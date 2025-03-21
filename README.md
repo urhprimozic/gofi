@@ -1,4 +1,4 @@
-# Irreducable representations gradient search
+# Gradient Optimisation For Ireducable representations
 ### Implementacija ideje Urbana Jezernika 
 
 We have a model 
