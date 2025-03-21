@@ -15,7 +15,7 @@ $$
 $$
 
 ## Results
-### $\rho \colon S_3 \to \mathbb \R \setminus \{0\}$
+### $\rho \colon S_3 \to \mathbb R \setminus \{0\}$
 The following resoults are found in [src/analysis.ipynb](src/analysis.ipynb).
 
 
