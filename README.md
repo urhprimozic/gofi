@@ -1,5 +1,7 @@
-# Gradient Optimisation For Ireducable representations
+# Irreducable representations gradient search
 ### Implementacija ideje Urbana Jezernika 
+
+**[Povezava do teorije: ](zapiski/teorija.md)**
 
 We have a model 
 $$\phi  \mapsto \hat \rho _\phi : G \to \mathbb{F}^{\text{dim} \times \text{dim}}$$
@@ -15,7 +17,7 @@ $$
 $$
 
 ## Results
-### $\rho \colon S_3 \to \mathbb R \setminus \{0\}$
+### $\rho \colon S_3 \to \mathbb \R \setminus \{0\}$
 The following resoults are found in [src/analysis.ipynb](src/analysis.ipynb).
 
 

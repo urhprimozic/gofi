@@ -1,10 +1,17 @@
-from models import GeneratorModel, GeneratorGroup
+from torch.models import GeneratorModel, GeneratorGroup
 from math import factorial
 
 demo_S3 = GeneratorGroup(
             generators=[(1, 2), (1, 3)],
             relations=[[0, 0], [1, 1], [0, 1, 0, 1, 0, 1]],
              table = [[], [0], [1], [0, 1, 0], [0, 1], [1, 0]]
+        )
+
+
+demo_C3 = GeneratorGroup(
+            generators=["s"],
+            relations=[[0,0,0]],
+             table = [[], [0], [0,0]]
         )
 
 def coxeter_presentation(n : int):

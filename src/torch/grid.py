@@ -11,6 +11,65 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 import matplotlib.pyplot as plt
 from typing import Callable, Any
 
+def generate_complex_grid(
+    model: GeneratorModel,
+    loss_function: Callable[[GeneratorModel], Any],
+    min_param: float,
+    max_param: float,
+    grid_dim: int,
+    opt_steps: int = 2000,
+    lr: float = 0.001,
+    weight_decay: float = 1e-4,
+    run_name: str = None,
+    eps: float = 1e-3,
+    verbose: bool = False,
+    save_on_each_step=False,
+    plot_loss_on_each_step=False
+):
+    '''
+    Runs a SGD/adam for each set of parameters.
+    Each parameter is bounded by min and max. There are grid_dim steps between min and max for each parameter.
+    The number of all steps taken is grid_dim^n_parameters = grid_dim^8
+
+    Parameters
+    ----------
+    model : GeneratorModel
+        Model of representation G -> GL(model.dim)
+    loss_function :  Callable[[GeneratorModel], Any]
+        Loss function, which calculates loss of a GeneratorModel model.
+    min_param : float
+        Minimal threshold of every initial parameter.
+    max_param : float
+        Maximal threshold of every initial parameter.
+    grid_dim : int
+        Dimensions of the generated grid.
+    opt_steps=2000
+        Maximal steps of optimisation used in training for each set of initial parameters.
+    weight_decay : float (default=1e-4)
+        Weight decay for adam optimiser
+
+    lr: float (default = 0.001)
+        Learning rate for optimisation
+    run_name : str=None
+        Name of the run. Used to label results
+    eps : float (default=1e-3)
+        Threshold for loss. If loss is lover than that, training stops.
+    verbose : bool (default=False)
+        If true, logs are printed
+    save_on_each_step : bool (default=False)
+        If true, losses and weights are saved on each step. Deprecated... 
+    plot_loss_on_each_step : bool (default=False)
+        Saves plots of loss for each set of parameters
+    
+    Returns
+    -------------
+    run_name, min_param, max_param, grid_dim : tuple
+        where
+
+    run_name : str
+        name of the run
+    '''
+    pass
 
 def param_grid(min_param: float, max_param: float, n_points: int, n_params: int):
     """
@@ -145,19 +204,19 @@ def generate_grid(
             # draw results
             plt.plot(losses, label="Loss")
             plt.title("Parameters: " + str(final_weights))
-            plt.savefig(f"../results/{run_name}_loss_plot_{index}.png")
+            plt.savefig(f"../../results/{run_name}_loss_plot_{index}.png")
             plt.clf()
 
         if save_on_each_step:    
             # save data
             # save final losses
-            np.save(f"../results/{run_name}_losses_{index}.npy", losses)
+            np.save(f"../../results/{run_name}_losses_{index}.npy", losses)
             
-            np.save(f"../results/{run_name}_weights_{index}.npy", final_weights)
+            np.save(f"../../results/{run_name}_weights_{index}.npy", final_weights)
     # save results 
-    np.save(f"../results/{run_name}_losses.npy", all_losses)
-    np.save(f"../results/{run_name}_weights.npy", all_weights)
-    np.save(f"../results/{run_name}_conv_results.npy", all_conv_results)
+    np.save(f"../../results/{run_name}_losses.npy", all_losses)
+    np.save(f"../../results/{run_name}_weights.npy", all_weights)
+    np.save(f"../../results/{run_name}_conv_results.npy", all_conv_results)
 
     return run_name, min_param, max_param, grid_dim
 
@@ -205,14 +264,14 @@ def plot_results(
     print("Collecting data..")
 
     # load results 
-    all_losses = np.load(f"../results/{run_name}_losses.npy")
-    all_weights = np.load(f"../results/{run_name}_weights.npy")
-    all_conv_results = np.load(f"../results/{run_name}_conv_results.npy")
+    all_losses = np.load(f"../../results/{run_name}_losses.npy")
+    all_weights = np.load(f"../../results/{run_name}_weights.npy")
+    all_conv_results = np.load(f"../../results/{run_name}_conv_results.npy")
 
     raise NotImplementedError("refactor to new loading mechanism is notyet complete")
 
     for index in tqdm(range(grid_dimensions ** n_params), total=grid_dimensions**n_params):
-        total_loss = np.load(f"../results/{run_name}_losses_{index}.npy")
+        total_loss = np.load(f"../../results/{run_name}_losses_{index}.npy")
         # check if converges
         if (total_loss < eps).any():
             # get index of first step, where loss < eps
@@ -225,8 +284,8 @@ def plot_results(
             color = -total_loss[-1]
             index_to_color_value[index] = color
 
-        # losses.append(np.load(f"../results/{run_name}_losses_{index}.npy"))
-        # weights.append(np.load(f"../results/{run_name}_weights_{index}.npy"))
+        # losses.append(np.load(f"../../results/{run_name}_losses_{index}.npy"))
+        # weights.append(np.load(f"../../results/{run_name}_weights_{index}.npy"))
 
     # get axis
 
@@ -254,7 +313,7 @@ def plot_results(
     if y_label is not None:
         plt.ylabel(y_label)
 
-    plt.savefig(f"../results/scatter/{run_name}.png")
+    plt.savefig(f"../../results/scatter/{run_name}.png")
     plt.show()
     plt.clf()
 
@@ -310,7 +369,7 @@ def _plot_results(
     # collect data
     print("Collecting data..")
     for index in tqdm(range(grid_dimensions ** n_params), total=grid_dimensions**n_params):
-        total_loss = np.load(f"../results/{run_name}_losses_{index}.npy")
+        total_loss = np.load(f"../../results/{run_name}_losses_{index}.npy")
         # check if converges
         if (total_loss < eps).any():
             # get index of first step, where loss < eps
@@ -323,8 +382,8 @@ def _plot_results(
             color = -total_loss[-1]
             index_to_color_value[index] = color
 
-        # losses.append(np.load(f"../results/{run_name}_losses_{index}.npy"))
-        # weights.append(np.load(f"../results/{run_name}_weights_{index}.npy"))
+        # losses.append(np.load(f"../../results/{run_name}_losses_{index}.npy"))
+        # weights.append(np.load(f"../../results/{run_name}_weights_{index}.npy"))
 
     # get axis
 
@@ -352,7 +411,7 @@ def _plot_results(
     if y_label is not None:
         plt.ylabel(y_label)
 
-    plt.savefig(f"../results/scatter/{run_name}.png")
+    plt.savefig(f"../../results/scatter/{run_name}.png")
     plt.show()
     plt.clf()
 

@@ -6,6 +6,10 @@ model of S3 -> O(2).
 - only relation loss and loss of irreducability are used, since all the matrices are already ortogonal
 '''
 import torch
+from models import GeneratorModel
+from loss import irr_loss_generator, relation_loss_generator
+from groups import demo_S3
+from grid import generate_grid
 
 def sign(x):
     if x > 0:
@@ -23,16 +27,15 @@ def param_to_matrix(a, b_sign=1, c_sign=1, d_sign=1):
 
     '''
     assert abs(b_sign) == 1 and abs(c_sign == 1) and abs(d_sign) == 1
-    assert a.shape == torch.Size([])
+    assert a.shape in [torch.Size([]), torch.Size([1]) ]
+    
+    row1 = torch.concat((a , -torch.sqrt(1 - a**2)))
+    row2 = torch.concat((torch.sqrt(1 - a**2) , -a))
 
-    if a == 0:
-        return torch.tensor([[ a , b_sign * 1],
-                              [ c_sign * 1,     0]])
-    else:
-        c = c_sign * torch.sqrt(1 - a**2)
-        b = -  c 
-        d = d_sign * torch.sqrt(1 - b**2)
+    m = torch.concat((row1, row2), dim=0)
+    m = torch.reshape(m, (2,2))
+    return  m
 
-        return torch.tensor([[ a , b],
-                              [ c,     d]])
+def loss_function(model : GeneratorModel):
+    return irr_loss_generator(model) + relation_loss_generator(model)
 

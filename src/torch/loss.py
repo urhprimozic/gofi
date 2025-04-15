@@ -58,3 +58,4 @@ def triple_loss_function(model):
     '''
     irr, rel, uni = loss_function_generator(model)
     return irr + rel + uni
+

@@ -70,6 +70,7 @@ class GeneratorModel(nn.Module):
         initial_params: torch.Tensor | None = None,
         params_shape=None,
         param_to_matrix=None,
+        complex=False
     ):
         """
         Creates a new model of dim-dimensional representation of group.
@@ -95,11 +96,17 @@ class GeneratorModel(nn.Module):
         param_to_matrix : function |None
             Function, which maps params[index] to matrix. If this is none or params_shape is None, identity is used.
             Otherwise: Representation(g) = param_to_matrix(parameters[g])
+        
+        complex : bool (default = False)
+            If True, the model is parametrised by complex numbers.
+            If False, the model is parametrised by real numbers.
 
         """
         super().__init__()
         self.group = group
         self.dim = dim
+
+        self.dtype = torch.complex64 if complex else torch.float32
 
         if params_shape is None:
             params_shape = torch.Size([group.n_generators, dim, dim])
@@ -110,11 +117,9 @@ class GeneratorModel(nn.Module):
         self.param_to_matrix = param_to_matrix
 
         if initial_params is None:
-            weights = (
-                torch.distributions.Normal(0.0, 0.2)
-                .sample((group.n_generators, dim, dim))
-                .to(device)
-            )
+            weights = torch.rand(params_shape, dtype=self.dtype).to(device)
+            # scale weights between - and 
+            weights = - 1 + 2 * weights
         else:
 
             # set weights to initial params
