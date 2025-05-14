@@ -1,3 +1,18 @@
+# TODO
+## upodobitve
+- zrihtaj kodo za upodobitve Dn
+- dodaj avtomorfizme med dvema grafoma
+- ko najdeš eno upodobitev u, dodaj v loss pogoj, da je karakter pravokoten na u
+- narediš loss kot produkt lossov za različne dimenzije matrik  --> imaš nekaj, kar išče po vseh dimenzijah 
+## grafi 
+- a, b iz A_n naključno --> cayley graf
+- x y druga dva --> cayley graf   
+- poglej, če je izomorfizem 
+- probaš na vseh cayleyevih grafih A_n glede na dva naključno izbrana elementa 
+
+gemini Pro vs chatgbt
+
+
 # Irreducable representations gradient search
 ### Implementacija ideje Urbana Jezernika 
 
