@@ -1,10 +1,10 @@
 # TODO
 ## upodobitve
 - zrihtaj kodo za upodobitve Dn
-- dodaj avtomorfizme med dvema grafoma
 - ko najdeš eno upodobitev u, dodaj v loss pogoj, da je karakter pravokoten na u
 - narediš loss kot produkt lossov za različne dimenzije matrik  --> imaš nekaj, kar išče po vseh dimenzijah 
 ## grafi 
+- dodaj avtomorfizme med dvema grafoma
 - a, b iz A_n naključno --> cayley graf
 - x y druga dva --> cayley graf   
 - poglej, če je izomorfizem 
