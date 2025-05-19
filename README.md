@@ -10,6 +10,13 @@
 - poglej, če je izomorfizem 
 - probaš na vseh cayleyevih grafih A_n glede na dva naključno izbrana elementa 
 
+# Plani za naprej:
+- dodaj loss ortogonalnosti na prejšnje upodobitve
+- dodaj 
+- Ogromne simulacije na calculusu
+- Pripravi berljive zvezke
+
+
 gemini Pro vs chatgbt
 
 
