@@ -227,8 +227,8 @@ class OrtogonalLoss(LossDihedral):
         """
         ans = 0
         for i in range(self.n):
-            ans += np.trace(pow(self.R0, i)) * np.trace(pow(R, self. n-i))
-            ans += np.trace(pow(self.R0, i) @ self.S0) * np.trace(S @ pow(R, self. n-i))
+            ans += np.trace(pow(self.R0, i)) * np.trace(pow(R, self.n-i))
+            ans += np.trace(pow(self.R0, i) @ self.S0) * np.trace(S @ pow(R, self.n-i))
         ans /= 2 * self.n
         return ans
     def __call__(self, R, S):
