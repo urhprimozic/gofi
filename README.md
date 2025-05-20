@@ -1,3 +1,10 @@
+# Instalacija
+Poženi
+```
+pip install -e .
+```
+iz lokacije, v kateri je ta README. To instalira paket gofi, zraven pa sledi vsem spremembam.
+
 # TODO
 ## upodobitve
 - zrihtaj kodo za upodobitve Dn
