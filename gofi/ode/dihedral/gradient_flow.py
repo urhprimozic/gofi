@@ -37,6 +37,8 @@ class GradientFlow:
         dS =  dS.flatten()
 
         P = np.concatenate((dR, dS), axis=None)
+        # negate
+        P = -P
 
         # clip to avoid too big gradients 
         if self.clipping_limit is not None:
