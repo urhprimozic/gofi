@@ -4,6 +4,7 @@ from numpy.linalg import norm
 from numpy.linalg import matrix_power as pow
 from abc import ABC, abstractmethod
 
+
 # helper functions to compute the derivative of the loss function
 def Q(X, n):
     """
@@ -40,22 +41,64 @@ def norm_square_RS_minus_I_by_S(R, S):
 #############################################################
 class LossDihedral(ABC):
     """Abstract class for loss functions."""
+
     @abstractmethod
     def __init__(self, *args):
         """Initialize the loss function with given arguments."""
         pass
+
     @abstractmethod
     def __call__(self, R, S):
         """Compute the loss given the parameters R and S."""
         pass
-    @abstractmethod    
+
+    @abstractmethod
     def dR(self, R, S):
         """Compute the gradient d/dR of the loss with respect to R."""
         pass
-    @abstractmethod    
+
+    @abstractmethod
     def dS(self, R, S):
         """Compute the gradient d/dS of the loss with respect to S."""
         pass
+
+    def __add__(self, other):
+        return SumOfLoss(self, other)
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+
+class SumOfLoss(LossDihedral):
+    """Sum of two loss functions."""
+
+    def __init__(self, loss1: LossDihedral, loss2: LossDihedral):
+        """
+
+        Initialize the sum of two loss functions.
+
+        SumOfLoss(loss1, loss2)(R, S) = loss1(R, S) + loss2(R, S)
+
+        Parameters
+        ----------
+        loss1 : LossDihedral
+            First loss function.
+        loss2 : LossDihedral
+            Second loss function."""
+        self.loss1 = loss1
+        self.loss2 = loss2
+
+    def __call__(self, R, S):
+        return self.loss1(R, S) + self.loss2(R, S)
+
+    def dR(self, R, S):
+        return self.loss1.dR(R, S) + self.loss2.dR(R, S)
+
+    def dS(self, R, S):
+        return self.loss1.dS(R, S) + self.loss2.dS(R, S)
+
+    def __repr__(self):
+        return str(self.loss1) + " + " + str(self.loss2)
 
 
 class RelationLoss(LossDihedral):
@@ -71,6 +114,9 @@ class RelationLoss(LossDihedral):
             Order of rotation. Order of dihedral group D_2n is equal to 2n.
         """
         self.n = n
+
+    def __str__(self):
+        return "RelationLoss"
 
     def __call__(self, R, S):
         """
@@ -115,7 +161,8 @@ def norm_chi(R, S, n):
 
 class IrreducibilityLoss(LossDihedral):
     """Irreducibility loss (|character(R,S)| - 1)^2"""
-
+    def __str__(self):
+        return "IrreducibilityLoss"
     def __init__(self, n):
         """
         Initialize the irreducibility loss with respect to the dihedral group D_2n.
@@ -171,7 +218,8 @@ def unitary_norm(X):
 
 class UnitaryLoss(LossDihedral):
     """Unitary loss 1/2 * (||R^T R - I||^2 + ||S^T S - I||^2)"""
-
+    def __str__(self):
+        return "UnitaryLoss"
     def __init__(self, *args):
         pass
 
@@ -201,61 +249,73 @@ class UnitaryLoss(LossDihedral):
         """
         return 0.5 * unitary_norm(S)
 
+
 class OrtogonalLoss(LossDihedral):
-    def __init__(self, n : int, R0 : np.array , S0 : np.array):
+    def __init__(self, n: int, R0: np.array, S0: np.array):
         """
-        Creates loss for ortogonality of characthers. OrtogonalLoss(n, R0, S0)(R, S) is equal to the square of  scalar product 
+        Creates loss for ortogonality of characthers. OrtogonalLoss(n, R0, S0)(R, S) is equal to the square of  scalar product
         between mapping (r -> R0, s -> S0) and (r -> R, s -> S).
 
 
         Parameters
         ----------
-        n : int 
+        n : int
             Dihedral group D2n number.
         R1 : np.array
             Map of rotation
-        S1 : np.array 
+        S1 : np.array
             Map of flip
         """
-        self.n = n 
-        self.R0 = R0 
+        self.n = n
+        self.R0 = R0
         self.S0 = S0
+    def __str__(self):
+        return "OrtogonalLoss"
     def prod(self, R, S):
         """
         Returns scalar product between mapping rho:(r -> R, s -> S) and rho1:(r -> R1, s -> S1)
-        [rho, rho1] = 1/(2n) sum_{g in Dn} tr(rho(g) tr(rho1(g) 
+        [rho, rho1] = 1/(2n) sum_{g in Dn} tr(rho(g) tr(rho1(g)
         """
         ans = 0
         for i in range(self.n):
-            ans += np.trace(pow(self.R0, i)) * np.trace(pow(R, self.n-i))
-            ans += np.trace(pow(self.R0, i) @ self.S0) * np.trace(S @ pow(R, self.n-i))
+            ans += np.trace(pow(self.R0, i)) * np.trace(pow(R, self.n - i))
+            ans += np.trace(pow(self.R0, i) @ self.S0) * np.trace(
+                S @ pow(R, self.n - i)
+            )
         ans /= 2 * self.n
         return ans
+
     def __call__(self, R, S):
         """
         Returns square of  scalar product between mapping rho:(r -> R, s -> S) and rho1:(r -> R1, s -> S1)
-        [rho, rho1] = 1/(2n) sum_{g in Dn} tr(rho(g) tr(rho1(g) 
-        """ 
+        [rho, rho1] = 1/(2n) sum_{g in Dn} tr(rho(g) tr(rho1(g)
+        """
         return self.prod(R, S) ** 2
 
     def dR(self, R, S):
         """
         Returns d/dR(OrtogonalLoss)
-        """ 
+        """
         ans = np.zeros(R.shape)
         for i in range(self.n):
             ans += np.trace(pow(self.R0, i)) * (self.n - i) * pow(R, self.n - i - 1)
-            ans += np.trace(pow(self.R0, i) @ self.S0) * S * (self.n - i) * pow(R, self.n - i - 1)
+            ans += (
+                np.trace(pow(self.R0, i) @ self.S0)
+                * S
+                * (self.n - i)
+                * pow(R, self.n - i - 1)
+            )
         ans /= 2 * self.n
         ans *= self.prod(R, S)
-        return ans  
-    def dS(self,  R, S):
+        return ans
+
+    def dS(self, R, S):
         """
         Returns d/dS(OrtogonalLoss)
-        """ 
+        """
         ans = np.zeros(S.shape)
         for i in range(self.n):
-            ans += np.trace(pow(self.R0, i) @ self.S0) *  pow(R, self.n - i)
+            ans += np.trace(pow(self.R0, i) @ self.S0) * pow(R, self.n - i)
         ans /= 2 * self.n
         ans *= self.prod(R, S)
         return ans
