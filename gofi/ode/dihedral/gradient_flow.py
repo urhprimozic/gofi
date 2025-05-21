@@ -80,3 +80,4 @@ class GradientFlow:
         # solve 
         P0 = self.matrix_to_vec(R0, S0)
         return solve_ivp(self.neg_grad, (0, t_max), P0, events=event)
+
