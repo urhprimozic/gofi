@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.integrate import solve_ivp
+import multiprocessing as mp
+from tqdm import tqdm
 
 class GradientFlow:
     """
@@ -82,4 +84,62 @@ class GradientFlow:
         # solve 
         P0 = self.matrix_to_vec(R0, S0)
         return solve_ivp(self.neg_grad, (0, t_max), P0, events=event)
+            
+    def solve_random(self, min_value=-1, max_value=1, eps=0.0001, t_max=50):
+            """
+            Solves the gradient flow for a random initial point.
+            """
+            # generate random initial point
+            R0 = np.random.uniform(min_value, max_value, (self.dim, self.dim))
+            S0 = np.random.uniform(min_value, max_value, (self.dim, self.dim))
+            
+            # solve the gradient flow
+            return self.solve(R0, S0, eps=eps, t_max=t_max)
+    
+    
+    def solve_on_uniform_sample(self, n_samples : int, min_value :  float = -1,max_value : float=1, multiprocess=False, eps=0.0001, t_max=50, verbose=False):
+        """
+        Samples n_sample different initial parameters and runs solve for each one. 
+        Every group element inside initial parameters is selected uniformly between min_value and max_value.
+
+        parameters
+        -----------
+        n_samples : int
+            Number of samples to be generated.
+        min_value : float
+            Minimum value for the random sample. Default is -1.
+        max_value : float
+            Maximum value for the random sample. Default is 1.
+        multiprocess : bool
+            If True, uses multiprocessing to speed up the computation. Default is False.
+        eps : float
+            Convergence threshold for the integration. Default is 0.0001.
+        t_max : float
+            Maximum time for the integration. Default is 50.
+        
+        verbose : bool
+            If True, prints the progress of the integration. Default is False.
+        """
+        solutions = []
+
+
+
+        # dummy function to be used for multiprocessing
+        f = lambda _ : self.solve_random(min_value=min_value, max_value=max_value, eps=eps, t_max=t_max)
+
+        results = []
+        
+        if multiprocess:
+            raise NotImplementedError("Multiprocessing is not implemented yet.")
+            with mp.Pool(processes=mp.cpu_count()) as pool:
+                results = pool.map(f, range(n_samples)) 
+        else:
+            iterator = range(n_samples) 
+            if verbose:
+                iterator = tqdm(iterator, desc="Solving on uniform sample..", total=n_samples)
+            for i in iterator:
+                results.append(f(i))
+        
+        return results
+
 
