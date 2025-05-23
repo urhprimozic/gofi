@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torch_settings import device
+from gofi.autograd.torch_settings import device
 import numpy as np
 
 

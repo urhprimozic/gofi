@@ -1,4 +1,4 @@
-from torch.models import GeneratorModel, GeneratorGroup
+from gofi.autograd.models import GeneratorModel, GeneratorGroup
 from math import factorial
 
 demo_S3 = GeneratorGroup(

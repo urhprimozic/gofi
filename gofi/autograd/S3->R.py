@@ -6,12 +6,12 @@ For each opt run, three differnet outcomes are expected:
 - converges to sing -- final parameters are close to [[-1], [-1]]
 - diverges
 '''
-from models import GeneratorModel
-from groups import demo_S3
-from training import training_loop
-from loss import triple_loss_function, loss_function_generator
+from gofi.autograd.models import GeneratorModel
+from gofi.groups import demo_S3
+from gofi.autograd.training import training_loop
+from gofi.autograd.loss import triple_loss_function, loss_function_generator
 import torch
-from grid import generate_grid, param_grid
+from gofi.autograd.grid import generate_grid, param_grid
 from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt

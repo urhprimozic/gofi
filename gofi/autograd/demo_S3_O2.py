@@ -6,10 +6,10 @@ model of S3 -> O(2).
 - only relation loss and loss of irreducability are used, since all the matrices are already ortogonal
 '''
 import torch
-from models import GeneratorModel
-from loss import irr_loss_generator, relation_loss_generator
-from groups import demo_S3
-from grid import generate_grid
+from gofi.autograd.models import GeneratorModel
+from gofi.autograd.loss import irr_loss_generator, relation_loss_generator
+from gofi.groups import demo_S3
+from gofi.autograd.grid import generate_grid
 
 def sign(x):
     if x > 0:

@@ -1,4 +1,4 @@
-from models import GeneratorModel
+from gofi.autograd.models import GeneratorModel
 from typing import Callable, Any
 import torch
 from tqdm import tqdm

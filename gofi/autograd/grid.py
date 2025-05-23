@@ -1,11 +1,11 @@
-from models import GeneratorModel
-from torch_settings import device
+from gofi.autograd.models import GeneratorModel
+from gofi.autograd.torch_settings import device
 from datetime import datetime
-from groups import demo_S3
+from gofi.groups import demo_S3
 import itertools
 import torch
 import numpy as np
-from training import training_loop
+from gofi.autograd.training import training_loop
 from tqdm import tqdm
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import matplotlib.pyplot as plt

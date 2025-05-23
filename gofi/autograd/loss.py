@@ -1,6 +1,6 @@
 import torch
 from torch.linalg import matrix_norm
-from models import GeneratorModel
+from gofi.autograd.models import GeneratorModel
 
 def relation_loss_generator(model: GeneratorModel):
     """
