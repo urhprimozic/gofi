@@ -5,6 +5,29 @@ pip install -e .
 ```
 iz lokacije, v kateri je ta README. To instalira paket gofi, zraven pa sledi vsem spremembam.
 
+## Struktura 
+- `ode/`  - vse, kar ne uporablja torcha
+- `graphs/` - grafi 
+   - `graph.py`
+      `RelationLoss()`, itd... 
+- `actions/` - delovanja
+  - `action.py` 
+     - `class ActionModel(Group(S,R))` - za vsak generator ima svoj `models.RandomMap()` 
+- `repr/` - upodobitve
+   - `repr.py` -  `class RepresentationModel`
+- `models.py` 
+   - `class Group`
+   - `class RandomMap`
+- `loss.py` 
+   - `def UnitaryLoss(Matrix)` 
+
+- ~~`autograd`~~ - **REMOVE!** to bo z zgornjo strukturo obsolete
+
+
+
+
+
+
 # TODO
 ## upodobitve
 - zrihtaj kodo za upodobitve Dn
