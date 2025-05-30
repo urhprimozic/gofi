@@ -1,7 +1,21 @@
 import torch
 import torch.nn as nn
 from typing import Tuple
+from scipy.optimize import linear_sum_assignment
 
+def closest_permutation_matrix(M: torch.Tensor) -> torch.Tensor:
+    # Convert to numpy for scipy
+    M_np = M.detach().numpy()
+
+    # Solve the linear sum assignment problem on the NEGATED matrix
+    # (because we want to maximize the sum, but scipy minimizes)
+    row_ind, col_ind = linear_sum_assignment(-M_np)
+
+    # Create the permutation matrix
+    n = M.size(0)
+    P = torch.zeros_like(M)
+    P[row_ind, col_ind] = 1.0
+    return P
 
 class Matrix(nn.Module):
     """
@@ -57,7 +71,10 @@ class RandomMap(nn.Module):
         self.codomain = self.shape[1]
         # set inner model
         if inner_model is None:
+            self.overparameterized = False
             inner_model = Matrix(self.domain, self.codomain, initial_params)
+        else:
+            self.overparameterized = True
         self.inner_model = inner_model
         self.softmax = nn.Softmax(dim=1)
 
@@ -118,3 +135,22 @@ class RandomMap(nn.Module):
 
     def most_probable_map(self):
         return self.mode()
+
+    def table(self):
+        d = self.mode()
+        return [d[i] for i in range(1, self.domain + 1)]
+    
+    def im_size(self):
+        table = self.table()
+        ans = 0
+        for  i in range(1, self.domain +1):
+            if i in table:
+                ans += 1 
+        return ans 
+    def mode_matrix(self):
+        return closest_permutation_matrix(self.P())
+    
+        
+    
+
+        
