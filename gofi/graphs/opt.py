@@ -74,7 +74,7 @@ def training(
                             print(f", lr={scheduler.get_last_lr()}", end="")
                         except: 
                             pass
-            print("")
+                print("")
             # stop when reaching max steps
             if max_steps is not None:
                 if step >= max_steps:
