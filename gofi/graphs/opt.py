@@ -89,8 +89,9 @@ def training(
                         scheduler.step(loss)
                 else:
                     scheduler.step()
-    except:
-        print("exception.. returning f")
+    except Exception as e:
+        print(f"Exception: {e}")
+        print("--------------------------\Exception occured.. returning f")
         return f 
 
 
