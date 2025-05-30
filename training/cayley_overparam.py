@@ -152,7 +152,7 @@ def transformer_schedule(warmup_steps, d_model):
         return (d_model ** -0.5) * min(step ** -0.5, step * warmup_steps ** -1.5)
     return lr_lambda
 
-
+ 
 
 
 
@@ -168,7 +168,7 @@ if __name__ == "__main__":
         #toy: 
         inner_model = MatrixGeneratorTransformerMLP(120, dim=10, dim_feedforward=10, depth=1, nhead=1).to(device)
     else:
-        inner_model = MatrixGeneratorTransformerMLP(120, dim=dim, dim_feedforward=2000, depth=8, nhead=8, depth=4).to(device)
+        inner_model = MatrixGeneratorTransformerMLP(120, dim=dim, dim_feedforward=2000, nhead=4, depth=4).to(device)
     
     f = RandomMap(120, inner_model=inner_model).to(device)  # Move model to device
 
