@@ -13,7 +13,7 @@ from gofi.graphs.loss import (
 from torch.nn.utils import clip_grad_norm_
 from tqdm import tqdm
 import torch.nn as nn
-
+import traceback
 
 def training(
     f: RandomMap,
@@ -91,6 +91,8 @@ def training(
                     scheduler.step()
     except Exception as e:
         print(f"Exception: {e}")
+        print("--------------------------\nTre::\n")
+        traceback.print_exc()
         print("--------------------------\nException occured.. returning f")
         return f 
 
