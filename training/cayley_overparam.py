@@ -141,7 +141,7 @@ class ProjIntoRelu(nn.Module):
 
 
 # create transformer model
-dim = 1200
+dim = 200
 
 
 # hacky hacky
@@ -168,7 +168,7 @@ if __name__ == "__main__":
         #toy: 
         inner_model = MatrixGeneratorTransformerMLP(120, dim=10, dim_feedforward=10, depth=1, nhead=1).to(device)
     else:
-        inner_model = MatrixGeneratorTransformerMLP(120, dim=dim, dim_feedforward=4*200**2, depth=8, nhead=8).to(device)
+        inner_model = MatrixGeneratorTransformerMLP(120, dim=dim, dim_feedforward=2000, depth=8, nhead=8, depth=4).to(device)
     
     f = RandomMap(120, inner_model=inner_model).to(device)  # Move model to device
 
