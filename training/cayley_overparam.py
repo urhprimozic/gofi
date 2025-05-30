@@ -142,9 +142,6 @@ class ProjIntoRelu(nn.Module):
 
 # create transformer model
 dim = 1200
-inner_model = MatrixGeneratorTransformerMLP(120, dim=dim, dim_feedforward=4*200**2, depth=8, nhead=8).to(device)
-#toy: inner_model = MatrixGeneratorTransformerMLP(120, dim=10, dim_feedforward=10, depth=1, nhead=1).to(device)
-f = RandomMap(120, inner_model=inner_model).to(device)  # Move model to device
 
 
 # hacky hacky
@@ -163,7 +160,19 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("max_steps", type=int, help="Number of steps of training")
     parser.add_argument("filename", type=str, help="Filename to save the results")
+    parser.add_argument("--toy", type=str, default=0, help="If 1, toy model is used.")
     args = parser.parse_args()
+
+
+    if int(args.toy) == 1:
+        #toy: 
+        inner_model = MatrixGeneratorTransformerMLP(120, dim=10, dim_feedforward=10, depth=1, nhead=1).to(device)
+    else:
+        inner_model = MatrixGeneratorTransformerMLP(120, dim=dim, dim_feedforward=4*200**2, depth=8, nhead=8).to(device)
+    
+    f = RandomMap(120, inner_model=inner_model).to(device)  # Move model to device
+
+
 
     training(
         f,

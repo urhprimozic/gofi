@@ -2,6 +2,8 @@ from gofi.models import RandomMap
 import torch
 import torch.nn as nn
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 def RelationLossMatrix(P, M1, M2, eps=0.1e-10):
     """
     Returns relation loss of random map, defined by shotachastic matrix P, on graphs G1 and G2, given by adjacency matrices M1 and M2.
@@ -21,7 +23,7 @@ def RelationLossMatrix(P, M1, M2, eps=0.1e-10):
     torch.Tensor
         Relation loss of random map defined by P on graphs G1 and G2.
     """
-    return -torch.trace(torch.log(P @ M2 @ P.T + eps) @ M1.T)
+    return -torch.trace(torch.log(P @ M2 @ P.T + eps) @ M1.T).to(device)
 
 def BijectiveLossMatrix(P, eps=0.1e-10):
     """
@@ -37,7 +39,7 @@ def BijectiveLossMatrix(P, eps=0.1e-10):
     torch.Tensor
         Bijective loss of random map defined by P.      
     """
-    return torch.norm(P @ P.T - torch.eye(P.shape[0])) ** 2
+    return (torch.norm(P @ P.T - torch.eye(P.shape[0])) ** 2).to(device)
 
 
 def RelationLoss(f : RandomMap, M1 : torch.Tensor, M2 : torch.Tensor, eps=0.1e-10):
@@ -59,7 +61,7 @@ def RelationLoss(f : RandomMap, M1 : torch.Tensor, M2 : torch.Tensor, eps=0.1e-1
     torch.Tensor
         Relation loss of random map f on graphs G1 and G2.
     """
-    return RelationLossMatrix(f.P(), M1, M2)
+    return RelationLossMatrix(f.P(), M1, M2).to(device)
     #return -torch.trace(torch.log(f.P() @ M2 @ f.P().T) @ M1.T)
 
 def BijectiveLoss(f : RandomMap, eps=0.1e-10):
@@ -80,6 +82,6 @@ def BijectiveLoss(f : RandomMap, eps=0.1e-10):
     """
     if f.domain != f.codomain:
         raise ValueError("Bijective loss is defined only for maps between same-sized sets.")
-    return BijectiveLossMatrix(f.P())
+    return BijectiveLossMatrix(f.P()).to(device)
     #return torch.norm(f.P() @ f.P().T - torch.eye(f.domain)) ** 2
 
