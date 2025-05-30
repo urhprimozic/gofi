@@ -71,7 +71,7 @@ def training(
                 print(f"Loss= {loss.item()}, |grad| = {grad_norm}", end="")
                 if scheduler is not None:
                         try:
-                            print(f", lr={scheduler.get_lr()}", end="")
+                            print(f", lr={scheduler.get_last_lr()}", end="")
                         except: 
                             pass
             print("")

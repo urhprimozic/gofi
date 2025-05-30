@@ -6,17 +6,20 @@ from gofi.models import RandomMap
 import torch 
 import argparse
 
-M = adjacency_matrix_cayley_Sn(5)
+# Set device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+M = torch.tensor(adjacency_matrix_cayley_Sn(5)).to(device)  # Move adjacency matrix to device
 
 
 class MatrixGeneratorTransformerMLP(nn.Module):
-    def __init__(self, n, dim=200, dim_feedforward=2048, depth=6):
+    def __init__(self, n, dim=200, dim_feedforward=2048, depth=6, nhead=4):
         super().__init__()
         self.n = n
         self.initial = nn.Parameter(torch.rand(n, 1, dim))
 
         self.transformer = nn.TransformerEncoder(
-            nn.TransformerEncoderLayer(d_model=dim, nhead=4, dim_feedforward=dim_feedforward),
+            nn.TransformerEncoderLayer(d_model=dim, nhead=nhead, dim_feedforward=dim_feedforward),
             num_layers=3,
         )
 
@@ -138,11 +141,10 @@ class ProjIntoRelu(nn.Module):
 
 
 # create transformer model
-dim=1200
-inner_model = MatrixGeneratorTransformerMLP(120, dim=dim,dim_feedforward=4*120**2, depth=8)
-# inner_model = MatrixGeneratorTransformerMLP(120, dim=600,dim_feedforward=4*(120**2), depth=8)
-# create a random map with that model
-f = RandomMap(120, inner_model=inner_model)
+dim = 1200
+inner_model = MatrixGeneratorTransformerMLP(120, dim=dim, dim_feedforward=4*200**2, depth=8, nhead=8).to(device)
+#toy: inner_model = MatrixGeneratorTransformerMLP(120, dim=10, dim_feedforward=10, depth=1, nhead=1).to(device)
+f = RandomMap(120, inner_model=inner_model).to(device)  # Move model to device
 
 
 # hacky hacky
@@ -174,8 +176,7 @@ if __name__ == "__main__":
         verbose=100,
         B=10,
         scheduler=LambdaLR,        
-        #lr_lambda=transformer_schedule(warmup_steps=4000, d_model=512)
-        scheduler_parameters={'lr_lambda' :  transformer_schedule(warmup_steps=1000, d_model=dim)},   #  {"patience": 2, "factor": 0.1},
+        scheduler_parameters={'lr_lambda': transformer_schedule(warmup_steps=1000, d_model=dim)},
         scheduler_input=None,
     )
     # save the model 
