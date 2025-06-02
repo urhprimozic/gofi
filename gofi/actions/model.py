@@ -10,7 +10,7 @@ def multiply_matrices(*tensors):
     return reduce(operator.matmul, tensors)
 
 class Group:
-    def __init__(self, generators : Iterable[Hashable], relations : Iterable[Iterable[Hashable]]):
+    def __init__(self, generators : Iterable[Hashable], relations : Iterable[Iterable[Hashable]], name=None):
         """
         Creates a new group =<generators | relations>.
 
@@ -20,10 +20,12 @@ class Group:
             List (or any other iterable) of generators. Can be arbitrary types. int or str advised.
         relations : Iterable[Iterable[Hashable]]
             List (or any other iterable) of relations. Each relation is an iterator over generators.
-        
+        name : str | None 
+            group name
         Example
         -----------
         """
+        self.name  = name
         self.generators = generators
         self.relations = relations
         self.n_relations = len(list(relations))
