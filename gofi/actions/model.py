@@ -4,6 +4,7 @@ import torch.nn as nn
 from gofi.models import RandomMap
 from functools import reduce
 import operator
+from gofi.graphs.loss import BijectiveLoss
 
 def multiply_matrices(*tensors):
     return reduce(operator.matmul, tensors)
@@ -26,8 +27,10 @@ class Group:
         self.generators = generators
         self.relations = relations
         self.n_relations = len(list(relations))
+        self.n_generators = len(list(generators))
 
 class ActionModel(nn.Module):
+    
     def __init__(self, group : Group, n : int):
         """
         Creates a new ActionModel, which models a mapping from a group into the distributions over fun([n], [n]).
@@ -40,6 +43,7 @@ class ActionModel(nn.Module):
             Number of elements the group is actiong on.
         
         """
+        super().__init__()
         self.group = group 
         self.n = n
         # creates a dictionary between generators and their RandomModels
@@ -63,7 +67,7 @@ class ActionModel(nn.Module):
 
         where P_r is the stohastic matrix of a random map, defined with r.
         """
-        ans = torch.zeros((self.n, self.n))
+        ans = 0
         for r in self.group.relations:
             # get stochastic matrix 
             P_r = multiply_matrices(*[self.P(s) for s in r])
@@ -71,4 +75,12 @@ class ActionModel(nn.Module):
             ans += torch.trace(log)
         ans *= -1/self.group.n_relations
         return ans 
+    
+    def bijective_loss(self, eps=1e-10):
+        ans = 0
+        for s in self.group.generators:
+            f  =self.rm[s]
+            ans += BijectiveLoss(f, eps=eps)
+        ans /= self.group.n_generators
+        return ans
     

@@ -1,3 +1,4 @@
+import pickle 
 from gofi.ode.dihedral.gradient_flow import GradientFlow
 import numpy as np
 from tqdm import tqdm
@@ -6,8 +7,8 @@ from gofi.ode.dihedral.loss import *
 
 
 def grid(
-    min_char : int,
-    max_char : int,
+    min_value : int,
+    max_value : int,
     resolution: int,
     gradient_flow: GradientFlow,
     verbose: bool = False,
@@ -17,29 +18,17 @@ def grid(
     """
     Creates resolution * resolution grid of different values for real numbers R and S.
     Each pair (R,S) is useda as a initial value for GradientFLow.
-
-    Returns:
-    --------
-    (characters, samples) : tuple
-        A tuple containing the characters of the matrices and the solutions for each pair of matrices.
-
-        characters : list
-            A list of tuples containing the characters (charR, charS) for each pair of matrices.
-        samples : list
-            A list of dictionaries containing the initial points and solutions for each pair of matrices.
-            Each dictionary contains:
-                - 'init_points' : list of tuples (R0, S0) for each sample
-                - 'solutions' : list of solutions for each sample
-            Samples[i] corresponds to characters[i].
     """
     # Create a linspace for the grid
-    values = np.linspace(min_char, max_char, resolution)
+    values = np.linspace(min_value, max_value, resolution)
+    
     # meshgrid
-    charsR, charsS = np.meshgrid(*[values] * 2)
+    points_r, points_s = np.meshgrid(*[values] * 2)
+    # charsR, charsS = np.meshgrid(*[values] * 2)
     
     # solve gradient flow for each pair of initial values R,S in flattened
 
-    iterator = zip(charsR.flatten(), charsS.flatten())
+    iterator = zip(points_r.flatten(), points_s.flatten())
 
     if verbose:
         iterator = tqdm(
@@ -49,59 +38,46 @@ def grid(
     characters = []
     samples = []
 
-    # Solve gradient flow for each point in grid
-    for charR , charS in iterator:
-        characters.append((charR, charS))
-        # sample different initial values
-        solutions = []
-        init_points = []
-        for i in range(n_samples):
-            # get new sample
-            R0 = sample_fixed_char(min_value, max_value, charR)
-            S0 = sample_fixed_char(min_value, max_value, charS)
-            # get the trajectory of gradient flow 
-            solution = gradient_flow.solve(R0, S0, eps, t_max)
-            # save 
-            init_points.append((R0, S0))
-            solutions.append(solution)
-        sample = {'init_points' : init_points, 'solutions' : solutions}
-        samples.append(sample)
+    grid_dict={}
 
-    return characters, samples
+    # Solve gradient flow for each point in grid
+    for r , s in iterator:
+        r0 = r.reshape((1,1))
+        s0 = s.reshape((1,1))
+        
+        solution = gradient_flow.solve(r0, s0, eps=0.001, t_max=4)
+        grid_dict[(r.item(), s.item())] = solution
+
+    return grid_dict
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("max_n", type=str, help="Number of different dihedral groups tested")
-    parser.add_argument("n_samples", type=int, help="Number of samples, generated for each group")
-    parser.add_argument("filename", type=str, help="Filename to save the results")
-    parser.add_argument("--dim", default="2",type=str, help="Dimension of the modeled representation.")
+    parser.add_argument("n", type=str, help="Order of rotation . Encodes n at D2n.")
+    parser.add_argument("min_value", type=str, help="Minimal value of the grid")
+    parser.add_argument("max_value", type=str, help="Max value of the grid")
+    parser.add_argument("resolution", type=str, help="Grid resolution")
+    parser.add_argument("filename", type=str, help="Filename to save the result")
+    parser.add_argument("--eps",default="0.001", type=str, help="Eps")
+   
     args = parser.parse_args()
+    # collect args
+    n = int(args.n)
+    eps = float(args.eps)
+    min_value = int(args.min_value)
+    max_value = int(args.max_value)
+    resolution = int(args.resolution)
+    filename = args.filename
 
-    dim = int(args.dim)
-    
-    dihedral_to_solutions={}
-    for n in tqdm(range(1, int(args.max_n) + 1), desc="Iterating over dihedral groups", total=int(args.max_n)):
-        # create new equations
-        irr_loss = IrreducibilityLoss(n)
-        unit_loss = UnitaryLoss()
-        rel_loss = RelationLoss(n)
-        loss = irr_loss + unit_loss + rel_loss
-        
-        gf = GradientFlow(dim, loss, clipping_limit=10)
+    # create new equations
+    irr_loss = IrreducibilityLoss(n)
+    unit_loss = UnitaryLoss()
+    rel_loss = RelationLoss(n)
+    loss = irr_loss + unit_loss + rel_loss
+    gf = GradientFlow(1, loss, clipping_limit=100)
+    # run grid
+    grid_dict = grid(min_value, max_value, resolution, gf, verbose=True, eps=eps)
 
-        # run simulations
-        solutions = gf.solve_on_uniform_sample(
-            n_samples=int(args.n_samples),
-            min_value=-1,
-            max_value=1,
-            multiprocess=False,
-            eps=0.001,
-            t_max=5,
-            verbose=True
-        )
-        # save solutions
-        np.save(args.filename + f"n={n}", solutions, allow_pickle=True)
-        dihedral_to_solutions[n] = solutions
-    np.save(args.filename, dihedral_to_solutions, allow_pickle=True)
-        
+    # save grid 
+    with open(f'{filename}.pkl', 'wb') as f:
+        pickle.dump(grid_dict, f)
