@@ -23,7 +23,8 @@ def RelationLossMatrix(P, M1, M2, eps=0.1e-10):
     torch.Tensor
         Relation loss of random map defined by P on graphs G1 and G2.
     """
-    return -torch.trace(torch.log(P @ M2 @ P.T + eps) @ M1.T).to(device)
+    conjugate = torch.min(P @ M2 @ P.T + eps, torch.tensor(1, device=P.device))
+    return -torch.trace(torch.log(conjugate) @ M1.T)#.to(device)
 
 def BijectiveLossMatrix(P, eps=0.1e-10):
     """
@@ -39,7 +40,8 @@ def BijectiveLossMatrix(P, eps=0.1e-10):
     torch.Tensor
         Bijective loss of random map defined by P.      
     """
-    return (torch.norm(P @ P.T - torch.eye(P.shape[0]).to(device)  ) ** 2).to(device)
+    
+    return (torch.norm(P @ P.T - torch.eye(P.shape[0]).to(device)  ) ** 2)#.to(device)
 
 
 def RelationLoss(f : RandomMap, M1 : torch.Tensor, M2 : torch.Tensor, eps=0.1e-10):

@@ -1,3 +1,4 @@
+from torch.autograd.functional import jacobian
 import torch
 from torchdiffeq import odeint, odeint_event
 from gofi.models import RandomMap
@@ -97,11 +98,42 @@ def training(
         return f 
 
 
-def solve_gradient_flow(phi0: torch.Tensor, M1: torch.Tensor, M2: torch.Tensor):
+def integrate_gradient_flow(phi0: torch.Tensor, M1: torch.Tensor, M2: torch.Tensor, t_max : int = 10, steps : int = 1000):
     def neg_grad(t, x):
         x.requires_grad_ = True
-        loss = RelationLossMatrix(torch.softmax(x, dim=1), M1, M2)
+        loss = RelationLossMatrix(torch.softmax(x, dim=1), M1, M2) +  BijectiveLossMatrix(torch.softmax(x, dim=1))
         grad = torch.autograd.grad(loss, x)[0]  # , retain_graph=True)
-        return grad
+        return -grad
 
-    return odeint(neg_grad, phi0, torch.linspace(0, 60, 6000))
+    return odeint(neg_grad, phi0, torch.linspace(0, t_max, steps))
+
+def solve_gradient_flow(phi0: torch.Tensor, M1: torch.Tensor, M2: torch.Tensor, eps=0.01):
+    """
+    Integrate the gradient flow ODE using odeint_event, stopping when the gradient norm < eps.
+    """
+    def neg_grad(t, x):
+        #           x = x.detach().clone().requires_grad_(True)
+        x.requires_grad_=True
+        loss = RelationLossMatrix(torch.softmax(x, dim=1), M1, M2) + BijectiveLossMatrix(torch.softmax(x, dim=1))
+        grad = torch.autograd.grad(loss, x)[0]
+        return -grad
+    
+    loss  =  lambda x : RelationLossMatrix(torch.softmax(x, dim=1), M1, M2 ) + BijectiveLossMatrix(torch.softmax(x, dim=1))
+
+    def event(t, x):
+        #x = x.detach().clone().requires_grad_(True)
+        x = x.detach().clone()
+        grad = jacobian(loss, phi0)
+        #grad = torch.autograd.grad(loss, x, retain_graph=True)[0]
+        grad_norm = torch.norm(grad)
+        return grad_norm - eps
+
+    t0 = torch.tensor(0.0)
+  
+    solution, _ = odeint_event(
+        neg_grad,
+        phi0,
+        t0,
+        event_fn=event
+    )
+    return solution
