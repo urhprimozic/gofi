@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 from gofi.plot.colors import blueorange
 from gofi.actions.opt import training
 from tqdm import tqdm
+import torch
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def plot_model_cyclic(model, title : str, main_title : str,  filename):
     
