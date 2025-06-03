@@ -110,7 +110,7 @@ def sample_random(n_iterator, sample_size):
             plt.title(f"Initial values for random graph$({n}) $")
             plt.axis("off")
             plt.colorbar()
-            plt.savefig(f"Cayley_{n}_s{sample}_initial.pdf")
+            plt.savefig(f"Random_{n}_s{sample}_initial.pdf")
             plt.close()
 
             training(
@@ -125,5 +125,5 @@ def sample_random(n_iterator, sample_size):
             plt.title(f"Initial values for random graph$({n}) $" + f"Loss: {loss}")
             plt.axis("off")
             plt.colorbar()
-            plt.savefig(f"Cayley_{n}_s{sample}_final.pdf")
+            plt.savefig(f"Random_{n}_s{sample}_final.pdf")
             plt.close()
