@@ -46,6 +46,8 @@ dihedral = [
 ]
 groups = cyclic + dihedral
 
+def loss_function(model: ActionModel):
+    return  model.relation_loss() +  model.bijective_loss()
 
 sample_size = 10
 
@@ -62,4 +64,5 @@ for group in tqdm(groups, total=len(groups)):
             plot_model(model, f"Initial parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_initial.pdf")
             # train
             training(model, eps=0.001, max_steps=50000, adam_parameters={"lr":0.001}, verbose=1000)
-            plot_model(model, f"Final parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_final.pdf")
+            loss = loss_function(model)
+            plot_model(model, f"Final parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$\nLoss: {loss}", f"{group.name}_on_{n}_sample{sample}_final.pdf")
