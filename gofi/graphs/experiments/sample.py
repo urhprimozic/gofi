@@ -68,7 +68,7 @@ def save_graph_image(adj,  filename="graph.png",title=None, layout="spring", dpi
 def sample_cayley(n_iterator, sample_size):
     for n in n_iterator:
 
-        M = adjacency_matrix_cayley_Sn(n)
+        M = adjacency_matrix_cayley_Sn(n).to(device)
         for sample in range(sample_size):
 
             f = RandomMap(factorial(n)).to(device)
@@ -97,10 +97,10 @@ def sample_cayley(n_iterator, sample_size):
             plt.close()
 
 
-def sample_cayley(n_iterator, sample_size):
+def sample_random(n_iterator, sample_size):
     for index, n in enumerate(n_iterator):
 
-        M = random_adjacency_matrix(n)
+        M = random_adjacency_matrix(n).to(device)
         save_graph_image(M, filename=f"graph_{index+1}.pdf")
 
         for sample in range(sample_size):
