@@ -9,7 +9,7 @@ from gofi.plot.colors import blueorange
 import networkx as nx
 
 torch.set_printoptions(precision=2, sci_mode=False)
-
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def save_graph_image(adj,  filename="graph.png",title=None, layout="spring", dpi=300):
     """
@@ -71,7 +71,7 @@ def sample_cayley(n_iterator, sample_size):
         M = adjacency_matrix_cayley_Sn(n)
         for sample in range(sample_size):
 
-            f = RandomMap(factorial(n))
+            f = RandomMap(factorial(n)).to(device)
             plt.imshow(f.P().clone().cpu().detach(), cmap=blueorange)
             plt.title(f"Initial values for Cayley$({n}) \\to $Cayley$({n})$")
             plt.axis("off")
@@ -105,7 +105,7 @@ def sample_cayley(n_iterator, sample_size):
 
         for sample in range(sample_size):
 
-            f = RandomMap(n)
+            f = RandomMap(n).to(device)
             plt.imshow(f.P().clone().cpu().detach(), cmap=blueorange)
             plt.title(f"Initial values for random graph$({n}) $")
             plt.axis("off")
