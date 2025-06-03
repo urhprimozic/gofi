@@ -167,3 +167,4 @@ cython_debug/
 gofi/ode/dihedral/*.pdf
 gofi/ode/dihedral/*.png
 
+gofi/actions/experiment/*.pdf
