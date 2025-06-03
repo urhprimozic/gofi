@@ -8,7 +8,7 @@ from tqdm import tqdm
 def plot_model_cyclic(model, title : str, main_title : str,  filename):
     
 
-    plt.imshow(model.P("z").clone().detach(), cmap=blueorange)#"hot")
+    plt.imshow(model.P("z").cpu().clone().detach(), cmap=blueorange)#"hot")
     plt.title(title +" z")
     
     plt.colorbar()
@@ -21,11 +21,11 @@ def plot_model_cyclic(model, title : str, main_title : str,  filename):
 def plot_model_dihedral(model, title : str, main_title : str,  filename):
     fig, axs = plt.subplots(1, 2)  # 1 row, 2 columns
 
-    imr = axs[0].imshow(model.P("r").clone().detach(), cmap=blueorange)#"hot")
+    imr = axs[0].imshow(model.P("r").cpu().clone().detach(), cmap=blueorange)#"hot")
     axs[0].set_title(title +" r")
 
 
-    ims = axs[1].imshow(model.P("s").clone().detach(),cmap=blueorange)#"hot")
+    ims = axs[1].imshow(model.P("s").cpu().clone().detach(),cmap=blueorange)#"hot")
     axs[1].set_title(title +" s")
 
     plt.tight_layout()
