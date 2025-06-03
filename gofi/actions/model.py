@@ -6,6 +6,8 @@ from functools import reduce
 import operator
 from gofi.graphs.loss import BijectiveLoss
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 def multiply_matrices(*tensors):
     return reduce(operator.matmul, tensors)
 
@@ -49,7 +51,7 @@ class ActionModel(nn.Module):
         self.group = group 
         self.n = n
         # creates a dictionary between generators and their RandomModels
-        self.rm = nn.ModuleDict({s : RandomMap(n) for s in group.generators})
+        self.rm = nn.ModuleDict({s : RandomMap(n).to(device) for s in group.generators})
     def P(self, s : Hashable):
         """
         Returns stochastic matrix of a random map for a generator s
