@@ -168,3 +168,5 @@ gofi/ode/dihedral/*.pdf
 gofi/ode/dihedral/*.png
 
 gofi/actions/experiment/*.pdf
+gofi/graphs/experiments/*.pdf
+gofi/ode/dihedral/experiments/*.pdf
