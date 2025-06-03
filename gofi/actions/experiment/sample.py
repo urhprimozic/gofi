@@ -44,25 +44,28 @@ cyclic = [Group("z", ["z" * n], name=f"C{n}") for n in range(6, 10)]
 dihedral = [
     Group(generators="rs", relations=["r" * n, "rsrs", "ss"], name=f"D{n}") for n in range(3, N)
 ]
-groups = cyclic + dihedral
+groups = dihedral
 
 def loss_function(model: ActionModel):
     return  model.relation_loss() +  model.bijective_loss()
 
 sample_size = 10
 
-for group in tqdm(groups, total=len(groups)):
+for n in tqdm(range(5, N), total=N-5):
+    # get dihedral group
+    group = Group(generators="rs", relations=["r" * n, "rsrs", "ss"], name=f"D{n}")
+
     if group.name[0] == "C":
         plot_model = plot_model_cyclic
     else:
         plot_model = plot_model_dihedral
 
 
-    for n in range(5, N+5):
-        for sample in range(sample_size):
-            model = ActionModel(group, n).to(device)
-            plot_model(model, f"Initial parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_initial.pdf")
-            # train
-            training(model, eps=0.001, max_steps=50000, adam_parameters={"lr":0.001}, verbose=1000)
-            loss = loss_function(model)
-            plot_model(model, f"Final parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$\nLoss: {loss}", f"{group.name}_on_{n}_sample{sample}_final.pdf")
+
+    for sample in range(sample_size):
+        model = ActionModel(group, n).to(device)
+        plot_model(model, f"Initial parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_initial.pdf")
+        # train
+        training(model, eps=0.001, max_steps=50000, adam_parameters={"lr":0.001}, verbose=1000)
+        loss = loss_function(model)
+        plot_model(model, f"Final parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$\nLoss: {loss}", f"{group.name}_on_{n}_sample{sample}_final.pdf")
