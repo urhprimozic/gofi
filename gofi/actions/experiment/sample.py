@@ -47,7 +47,7 @@ dihedral = [
 groups = cyclic + dihedral
 
 
-sample_size = 50
+sample_size = 10
 
 for group in tqdm(groups, total=len(groups)):
     if group.name[0] == "C":
@@ -61,5 +61,5 @@ for group in tqdm(groups, total=len(groups)):
             model = ActionModel(group, n).to(device)
             plot_model(model, f"Initial parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_initial.pdf")
             # train
-            training(model, eps=0.0007, max_steps=80000, adam_parameters={"lr":0.001})
+            training(model, eps=0.001, max_steps=50000, adam_parameters={"lr":0.001}, verbose=1000)
             plot_model(model, f"Final parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_final.pdf")
