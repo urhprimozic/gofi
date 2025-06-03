@@ -40,7 +40,7 @@ def plot_model_dihedral(model, title : str, main_title : str,  filename):
 
 
 N = 50
-cyclic = [Group("z", ["z" * n], name=f"C{n}") for n in range(2, 15)]
+cyclic = [Group("z", ["z" * n], name=f"C{n}") for n in range(6, 10)]
 dihedral = [
     Group(generators="rs", relations=["r" * n, "rsrs", "ss"], name=f"D{n}") for n in range(3, N)
 ]
