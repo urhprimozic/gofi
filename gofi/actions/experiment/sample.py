@@ -58,7 +58,7 @@ for group in tqdm(groups, total=len(groups)):
 
     for n in range(5, N+5):
         for sample in range(sample_size):
-            model = ActionModel(group, n)
+            model = ActionModel(group, n).to(device)
             plot_model(model, f"Initial parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_initial.pdf")
             # train
             training(model, eps=0.0007, max_steps=80000, adam_parameters={"lr":0.001})

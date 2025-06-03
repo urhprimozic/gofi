@@ -36,9 +36,9 @@ class Matrix(nn.Module):
     ):
         super().__init__(*args, **kwargs)
         if initial_params is not None:
-            self.matrix = nn.Parameter(initial_params).to(device)
+            self.matrix = nn.Parameter(initial_params)
         else:
-            self.matrix = nn.Parameter(torch.rand((rows, columns)) * 2 - 1).to(device)
+            self.matrix = nn.Parameter(torch.rand((rows, columns)) * 2 - 1)
 
     def forward(self):
         return self.matrix
@@ -76,11 +76,11 @@ class RandomMap(nn.Module):
         # set inner model
         if inner_model is None:
             self.overparameterized = False
-            inner_model = Matrix(self.domain, self.codomain, initial_params).to(device)
+            inner_model = Matrix(self.domain, self.codomain, initial_params)#.to(device)
         else:
             self.overparameterized = True
-        self.inner_model = inner_model.to(device)
-        self.softmax = nn.Softmax(dim=1).to(device)
+        self.inner_model = inner_model#.to(device)
+        self.softmax = nn.Softmax(dim=1)#.to(device)
 
     @classmethod
     def from_probs(cls, probs: torch.Tensor, eps=1e-10):
@@ -108,13 +108,13 @@ class RandomMap(nn.Module):
         """
         Returns square matrix, which encodes the map. Probability matrix is given by applying softmax over phi.
         """
-        return self.inner_model().to(device)
+        return self.inner_model()#.to(device)
 
     def P(self):
         """
         Returns stochastic matrix, which gives the probability distribution the map follows. (i,j)-th element of P equals to P(RandomMap(i)=j).
         """
-        return self.softmax(self.phi()).to(device)
+        return self.softmax(self.phi())#.to(device)
 
     def mode(self, programercic=False):
         """
