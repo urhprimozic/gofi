@@ -51,7 +51,7 @@ class ActionModel(nn.Module):
         self.group = group 
         self.n = n
         # creates a dictionary between generators and their RandomModels
-        self.rm = nn.ModuleDict({s : RandomMap(n).to(device) for s in group.generators})
+        self.rm = nn.ModuleDict({s : RandomMap(n) for s in group.generators})
     def P(self, s : Hashable):
         """
         Returns stochastic matrix of a random map for a generator s
