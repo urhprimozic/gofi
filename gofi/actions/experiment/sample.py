@@ -15,6 +15,7 @@ def plot_model_cyclic(model, title : str, main_title : str,  filename):
 
     plt.suptitle(main_title) 
     plt.savefig(filename)
+    plt.close()
 
 
 def plot_model_dihedral(model, title : str, main_title : str,  filename):
@@ -31,13 +32,14 @@ def plot_model_dihedral(model, title : str, main_title : str,  filename):
     fig.colorbar(ims, ax=axs, orientation='vertical', fraction=0.046, pad=0.04)
     fig.suptitle(main_title) 
     plt.savefig(filename)
+    plt.close()
 
 
 
-
-cyclic = [Group("z", ["z" * n], name=f"C{n}") for n in range(2, 10)]
+N = 50
+cyclic = [Group("z", ["z" * n], name=f"C{n}") for n in range(2, 15)]
 dihedral = [
-    Group(generators="rs", relations=["r" * n, "rsrs", "ss"], name=f"D{n}") for n in range(3, 10)
+    Group(generators="rs", relations=["r" * n, "rsrs", "ss"], name=f"D{n}") for n in range(3, N)
 ]
 groups = cyclic + dihedral
 
@@ -51,10 +53,10 @@ for group in tqdm(groups, total=len(groups)):
         plot_model = plot_model_dihedral
 
 
-    for n in range(5, 15):
+    for n in range(5, N+5):
         for sample in range(sample_size):
             model = ActionModel(group, n)
             plot_model(model, f"Initial parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_initial.pdf")
             # train
-            training(model, eps=0.001, max_steps=50000, adam_parameters={"lr":0.001})
+            training(model, eps=0.0007, max_steps=80000, adam_parameters={"lr":0.001})
             plot_model(model, f"Final parameters of generator", f"${group.name} \\to $ fun$([{{n}}])$", f"{group.name}_on_{n}_sample{sample}_final.pdf")
