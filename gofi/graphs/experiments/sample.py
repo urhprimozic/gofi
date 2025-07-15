@@ -125,7 +125,7 @@ def sample_random(n_iterator, sample_size, run_name=None):
         
         graph_name=run_name + f"random_graph_{index+1}_on_{n}"
 
-        save_graph_image(M, filename=graph_name)
+        save_graph_image(M, filename=graph_name + ".pdf")
 
         for sample in range(sample_size):
 
