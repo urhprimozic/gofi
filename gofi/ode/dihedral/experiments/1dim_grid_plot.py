@@ -1,3 +1,4 @@
+import math
 import matplotlib.pyplot as plt
 from gofi.plot.colors import cmap_blue, cmap_orange
 import numpy as np
@@ -20,7 +21,7 @@ def smooth_time(time, joint=30):
         return time 
     return joint
 
-def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str, n : int, time_len=False, t_max=1):
+def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str, n : int, time_len=False, t_max=1, expscale=False):
     """
     If time_len = True, time of convergence will be measured by the nubmer of steps instead of time till losss  < eps
     
@@ -65,6 +66,10 @@ def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str
         pr = solution.y[0]
         ps = solution.y[1]
         limit = closest_corner(pr[-1], ps[-1])
+
+        if expscale:
+            time = math.exp(time)
+
         # update max time
         max_times[limit] = max(max_times[limit], time)
 
@@ -114,6 +119,7 @@ if __name__ == "__main__":
     parser.add_argument("filename", type=str, help="Filename of the grid")
     parser.add_argument("plotname", type=str, help="Filename of the plot to save")
     parser.add_argument("--t_max", default="1",type=str, help="Maximum time of integration")
+    parser.add_argument("--expscale", default="0",type=str, help="If 1, times are scaled to get better color scale")
     args = parser.parse_args()
     # collect args
     n = int(args.n)
@@ -123,8 +129,9 @@ if __name__ == "__main__":
     filename = args.filename
     plotname = args.plotname
     t_max = float(args.t_max)
+    expscale = bool(int(args.expscale))
 
     # load grid
     with open(f'{filename}', 'rb') as f:
         grid_dict = pickle.load(f)
-    plot_grid(min_value, max_value, resolution, grid_dict, plotname, n, t_max=t_max)
+    plot_grid(min_value, max_value, resolution, grid_dict, plotname, n, t_max=t_max, expscale=expscale)
