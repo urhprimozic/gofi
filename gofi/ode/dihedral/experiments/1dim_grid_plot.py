@@ -40,6 +40,8 @@ def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str
         # catch errors at computation
         if solution is None:
             # save to "closest grid"
+            # skip
+            continue
             limit = closest_corner(r,s)
             row = index % resolution
             column = index // resolution
