@@ -68,7 +68,7 @@ def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str
         limit = closest_corner(pr[-1], ps[-1])
 
         if expscale:
-            time = math.exp(time)
+            time = math.log(time)
 
         # update max time
         max_times[limit] = max(max_times[limit], time)
