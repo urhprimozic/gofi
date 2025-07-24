@@ -111,6 +111,7 @@ if __name__ == "__main__":
     parser.add_argument("resolution", type=str, help="Grid resolution")
     parser.add_argument("filename", type=str, help="Filename of the grid")
     parser.add_argument("plotname", type=str, help="Filename of the plot to save")
+    parser.add_argument("--t_max", default="1",type=str, help="Maximum time of integration")
     args = parser.parse_args()
     # collect args
     n = int(args.n)
@@ -119,8 +120,9 @@ if __name__ == "__main__":
     resolution = int(args.resolution)
     filename = args.filename
     plotname = args.plotname
+    t_max = float(args.t_max)
 
     # load grid
     with open(f'{filename}', 'rb') as f:
         grid_dict = pickle.load(f)
-    plot_grid(min_value, max_value, resolution, grid_dict, plotname, n)
+    plot_grid(min_value, max_value, resolution, grid_dict, plotname, n, t_max=t_max)
