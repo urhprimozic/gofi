@@ -20,7 +20,7 @@ def smooth_time(time, joint=30):
         return time 
     return joint
 
-def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str, n : int, time_len=False):
+def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str, n : int, time_len=False, t_max=1):
     """
     If time_len = True, time of convergence will be measured by the nubmer of steps instead of time till losss  < eps
     
@@ -37,15 +37,25 @@ def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str
     for index, (r, s) in enumerate(iterator):
         # collect solution data
         solution = grid_dict[(r.item(), s.item())]
+        # catch errors at computation
+        if solution is None:
+            # save to "closest grid"
+            limit = closest_corner(r,s)
+            row = index % resolution
+            column = index // resolution
+            grids[limit][row][column] = t_max
+            max_times[limit] = max(max_times[limit], time)
+            continue
+
         if time_len:
             time=smooth_time(len(solution.t))
 
         else:
             # extract time
             if solution.t_events is None:
-                time = 1 
+                time = t_max
             elif solution.t_events[0].shape == (0,):
-                time = 1
+                time = t_max
             else:
                 #print(solution.t_events, " ", solution.t_events[0].shape, "  !!!!!\n" )
                 time = solution.t_events[0][0]

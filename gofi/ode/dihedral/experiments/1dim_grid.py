@@ -44,8 +44,10 @@ def grid(
     for r , s in iterator:
         r0 = r.reshape((1,1))
         s0 = s.reshape((1,1))
-        
-        solution = gradient_flow.solve(r0, s0, eps=eps, t_max=t_max)
+        try:
+            solution = gradient_flow.solve(r0, s0, eps=eps, t_max=t_max)
+        except:
+            solution = None
         grid_dict[(r.item(), s.item())] = solution
 
     return grid_dict
