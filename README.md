@@ -5,6 +5,21 @@ pip install -e .
 ```
 iz lokacije, v kateri je ta README. To instalira paket gofi, zraven pa sledi vsem spremembam.
 
+## Simulacije
+### Dinamika 1dim D_n - Hitrost konvergence začetnih parametrov (dihedral grid)
+Barva pixla pove, kam konvergiramo iz njega. Odtenek  pove, kako hitro konvergiramo. 
+Koda za simulacije:
+```
+python3 gofi/ode/dihedral/expiriments/1_dim_grid.py n min max resolution grid_filename
+python3 gofi/ode/dihedral/expiriments/1_dim_grid_plot.py n min max  grid_filename graph_filename
+```
+### Dinamika 2dim D_n
+Trajektorije in verjetnost uspešne konvergence. Koda:
+```
+
+```
+
+
 ## Struktura 
 - `ode/`  - vse, kar ne uporablja torcha
 - `graphs/` - grafi 
@@ -27,7 +42,40 @@ iz lokacije, v kateri je ta README. To instalira paket gofi, zraven pa sledi vse
 
 
 
+## Inversion table - overparametrizacija za grafe, ki tvori le permutacije
+Ideja: $S_n \cong \prod _{i=n-1}^0 [0, i]$, s homomorfizmom
+$$
+\pi \mapsto (a_1, a_2, \ldots, a_n),
+$$
+kjer je $a_k$ enak številu elementov, VEČJIH od $k$, ki se v permutaciji pojavijo levo od $k$. 
 
+Distribucijo nad $S_n$ podamo kot $distribucijo nad vrednostimi $a_1, a_2, ...$ z vektorji 
+$$P = [P(a_1 = 0), P(a_1 = 1), \ldots , P(a_1=n-1)], 
+[P(a_2 = 0), P(a_2 = 1), \ldots , P(a_2=n-2)], \ldots .$$
+
+Model je poljuben $M \colon \R^{\text{\#params}} \to  \prod _{i=n-1}^0 [0, 1]^i$ ki pretvori parametre $\phi$ v distribucijo $M(\phi) = P$.
+
+### Funkcija izgube
+Ne rabimo več unitarnosti, zanima nas samo še $P(f(i) \sim f(j)) = \sum_{k \neq h} P(f(i) = k, f(j) = h)$, za katero hočemo, da je čim večja. 
+
+### Implementacija
+Označimo $P(i, k, j, h, n) =   P(f(i) = k, f(j) = h | f \in S_n \text{ tvorjen kot zgoraj})$. Očitno velja rekurzivna zveza 
+
+$$
+P(i,k,j,h,m) = P(i-1, k, j, h, m-1) \sum_{z=0}^{i-2} P(a_{n-m + 1} = z )
++
+P(i, k, j-1, h, m-1) \sum_{z=i}^{j-2} P(a_{n-m + 1} = z )
++
+P(i-1, k, j, h, m-1) \sum_{z=j}^{m-1} P(a_{n-m + 1} = z )
+$$
+z robnimi pogoji 
+$$P(0,k, j,h, n) = P(i,k,0,h,n) = 0$$ 
+in
+$$
+P(i>0, k, j>0, h, 1) = 1.
+$$
+
+Naredimo funkcijo `p(i,k,j,n)`. Loss je vsota logaritmov od  takih za vsako povezavo. 
 # TODO
 ## upodobitve
 - zrihtaj kodo za upodobitve Dn
