@@ -3,9 +3,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class LinearNN(nn.Module):
-    def __init__(self, *layer_sizes, clamp_value=10e8, T=None):
+    def __init__(self, *layer_sizes, clamp_value=10e8, T=None, softmax=True):
         super(LinearNN, self).__init__()
         assert len(layer_sizes) >= 2, "Need at least input and output layer size"
+
+        self.softmax = softmax
 
         if T is None:
             self.T=1
@@ -28,7 +30,13 @@ class LinearNN(nn.Module):
             x = F.relu(x)
 
         x = self.linears[-1](x)           # last layer
-        x = F.softmax(x / self.T, dim=-1)           # apply softmax 
+        if self.softmax:
+            if x.dim() == 2:
+                x = F.softmax(x / self.T, dim=1)           # apply softmax   
+            if x.dim() == 1:  
+                x = F.softmax(x / self.T, dim=0)           # apply softmax 
+            else:
+                raise ValueError("Dimensions of x should be 1 or 2.")
         return x
 
 class PermDistDissconnected(nn.Module):
@@ -63,20 +71,28 @@ class PermDistConnected(nn.Module):
         >>> dist()
         TODO
         """
+        if T is None:
+            T = 1
         super().__init__(*args, **kwargs)
         args = (   [layer_size] * n_layers) + [int(0.5*n*(n+1)  - 1)]
-        self.model = LinearNN(*args, clamp_value=clamp_value, T=T)
+        self.model = LinearNN(*args, clamp_value=clamp_value, T=T, softmax=False)# without softmax! - applied here!
         self.n_layers = n_layers
         self.layer_size = layer_size
         self.n = n
+        self.T = T 
     def forward(self):
         x = torch.ones((self.layer_size,))
         stacked =  self.model(x)
-        ans = [stacked[i*self.n : (i+1) * self.n - i]  for i in range(self.n-1)]
+        ans = []
+        for i in range(self.n-1):
+            values = stacked[i*self.n : (i+1) * self.n - i] 
+            # apply softmax to values- - get probs!
+            if values.dim() == 2:
+                values = F.softmax(values / self.T, dim=1)           # apply softmax   
+            if values.dim() == 1:  
+                values = F.softmax(values / self.T, dim=0)           # apply softmax 
+            else:
+                raise ValueError("Dimensions of x should be 1 or 2.")
+            ans.append(values)
         return ans
     
-x = torch.ones((1,3))
-y = x[0]
-
-c = PermDistConnected(3, 4, 2, T=100)
-d = PermDistDissconnected(3,4,2, T=100)
