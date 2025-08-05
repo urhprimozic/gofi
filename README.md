@@ -55,25 +55,55 @@ $$P = [P(a_1 = 0), P(a_1 = 1), \ldots , P(a_1=n-1)],
 
 Model je poljuben $M \colon \R^{\text{\#params}} \to  \prod _{i=n-1}^0 [0, 1]^i$ ki pretvori parametre $\phi$ v distribucijo $M(\phi) = P$.
 
+**Tvorjenje na ta način je ekvivalentno slednjemu procesu: izbereš eno izmed $n$ možnih mest za $1$ glede na distribucijo nad $a_k$. Nato izbereš mesto za $2$ izmed $n-1$ mesti...**
+
 ### Funkcija izgube
 Ne rabimo več unitarnosti, zanima nas samo še $P(f(i) \sim f(j)) = \sum_{k \neq h} P(f(i) = k, f(j) = h)$, za katero hočemo, da je čim večja. 
 
 ### Implementacija
-Označimo $P(i, k, j, h, n) =   P(f(i) = k, f(j) = h | f \in S_n \text{ tvorjen kot zgoraj})$. Očitno velja rekurzivna zveza 
+Recimo, da smo prvih $m-1$ števil že postavili. Imamo še $n-m+1$ praznih mest in postavljamo $m$. prazna mesta oštevilčimo z $1, 2, \ldots, n-m+1$. Označimo s  $P(i, k, j, h, m)$, **kjer je $i <j$** verjetnost, da bomo  tvorili permutacijo, ki ima na $i$-tem mestu (po novih oznakah) $k$, na $j$-tem pa $h$. 
 
+Dodatno s $q(j,h,s)$ označimo verjetnost, da $h$ damo na $j$-to prosto mesto, če smo prvih $s-1$ števil že postavili.
+
+Ločimo  primere:
+
+Če je $m=n$, imamo samo še eno prosto mesto. (Do tega sicer ne moremo priti med tvorjenjem).
 $$
-P(i,k,j,h,m) = P(i-1, k, j, h, m-1) \sum_{z=0}^{i-2} P(a_{n-m + 1} = z )
+P(i, k, j, h, n)=1
+$$
+Če je $i<=0$ ali $j<= 0$, je $P(i,k,j,h,n) =0$.
+
+Če je $m = k$, moramo k postaviti na $i$-to prosto mesto! Potem pa še $h$ na $j-1$ prosto mesto. **TUkaj je pomembno, da je $i<j$**!
+$$
+P(i,k,j,h,k) = P(a_k=i) q(j-1,h,k+1)
+$$
+Podobno, če je $m=h$, postavimo $h$ na $j$-to mesto. V tem primeru se indeks $i$ ne spremeni.
+$$
+P(i,k,j,h,h) = P(a_h=i) q(i,k,h+1)
+$$
+Če je $h \neq m \neq k$, potem lahko $m$ postavimo pred $i$, med $i$ in $j$ in za $j$. Velja
+$$
+P(i,k,j,h,m) = P(i-1, k, j-1, h, m+1) \sum_{z=1}^{i-1} P(a_{m} = z )
 +
-P(i, k, j-1, h, m-1) \sum_{z=i}^{j-2} P(a_{n-m + 1} = z )
+P(i, k, j-1, h, m+1) \sum_{z=i+1}^{j-1} P(a_m = z )
 +
-P(i-1, k, j, h, m-1) \sum_{z=j}^{m-1} P(a_{n-m + 1} = z )
+P(i, k, j, h, m+1) \sum_{z=j+1}^{n-m} P(a_m = z ).
 $$
-z robnimi pogoji 
-$$P(0,k, j,h, n) = P(i,k,0,h,n) = 0$$ 
-in
+
+Za $q(j,h,m)$ (postavljamo $h$ na $j$to prosto mesto, $m-1$ smo jih že postavili) pa velja
 $$
-P(i>0, k, j>0, h, 1) = 1.
+q(j,h,h) = P(a_h = j)
 $$
+za $m\neq h$:
+$$
+q(j,h,m) = q(j-1, h, m+1) \sum_{z=1}^{j-1} P(a_m = z) 
++ 
+q(j, h, m+1) \sum_{z=j+1}^{n-m} P(a_m = z) .
+$$
+Seveda veljata robna pogoja
+$q(0,h, m) = 0$ in $q(j,h,n) =1$.
+
+
 
 Naredimo funkcijo `p(i,k,j,n)`. Loss je vsota logaritmov od  takih za vsako povezavo. 
 # TODO
