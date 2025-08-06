@@ -59,7 +59,7 @@ class PermDistDissconnected(nn.Module):
         self.n_layers = n_layers
         self.layer_size = layer_size
     def forward(self):
-        x = torch.ones((self.layer_size,))
+        x = torch.ones((self.layer_size,)).to(device)
         return [model(x) for model in self.models]
     
 class PermDistConnected(nn.Module):
@@ -84,7 +84,7 @@ class PermDistConnected(nn.Module):
         self.n = n
         self.T = T 
     def forward(self):
-        x = torch.ones((self.layer_size,))
+        x = torch.ones((self.layer_size,)).to(device)
         stacked =  self.model(x)
         ans = []
         for i in range(self.n-1):

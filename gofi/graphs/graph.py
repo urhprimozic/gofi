@@ -69,7 +69,8 @@ def random_adjacency_matrix(n : int):
     The probability of an edge between any two vertices is 0.5.
     
     """
-    M = torch.rand(n, n)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    M = torch.rand(n, n, device=device)
     M = (M + M.T) / 2  # make it symmetric
     M[M < 0.5] = 0
     M[M >= 0.5] = 1
