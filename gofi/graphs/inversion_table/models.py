@@ -85,7 +85,7 @@ class PermDistConnected(nn.Module):
         stacked =  self.model(x)
         ans = []
         for i in range(self.n-1):
-            values = stacked[i*self.n : (i+1) * self.n - i] 
+            values = stacked[i * self.n - int((i-1)*(i)/2) : (i+1) * self.n - int((i)*(i+1)/2)] 
             # apply softmax to values- - get probs!
             if values.dim() == 2:
                 values = F.softmax(values / self.T, dim=1)           # apply softmax   
