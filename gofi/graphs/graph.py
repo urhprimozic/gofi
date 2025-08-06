@@ -55,8 +55,9 @@ def adjacency_matrix_cayley_Sn(n: int):
     # return a list sorted for reproducibility
     edges = sorted(edges)
     # convert to matrix
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     m = factorial(n)
-    M = torch.zeros((m, m))
+    M = torch.zeros((m, m), device=device)
     for i, j in edges:
         M[i,j] = 1
         M[j, i] = 1
