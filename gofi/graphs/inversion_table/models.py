@@ -2,6 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 class LinearNN(nn.Module):
     def __init__(self, *layer_sizes, clamp_value=10e8, T=None, softmax=True):
         super(LinearNN, self).__init__()
@@ -18,7 +21,7 @@ class LinearNN(nn.Module):
         
 
         for in_size, out_size in zip(layer_sizes[:-1], layer_sizes[1:]):
-            self.linears.append(nn.Linear(in_size, out_size))
+            self.linears.append(nn.Linear(in_size, out_size).to(device))
 
         self.n_layers = len(self.linears)
 

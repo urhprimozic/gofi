@@ -1,5 +1,5 @@
 import torch
-
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class PermModel:
     def __init__(self, model, n):
@@ -9,7 +9,7 @@ class PermModel:
         model
             torch model. model() Should be a list of categorical distributions of lenghts n, n-1, ..., 1
         """
-        self.model = model
+        self.model = model.to(device)
         self.n = n
 
     def P(self, m, s):

@@ -2,6 +2,8 @@ from gofi.graphs.inversion_table.probs import PermModel
 import torch
 from gofi.graphs.graph import adjacency_matrix_to_edges_list
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 def log_loss(dist : PermModel, M1 : torch.tensor, M2 : torch.tensor,  eps=10e-13, loops=False):
     raise NotImplementedError
 
@@ -31,6 +33,10 @@ def norm_loss(dist : PermModel, M1 : torch.tensor, M2 : torch.tensor,  eps=10e-1
     loops : boolean
         True, if graohs can include loops
     '''
+    # send to device
+    M1 = M1.to(device)
+    M2 = M2.to(device)
+
     if loops:
         raise NotImplementedError("Graphs with loops are not yet implemented. ")
     ans = 0

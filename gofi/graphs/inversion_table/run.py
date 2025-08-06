@@ -3,8 +3,9 @@ from gofi.graphs.inversion_table.probs import PermModel
 from gofi.graphs.inversion_table.opt import training
 from gofi.graphs.graph import random_adjacency_matrix
 from gofi.graphs.inversion_table.loss import norm_loss_normalized, id_loss
+import torch 
 
-
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 n = 5
