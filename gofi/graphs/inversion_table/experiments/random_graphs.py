@@ -29,7 +29,7 @@ def loss_function(dist, M1, M2):
 
 def run_on_random_graph(n, loss_function=loss_function, disconnected=False, verbose=1000):
     """
-    Trains a network on a random graph. Returns tuple (M, dist, loss), where 
+    Trains a network on a random graph. Returns tuple (M, dist, loss, dist.model()), where 
     M is adjecency matrix, dist is distribution model and loss is loss at the end.
     """
     # get random graph 
@@ -37,9 +37,9 @@ def run_on_random_graph(n, loss_function=loss_function, disconnected=False, verb
     
     # model
     if disconnected:
-         model = PermDistDissconnected(n, max(4, int(math.log(n))), n**3 ,T=100)
+         model = PermDistDissconnected(n, min(max(4, int(math.log(n))), 10), n**2 + n ,T=100)
     else:
-        model = PermDistConnected(n, max(4, int(math.log(n))), n**3 ,T=100)
+        model = PermDistConnected(n, min(max(4, int(math.log(n))), 10), n**2 + n ,T=100)
     
     # distribution
     dist = PermModel(model, n)
@@ -50,7 +50,7 @@ def run_on_random_graph(n, loss_function=loss_function, disconnected=False, verb
 
     except:
         print("error occured! Returning M, dist, last_loss ....")
-        return M, dist, loss_function(dist, M, M).item()
+        return M, dist, loss_function(dist, M, M).item(), dist.model()
 
-    return M, dist, loss_function(dist, M, M).item()
+    return M, dist, loss_function(dist, M, M).item(), dist.model()
 
