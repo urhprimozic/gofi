@@ -92,21 +92,3 @@ class PermModel:
         """
         return self.p(i,k,j,h,1)
     
-    
-from gofi.graphs.inversion_table.models import PermDistConnected, PermDistDissconnected
-c = PermDistConnected(3, 2, 3)
-d = PermDistDissconnected(3,2,3)
-p_c = PermModel(c, 3)
-p_d = PermModel(d, 3)
-
-def u():
-    return [torch.tensor([1/3,1/3,1/3]),torch.tensor([0.5,0.5])]
-p_u = PermModel(u, 3)
-
-A = [(1,2),(2,1),(1,3),(3,1),(2,3),(3,2)]
-
-def sum_of_all(model):
-    ans = 0
-    for a in A:
-        ans += model.prob(1,a[0], 2, a[1])
-    return ans

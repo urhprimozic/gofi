@@ -2,6 +2,17 @@ import itertools
 import torch
 from math import factorial
 
+def adjacency_matrix_to_edges_list(M):
+    edges = []
+    n = M.shape[0]
+    for i in range(n):
+        for j in range(n):
+            if j > i:
+                break
+            if M[i][j] == 1:
+                edges.append((i + 1 ,j + 1)) # index edges with 1!
+    return edges
+
 def compose_permutation(p, q):
     """Return the composition p ∘ q (first q, then p) for permutations
     stored as tuples whose i-th entry is the image of i+1."""
