@@ -1,5 +1,5 @@
 from gofi.graphs.inversion_table.probs import PermModel
-from gofi.graphs.inversion_table.loss import norm_loss
+from gofi.graphs.inversion_table.loss import norm_loss_normalized
 from torch.optim import Adam
 from torch.nn.utils import clip_grad_norm_
 import torch 
@@ -9,6 +9,7 @@ def training(
     dist: PermModel,
     M1: torch.Tensor,
     M2: torch.Tensor,
+    loss_function=norm_loss_normalized,
     eps=None,
     max_steps=None,
     adam_parameters=None,
@@ -45,7 +46,7 @@ def training(
         step += 1
 
         #################### one step of opt ####################
-        loss = norm_loss(dist, M1, M2)
+        loss = loss_function(dist, M1, M2)
         loss.backward()
 
         if grad_clipping is not None:
