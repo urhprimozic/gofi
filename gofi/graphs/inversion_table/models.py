@@ -55,7 +55,7 @@ class PermDistDissconnected(nn.Module):
         super().__init__(*args, **kwargs)
         args = [layer_size] * n_layers
         # za n ne rabiš svojega modelaa, itak vedno vrneš 1
-        self.models = nn.ModuleList([LinearNN(*(args + [n-i]), clamp_value=clamp_value, T=T) for i in range(n-1)])
+        self.models = nn.ModuleList([LinearNN(*(args + [n-i]), clamp_value=clamp_value, T=T).to(device) for i in range(n-1)])
         self.n_layers = n_layers
         self.layer_size = layer_size
     def forward(self):
@@ -78,7 +78,7 @@ class PermDistConnected(nn.Module):
             T = 1
         super().__init__(*args, **kwargs)
         args = (   [layer_size] * n_layers) + [int(0.5*n*(n+1)  - 1)]
-        self.model = LinearNN(*args, clamp_value=clamp_value, T=T, softmax=False)# without softmax! - applied here!
+        self.model = LinearNN(*args, clamp_value=clamp_value, T=T, softmax=False).to(device)# without softmax! - applied here!
         self.n_layers = n_layers
         self.layer_size = layer_size
         self.n = n
