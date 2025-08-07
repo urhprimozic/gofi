@@ -16,7 +16,11 @@ EPS = 0.001 # če pridemo pod en promil, smo gucci
 
 def lr_lambda(step):
     if step < 1000:
-        return 1.0            # 0.001
+        return 100.0
+    elif step < 2000:
+        return 10.0            # 0.001
+    elif step < 5000:
+        return 1.0
     elif step < 10000:
         return 0.1            # 0.0001
     elif step < 50000:
