@@ -5,12 +5,41 @@ import torch.nn.functional as F
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+class Linear_demo(nn.Module):
+    def __init__(self, n, n_hidden_layers=2, softmax=True):
+        super().__init__()
+        hidden_dim = 10 * n
+        output_dim = sum(n - i for i in range(n))  # n + n-1 + ... + 1
+        self.init = nn.Parameter(torch.randn(n))  # ali konstanta
+        self.net = nn.Sequential(*([
+            nn.Linear(n, hidden_dim),
+            nn.ReLU(),] + [
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),] * n_hidden_layers + [ 
+            nn.Linear(hidden_dim, output_dim),
+            ])
+        )
+        self.softmax = softmax
+
+    def forward(self):
+        x = self.net(self.init)  # output je en velik vektor
+        if self.softmax:
+            if x.dim() == 2:
+                x = F.softmax(x / self.T, dim=1)           # apply softmax   
+            if x.dim() == 1:  
+                x = F.softmax(x / self.T, dim=0)           # apply softmax 
+            else:
+                raise ValueError("Dimensions of x should be 1 or 2.")
+        return x
+
+
 class LinearNN(nn.Module):
     def __init__(self, *layer_sizes, clamp_value=10e8, T=None, softmax=True):
         super(LinearNN, self).__init__()
         assert len(layer_sizes) >= 2, "Need at least input and output layer size"
 
         self.softmax = softmax
+        self.init = nn.Parameter(torch.randn(layer_sizes[0])).to(device)  # initial vector
 
         if T is None:
             self.T=1
@@ -25,7 +54,8 @@ class LinearNN(nn.Module):
 
         self.n_layers = len(self.linears)
 
-    def forward(self, x):
+    def forward(self):
+        x = self.init
         for i in range(self.n_layers - 1):  # all layers except last
             x = self.linears[i](x)
             if self.clamp_value is not None:
@@ -59,8 +89,7 @@ class PermDistDissconnected(nn.Module):
         self.n_layers = n_layers
         self.layer_size = layer_size
     def forward(self):
-        x = torch.ones((self.layer_size,)).to(device)
-        return [model(x) for model in self.models]
+        return [model() for model in self.models]
     
 class PermDistConnected(nn.Module):
     def __init__(self,n, n_layers, layer_size, clamp_value=10e8, T=None, *args, **kwargs):
@@ -84,8 +113,7 @@ class PermDistConnected(nn.Module):
         self.n = n
         self.T = T 
     def forward(self):
-        x = torch.ones((self.layer_size,)).to(device)
-        stacked =  self.model(x)
+        stacked =  self.model()
         ans = []
         for i in range(self.n-1):
             values = stacked[i * self.n - int((i-1)*(i)/2) : (i+1) * self.n - int((i)*(i+1)/2)] 

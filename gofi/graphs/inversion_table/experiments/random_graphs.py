@@ -36,10 +36,11 @@ def run_on_random_graph(n, loss_function=loss_function, disconnected=False, verb
     M = random_adjacency_matrix(n)
     
     # model
+
     if disconnected:
-         model = PermDistDissconnected(n, min(max(4, int(math.log(n))), 10), n**2 + n ,T=100)
+         model = PermDistDissconnected(n, 4,n ,T=50)
     else:
-        model = PermDistConnected(n, min(max(4, int(math.log(n))), 10), n**2 + n ,T=100)
+        model = PermDistConnected(n, 4,n ,T=50)
     
     # distribution
     dist = PermModel(model, n)
