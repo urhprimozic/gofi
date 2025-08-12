@@ -2,8 +2,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+
+
+
 
 class Linear_demo(nn.Module):
     def __init__(self, n, n_hidden_layers=2, softmax=True):
@@ -126,4 +130,27 @@ class PermDistConnected(nn.Module):
                 raise ValueError("Dimensions of x should be 1 or 2.")
             ans.append(values)
         return ans
-    
+
+class Destack(nn.Module):
+    def __init__(self,n, model,T=50,  *args, **kwargs):
+        '''
+        Creates model, that destacts n(n-1)/2 - 1 dim input 
+        '''
+        super().__init__(*args, **kwargs)
+        self.model = model 
+        self.n=n 
+        self.T=T
+    def forward(self):
+        stacked = self.model()
+        ans = []
+        for i in range(self.n-1):
+            values = stacked[i * self.n - int((i-1)*(i)/2) : (i+1) * self.n - int((i)*(i+1)/2)] 
+            # apply softmax to values- - get probs!
+            if values.dim() == 2:
+                values = F.softmax(values / self.T, dim=1)           # apply softmax   
+            if values.dim() == 1:  
+                values = F.softmax(values / self.T, dim=0)           # apply softmax 
+            else:
+                raise ValueError("Dimensions of x should be 1 or 2.")
+            ans.append(values)
+        return ans
