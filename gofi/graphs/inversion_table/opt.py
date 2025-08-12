@@ -55,6 +55,8 @@ def training(
         opt.step()
         # reset for next iter
         opt.zero_grad()
+        # clear cahce
+        dist.clear_cache()
 
         ### log
         if verbose and ( (step % verbose == 1) or verbose == 1):
