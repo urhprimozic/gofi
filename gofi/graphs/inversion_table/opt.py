@@ -18,6 +18,7 @@ def training(
     scheduler_input=None,
     grad_clipping=100,
     verbose=500,
+    debug=False
 ):
     """
     Trains a PermModel dist on graphs, given with adjecency matrices M1 and M2. 
@@ -42,43 +43,64 @@ def training(
 
     step = 0
     
+    def debug_log(msg):
+        if debug:
+            print(msg)
+
     while True:
         step += 1
-
+    
         #################### one step of opt ####################
+        # reset previusly computed gradients
+        opt.zero_grad()
+        
+        debug_log("Calculating loss..")
+        # calculate loss - uses cache
         loss = loss_function(dist, M1, M2)
+
+         # clear cahce
+        dist.clear_cache()
+        
+        # store loss value before backward to avoid graph issues
+        loss_value = loss.item()
+
+       
+        debug_log("Backward pass..")
         loss.backward()
 
         if grad_clipping is not None:
             clip_grad_norm_(dist.model.parameters(), max_norm=grad_clipping)
 
+        debug_log("Optimizer step..")
         opt.step()
-        # reset for next iter
-        opt.zero_grad()
-        # clear cahce
-        dist.clear_cache()
+        
+
+
 
         ### log
         if verbose and ( (step % verbose == 1) or verbose == 1):
-            print(f"step {step} loss: {loss.item()}")
+        
+            print(f"step {step} loss: {loss_value}")
+
 
         #################### stopping conditions ####################
         if max_steps is not None:
                 if step >= max_steps:
                     if verbose:
-                        print(f"Stopping after {step} steps. Last loss: {loss.item()}")
+                        print(f"Stopping after {step} steps. Last loss: {loss_value}")
                     break
         
         if eps is not None:
-            if loss < eps:
+            if loss_value < eps:
                 if verbose:
-                    print(f" Loss of {loss.item()} < {eps} reached. Stopping training.")
+                    print(f" Loss of {loss_value} < {eps} reached. Stopping training.")
                 break
         #################### scheduler ####################
+        
         if scheduler is not None:
             if scheduler_input is not None:
                 if scheduler_input == 'loss':
-                    scheduler.step(loss)
+                    scheduler.step(loss_value)
             else:
                 scheduler.step()
     

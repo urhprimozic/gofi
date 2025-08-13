@@ -88,7 +88,8 @@ def run_on_random_graph(
     eps=0.001,
     lr_max=1e-3,
     warmup_steps=500,
-    lambda_lr_name=None
+    lambda_lr_name=None,
+    debug=False
 ):
     """
     Trains a network on a random graph. Returns tuple (M, dist, loss, dist.model()), where
@@ -126,10 +127,12 @@ def run_on_random_graph(
             verbose=verbose,
             scheduler=LambdaLR,
             scheduler_parameters={"lr_lambda": lr_lambda},
+            debug=debug
         )
 
-    except:
-        print("error occured! Returning M, dist, last_loss ....")
+    except Exception as e:
+        print("error occured! Returning M, dist, last_loss ....\nError:\n")
+        print(e)
         return M, dist, loss_function(dist, M, M).item(), dist.model()
 
     return M, dist, loss_function(dist, M, M).item(), dist.model()
@@ -168,6 +171,12 @@ if __name__ == "__main__":
         type=str,
         help="Either cosine or simple. more to come",
     )
+    parser.add_argument(
+        "--debug",
+        default="0",
+        type=str,
+        help="Either 1 or 0",
+    )
     args = parser.parse_args()
 
     # collect args
@@ -178,6 +187,7 @@ if __name__ == "__main__":
     warmup_steps = int(args.warmup_steps)
     verbose = int(args.verbose)
     lambda_lr_name = args.lambda_lr
+    debug=bool(int(args.debug))
     # run
     M, dist, loss, model = run_on_random_graph(
         n,
@@ -187,5 +197,6 @@ if __name__ == "__main__":
         eps=eps,
         lr_max=lr_max,
         warmup_steps=warmup_steps,
-        lambda_lr_name=lambda_lr_name
+        lambda_lr_name=lambda_lr_name,
+        debug=debug
     )

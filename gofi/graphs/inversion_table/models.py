@@ -6,7 +6,17 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 
-
+class Cache(nn.Module):
+    def __init__(self, model,  *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.model = model 
+        self.cache = None
+    def forward(self):
+        if self.cache is None:
+            self.cache = self.model()
+        return self.cache
+    def clear(self):
+        self.cache = None
 
 
 class Linear_demo(nn.Module):

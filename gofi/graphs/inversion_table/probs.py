@@ -1,20 +1,20 @@
 import torch
-
+import torch.nn as nn
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+from gofi.graphs.inversion_table.models import Cache
 
 class PermModel:
-    def __init__(self, model, n):
+    def __init__(self, model, n, *args, **kwargs):
         """
         Parameters
         ------------
         model
             torch model. model() Should be a list of categorical distributions of lenghts n, n-1, ..., 1
         """
-        self.model = model.to(device)
+        self.model = Cache(model.to(device))
         self.n = n
         # memo for P
-        self.cache = {}
+        #self.cache = {}
 
         # memo for model
         self.probabilities = None
@@ -22,8 +22,10 @@ class PermModel:
     def clear_cache(self):
         self.cahce = {}
         self.probabilities = None
+        self.model.clear()
 
     def model_value(self):
+        return self.model()
         if self.probabilities is None:
             self.probabilities = self.model()
         return self.probabilities
@@ -65,15 +67,15 @@ class PermModel:
             return self.P(m, j)
 
         # check cache
-        if self.cache.get((j, h, m)) is not None:
-            return self.cache[(j, h, m)]
+        #if self.cache.get((j, h, m)) is not None:
+         #   return self.cache[(j, h, m)]
         ### recursive ###
         ans = 0
         ans += self.q(j - 1, h, m + 1) * self.P_sum(m, 1, j - 1)
         ans += self.q(j, h, m + 1) * self.P_sum(m, j + 1, self.n - m + 1)
 
         # save to cahce
-        self.cache[(j, h, m)] = ans
+       # self.cache[(j, h, m)] = ans
 
         return ans
 
@@ -100,22 +102,22 @@ class PermModel:
             return 1
 
         # check cache
-        if self.cache.get((i, k, j, h, m)) is not None:
-            return self.cache[(i, k, j, h, m)]
+       # if self.cache.get((i, k, j, h, m)) is not None:
+          #  return self.cache[(i, k, j, h, m)]
 
         ### place m ###
         if m == k:
             ans = self.P(k, i) * self.q(j - 1, h, k + 1)
             
             # save to cache
-            self.cache[(i, k, j, h, m)] = ans
+            #self.cache[(i, k, j, h, m)] = ans
 
             return ans
         if m == h:
             ans = self.P(h, j) * self.q(i, k, h + 1)
 
             # save to cache
-            self.cache[(i, k, j, h, m)] = ans
+           # self.cache[(i, k, j, h, m)] = ans
 
             return ans
 
@@ -126,7 +128,7 @@ class PermModel:
         ans += self.p(i, k, j, h, m + 1) * self.P_sum(m, j + 1, self.n - m + 1)
 
         # save to cache
-        self.cache[(i, k, j, h, m)] = ans
+      #  self.cache[(i, k, j, h, m)] = ans
 
         return ans
 
