@@ -43,15 +43,15 @@ class ShallowWide(nn.Module):
 epochs = 10
 
 def lr_lambda_simple(step):
-    if step < 1000:
+    if step < 50:
         return 100.0
-    elif step < 2000:
+    elif step < 500:
         return 10.0            # 0.001
-    elif step < 5000:
+    elif step < 1000:
         return 1.0
     elif step < 10000:
         return 0.1            # 0.0001
-    elif step < 50000:
+    elif step < 20000:
         return 0.01           # 0.00001
     else:
         return 0.001          # 0.000001
