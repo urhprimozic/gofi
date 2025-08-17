@@ -1,4 +1,5 @@
 import torch
+from gofi.graphs.recursive.model import PermutationGenerator
 
 def loss_qap(P, M1, M2):
     return torch.norm(M1 - P @ M2 @ P.T)
@@ -7,7 +8,7 @@ def loss_qap_normalized(P, M1, M2):
     n = P.shape[0]
     return torch.norm(M1 - P @ M2 @ P.T) / (n**2)
 
-def reinforce_loss(generator, M1, M2, baseline, batch_size=16, baseline_decay=0.9):
+def reinforce_loss(generator, M1, M2, baseline, batch_size=100, baseline_decay=0.9):
     P, log_probs = generator(batch_size=batch_size)
 
     diff = M1.unsqueeze(0) - P @ M2.unsqueeze(0) @ P.transpose(1, 2)
@@ -24,3 +25,16 @@ def reinforce_loss(generator, M1, M2, baseline, batch_size=16, baseline_decay=0.
     return loss, losses.mean().item()
 
 
+
+def sample_losses_and_perms(generator, M1, M2, batch_size=32):
+    """
+    Returns matrices, probabilities, losses
+    """
+    matrices, log_probs = generator(batch_size=batch_size)   # (batch_size, n)
+
+    losses = []
+    for i in range(batch_size):
+        P = matrices[i]
+        losses.append(loss_qap(P, M1, M2))
+    
+    return matrices, torch.exp(log_probs), losses

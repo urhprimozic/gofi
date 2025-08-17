@@ -1,3 +1,5 @@
+*.pkl 
+*.pt
 *.pdf 
 *.png
 # expiriments

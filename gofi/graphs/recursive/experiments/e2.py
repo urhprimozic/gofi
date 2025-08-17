@@ -1,3 +1,6 @@
+import pickle
+import numpy as np
+from tqdm import tqdm
 import datetime
 from gofi.graphs.graph import random_adjacency_matrix
 import torch
@@ -12,7 +15,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 if __name__ == "__main__":
     # defaults
-    MAX_STEPS = 100000
+    SAMPLE_SIZE=100
+    MAX_STEPS = 50000
     EPS = 0.001
     VERBOSE = 1
     LEARNING_RATE = 0.001
@@ -20,6 +24,12 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("n", type=str, help="Number of vertices in a graph")
+    parser.add_argument(
+        "--sample_size",
+        type=str,
+        default=str(SAMPLE_SIZE),
+        help="Number of diferent graphs tested",
+    )
     parser.add_argument(
         "--max_steps",
         type=str,
@@ -52,27 +62,38 @@ if __name__ == "__main__":
 
     # collect args
     n = int(args.n)
+    sample_size = int(args.sample_size)
     max_steps = int(args.max_steps)
     eps = float(args.eps)
     lr = float(args.lr)
     verbose = int(args.verbose)
     run_name = str(args.run_name)
 
-    M1 = random_adjacency_matrix(n)
+    graphs = []
+    all_losses = []
+    convergences = []
 
-    gen = PermutationGenerator(n=n, hidden_size=n**2, num_layers=4).to(device)
-    losses, converged = training(gen, M1, M1, eps=1e-4, max_steps=2000, verbose=1, lr=lr, batch_size=min(50*n, 100))
+    for sample in tqdm(range(sample_size), total = sample_size):
+        M = random_adjacency_matrix(n).to(device)
+        generator = PermutationGenerator(n=n, hidden_size=n**2, num_layers=4).to(device)
+        losses, converged = training(generator, M , M, eps = eps, max_steps=max_steps, verbose=-1, lr=lr, batch_size=min(50*n, 100))
 
-    # Preveri en vzorec po treningu
-    P, logp = gen(batch_size=1)
-    try:
-        print("Permutacijska matrika:\n", matrix_to_permutation(P[0]))
-    except Exception as e:
-        print("Error occured when trying to print the permutation.")
-        print(e)
-    print("probability:", torch.exp(logp).item())
+        graphs.append(graphs)
+        all_losses.append(losses)
+        convergences.append(converged)
 
-    torch.save(gen, f"{run_name}_model.pt")
-    torch.save(M1, f"{run_name}_M1.pt")
+    print("Finished simulation.")
+    x = np.array(convergences)
+    print(f"{x.sum().item()} out of {len(x)} converged.")
 
-    print(sample_losses_and_perms(gen, M1, M1, batch_size=5))
+    with open(f"n={n}_{run_name}.pkl", "wb") as f:
+        pickle.dump(graphs, f)
+        pickle.dump(all_losses, f)
+        pickle.dump(convergences, f)
+
+    # load
+    # with open("myfile.pkl", "rb") as f:
+    #     graphs = pickle.load(f)
+    #     all_losses = pickle.load(f)
+    #     convergences = pickle.load(f)
+
