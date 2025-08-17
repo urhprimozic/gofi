@@ -61,7 +61,7 @@ if __name__ == "__main__":
     M1 = random_adjacency_matrix(n)
 
     gen = PermutationGenerator(n=n, hidden_size=n**2, num_layers=4).to(device)
-    losses, converged = training(gen, M1, M1, eps=1e-4, max_steps=2000, verbose=1, lr=lr, batch_size=min(50*n, 100))
+    losses, converged = training(gen, M1, M1, eps=eps, max_steps=max_steps, verbose=verbose, lr=lr, batch_size=min(50*n, 100))
 
     # Preveri en vzorec po treningu
     P, logp = gen(batch_size=1)
