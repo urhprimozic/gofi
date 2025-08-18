@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
     for sample in tqdm(range(sample_size), total = sample_size):
         M = random_adjacency_matrix(n).to(device)
-        generator = PermutationGenerator(n=n, hidden_size=n**2, num_layers=4).to(device)
+        generator = PermutationGenerator(n=n, hidden_size=10*n**2, num_layers=4).to(device)
         losses, converged = training(generator, M , M, eps = eps, max_steps=max_steps, verbose=-1, lr=lr, batch_size=min(50*n, 100))
 
         graphs.append(graphs)
