@@ -9,7 +9,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def training(generator : PermutationGenerator, M1, M2, eps=1e-3, max_steps=10000, batch_size=100, lr=1e-3, verbose=1):
     baseline = torch.tensor(0.0, device=device)
     optimizer = torch.optim.Adam(generator.parameters(), lr=lr)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=50)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.9, patience=30)
 
     losses = []
 
