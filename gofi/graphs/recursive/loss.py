@@ -8,7 +8,7 @@ def loss_qap_normalized(P, M1, M2):
     n = P.shape[0]
     return torch.norm(M1 - P @ M2 @ P.T) / (n**2)
 
-def reinforce_loss(generator, M1, M2, baseline, batch_size=100, baseline_decay=0.9):
+def reinforce_loss(generator, M1, M2, baseline, batch_size=100, baseline_decay=1, moving_average=True):
     P, log_probs = generator(batch_size=batch_size)
 
     diff = M1.unsqueeze(0) - P @ M2.unsqueeze(0) @ P.transpose(1, 2)
@@ -16,11 +16,15 @@ def reinforce_loss(generator, M1, M2, baseline, batch_size=100, baseline_decay=0
 
     # baseline update
     with torch.no_grad():
-        batch_mean = losses.mean()
-        baseline.mul_(baseline_decay).add_((1 - baseline_decay) * batch_mean)
+        if moving_average:
+            batch_mean = losses.mean()
+            baseline.mul_(baseline_decay).add_((1 - baseline_decay) * batch_mean)
+        else: 
+            baseline =  losses.mean()
 
     advantages = losses - baseline
-    loss = -(advantages.detach() * (-log_probs)).mean()
+    
+    loss = (advantages.detach() * (log_probs)).mean()
 
     return loss, losses.mean().item()
 
