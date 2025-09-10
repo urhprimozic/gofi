@@ -4,6 +4,7 @@ from gofi.graphs.graph import adjacency_matrix_to_edges_list
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+
 def log_loss(dist : PermModel, M1 : torch.tensor, M2 : torch.tensor,  eps=10e-13, loops=False):
     raise NotImplementedError
 

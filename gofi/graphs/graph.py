@@ -79,3 +79,15 @@ def random_adjacency_matrix(n : int):
     for i in range(n):
         M[i, i] = 0
     return M
+
+def random_permutation_matrix(n, device=None, dtype=torch.float32):
+    """
+    Generate a random permutation matrix of size (n x n).
+    """
+    if device is None:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    perm = torch.randperm(n, device=device)        # random permutation of [0, ..., n-1]
+    P = torch.zeros((n, n), device=device, dtype=dtype)
+    P[torch.arange(n, device=device), perm] = 1.0  # place ones according to permutation
+    return P

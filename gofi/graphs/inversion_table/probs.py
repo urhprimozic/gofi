@@ -20,7 +20,7 @@ class PermModel:
         self.probabilities = None
 
     def clear_cache(self):
-        self.cahce = {}
+       #  self.cahce = {}
         self.probabilities = None
         self.model.clear()
 
