@@ -1530,33 +1530,70 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               S_m^\text{mid}(i,j) &= \sum_{s=i}^{j} P(a_m = s) \\
               S_m^>(j) &= \sum_{s=j}^{n} P(a_m = s) \\
             \end{align*}
-            Definiramo $q(j,h,m)$ - verjetnost, da postavimo $h$ na $j$-to trenutno prosto mesto, če smo že postavili 
-            $m-1$ elementov in trenutno postavlamo $m$-ti element:
-            $$
-            q(j, h, m) =
-            \begin{cases}
-              0 & j \notin [1, n-m+1] \vee h \notin [m, n] \\
-              P(a_m = j) & m = h \wedge j \in [1, n-m+1] \\
-              q(j-1, h, m+1) S_m^<(j-1) +
-              q(j, h, m+1) S_m^>(j+1)
-              & \text{sicer}
-              \end{cases}
-            $$
+            Recimo, da smo že postavili $m-1$ elementov
+            in postavljamo $m$-ti element. S
+            $q(j,h,m)$ označimo verjetnost, da bomo med
+            tvorjenjem slučajen premutacije $h$ postavili na
+            $j$-to trenutno prosto mesto. Podobno s $p(i, k, j, h, m)$ označimo verjetnost, da bomo
+            med tvorjenjem slučajne permutacije $k$ postavili na
+            $i$-to in $h$ na $j$-to trenutno prosto mesto.
 
-
+            Za $h \notin [m, n]$ ali $j \notin [1, n-m+1]$ je
+            $$q(j,h,m) = 0.$$
+            Za $m=h$ in $j \in [1, n-m+1]$ velja
+            $$q(j,h,m) = P(a_m = j)$$ sicer pa velja
+            $$q(j, h, m) =   q(j-1, h, m+1) S_m^<(j-1) +
+            q(j, h, m+1) S_m^>(j+1)$$.
+            %
+            %$$
+            %q(j, h, m) =
+            %\begin{cases}
+            %  0 & j \notin [1, n-m+1] \vee h \notin [m, n] \\
+            %  P(a_m = j) & m = h \wedge j \in [1, n-m+1] \\
+            %  q(j-1, h, m+1) S_m^<(j-1) +
+            %  q(j, h, m+1) S_m^>(j+1)
+            %  & \text{sicer}
+            %  \end{cases}
+            %$$
+            Za $p$ velja $p(i, k, j, h, m) = 0$, če je $k=h$,
+            $k \notin [m, n]$ ali $h \notin [m, n]$, $i \notin [1,
+            n-m+1]$ ali $j \notin [1, n-m+1]$.
+            Če je $m=k$ in $k,h \in [m,n]$ ter $i,j \in [1, n-m+1]$,
+            je 
             $$
-            p(i, k, j, h, m) =
-            \begin{cases}
-              0 & k=h   \vee k \notin [m, n ] \vee h \notin [m, n]\\
-              0 & i \notin [1, n-m+1] \vee j \notin [1, n-m+1] \\
-              P(a_k = i) q(j-1, h, k+1) & m = h \wedge k,h \in [m,n]
-              \wedge i,j \in [1, n -m +1] \\
-              p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
+            P(a_k = i) q(j-1, h, k+1).
+            $$
+            Podobno je za $m=h$ in $k,h \in [m,n]$ ter $i,j \in [1,
+            n-m+1]$
+            $$
+            P(a_h = j) q(i, k, h+1).
+            $$
+            Sicer pa velja rekurzivna zveza
+            $$
+            p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
               p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1) +
-              p(i, k, j, h, m+1) S_m^>(j+1)
-              & \text{sicer}
-            \end{cases}
+              p(i, k, j, h, m+1) S_m^>(j+1).
             $$
+            
+
+            %
+            %$$
+            %p(i, k, j, h, m) =
+            %\begin{cases}
+            %  0 & k=h   \vee k \notin [m, n ] \vee h \notin [m, n]\\
+            %  0 & i \notin [1, n-m+1] \vee j \notin [1, n-m+1] \\
+            %  P(a_k = i) q(j-1, h, k+1) & m = k \wedge k,h \in [m,n]
+            %  \wedge i,j \in [1, n -m +1] \\
+            %  P(a_h = j) q(i, k, h+1) & m = h \wedge k,h \in [m,n]
+            %  \wedge i,j \in [1, n -m +1] \\
+            %  p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
+            %  &  \text{sicer} \\
+            %  p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1) +
+            %  &\\
+            %  p(i, k, j, h, m+1) S_m^>(j+1)
+            %  & \\
+            %\end{cases}
+            %$$
 
             \begin{align}
               U_{j,m}(k) &= P\big(\text{label } m \text{ is placed in
