@@ -53,13 +53,14 @@ def training(
         #################### one step of opt ####################
         # reset previusly computed gradients
         opt.zero_grad()
+        # clear cahce
+        dist.clear_cache()
         
         debug_log("Calculating loss..")
         # calculate loss - uses cache
         loss = loss_function(dist, M1, M2)
 
-         # clear cahce
-        dist.clear_cache()
+         
         
         # store loss value before backward to avoid graph issues
         loss_value = loss.item()

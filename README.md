@@ -98,7 +98,7 @@ za $m\neq h$:
 $$
 q(j,h,m) = q(j-1, h, m+1) \sum_{z=1}^{j-1} P(a_m = z) 
 + 
-q(j, h, m+1) \sum_{z=j+1}^{n-m} P(a_m = z) .
+q(j, h, m+1) \sum_{z=j+1}^{n-m+1} P(a_m = z) .
 $$
 Seveda veljata robna pogoja
 $q(0,h, m) = 0$ in $q(j,h,n) =1$.
