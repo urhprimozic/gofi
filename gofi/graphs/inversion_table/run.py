@@ -32,4 +32,4 @@ if "__main__" == __name__:
         return norm_loss_normalized(dist, M1, M2) + id_loss(dist)
 
     # train
-    training(dist, M1, M2,loss_function=loss_function, max_steps=1000, adam_parameters={"lr": 0.08}, verbose=10)
+    training(dist, M1, M2,loss_function=loss_function, max_steps=1000, adam_parameters={"lr": 0.001}, verbose=10)
