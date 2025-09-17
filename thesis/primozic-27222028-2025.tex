@@ -1534,47 +1534,120 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             in postavljamo $m$-ti element. S
             $q(j,h,m)$ označimo verjetnost, da bomo med
             tvorjenjem slučajen premutacije $h$ postavili na
-            $j$-to trenutno prosto mesto. Podobno s $p(i, k, j, h, m)$ označimo verjetnost, da bomo
+            $j$-to trenutno prosto mesto. Podobno s $p(i, k, j, h,
+            m)$ označimo verjetnost, da bomo
             med tvorjenjem slučajne permutacije $k$ postavili na
             $i$-to in $h$ na $j$-to trenutno prosto mesto.
+            Očitno je $P(f(i) = k, f(j) = h) = p(i, k, j, h,1)$.
+            %
 
             Za $h \notin [m, n]$ ali $j \notin [1, n-m+1]$ je
-            $$q(j,h,m) = 0.$$
-            Za $m=h$ in $j \in [1, n-m+1]$ velja
-            $$q(j,h,m) = P(a_m = j)$$ sicer pa velja
-            $$q(j, h, m) =   q(j-1, h, m+1) S_m^<(j-1) +
-            q(j, h, m+1) S_m^>(j+1)$$.
+            $q(j,h,m) = 0$, sicer pa
+            %Za $m=h$ in $j \in [1, n-m+1]$ velja
+            %$$q(j,h,m) = P(a_m = j)$$ sicer pa velja
+            %$$q(j, h, m) =   q(j-1, h, m+1) S_m^<(j-1) +
+            %q(j, h, m+1) S_m^>(j+1)$$.
             %
+            $$
+            q(j, h, m) =
+            \begin{cases}
+              P(a_m = j) & m = h \\
+              q(j-1, h, m+1) S_m^<(j-1) +
+              & \text{sicer} \\
+              q(j, h, m+1) S_m^>(j+1)&\\
+            \end{cases}
+            $$
+
+            Za $p$ velja $p(i, k, j, h, m) = 0$, če velja ena od $k=h$,
+            $k \notin [m, n]$, $h \notin [m, n]$, $i \notin [1,
+            n-m+1]$, $j \notin [1, n-m+1]$.
+            Sicer pa je
+            %Če je $m=k$ in $k,h \in [m,n]$ ter $i,j \in [1, n-m+1]$,
+            %je
             %$$
-            %q(j, h, m) =
-            %\begin{cases}
-            %  0 & j \notin [1, n-m+1] \vee h \notin [m, n] \\
-            %  P(a_m = j) & m = h \wedge j \in [1, n-m+1] \\
-            %  q(j-1, h, m+1) S_m^<(j-1) +
-            %  q(j, h, m+1) S_m^>(j+1)
-            %  & \text{sicer}
-            %  \end{cases}
+            %p(i, k, j, h, m) = P(a_k = i) q(j-1, h, k+1).
             %$$
-            Za $p$ velja $p(i, k, j, h, m) = 0$, če je $k=h$,
-            $k \notin [m, n]$ ali $h \notin [m, n]$, $i \notin [1,
-            n-m+1]$ ali $j \notin [1, n-m+1]$.
-            Če je $m=k$ in $k,h \in [m,n]$ ter $i,j \in [1, n-m+1]$,
-            je 
+            %Podobno je za $m=h$ in $k,h \in [m,n]$ ter $i,j \in [1,
+            %n-m+1]$
+            %$$
+            %p(i, k, j, h, m) =  P(a_h = j) q(i, k, h+1).
+            %$$
+            %Sicer pa velja rekurzivna zveza
+            %\begin{align*}
+            %  p(i, k, j, h, m) &= \\
+            %  p(i-1, k, j-1, h, m+1) &S_m^<(i-1) +\\
+            %  p(i, k, j-1, h, m+1) &S_m^{\text{mid}}(i+1, j-1) +\\
+            %  p(i, k, j, h, m+1) &S_m^>(j+1).
+            %\end{align*}
             $$
-            P(a_k = i) q(j-1, h, k+1).
-            $$
-            Podobno je za $m=h$ in $k,h \in [m,n]$ ter $i,j \in [1,
-            n-m+1]$
-            $$
-            P(a_h = j) q(i, k, h+1).
-            $$
-            Sicer pa velja rekurzivna zveza
-            $$
-            p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
+            p(i, k, j, h, m) =
+            \begin{cases}
+              P(a_k = i) q(j-1, h, k+1) & m = k \\
+              P(a_h = j) q(i, k, h+1) & m = h \\
+              p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
+              &  \text{sicer} \\
               p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1) +
-              p(i, k, j, h, m+1) S_m^>(j+1).
+              &\\
+              p(i, k, j, h, m+1) S_m^>(j+1)
+              & \\
+            \end{cases}
             $$
-            
+            %
+            Z uporabo zgornjih rekurzivnih
+            enačb lahko funkcijo izgube izračunamo v času
+            $O(n^5)$. S pametnim preoblikovanjem funkcije izgube lahko
+            časovno zahtevnost znižamo na $O(n^3)$\footnote{\TODO{to
+            je dovolj }}.
+            %
+            \paragraph{Izračun v $O(n^3)$}
+            %
+            Računamo
+            $\loss = \sum_{i,j} \left ((M_1)_{i,j} - \sum_{k,h}p(i, k, j,
+            h, 1) (M_2)_{k,h} \right )^2$. 
+            Definiramo pomožne funkcije
+            \begin{align*}
+              U_{j, m, k} &= \sum_h q(j, h, m)(M_2)_{k, h} \\
+              V_{i, m, h} &= \sum_k q(i, k, m)(M_2)_{k, h} \\
+              T_{i, j, m} &= \sum_{k,h} p(i, k, j, h, m) (M_2)_{k,h}
+            \end{align*}
+            Očitno je $\loss = \sum_{i,j} \left ((M_1)_{i,j} - T_{i,
+            j, m} \right )^2$. Iz rekurzivnih zvez za $p$ in $q$ 
+            sledi 
+            \begin{align*}
+T_{i, j, m} &={} &
+   &+\sum_h  P(a_m = i) q(j-1, h, m+1) (M_2)_{m,h}  \\
+          &   & 
+   &+\sum_h  P(a_m = j) q(i, k, m+1) (M_2)_{k,m} \\
+          &   &
+  &+ \sum_{k, h}  
+      p(i-1, k, j-1, h, m+1) S_m^<(i-1) (M_2)_{k,h} \\
+          &   &
+   &+\sum_{k, h}   
+      p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1)(M_2)_{k,h} \\ 
+          &   &
+   &+\sum_{k, h}  
+      p(i, k, j, h, m+1) S_m^>(j+1) (M_2)_{k,h} \\
+   &={} &
+   &P(a_m=i)  U_{j-1, m+1, m} +
+   P(a_m=j) V_{i, m+1, m} \\
+   & & &+  
+   T_{i-1, j-1, m+1}  S_m^<(i-1) +
+   T_{i, j-1, m+1}  S_m^{\text{mid}}(i+1, j-1) +
+   T_{i, j, m+1}  S_m^>(j+1)
+\end{align*}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            Definiramo pomožne funkcije
+            \begin{align*}
+              U_{j, m}(k) &= \sum_h q(j-1, h, m)(M_2)_{k, h} \\
+              V_{i, m}(h) &= \sum_k q(i, k, m)(M_2)_{k, h} \\
+              T_{i, j, m} &= \sum_{k,h} p(i, k, j, h, m) (M_2)_{k,h}
+            \end{align*}
+            Iz zgornjih rekurzivnih zvez sledi
+            $T_{i, j, m} = $
 
             %
             %$$
@@ -1689,7 +1762,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             % \verb|\eqref|, za citate \verb|\cite|. Pri
             % sklicevanju in citiranju sklicano številko povežemo s
             % prejšnjo besedo z nedeljivim presledkom
-            % $\sim$, kot npr.\ \verb|iz trditve~\ref{trd:obstoj-omega} vidimo|.
+            % $\sim$, kot
+            % npr.\ \verb|iz trditve~\ref{trd:obstoj-omega} vidimo|.
 
             % \begin{primer}
             %   Zaporedje~\eqref{eq:zero-kompleks} iz dokaza
