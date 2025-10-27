@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 from gofi.graphs.inversion_table.models import Cache
 from functools import lru_cache
+from torch.amp import autocast
 
-torch.autograd.set_detect_anomaly(True)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class PermModel:
     def __init__(self, model, n, *args, **kwargs):
@@ -16,150 +16,132 @@ class PermModel:
         """
         self.model = Cache(model.to(device))
         self.n = n
-        # memo for P
-        #self.cache = {}
-
-        # memo for model
-        self.probabilities = None
-        #self.q_cache = torch.full((n +1, n +1, n +1), torch.nan, device=device)  # q_cache[j,h,m] = q(j,h,m)
-       # self.q_cache = {}
-
-        # self.p_cache = torch.full((n + 1, n + 1, n + 1, n + 1, n + 1), torch.nan, device=device)  # p_cache[m,s] = P(m,s)
-        self.PSums = torch.full((n + 1, n + 1, n + 1), torch.nan, device=device)  # PSums[m,s1,s2] = P_sum(m,s1,s2)
-
-    def prepeare_cache(self):
-        out = self.model_value()
         
-
-
-        raise NotImplementedError("Not finished")
-
+        self.probabilities = None
+       
     def clear_cache(self):
         self.p.cache_clear()
         self.q.cache_clear()
-       #  self.cahce = {}
-       # self.q_cache = torch.full((self.n + 1, self.n + 1, self.n + 1), torch.nan, device=device)  # q_cache[j,h,m] = q(j,h,m)
-        #self.p_cache = torch.full((self.n + 1, self.n + 1, self.n + 1,self.n + 1, self.n + 1), torch.nan, device=device)  # p_cache[m,s] = P(m,s)
+        self.P.cache_clear()
+        self.P_sum.cache_clear()
         self.probabilities = None
         self.model.clear()
 
     def model_value(self):
         return self.model()
-        if self.probabilities is None:
-            self.probabilities = self.model()
-        return self.probabilities
-            
+    
+    def most_probable_permutation(self):
+        """
+        Returns the most probable permutation according to the model.
 
+        TODO implement more efficiently using dynamic programming in nlogn time.
+        Currently: O(n^2)
+        """
+
+
+        perm = [None] * self.n
+        
+        with autocast(device_type='cuda', enabled=False):
+            probs = self.model_value()
+
+            free_positions = list(range(1, self.n + 1))
+            
+            for m in range(1, self.n):
+                prob_m = probs[m - 1]  
+                it_index = torch.argmax(prob_m).item() + 1
+                true_position = free_positions[it_index - 1]
+
+                # remove this position from free positions
+                free_positions.pop(it_index - 1)
+                
+                # put m in the true position
+                perm[true_position - 1] = m        
+                
+
+            # place n in the last remaining position
+            for i in range(self.n):
+                if perm[i] is None:
+                    perm[i] = self.n
+                    break
+            
+            return perm
+
+    @lru_cache(maxsize=None)
     def P(self, m, s):
         """
         Returns the probability P(a_m = s) of placing m on the s-th empty file.
         """
-        probs = self.model_value()[m - 1]  # we index with 0!
-        return probs[s - 1]  # we index with zero!
+        with autocast(device_type='cuda', enabled=False):
+            if m == self.n:
+                return torch.tensor(1.0 if s == 1 else 0.0, device=device, dtype=torch.float32)
+            probs = self.model_value()[m - 1].float()  # we index with 0!
+            return probs[s - 1]  # we index with zero!
 
+    @lru_cache(maxsize=None)
     def P_sum(self, m, start, end):
         """
-        Returns SUM_{s=start --> end} P(a_m = s). That equals to the probability of placing m anywhere between (and including ) start and end.
+        SUM_{s=start..end} P(a_m = s), inclusive.
         """
-        # get probabilities for placing m
-        probs = self.model_value()[m - 1]  # index with zero
-        # sum
-        return torch.sum(
-            probs[start - 1 : end]
-        )  # index by zero, end -1 is the last one
+        with autocast(device_type='cuda', enabled=False):
+            probs = self.model_value()[m - 1].float()
+            max_pos = self.n - m + 1
+            start = max(1, start)
+            end = min(max_pos, end)
+            if start > end:
+                return torch.tensor(0.0, device=device, dtype=torch.float32)
+            return torch.sum(probs[start - 1 : end])
 
     @lru_cache(maxsize=None)
     def q(self, j, h, m):
         """
         probability of placing h on the j-th empty file, if m-1 numbers were already placed.
         """
-       # if not torch.isnan(self.q_cache)[j, h, m]:
-          #  return self.q_cache[j, h, m]
-        ### border cases ###
-        # j outside of scope
-        if j <= 0 or j > self.n - m + 1:
-         #   self.q_cache[j, h, m] = 0
-            return 0
-        # j in scope but m is n --> just one option
-        if m == self.n:
-           # self.q_cache[j, h, m] = 1
-            return 1
-
-        ## place m on j-th place
-        if m == h:
-            #self.q_cache[j, h, m] = self.P(m, j)
-            return self.P(m, j)
-
-        # check cache
-        #if self.cache.get((j, h, m)) is not None:
-         #   return self.cache[(j, h, m)]
-        ### recursive ###
-        ans = 0
-        ans += self.q(j - 1, h, m + 1) * self.P_sum(m, 1, j - 1)
-        ans += self.q(j, h, m + 1) * self.P_sum(m, j + 1, self.n - m + 1)
-
-        # save to cahce
-       # self.cache[(j, h, m)] = ans
-        #self.q_cache[j, h, m] = ans
-        return ans
-    
+        with autocast(device_type='cuda', enabled=False):
+            if j <= 0 or j > self.n - m + 1: 
+                return torch.tensor(0.0, device=device, dtype=torch.float32)
+            # terminal: only n remains and only slot j=1 is available for h=n
+            if m == self.n + 1:
+                print(f"Error in q({j}, {h}, {m}): m={m} > n={self.n}")
+                raise ValueError("m cannot be greater than n+1")
+            if m == h:
+                return self.P(m, j)
+            if m == self.n:
+                raise ValueError(f"It should be m < n, but got m == n = {self.n}")
+            ans = torch.tensor(0.0, device=device, dtype=torch.float32)
+            ans = ans + self.q(j - 1, h, m + 1) * self.P_sum(m, 1, j - 1)
+            ans = ans + self.q(j,     h, m + 1) * self.P_sum(m, j + 1, self.n - m + 1)
+            return ans
+     
 
     @lru_cache(maxsize=None)
     def p(self, i, k, j, h, m):
         """
-        probability of placing k on the i-th empty file and j on the j-th empty file, if m-1 numbers were already placed.
+        probability of placing k on the i-th empty file and h on the j-th empty file, if m-1 numbers were already placed.
+        """
+        if k == h or i == j:
+            return torch.tensor(0.0, device=device, dtype=torch.float32)
 
-        TODO"""
-        #if not torch.isnan(self.p_cache)[i, k, j, h, m]:
-          #  return self.p_cache[i, k, j, h, m]
-        # i < j
+        # enforce i < j
         if i >= j:
-            # i should be SMALLER than j!
             i, j = j, i
             k, h = h, k
 
-        ### border cases ###
-        # i or j out of scope
-        if i <= 0 or j <= 0 or i > self.n - m + 1 or j > self.n - m + 1:
-            # outside of the region placed to many on one side
-            #self.p_cache[i, k, j, h, m] = 0
-            return 0
-        # m maximal
-        if m == self.n:
-            # just one tile to place
-           # self.p_cache[i, k, j, h, m] = 1
-            return 1
-
-        # check cache
-       # if self.cache.get((i, k, j, h, m)) is not None:
-          #  return self.cache[(i, k, j, h, m)]
-
-        ### place m ###
-        if m == k:
-            ans = self.P(k, i) * self.q(j - 1, h, k + 1)
-            
-            # save to cache
-            #self.cache[(i, k, j, h, m)] = ans
-            #self.p_cache[i, k, j, h, m] = ans
+        with autocast(device_type='cuda', enabled=False):
+            if i <= 0 or j <= 0 or i > self.n - m + 1 or j > self.n - m + 1 or m > self.n:
+                return torch.tensor(0.0, device=device, dtype=torch.float32)
+            if m == k:
+                return self.P(k, i) * self.q(j - 1, h, k + 1)
+            if m == h:
+                return self.P(h, j) * self.q(i, k, h + 1)
+            if m == self.n:
+                print(f"Error in p({i}, {k}, {j}, {h}, {m}): m={m} == n={self.n}, but m==k or m==h not satisfied")
+                raise ValueError(f"It should be m < n, but got m == n = {self.n}")
+                
+            ans = torch.tensor(0.0, device=device, dtype=torch.float32)
+            ans = ans + self.p(i - 1, k, j - 1, h, m + 1) * self.P_sum(m, 1, i - 1)
+            ans = ans + self.p(i,     k, j - 1, h, m + 1) * self.P_sum(m, i + 1, j - 1)
+            ans = ans + self.p(i,     k, j,     h, m + 1) * self.P_sum(m, j + 1, self.n - m + 1)
             return ans
-        if m == h:
-            ans = self.P(h, j) * self.q(i, k, h + 1)
-
-            # save to cache
-           # self.cache[(i, k, j, h, m)] = ans
-           # self.p_cache[i, k, j, h, m] = ans
-            return ans
-
-        ### recursive ###
-        ans = 0
-        ans += self.p(i - 1, k, j - 1, h, m + 1) * self.P_sum(m, 1, i - 1)
-        ans += self.p(i, k, j - 1, h, m + 1) * self.P_sum(m, i + 1, j - 1)
-        ans += self.p(i, k, j, h, m + 1) * self.P_sum(m, j + 1, self.n - m + 1)
-        #ans = self.p_cache[i, k, j, h, m] 
-        # save to cache
-      #  self.cache[(i, k, j, h, m)] = ans
-
-        return ans
 
     def prob(self, i, k, j, h):
         """

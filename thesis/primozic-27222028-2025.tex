@@ -1611,7 +1611,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               T_{i, j, m} &= \sum_{k,h} p(i, k, j, h, m) (M_2)_{k,h}
             \end{align*}
             Očitno je $\loss = \sum_{i,j} \left ((M_1)_{i,j} - T_{i,
-            j, m} \right )^2$. Iz rekurzivnih zvez za $p$ in $q$ 
+            j, 0} \right )^2$. Iz rekurzivnih zvez za $p$ in $q$ 
             sledi 
             \begin{align*}
 T_{i, j, m} &={} &
@@ -1635,87 +1635,22 @@ T_{i, j, m} &={} &
    T_{i, j-1, m+1}  S_m^{\text{mid}}(i+1, j-1) +
    T_{i, j, m+1}  S_m^>(j+1)
 \end{align*}
+Z uporabo teh formul lahko funkcijo izgube izračunamo v
+času $O(n^3)$. Če želimo še hitrejši izračun, lahko 
+naključno izberemo podmnožico indeksov $(i,j)$ in
+izračunamo stohastični približek funkcije izgube na podmnožici.
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            Definiramo pomožne funkcije
-            \begin{align*}
-              U_{j, m}(k) &= \sum_h q(j-1, h, m)(M_2)_{k, h} \\
-              V_{i, m}(h) &= \sum_k q(i, k, m)(M_2)_{k, h} \\
-              T_{i, j, m} &= \sum_{k,h} p(i, k, j, h, m) (M_2)_{k,h}
-            \end{align*}
-            Iz zgornjih rekurzivnih zvez sledi
-            $T_{i, j, m} = $
-
-            %
-            %$$
-            %p(i, k, j, h, m) =
-            %\begin{cases}
-            %  0 & k=h   \vee k \notin [m, n ] \vee h \notin [m, n]\\
-            %  0 & i \notin [1, n-m+1] \vee j \notin [1, n-m+1] \\
-            %  P(a_k = i) q(j-1, h, k+1) & m = k \wedge k,h \in [m,n]
-            %  \wedge i,j \in [1, n -m +1] \\
-            %  P(a_h = j) q(i, k, h+1) & m = h \wedge k,h \in [m,n]
-            %  \wedge i,j \in [1, n -m +1] \\
-            %  p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
-            %  &  \text{sicer} \\
-            %  p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1) +
-            %  &\\
-            %  p(i, k, j, h, m+1) S_m^>(j+1)
-            %  & \\
-            %\end{cases}
-            %$$
-
-            \begin{align}
-              U_{j,m}(k) &= P\big(\text{label } m \text{ is placed in
-                position } k \mid \text{labels } 1,\dots,m-1 \text{
-              already placed}\big), \\
-              V_{i,m}(h) &= P\big(\text{label } m \text{ is placed in
-                position } h \mid \text{labels } 1,\dots,m-1 \text{
-              already placed}\big), \\
-              S^<_m(i) &= \sum_{s=1}^{i-1} P(a_m = s), \\
-              S^>_m(j) &= \sum_{s=j+1}^{n-m+1} P(a_m = s), \\
-              S^{mid}_m(i,j) &= \sum_{s=i+1}^{j-1} P(a_m = s).
-            \end{align}
-            % Cumulative sums
-            \begin{align}
-              S^<_m(i) &= \sum_{s=1}^{i-1} P(a_m = s), \\
-              S^>_m(j) &= \sum_{s=j+1}^{n-m+1} P(a_m = s), \\
-              S^{mid}_m(i,j) &= \sum_{s=i+1}^{j-1} P(a_m = s).
-            \end{align}
-
-            % Recursive definitions of U and V
-            \begin{align}
-              U_{j,m}(k) &=
-              \begin{cases}
-                P(a_m = j), & \text{if } m = k \quad \text{(base case)} \\
-                0, & j \le 0 \text{ or } j > n-m+1 \\
-                S^<_m(j)\, U_{j-1,m+1}(k) + S^{mid}_m(j)\,
-                U_{j,m+1}(k) + S^>_m(j)\, U_{j,m+1}(k+1), & \text{otherwise}
-              \end{cases} \\
-              V_{i,m}(h) &=
-              \begin{cases}
-                P(a_m = i), & \text{if } m = h \quad \text{(base case)} \\
-                0, & i \le 0 \text{ or } i > n-m+1 \\
-                S^<_m(i)\, V_{i-1,m+1}(h) + S^{mid}_m(i)\,
-                V_{i,m+1}(h) + S^>_m(i)\, V_{i,m+1}(h+1), & \text{otherwise}
-              \end{cases}
-            \end{align}
-
-            % Recursive definition of T
-            \begin{align}
-              T_{i,j,m} &=
-              \begin{cases}
-                1, & m = n \text{ (only one placement left)} \\
-                0, & i \le 0 \text{ or } j \le 0 \\
-                U_{j,m}(k)\, T_{i,j-1,m+1} + V_{i,m}(h)\, T_{i-1,j,m+1} +
-                S^<_m(i)\, T_{i-1,j,m+1} + S^{mid}_m(i,j)\,
-                T_{i,j,m+1} + S^>_m(j)\, T_{i,j+1,m+1}, & \text{otherwise}
-              \end{cases}
-            \end{align}
-
+Naj bo $S \subset [n] \times [n]$ naključno izbrana
+podmnožica indeksov. Za približek funkcije izgube lahko
+vzamemo
+\begin{equation*}
+  \loss_\approx = \sum_{(i, j) \in S}
+  \left ((M_1)_{i,j} - T_{i, j, 1} \right )^2.
+\end{equation*}
+Časovna zahtevnost izračuna približka je
+$O(|S| n^2)$.
+%
+\TODO{Rezultati}
             \section{Dodatek}
             \subsection{Izomorfizmi Cayleyevih grafov}
             \label{dodatek:cayley}
@@ -1725,8 +1660,8 @@ T_{i, j, m} &={} &
             \subsection{Izomorfizmi naključnih grafov}
             \label{dodatek:naključni grafi}
             \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
-            \subsection{Dovolj so upodobitve nad končnimi množicami}
-
+%            \subsection{Dovolj so upodobitve nad končnimi množicami}
+%
             % \section{Integrali po \texorpdfstring{$\omega$}{ω}-kompleksih}
             % \subsection{Definicija}
             % \begin{definicija}
