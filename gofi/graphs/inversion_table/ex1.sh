@@ -2,7 +2,9 @@
 
 # Arrays of values
 Ns=(8 16 32 64)
+#Ns=(5 6)
 LSs=(128 512 1024 2048)
+#LSs=(64 128)
 
 # Loop over values
 for n in "${Ns[@]}"; do
