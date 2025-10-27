@@ -1,7 +1,10 @@
 #!/bin/bash
 
-Ns=(5 6)
-LSs=(64 128)
+#Ns=(5 6)
+#LSs=(64 128)
+
+Ns=(8 16 32 64)
+LSs=(128 512 1024 2048)
 
 for n in "${Ns[@]}"; do
   for ls in "${LSs[@]}"; do
