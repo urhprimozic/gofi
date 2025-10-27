@@ -1,3 +1,4 @@
+import math
 import argparse
 from gofi.graphs.inversion_table.models import PermDistConnected, PermDistDissconnected
 from gofi.graphs.inversion_table.probs import PermModel
@@ -49,7 +50,7 @@ if "__main__" == __name__:
     loss_function_name = args.loss
     sample_size = args.loss_sample_size
     if sample_size == "None":
-        sample_size = int(n * (n - 1) // 4)
+        sample_size = int((n**(4/5)) * (n - 1) // 2)
     else:
         sample_size = int(sample_size)
     # choose scheduler
