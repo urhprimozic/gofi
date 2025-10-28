@@ -31,7 +31,7 @@ if "__main__" == __name__:
     )
     parser.add_argument("--T", type=str, help="Temperature of softmax", default="1")
     parser.add_argument(
-        "--verbose", type=str, help="Number of steps taken between logs", default="100"
+        "--verbose", type=str, help="Number of steps taken between logs", default="1"
     )
     parser.add_argument(
         "--grad_clipping", type=float, help="Gradient clipping norm", default=2.0
