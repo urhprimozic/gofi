@@ -2,7 +2,7 @@ import math
 import argparse
 from gofi.graphs.inversion_table.models import PermDistConnected, PermDistDissconnected
 from gofi.graphs.inversion_table.probs import PermModel
-from gofi.graphs.inversion_table.opt import training
+import gofi.graphs.inversion_table.opt as opt
 from gofi.graphs.graph import random_adjacency_matrix, random_permutation_matrix
 from gofi.graphs.inversion_table.loss import (
     norm_loss_normalized,
@@ -74,7 +74,28 @@ if "__main__" == __name__:
         help="Run name",
         default=str(datetime.now().strftime("%Y%m%d_%H%M%S")),
     )
-    args = parser.parse_args()
+    parser.add_argument(
+        "--amp",
+        type=str,
+        choices=["on", "of"],
+        default="on",
+        help="Enable/disable mixed precision (AMP) on CUDA",
+    )
+    args = parser.parse_args()     
+    
+     # Configure AMP (mixed precision) for opt.training via the module-global scaler
+    if args.amp == "off":
+        opt.scaler = None
+        print("AMP disabled")
+    else:
+        if torch.cuda.is_available():
+            from torch.amp import GradScaler
+            opt.scaler = GradScaler('cuda')
+            print("AMP enabled (fp16)")
+        else:
+            opt.scaler = None
+            print("AMP disabled (no CUDA)")
+
 
     # collect args+
     n = int(args.n)
@@ -150,7 +171,7 @@ if "__main__" == __name__:
         print("Using stochastic loss")
     # train
 
-    losses = training(
+    losses = opt.training(
         dist,
         M1,
         M2,
