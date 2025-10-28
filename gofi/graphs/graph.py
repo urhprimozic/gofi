@@ -91,3 +91,21 @@ def random_permutation_matrix(n, device=None, dtype=torch.float32):
     P = torch.zeros((n, n), device=device, dtype=dtype)
     P[torch.arange(n, device=device), perm] = 1.0  # place ones according to permutation
     return P
+
+def permutation_matrix_to_permutation(P: torch.Tensor, index=1):
+    """
+    Convert a permutation matrix P to a permutation tuple.
+    """
+    return torch.argmax(P, axis=1) + index
+
+def permutation_to_permutation_matrix(perm: tuple, device=None, dtype=torch.float32, index=1):
+    """
+    Convert a permutation tuple to a permutation matrix.
+    """
+    n = len(perm)
+    if device is None:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    P = torch.zeros((n, n), device=device, dtype=dtype)
+    for i in range(n):
+        P[i, perm[i] - index] = 1.0
+    return P
