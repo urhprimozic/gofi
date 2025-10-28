@@ -3,7 +3,7 @@ import argparse
 from gofi.graphs.inversion_table.models import PermDistConnected, PermDistDissconnected
 from gofi.graphs.inversion_table.probs import PermModel
 import gofi.graphs.inversion_table.opt as opt
-from gofi.graphs.graph import random_adjacency_matrix, random_permutation_matrix
+from gofi.graphs.graph import random_adjacency_matrix, random_permutation_matrix, permutation_matrix_to_permutation, permutation_to_permutation_matrix
 from gofi.graphs.inversion_table.loss import (
     norm_loss_normalized,
     stochastic_norm_loss,
@@ -61,6 +61,12 @@ if "__main__" == __name__:
         type=int,
         default=1000,
         help="Cosine warm restart initial period T_0",
+    )
+    parser.add_argument(
+        "--eps",
+        type=float,
+        default=0.0001,
+        help="Stopping criterion for training based on loss value",
     )
     parser.add_argument(
         "--cos_Tmult", type=int, default=2, help="Cosine warm restart multiplier T_mult"
@@ -142,7 +148,8 @@ if "__main__" == __name__:
     M1 = random_adjacency_matrix(n)
     Q = random_permutation_matrix(n)
     # Use M2 = Q @ M1 @ Q.T so the natural mapping is f(i)=sigma(i)
-    M2 = Q @ M1 @ Q.T
+    #M2 = Q @ M1 @ Q.T
+    M2 = Q.T @ M1 @ Q
 
     # model
     model = PermDistConnected(n, 4, layer_size, T=T)
@@ -183,16 +190,44 @@ if "__main__" == __name__:
         scheduler_input=scheduler_input,
         grad_clipping=grad_clipping,
         verbose=verbose,
+        eps=args.eps
     )
 
     with torch.no_grad():
         print("Final loss after training:", loss_function(dist, M1, M2).item())
-    # save losses
-    with open(f"n_{n}_ls_{layer_size}_{args.name}.pkl", "wb") as f:
-        pickle.dump(losses, f)
+        print("Most probable permutation:", dist.most_probable_permutation())
+        print("Target permutation:", (torch.argmax(Q, axis=1)+ 1).tolist())
+        mpp = permutation_to_permutation_matrix(
+            dist.most_probable_permutation()
+        )
+
+        print("|target(M1) - most_probable(M1)|: ", torch.norm(
+            M2 - mpp.T @ M1 @ mpp ).item()
+        )
+    # save data
+    results = {
+        "n": n,
+        "layer_size": layer_size,
+        "lr": lr,
+        "T": T,
+        "verbose": verbose,
+        "grad_clipping": grad_clipping,
+        "loss_function": loss_function_name,
+        "loss_sample_size": sample_size,
+        "scheduler": args.scheduler,
+        "scheduler_parameters": scheduler_parameters,
+        "final_loss": loss_function(dist, M1, M2).item(),
+        "most_probable_permutation": dist.most_probable_permutation(),
+        "target_permutation": tuple(torch.argmax(Q, axis=1).cpu().numpy() + 1),
+        "losses": losses,
+    }
+
+    with open(f"results_n_{n}_ls_{layer_size}_{args.name}.pkl", "wb") as f:
+        pickle.dump(results, f)
+
 
     plt.plot(losses)
-    plt.savefig(f"n_{n}_ls_{layer_size}_{args.name}.pdf")
+    plt.savefig(f"loss_n_{n}_ls_{layer_size}_{args.name}.pdf")
 
     with torch.no_grad():
         print("Final loss:", loss_function(dist, M1, M2).item())

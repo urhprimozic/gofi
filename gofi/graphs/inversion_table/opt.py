@@ -110,6 +110,8 @@ def training(
         print(f"An error occurred during training at step {step}: {e}")
         raise e    
         
+    print(f"\nTraining completed in {step} steps. Best loss: {best:.6f}")
+
     return losses
 
 
