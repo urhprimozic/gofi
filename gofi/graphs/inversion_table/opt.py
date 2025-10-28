@@ -97,7 +97,7 @@ def training(
 
             ### log
             if verbose and (step % verbose == 0 or step == 1):
-                print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e}")
+                print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e}", end="\r")
 
             best = min(best, loss_value)
             if (eps is not None and best <= eps) or (max_steps is not None and step >= max_steps):
