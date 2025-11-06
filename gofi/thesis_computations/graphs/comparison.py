@@ -166,7 +166,7 @@ def run_vanilla(M1, Q, M2, verbose=0):
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument("name", type=str, help="Run name")
-    parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If on, adds current time in run name")
+    parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If no, adds current time in run name")
     args = parser.parse_args()
 
     run_name = args.name 
