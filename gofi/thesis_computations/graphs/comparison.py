@@ -175,8 +175,8 @@ if "__main__" == __name__:
 
     print("Running comparisons")
     # create  and save dataset
-   # dataset = create_dataset(range(3, 25) * 2, range(3, 5))
-    dataset = create_dataset([4] , [3])
+    dataset = create_dataset(list(range(3, 25)) * 2, range(3, 5))
+    #dataset = create_dataset([4] , [3])
 
     with open(f"dataset_{run_name}.pkl", "wb") as f:
         pickle.dump(dataset, f)
