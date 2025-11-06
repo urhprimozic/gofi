@@ -9,7 +9,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def closest_permutation_matrix(M: torch.Tensor) -> torch.Tensor:
     # Convert to numpy for scipy
-    M_np = M.detach().numpy()
+    M_np = M.cpu().detach().numpy()
 
     # Solve the linear sum assignment problem on the NEGATED matrix
     # (because we want to maximize the sum, but scipy minimizes)
