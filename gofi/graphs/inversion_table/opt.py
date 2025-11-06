@@ -4,6 +4,7 @@ from gofi.graphs.inversion_table.loss import norm_loss_normalized
 from torch.optim import Adam
 from torch.nn.utils import clip_grad_norm_
 from torch.amp import autocast, GradScaler
+from gofi.adameve.adamEVE import AdamEVE
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.backends.cudnn.benchmark = True
@@ -16,7 +17,9 @@ def training(
     M2: torch.Tensor,
     loss_function=norm_loss_normalized,
     eps=None,
+    grad_eps = None,
     max_steps=None,
+    adameve=False,
     adam_parameters=None,
     scheduler=None,
     scheduler_parameters=None,
@@ -43,7 +46,11 @@ def training(
     # prepare optimiser
     if adam_parameters is None:
         adam_parameters = {"lr": 3e-4}
-    opt = Adam(dist.model.parameters(), **adam_parameters)
+    
+    if adameve:
+        opt = AdamWithNoise(dist.model.parameters(), **adam_parameters)
+    else:
+        opt = Adam(dist.model.parameters(), **adam_parameters)
 
     sch = scheduler(opt, **(scheduler_parameters or {})) if scheduler is not None else None
 
@@ -95,21 +102,39 @@ def training(
                     except TypeError:
                         sch.step()
 
+            if grad_eps is not None:
+                # get gradient size
+                total_gradient_norm = 0.0
+                for p in dist.model.parameters():
+                    if p.grad is not None:
+                        total_gradient_norm += p.grad.data.norm(2).item() ** 2
+                total_gradient_norm = total_gradient_norm ** 0.5
+                if total_gradient_norm < grad_eps:
+                    print(f"gradient norm {total_gradient_norm} < {grad_eps}. Stopping learning..")
+                    break
             ### log
             if verbose and (step % verbose == 0 or step == 1):
-                print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e}", end="\r")
+                if grad_eps is None:
+                    print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e}", end="\r")
+                else: 
+                    print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e} ||gradient||={total_gradient_norm:.6f}", end="\r")
 
             best = min(best, loss_value)
             if (eps is not None and best <= eps) or (max_steps is not None and step >= max_steps):
                 break
 
+    
+
     except KeyboardInterrupt:
         print("Training interrupted by user.")
+        print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e}")
         return losses
     except Exception as e:
+        print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e}")
         print(f"An error occurred during training at step {step}: {e}")
         raise e    
-        
+    
+    print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e}")
     print(f"\nTraining completed in {step} steps. Best loss: {best:.6f}")
 
     return losses
