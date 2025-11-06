@@ -3,6 +3,8 @@ import torch
 import torch.nn as nn
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+def LossGraphMatching(P, M1, M2):
+    return torch.norm(M2 - P.T @ M1 @ P)
 
 def RelationLossMatrix(P, M1, M2, eps=0.1e-10):
     """

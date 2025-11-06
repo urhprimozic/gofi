@@ -15,6 +15,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau, CosineAnnealingWarmResta
 import pickle
 from datetime import datetime
 import matplotlib.pyplot as plt
+from gofi.graphs.inversion_table.distributions import VanillaModel
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -65,8 +66,14 @@ if "__main__" == __name__:
     parser.add_argument(
         "--eps",
         type=float,
-        default=0.0001,
-        help="Stopping criterion for training based on loss value",
+        default=0.001,
+        help="Stopping criterion for training based on loss value. Set to negative for None.",
+    )
+    parser.add_argument(
+        "--grad_eps",
+        type=float,
+        default=-1.,
+        help="Stopping criterion for training based on gradient norm. Default is none",
     )
     parser.add_argument(
         "--cos_Tmult", type=int, default=2, help="Cosine warm restart multiplier T_mult"
@@ -86,6 +93,20 @@ if "__main__" == __name__:
         choices=["on", "of"],
         default="on",
         help="Enable/disable mixed precision (AMP) on CUDA",
+    )
+    parser.add_argument(
+        "--opt",
+        type=str,
+        choices=["adam", "adameve"],
+        default="adam",
+        help="Optimizer. Choose between Adam and AdamEVE.",
+    )
+    parser.add_argument(
+        "--vanilla",
+        type=str,
+        choices=["on", "off"],
+        default="off",
+        help="if vanilla is on, there is no overparametrisation.",
     )
     args = parser.parse_args()     
     
@@ -112,6 +133,15 @@ if "__main__" == __name__:
     grad_clipping = float(args.grad_clipping)
     loss_function_name = args.loss
     sample_size = args.loss_sample_size
+    
+    eps = args.eps
+    if eps < 0:
+        eps = None 
+    
+    grad_eps = args.grad_eps
+    if grad_eps < 0:
+        grad_eps = None 
+    
     if sample_size == "None":
         sample_size = int((n ** (4 / 5)) * (n - 1) // 2)
     else:
@@ -152,7 +182,12 @@ if "__main__" == __name__:
     M2 = Q.T @ M1 @ Q
 
     # model
-    model = PermDistConnected(n, 4, layer_size, T=T)
+    if args.vanilla == "off":
+        print("Using NN overparametrisation.")
+        model = PermDistConnected(n, 4, layer_size, T=T)
+    else:
+        print("Using vanilla model.")
+        model = VanillaModel(n, T=T)
     dist = PermModel(model, n)
 
     # loss
@@ -190,7 +225,8 @@ if "__main__" == __name__:
         scheduler_input=scheduler_input,
         grad_clipping=grad_clipping,
         verbose=verbose,
-        eps=args.eps
+        eps=eps, 
+        grad_eps=grad_eps
     )
 
     with torch.no_grad():
@@ -220,6 +256,7 @@ if "__main__" == __name__:
         "most_probable_permutation": dist.most_probable_permutation(),
         "target_permutation": tuple(torch.argmax(Q, axis=1).cpu().numpy() + 1),
         "losses": losses,
+        "vanilla" : args.vanilla,
     }
 
     with open(f"results_n_{n}_ls_{layer_size}_{args.name}.pkl", "wb") as f:

@@ -1,8 +1,22 @@
 from gofi.graphs.inversion_table.probs import PermModel
 import torch.nn as nn 
 import torch 
+import torch.nn.functional as F
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+class VanillaModel(nn.Module):
+    def __init__(self, n, T=5):
+        super(VanillaModel, self).__init__()
+        self.params = nn.ParameterList([nn.Parameter(torch.rand(i)) for i in range(n, 1, -1)])
+        self.T = T
+
+    def forward(self):
+        ans = []
+        for logits in self.params:
+            ans.append(F.softmax(logits / self.T, dim=0))
+        return ans
+
 
 class ConstantModel(nn.Module):
     def __init__(self, n, probs):

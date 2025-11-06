@@ -73,3 +73,25 @@ class AdamEVE(Optimizer):
                 self.prev_update[i] = b_n.clone()
 
         return loss
+
+import torch
+from torch.optim import Adam
+
+class AdamWithNoise(Adam):
+    """
+    Adam optimizer z dodanim majhnim Gaussovim šumom po update.
+    """
+    def __init__(self, params, lr=1e-3, betas=(0.9,0.999), eps=1e-8, weight_decay=0.0, noise_std=1e-5):
+        super().__init__(params, lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
+        self.noise_std = noise_std
+
+    @torch.no_grad()
+    def step(self, closure=None):
+        loss = super().step(closure)
+        # dodajanje šuma
+        for group in self.param_groups:
+            for p in group['params']:
+                if p.grad is not None:
+                    noise = torch.randn_like(p) * self.noise_std
+                    p.add_(noise)
+        return loss

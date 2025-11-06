@@ -9,7 +9,7 @@ from gofi.graphs.loss import (
     BijectiveLoss,
     RelationLoss,
     BijectiveLossMatrix,
-    RelationLossMatrix,
+    RelationLossMatrix, LossGraphMatching
 )
 from torch.nn.utils import clip_grad_norm_
 from tqdm import tqdm
@@ -30,6 +30,7 @@ def training(
     verbose=500,
     A=1,
     B=1,
+    store_relation_loss=False
 ):
     def loss_function(f, M1, M2):
         return A * BijectiveLoss(f) + B * RelationLoss(f, M1, M2)
@@ -44,16 +45,25 @@ def training(
 
     grad_norm = eps + 1
     step = 0
+    losses = []
+    relation_losses = []
     # train till norm of gradient is small - local minima
     try:
         while grad_norm > eps:
             step += 1
-            if verbose and ( (step % verbose == 1) or verbose == 1):
-                print(f"Step {step}", end=". ")
+            
             # one step of training
             
             loss = loss_function(f, M1, M2)
             loss.backward()
+
+            with torch.no_grad():
+                loss_value = loss.item()
+                losses.append(loss_value)
+                if store_relation_loss:
+                    p_matrix = f.mode_matrix()
+                    rloss = LossGraphMatching(p_matrix, M1, M2)
+                    relation_losses.append(rloss.item())
             # clip gradient
             if grad_clipping is not None:
                 clip_grad_norm_(f.parameters(), max_norm=grad_clipping)
@@ -69,13 +79,7 @@ def training(
                     param_norm = p.grad.data.norm(2)  # L2 norm
                     grad_norm += param_norm.item() ** 2
             if verbose and ( (step % verbose == 1) or verbose == 1):
-                print(f"Loss= {loss.item()}, |grad| = {grad_norm}", end="")
-                if scheduler is not None:
-                        try:
-                            print(f", lr={scheduler.get_last_lr()}", end="")
-                        except: 
-                            pass
-                print("")
+                print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e} ||gradient||={grad_norm:.6f}", end="\r")
             # stop when reaching max steps
             if max_steps is not None:
                 if step >= max_steps:
@@ -94,8 +98,13 @@ def training(
         print(f"Exception: {e}")
         print("--------------------------\nTre::\n")
         traceback.print_exc()
-        print("--------------------------\nException occured.. returning f")
-        return f 
+        print("--------------------------\nException occured..")
+
+    if verbose:
+        print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e} ||gradient||={grad_norm:.6f}")
+    if store_relation_loss:
+        return losses, relation_losses
+    return losses
 
 
 def integrate_gradient_flow(phi0: torch.Tensor, M1: torch.Tensor, M2: torch.Tensor, t_max : int = 10, steps : int = 1000):
