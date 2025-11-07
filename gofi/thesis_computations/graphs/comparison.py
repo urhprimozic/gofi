@@ -178,7 +178,7 @@ if "__main__" == __name__:
     dataset = create_dataset(list(range(3, 25)) * 2, range(3, 5))
     #dataset = create_dataset([4] , [3])
 
-    with open(f"dataset_{run_name}.pkl", "wb") as f:
+    with open(f"./results/dataset_{run_name}.pkl", "wb") as f:
         pickle.dump(dataset, f)
 
     random_graphs, cayley_graphs, all_graphs = dataset
