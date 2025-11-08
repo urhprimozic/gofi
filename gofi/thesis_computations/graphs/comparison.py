@@ -166,8 +166,17 @@ def run_vanilla(M1, Q, M2, verbose=0):
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument("name", type=str, help="Run name")
+    parser.add_argument("-rg", nargs="*"    , type=int, help="List of random graph sizes")
+    parser.add_argument("-cg", nargs="*"    , type=int, help="List of cayley graph sizes for S_n")
     parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If no, adds current time in run name")
     args = parser.parse_args()
+
+    rg = args.rg
+    cg = args.cg
+    if rg is None:
+        rg = [] 
+    if cg is None:
+        cg = []
 
     run_name = args.name 
     if args.timeless == "no":
@@ -175,7 +184,7 @@ if "__main__" == __name__:
 
     print("Running comparisons")
     # create  and save dataset
-    dataset = create_dataset(list(range(3, 25)) * 2, range(3, 5))
+    dataset = create_dataset(rg, cg)
     #dataset = create_dataset([4] , [3])
 
     with open(f"./results/dataset_{run_name}.pkl", "wb") as f:
