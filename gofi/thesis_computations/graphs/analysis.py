@@ -6,6 +6,8 @@ import io
 import gofi.plot.colors as gc
 from comparison import run_nn
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 # Custom unpickler that maps CUDA tensors to CPU
 class CPU_Unpickler(pickle.Unpickler):
     def find_class(self, module, name):
@@ -20,6 +22,10 @@ def add_nn_into_comparison(run_name : str):
     # collect graphs and results
     random_graphs, cayley_graphs, all_graphs  = dataset
     for index, (graph_type, M1, Q, M2) in tqdm.tqdm(enumerate(all_graphs), total=len(all_graphs)):
+        # send to device 
+        M1 = M1.to(device)
+        M2 = M2.to(device)
+        Q = Q.to(device)
         try:
             with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl" , "rb") as f:
                 #results = pickle.load( f)
