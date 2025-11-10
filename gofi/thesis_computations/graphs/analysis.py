@@ -4,6 +4,7 @@ import tqdm
 import torch
 import io
 import gofi.plot.colors as gc
+from comparison import run_nn
 
 # Custom unpickler that maps CUDA tensors to CPU
 class CPU_Unpickler(pickle.Unpickler):
@@ -11,6 +12,30 @@ class CPU_Unpickler(pickle.Unpickler):
         if module == 'torch.storage' and name == '_load_from_bytes':
             return lambda b: torch.load(io.BytesIO(b), map_location='cpu')
         return super().find_class(module, name)
+
+def add_nn_into_comparison(run_name : str):
+    # collect dataset
+    with open(f'./results/dataset_{run_name}.pkl', 'rb') as f:
+        dataset = CPU_Unpickler(f).load() #pickle.load(f)
+    # collect graphs and results
+    random_graphs, cayley_graphs, all_graphs  = dataset
+    for index, (graph_type, M1, Q, M2) in tqdm.tqdm(enumerate(all_graphs), total=len(all_graphs)):
+        try:
+            with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl" , "rb") as f:
+                #results = pickle.load( f)
+                results = CPU_Unpickler(f).load()
+                #check if nn results are present
+                if "nn" in results:
+                    continue
+            # run nn comparison
+            results_nn = run_nn(M1, Q, M2)
+            # add to results 
+            results["nn"] = results_nn
+            # save back
+            with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl" , "wb") as f:
+                pickle.dump(results, f)
+        except:
+            print(f"Error at index: {index}. Skipping.")
 
 def collect_results(run_name : str):
     # collect dataset
@@ -24,6 +49,8 @@ def collect_results(run_name : str):
             with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl" , "rb") as f:
                 #results = pickle.load( f)
                 results = CPU_Unpickler(f).load()
+                #check if nn results are present
+
             all_results.append(results)
         except:
             print(f"Error at index: {index}. Skipping.")
