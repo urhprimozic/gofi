@@ -9,13 +9,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import torch
 
 def sinkhorn_matrix(log_alpha: torch.Tensor, n_iters=10, eps=1e-9):
-    # log_alpha: (n,n) logits
-    # log-domain Sinkhorn to reduce vanishing gradients
     log_P = log_alpha
     for _ in range(n_iters):
-        # row normalize
         log_P = log_P - torch.logsumexp(log_P, dim=1, keepdim=True)
-        # column normalize
         log_P = log_P - torch.logsumexp(log_P, dim=0, keepdim=True)
     return torch.exp(log_P).clamp_min(eps)
 
@@ -143,10 +139,10 @@ class RandomMap(nn.Module):
         return self.inner_model()#.to(device)
 
     def P(self):
-        if self.sinkhorn:
-            return sinkhorn_matrix(self.phi(), n_iters=self.sinkhorn_iters)
-        else:
-            return self.softmax(self.phi())#.to(device)
+        # Use Sinkhorn only if explicitly enabled; default preserves old behavior
+        if getattr(self, "sinkhorn", False):
+            return sinkhorn_matrix(self.phi(), n_iters=getattr(self, "sinkhorn_iters", 10))
+        return torch.softmax(self.phi(), dim=1)
 
     def mode(self, programercic=False):
         """

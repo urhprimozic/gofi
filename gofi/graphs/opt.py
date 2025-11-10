@@ -154,13 +154,20 @@ def training_stable(
     sinkhorn_warmup_disable: bool = False,
     sinkhorn_iters_warmup: Optional[int] = None,
     sinkhorn_iters_post: Optional[int] = None,
+    # normalize graph-matching loss (only used when use_relation_loss=False)
+    normalize_graph_matching: bool = False,
 ):
     if use_relation_loss:
         def loss_function(f, M1, M2):
             return A * BijectiveLoss(f) + B * RelationLoss(f, M1, M2) 
     else:
-        def loss_function(f, M1, M2):
-            return A * BijectiveLoss(f) + B * LossGraphMatchingRandomMap(f, M1, M2)
+        if normalize_graph_matching:
+            def loss_function(f, M1, M2):
+                n = M1.shape[0]
+                return A * BijectiveLoss(f) + B * (LossGraphMatchingRandomMap(f, M1, M2) / (n ** 2))
+        else:
+            def loss_function(f, M1, M2):
+                return A * BijectiveLoss(f) + B * LossGraphMatchingRandomMap(f, M1, M2)
 
     if adam_parameters is None:
         adam_parameters = {}

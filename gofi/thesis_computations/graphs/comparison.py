@@ -168,8 +168,8 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
     # prepare nn
     layer_size = int(n**2)
     n_layers = 4
-    args = (   [layer_size] * n_layers) + [n**2]
-    nn = LinearNN(*args, T=1, softmax=False).to(device)
+    args = ([layer_size] * n_layers) + [n**2]
+    nn = LinearNN(*args, T=1, softmax=False, batch_normalisation=True).to(device)
     inner_model = ToMatrix(nn, n).to(device)
     # use sinkhorn instead of softmax 
     f = RandomMap(n, inner_model=inner_model, sinkhorn=True, sinkhorn_iters=10).to(device)
@@ -192,22 +192,25 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
         scheduler_parameters=scheduler_parameters,
         scheduler_input=scheduler_input,
         eps=1e-4,
-        adam_parameters={"lr": 0.1},
+        adam_parameters={"lr": 0.02},
         store_relation_loss=True,
         verbose=verbose,
         use_relation_loss=False,
-        grad_clipping=100,
+        grad_clipping=10,
+        # weights after normalizing graph-matching by n^2
         A=0.1,
-        B=10,
+        B=1.0,
         # Anti-vanishing tweaks (opt-in; only for run_nn)
         anti_vanish=True,
-        warmup_steps=max(200, n * 20),
+        warmup_steps=max(100, n * 10),
         sinkhorn_warmup_disable=True,   # row-softmax during warmup
-        sinkhorn_iters_warmup=1,
-        sinkhorn_iters_post=5,
-        entropy_weight=0.02,
-        entropy_decay=0.999,
-        grad_noise_std=1e-3,
+        sinkhorn_iters_warmup=2,
+        sinkhorn_iters_post=10,
+        entropy_weight=0.01,
+        entropy_decay=0.995,
+        grad_noise_std=5e-4,
+        # scale LossGraphMatching by n^2 only for run_nn
+        normalize_graph_matching=True,
     )  # eps is the grad_norm threshold here
 
     with torch.no_grad():

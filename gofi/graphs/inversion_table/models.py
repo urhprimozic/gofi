@@ -57,26 +57,31 @@ class LinearNN(nn.Module):
         self.T = 1.0 if T is None else T
         self.clamp_value = clamp_value
         self.linears = nn.ModuleList()
-        self.batch_norms = nn.ModuleList() if self.batch_normalisation else None
+        # both BN and LN; choose at runtime based on batch size
+        self.bn_norms = nn.ModuleList() if self.batch_normalisation else None
+        self.ln_norms = nn.ModuleList() if self.batch_normalisation else None
         for in_size, out_size in zip(layer_sizes[:-1], layer_sizes[1:]):
             self.linears.append(nn.Linear(in_size, out_size))
             if self.batch_normalisation and out_size > 1:
-                # BatchNorm1d supports 1D input of shape (C); single sample case is fine
-                self.batch_norms.append(nn.BatchNorm1d(out_size))
+                self.bn_norms.append(nn.BatchNorm1d(out_size))
+                self.ln_norms.append(nn.LayerNorm(out_size))
         self.n_layers = len(self.linears)
 
     def forward(self):
         x = self.init
-        # hidden layers (all except last)
         for i in range(self.n_layers - 1):
             x = self.linears[i](x)
             if self.batch_normalisation:
-                # BatchNorm1d expects (C) or (N,C); (C) is acceptable
-                x = self.batch_norms[i](x)
+                # Use LN when batch size == 1 or 1D vector; BN otherwise
+                if x.dim() == 1 or (x.dim() == 2 and x.size(0) == 1):
+                    x = self.ln_norms[i](x)
+                elif x.dim() == 2:
+                    x = self.bn_norms[i](x)
+                else:
+                    raise ValueError(f"Unexpected tensor dim for normalization: {x.dim()}")
             x = torch.relu(x)
             if self.clamp_value is not None:
                 x = torch.clamp(x, -self.clamp_value, self.clamp_value)
-        # last layer (no activation before optional softmax)
         x = self.linears[-1](x)
         if self.softmax:
             if x.dim() == 2:
