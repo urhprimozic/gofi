@@ -198,8 +198,17 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
         use_relation_loss=False,
         grad_clipping=100,
         A=0.1,
-        B=10
-    )  # eps je za grad_norm < eps tukaj
+        B=10,
+        # Anti-vanishing tweaks (opt-in; only for run_nn)
+        anti_vanish=True,
+        warmup_steps=max(200, n * 20),
+        sinkhorn_warmup_disable=True,   # row-softmax during warmup
+        sinkhorn_iters_warmup=1,
+        sinkhorn_iters_post=5,
+        entropy_weight=0.02,
+        entropy_decay=0.999,
+        grad_noise_std=1e-3,
+    )  # eps is the grad_norm threshold here
 
     with torch.no_grad():
         perm = [f.mode()[i] for i in range(1, n + 1)]

@@ -10,20 +10,9 @@ from gofi.graphs.loss import (
     BijectiveLossMatrix,
     RelationLossMatrix, LossGraphMatching, LossGraphMatchingRandomMap
 )
+from analysis import scan_and_join_results, loss_on_size
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+run_names, all_graphs, all_results = scan_and_join_results()
 
-
-x, _, _ = create_dataset([5],[])
-M1, Q, M2 = x[0]
-
-n = M1.shape[0]
-    
-# prepare nn
-layer_size = int(n**2)
-n_layers = 4
-args = (   [layer_size] * n_layers) + [n**2]
-nn = LinearNN(*args, T=5).to(device)
-inner_model = ToMatrix(nn, n).to(device)
-f = RandomMap(n, inner_model=inner_model).to(device)
+loss_on_size(all_results, "loss_on_size_all_methods")

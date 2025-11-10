@@ -48,42 +48,43 @@ class Linear_demo(nn.Module):
 
 
 class LinearNN(nn.Module):
-    def __init__(self, *layer_sizes, clamp_value=10e8, T=None, softmax=True):
+    def __init__(self, *layer_sizes, clamp_value=10e8, T=None, softmax=True, batch_normalisation: bool = False):
         super(LinearNN, self).__init__()
         assert len(layer_sizes) >= 2, "Need at least input and output layer size"
-
         self.softmax = softmax
-        self.init = nn.Parameter(torch.randn(layer_sizes[0])).to(device)  # initial vector
-
-        if T is None:
-            self.T=1
-        else:
-            self.T = T
+        self.batch_normalisation = batch_normalisation
+        self.init = nn.Parameter(torch.randn(layer_sizes[0])).to(device)
+        self.T = 1.0 if T is None else T
         self.clamp_value = clamp_value
         self.linears = nn.ModuleList()
-        
-
+        self.batch_norms = nn.ModuleList() if self.batch_normalisation else None
         for in_size, out_size in zip(layer_sizes[:-1], layer_sizes[1:]):
-            self.linears.append(nn.Linear(in_size, out_size).to(device))
-
+            self.linears.append(nn.Linear(in_size, out_size))
+            if self.batch_normalisation and out_size > 1:
+                # BatchNorm1d supports 1D input of shape (C); single sample case is fine
+                self.batch_norms.append(nn.BatchNorm1d(out_size))
         self.n_layers = len(self.linears)
 
     def forward(self):
         x = self.init
-        for i in range(self.n_layers - 1):  # all layers except last
+        # hidden layers (all except last)
+        for i in range(self.n_layers - 1):
             x = self.linears[i](x)
+            if self.batch_normalisation:
+                # BatchNorm1d expects (C) or (N,C); (C) is acceptable
+                x = self.batch_norms[i](x)
+            x = torch.relu(x)
             if self.clamp_value is not None:
-                x = torch.clamp(x, min=-self.clamp_value, max=self.clamp_value)
-            x = F.relu(x)
-
-        x = self.linears[-1](x)           # last layer
+                x = torch.clamp(x, -self.clamp_value, self.clamp_value)
+        # last layer (no activation before optional softmax)
+        x = self.linears[-1](x)
         if self.softmax:
             if x.dim() == 2:
-                x = F.softmax(x / self.T, dim=1)           # apply softmax   
-            if x.dim() == 1:  
-                x = F.softmax(x / self.T, dim=0)           # apply softmax 
+                x = torch.softmax(x / self.T, dim=1)
+            elif x.dim() == 1:
+                x = torch.softmax(x / self.T, dim=0)
             else:
-                raise ValueError("Dimensions of x should be 1 or 2.")
+                raise ValueError("Unexpected tensor dimension.")
         return x
 
 class PermDistDissconnected(nn.Module):
