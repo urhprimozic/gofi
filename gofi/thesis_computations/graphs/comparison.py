@@ -213,7 +213,7 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
                 list(torch.argmax(Q, axis=1).cpu().numpy() + 1)
             ),
             "diff_target_result": torch.norm(M2 - mpp.T @ M1 @ mpp).item(),
-            "model": "vanilla",
+            "model": "nn",
         }
     return results
 

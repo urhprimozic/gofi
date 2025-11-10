@@ -168,8 +168,7 @@ def training_stable(
     relation_losses = []
     # train till norm of gradient is small - local minima
     try:
-        #while grad_norm > eps:
-        while True:
+        while grad_norm > eps:
             opt.zero_grad()
             step += 1
             
