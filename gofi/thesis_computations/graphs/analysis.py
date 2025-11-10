@@ -62,6 +62,16 @@ def collect_results(run_name : str):
             print(f"Error at index: {index}. Skipping.")
     return all_graphs, all_results
 
+def join_results(run_names):
+    all_graphs = None
+    all_results = []
+    for run_name in run_names:
+        graphs, results = collect_results(run_name)
+        if all_graphs is None:
+            all_graphs = graphs
+        all_results.extend(results)
+    return all_graphs, all_results
+
 def loss_on_size(all_results):
     '''
     Points in 2d space of n_vertices * loss. Each method has its own color.
