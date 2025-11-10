@@ -17,7 +17,7 @@ class CPU_Unpickler(pickle.Unpickler):
             return lambda b: torch.load(io.BytesIO(b), map_location='cpu')
         return super().find_class(module, name)
 
-def add_nn_into_comparison(run_name : str, override=True):
+def add_nn_into_comparison(run_name : str, override=True, print_error=False):
     # collect dataset
     with open(f'./results/dataset_{run_name}.pkl', 'rb') as f:
         dataset = CPU_Unpickler(f).load() #pickle.load(f)
@@ -44,8 +44,9 @@ def add_nn_into_comparison(run_name : str, override=True):
                 pickle.dump(results, f)
         except Exception as e:
             print(f"Error at index: {index}. Skipping.")
-            print(e)
-            e.print_traceback()
+            if print_error:
+                print(e)
+                e.print_traceback()
             continue
 
 def collect_results(run_name : str):
