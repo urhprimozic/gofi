@@ -251,10 +251,12 @@ if "__main__" == __name__:
         results_vanilla = run_vanilla(M1, Q, M2)
         results_vanilla_it = run_vanilla_it(M1, Q, M2)
         results_nn_it = run_nn_it(M1, Q, M2)
+        results_nn = run_nn(M1, Q, M2)
         # save results 
         results = {"vanilla" : results_vanilla,
                    "vanilla_it" : results_vanilla_it,
                    "nn_it" : results_nn_it,
+                   "nn" : results_nn,
                    "graph_tuple" : (M1, Q, M2)
                     }
         with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl" , "wb") as f:
