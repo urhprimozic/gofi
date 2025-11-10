@@ -9,7 +9,7 @@ from gofi.graphs.loss import (
     BijectiveLoss,
     RelationLoss,
     BijectiveLossMatrix,
-    RelationLossMatrix, LossGraphMatching
+    RelationLossMatrix, LossGraphMatching, LossGraphMatchingRandomMap
 )
 from torch.nn.utils import clip_grad_norm_
 from tqdm import tqdm
@@ -30,10 +30,15 @@ def training(
     verbose=500,
     A=1,
     B=1,
+    use_relation_loss=True,
     store_relation_loss=False
 ):
-    def loss_function(f, M1, M2):
-        return A * BijectiveLoss(f) + B * RelationLoss(f, M1, M2)
+    if use_relation_loss:
+        def loss_function(f, M1, M2):
+            return A * BijectiveLoss(f) + B * RelationLoss(f, M1, M2) 
+    else:
+        def loss_function(f, M1, M2):
+            return A * BijectiveLoss(f) + B * LossGraphMatchingRandomMap(f, M1, M2)
 
     if adam_parameters is None:
         adam_parameters = {}
@@ -49,13 +54,40 @@ def training(
     relation_losses = []
     # train till norm of gradient is small - local minima
     try:
-        while grad_norm > eps:
+        #while grad_norm > eps:
+        while True:
+            opt.zero_grad()
             step += 1
             
             # one step of training
             
             loss = loss_function(f, M1, M2)
+           
+
             loss.backward()
+            # diagnostic about grads
+            any_grad = False
+            total_sq = 0.0
+            for name, p in [(n, p) for n, p in f.named_parameters()]:
+                g = p.grad
+                if g is None:
+                    print(f"  PARAM: {name}: grad is None (shape {tuple(p.shape)})")
+                else:
+                    any_grad = True
+                    # avoid .data usage; detach the grad
+                    norm = g.detach().norm().item()
+                    total_sq += norm ** 2
+
+            grad_norm = total_sq ** 0.5
+            
+
+
+
+            # clip gradient
+            if grad_clipping is not None:
+                clip_grad_norm_(f.parameters(), max_norm=grad_clipping)
+
+            opt.step()
 
             with torch.no_grad():
                 loss_value = loss.item()
@@ -64,20 +96,10 @@ def training(
                     p_matrix = f.mode_matrix()
                     rloss = LossGraphMatching(p_matrix, M1, M2)
                     relation_losses.append(rloss.item())
-            # clip gradient
-            if grad_clipping is not None:
-                clip_grad_norm_(f.parameters(), max_norm=grad_clipping)
-
-            opt.step()
             
 
 
-            # update grad norm
-            grad_norm = 0.0
-            for p in f.parameters():
-                if p.grad is not None:
-                    param_norm = p.grad.data.norm(2)  # L2 norm
-                    grad_norm += param_norm.item() ** 2
+            
             if verbose and ( (step % verbose == 1) or verbose == 1):
                 print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e} ||gradient||={grad_norm:.6f}", end="\r")
             # stop when reaching max steps
@@ -85,8 +107,7 @@ def training(
                 if step >= max_steps:
                     break
             
-            # reset for next iter
-            opt.zero_grad()
+
             
             if scheduler is not None:
                 if scheduler_input is not None:
@@ -94,6 +115,8 @@ def training(
                         scheduler.step(loss)
                 else:
                     scheduler.step()
+            
+
     except Exception as e:
         print(f"Exception: {e}")
         print("--------------------------\nTre::\n")
@@ -106,6 +129,119 @@ def training(
         return losses, relation_losses
     return losses
 
+
+def training_stable(
+    f: RandomMap,
+    M1: torch.Tensor,
+    M2: torch.Tensor,
+    eps=0.001,
+    max_steps=None,
+    adam_parameters=None,
+    scheduler = None,
+    scheduler_parameters=None,
+    scheduler_input=None,
+    grad_clipping=10,
+    verbose=500,
+    A=1,
+    B=1,
+    use_relation_loss=True,
+    store_relation_loss=False
+):
+    if use_relation_loss:
+        def loss_function(f, M1, M2):
+            return A * BijectiveLoss(f) + B * RelationLoss(f, M1, M2) 
+    else:
+        def loss_function(f, M1, M2):
+            return A * BijectiveLoss(f) + B * LossGraphMatchingRandomMap(f, M1, M2)
+
+    if adam_parameters is None:
+        adam_parameters = {}
+    opt = Adam(f.parameters(), **adam_parameters)
+
+    if scheduler is not None:
+        scheduler = scheduler(opt, **scheduler_parameters)
+
+
+    grad_norm = eps + 1
+    step = 0
+    losses = []
+    relation_losses = []
+    # train till norm of gradient is small - local minima
+    try:
+        #while grad_norm > eps:
+        while True:
+            opt.zero_grad()
+            step += 1
+            
+            # one step of training
+            
+            loss = loss_function(f, M1, M2)
+           
+
+            loss.backward()
+            # diagnostic about grads
+            any_grad = False
+            total_sq = 0.0
+            for name, p in [(n, p) for n, p in f.named_parameters()]:
+                g = p.grad
+                if g is None:
+                    print(f"  PARAM: {name}: grad is None (shape {tuple(p.shape)})")
+                else:
+                    any_grad = True
+                    # avoid .data usage; detach the grad
+                    norm = g.detach().norm().item()
+                    total_sq += norm ** 2
+
+            grad_norm = total_sq ** 0.5
+            
+
+
+
+            # clip gradient
+            if grad_clipping is not None:
+                clip_grad_norm_(f.parameters(), max_norm=grad_clipping)
+
+            opt.step()
+
+            with torch.no_grad():
+                loss_value = loss.item()
+                losses.append(loss_value)
+                if store_relation_loss:
+                    p_matrix = f.mode_matrix()
+                    rloss = LossGraphMatching(p_matrix, M1, M2)
+                    relation_losses.append(rloss.item())
+            
+
+
+            
+            if verbose and ( (step % verbose == 1) or verbose == 1):
+                print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e} ||gradient||={grad_norm:.6f}", end="\r")
+            # stop when reaching max steps
+            if max_steps is not None:
+                if step >= max_steps:
+                    break
+            
+
+            
+            if scheduler is not None:
+                if scheduler_input is not None:
+                    if scheduler_input == 'loss':
+                        scheduler.step(loss)
+                else:
+                    scheduler.step()
+            
+
+    except Exception as e:
+        print(f"Exception: {e}")
+        print("--------------------------\nTre::\n")
+        traceback.print_exc()
+        print("--------------------------\nException occured..")
+
+    if verbose:
+        print(f"[step {step}] loss={loss_value:.6f} lr={opt.param_groups[0]['lr']:.2e} ||gradient||={grad_norm:.6f}")
+    if store_relation_loss:
+        return losses, relation_losses
+    return losses
 
 def integrate_gradient_flow(phi0: torch.Tensor, M1: torch.Tensor, M2: torch.Tensor, t_max : int = 10, steps : int = 1000):
     def neg_grad(t, x):

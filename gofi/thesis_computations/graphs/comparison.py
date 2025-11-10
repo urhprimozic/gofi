@@ -5,8 +5,8 @@ import gofi.graphs.inversion_table.opt as optit
 from gofi.graphs.inversion_table.loss import norm_loss_normalized
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import gofi.graphs.opt as optv
-from gofi.models import RandomMap
-from gofi.graphs.inversion_table.models import PermDistConnected, PermDistDissconnected
+from gofi.models import RandomMap, ToMatrix
+from gofi.graphs.inversion_table.models import PermDistConnected, LinearNN
 from gofi.graphs.inversion_table.probs import PermModel
 from gofi.graphs.graph import (
     random_adjacency_matrix,
@@ -162,6 +162,60 @@ def run_vanilla(M1, Q, M2, verbose=0):
         }
     return results
 
+def run_nn(M1, Q, M2, T=1, verbose=0):
+    n = M1.shape[0]
+    
+    # prepare nn
+    layer_size = int(n**2)
+    n_layers = 4
+    args = (   [layer_size] * n_layers) + [n**2]
+    nn = LinearNN(*args, T=1, softmax=False).to(device)
+    inner_model = ToMatrix(nn, n).to(device)
+    # use sinkhorn instead of softmax 
+    f = RandomMap(n, inner_model=inner_model, sinkhorn=True, sinkhorn_iters=10).to(device)
+    
+    scheduler = ReduceLROnPlateau
+    scheduler_parameters = {
+        "mode": "min",
+        "factor": 0.5,
+        "patience": 300,
+        "min_lr": 1e-5,
+    }
+    scheduler_input = "loss"
+
+    losses, relation_losses = optv.training_stable(
+        f,
+        M1,
+        M2,
+        max_steps=5000,
+        scheduler=ReduceLROnPlateau,
+        scheduler_parameters=scheduler_parameters,
+        scheduler_input=scheduler_input,
+        eps=1e-4,
+        adam_parameters={"lr": 0.1},
+        store_relation_loss=True,
+        verbose=verbose,
+        use_relation_loss=False,
+        grad_clipping=100,
+        A=0.1,
+        B=10
+    )  # eps je za grad_norm < eps tukaj
+
+    with torch.no_grad():
+        perm = [f.mode()[i] for i in range(1, n + 1)]
+        mpp = permutation_to_permutation_matrix(perm)
+        results = {
+            "losses": losses,
+            "relation_losses": relation_losses,
+            "final_loss": losses[-1],
+            "most_probable_permutation": perm,
+            "target_permutation": denumpy(
+                list(torch.argmax(Q, axis=1).cpu().numpy() + 1)
+            ),
+            "diff_target_result": torch.norm(M2 - mpp.T @ M1 @ mpp).item(),
+            "model": "vanilla",
+        }
+    return results
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()

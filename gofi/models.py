@@ -6,6 +6,33 @@ from scipy.optimize import linear_sum_assignment
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+import torch
+
+def sinkhorn_matrix(log_alpha: torch.Tensor, n_iters=10, eps=1e-9):
+    # log_alpha: (n,n) logits
+    # log-domain Sinkhorn to reduce vanishing gradients
+    log_P = log_alpha
+    for _ in range(n_iters):
+        # row normalize
+        log_P = log_P - torch.logsumexp(log_P, dim=1, keepdim=True)
+        # column normalize
+        log_P = log_P - torch.logsumexp(log_P, dim=0, keepdim=True)
+    return torch.exp(log_P).clamp_min(eps)
+
+
+class ToMatrix(nn.Module):
+    """
+    A model that reshapes output of an inner model into a square matrix.
+    """
+
+    def __init__(self, model : nn.Module, n : int):
+        super().__init__()
+        self.model = model
+        self.n = n
+
+    def forward(self) -> torch.Tensor:
+        return self.model().view(self.n, self.n)
+
 
 def closest_permutation_matrix(M: torch.Tensor) -> torch.Tensor:
     # Convert to numpy for scipy
@@ -50,6 +77,7 @@ class RandomMap(nn.Module):
         shape: int | Tuple[int, int],
         initial_params: None | torch.Tensor = None,
         inner_model: None | nn.Module = None,
+        sinkhorn = False,sinkhorn_iters=50
     ):
         """
         Create a random map on {1, 2, ...., shape} (if shape is int) or a random map between {1, ..., a} and {1, ..., b} if shape is (a, b).
@@ -64,6 +92,8 @@ class RandomMap(nn.Module):
             Initial parameters for the map, representing the probabilities of mapping each element to each other element. If None, parameters are initialized randomly.
         inner_model : nn.Module, optional
             An inner model to be used for the map, if any. If None, no inner model is used.
+        sinkhorn : bool, optional
+            Whether to use Sinkhorn normalization for the probability matrix. Default is False.
         """
         super().__init__()
         # set domain and codomain
@@ -81,6 +111,8 @@ class RandomMap(nn.Module):
             self.overparameterized = True
         self.inner_model = inner_model#.to(device)
         self.softmax = nn.Softmax(dim=1)#.to(device)
+        self.sinkhorn = sinkhorn
+        self.sinkhorn_iters = sinkhorn_iters
 
     @classmethod
     def from_probs(cls, probs: torch.Tensor, eps=1e-10):
@@ -111,10 +143,10 @@ class RandomMap(nn.Module):
         return self.inner_model()#.to(device)
 
     def P(self):
-        """
-        Returns stochastic matrix, which gives the probability distribution the map follows. (i,j)-th element of P equals to P(RandomMap(i)=j).
-        """
-        return self.softmax(self.phi())#.to(device)
+        if self.sinkhorn:
+            return sinkhorn_matrix(self.phi(), n_iters=self.sinkhorn_iters)
+        else:
+            return self.softmax(self.phi())#.to(device)
 
     def mode(self, programercic=False):
         """
@@ -153,8 +185,8 @@ class RandomMap(nn.Module):
         return ans 
     def mode_matrix(self):
         return closest_permutation_matrix(self.P())
-    
-        
-    
 
-        
+
+
+
+

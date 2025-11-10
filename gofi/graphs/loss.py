@@ -6,6 +6,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def LossGraphMatching(P, M1, M2):
     return torch.norm(M2 - P.T @ M1 @ P)
 
+def LossGraphMatchingRandomMap(f : RandomMap, M1 : torch.Tensor, M2 : torch.Tensor):
+    return LossGraphMatching(f.P().T, M1, M2)
+
 def RelationLossMatrix(P, M1, M2, eps=0.1e-10):
     """
     Returns relation loss of random map, defined by shotachastic matrix P, on graphs G1 and G2, given by adjacency matrices M1 and M2.
@@ -26,7 +29,7 @@ def RelationLossMatrix(P, M1, M2, eps=0.1e-10):
         Relation loss of random map defined by P on graphs G1 and G2.
     """
     conjugate = torch.min(P @ M2 @ P.T + eps, torch.tensor(1, device=P.device))
-    return -torch.trace(torch.log(conjugate) @ M1.T)#.to(device)
+    return -torch.trace(torch.log(conjugate) @ (M1.T))#.to(device)
 
 def BijectiveLossMatrix(P, eps=0.1e-10):
     """
