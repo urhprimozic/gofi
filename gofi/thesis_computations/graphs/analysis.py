@@ -79,7 +79,7 @@ def join_results(run_names):
 
 
 
-def loss_on_size(all_results, filename):
+def loss_on_size(all_results, filename, nn=True):
     '''
     Points in 2d space of n_vertices * loss. Each method has its own color.
 
@@ -101,16 +101,18 @@ def loss_on_size(all_results, filename):
         loss_vanilla_it.append(results["vanilla_it"]["final_loss"])
         loss_vanilla.append(results["vanilla"]["final_loss"])
         loss_nn_it.append(results["nn_it"]["final_loss"])
-        if "nn" in results:
-            loss_nn.append(results["nn"]["final_loss"])
-        else:
-            print("Warning: nn results missing!")
+        if nn:
+            if "nn" in results:
+                loss_nn.append(results["nn"]["final_loss"])
+            else:
+                print("Warning: nn results missing!")
 
     fig, ax = plt.subplots(ncols=1)
     ax.scatter(n_vertices, loss_vanilla_it, c=gc.lightorange, label="$\mathbb{R}^n$", marker='D')#, fillstyle='left')
     ax.scatter(n_vertices, loss_vanilla, c = gc.lightblue, label="$S_n$", marker='o')#, fillstyle='right')
     ax.scatter(n_vertices, loss_nn_it, c = gc.black, label="$S_n$ + nn", marker='P')#, fillstyle='full')
-    ax.scatter(n_vertices, loss_nn, c = gc.darkorange, label="$$\mathbb{R}^n$ + nn", marker='X')#, fillstyle='full')
+    if nn:
+        ax.scatter(n_vertices, loss_nn, c = gc.darkorange, label="$$\mathbb{R}^n$ + nn", marker='X')#, fillstyle='full')
 
     plt.legend()
     plt.savefig(f"{filename}.pdf")
@@ -122,7 +124,7 @@ def loss_on_size(all_results, filename):
     plt.legend()
     plt.savefig(f"{filename}_it.pdf")
 
-def scan_and_join_results(results_dir: str = "./results", verbose: bool = False):
+def scan_and_join_results(results_dir: str = "./results", verbose: bool = False, nn=True):
     """
     Scan results_dir for dataset_<run_name>.pkl files, extract run_names,
     then join their collected results.
@@ -145,7 +147,8 @@ def scan_and_join_results(results_dir: str = "./results", verbose: bool = False)
             run_name = m.group(1)
             run_names.append(run_name)
             # add nn
-            add_nn_into_comparison(run_name)
+            if nn:
+                add_nn_into_comparison(run_name)
 
     run_names = sorted(set(run_names))
     if verbose:

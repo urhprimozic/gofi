@@ -97,9 +97,9 @@ if "__main__" == __name__:
     parser.add_argument(
         "--opt",
         type=str,
-        choices=["adam", "adameve"],
-        default="adam",
-        help="Optimizer. Choose between Adam and AdamEVE.",
+        choices=["adam", "noise"],
+        default="noise",
+        help="Optimizer. Choose between Adam and Adam with noise.",
     )
     parser.add_argument(
         "--vanilla",
@@ -226,7 +226,8 @@ if "__main__" == __name__:
         grad_clipping=grad_clipping,
         verbose=verbose,
         eps=eps, 
-        grad_eps=grad_eps
+        grad_eps=grad_eps,
+        adam_version=args.opt,
     )
 
     with torch.no_grad():

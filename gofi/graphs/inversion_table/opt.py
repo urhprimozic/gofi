@@ -5,7 +5,6 @@ from gofi.graphs.graph import permutation_to_permutation_matrix, permutation_mat
 from torch.optim import Adam
 from torch.nn.utils import clip_grad_norm_
 from torch.amp import autocast, GradScaler
-from gofi.adameve.adamEVE import AdamEVE
 from gofi.graphs.loss import LossGraphMatching
 import traceback
 
@@ -22,7 +21,7 @@ def training(
     eps=None,
     grad_eps = None,
     max_steps=None,
-    adameve=False,
+    adam_version="noise",
     adam_parameters=None,
     scheduler=None,
     scheduler_parameters=None,
@@ -52,7 +51,7 @@ def training(
     if adam_parameters is None:
         adam_parameters = {"lr": 3e-4}
     
-    if adameve:
+    if adam_version == "noise":
         opt = AdamWithNoise(dist.model.parameters(), **adam_parameters)
     else:
         opt = Adam(dist.model.parameters(), **adam_parameters)
