@@ -260,12 +260,12 @@ if "__main__" == __name__:
         "vanilla" : args.vanilla,
     }
 
-    with open(f"results_n_{n}_ls_{layer_size}_{args.name}.pkl", "wb") as f:
-        pickle.dump(results, f)
-
-
-    plt.plot(losses)
-    plt.savefig(f"loss_n_{n}_ls_{layer_size}_{args.name}.pdf")
-
-    with torch.no_grad():
-        print("Final loss:", loss_function(dist, M1, M2).item())
+    #with open(f"results_n_{n}_ls_{layer_size}_{args.name}.pkl", "wb") as f:
+    #    pickle.dump(results, f)
+#
+#
+    #plt.plot(losses)
+    #plt.savefig(f"loss_n_{n}_ls_{layer_size}_{args.name}.pdf")
+#
+    #with torch.no_grad():
+    #    print("Final loss:", loss_function(dist, M1, M2).item())
