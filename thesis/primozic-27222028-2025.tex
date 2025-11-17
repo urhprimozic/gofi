@@ -229,7 +229,7 @@ Definicije sledijo \cite{prince2023understandingdeeplearning}.
       gradientnega spusta na funkciji $f(x) = x e^{\sqrt{x} -
       2x\sin(x)}$ z začetnim parametrom $x_0=1$ in hitrostjo učenja
       $\eta$. V obeh primerih metoda konvergira do lokalnega minimuma
-    funkcije, ki ni globalni. }
+    funkcije.}
     \label{fig:primer gradientnega spusta}
   \end{figure}
 \end{primer}
@@ -247,6 +247,21 @@ Gradientni spust je ekvivalenten numeričnem reševanju diferencialne
 enačbe \emph{gradientnega toka} z Eulerjevo metodo (glej
 \cite{dherin2025learningsolvingdifferentialequations}).
 
+\begin{opomba}
+  V globokem učenju (\TODO{referenca na deep learning}) se za
+  optimizacijo uporabljajo
+  metode, ki temeljijo na gradientnem spustu, a nimajo nujne povezave
+  z gradientnim
+  tokom. Med drugim lahko z uporabo šuma v izračunu gradienta
+  dobimo metodo, ki z visoko verjetnostjo pobegne iz sedel
+  \cite{jin2017escapesaddlepointsefficiently}. Te lastnosti
+  nima nobena rešitev enačb gradientnega toka.
+
+  Alternativno bi se lahko optimizacije lotili z boljšimi numeričnimi
+  metodami za reševanje gradientnega toka, npr Runge-Kutta metodami višjega reda
+  \cite{dherin2025learningsolvingdifferentialequations}.
+\end{opomba}
+
 \subsection{Lastnosti gradientnega spusta}
 V primeru~\ref{fig:primer gradientnega spusta} metoda konvergira do
 lokalnega minimuma funkcije.
@@ -255,7 +270,7 @@ vrednosti parametrov $\phi_0$.
 
 Rešitev $\phi(t)$ gradientnega toka $  \frac{d\phi}{d t} = - \nabla
 \mathcal{L}(\phi), \quad \phi(0)=\phi_0$ vedno konvergira do
-lokalnega minimuma (\cite[stran 203]{Hirsch2012dynamical-systems} ).
+kritične točke $\loss$ (\cite[stran 203]{Hirsch2012dynamical-systems} ).
 Limita $\lim \limits_{t \to \infty} \phi(t)$
 je odvisna od izbire začetnih parametrov $\phi_0$.
 % Z uporabo nevronskih mrež in večanjem števila parametrov lahko
@@ -264,7 +279,7 @@ je odvisna od izbire začetnih parametrov $\phi_0$.
 % hitrosti učenja $\eta$. Če je $\eta$ prevelik, je lahko sprememba
 % parametrov prevelika, posledično pa se vrednost funckionala lahko poveča.
 % V \cite{prince2023understandingdeeplearning} avtor to lastnost izkorišča
-\subsection{Napredne gradientne optimizacijske metode}
+\subsection{Moment}
 Kljub gladkosti funckije $\loss$ so lahko spremembe parametrov pri
 uporabi gradientnega spusta kaotične. lahko jih delno omejimo z
 uporabo \emph{momenta} (\cite[stran 86]{prince2023understandingdeeplearning})
@@ -291,9 +306,10 @@ kjer so $\alpha > 0, \beta \in [0,1), \delta \in [0,1 )$ parametri modela.
 
 Zaradi dobrih empiričnih rezultatov se v praksi v strojen učenju
 namesto surovega gradientnega spusta za optimizacijo uporablja
-algoritem Adam. Na nekaterih mestih v tem delu bo uporabljen namesto
-gradientnega spusta.
+algoritem Adam.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+\clearpage
 \section{Iskanje upodobitev}
 Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
   enačimo $f = (\operatorname{flatten}(f(g_1)),
@@ -316,7 +332,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
     za ciklične in diedrske grupe.
     \subsection{Upodobitve končnih grup}
     \label{subsection:upodobitve končnih grup}
-    jezik teorije upodobitev je povzet po \cite{jezernik2025upodobitve}.
+    Jezik teorije upodobitev je povzet po \cite{jezernik2025upodobitve}.
     \begin{definicija}
       \index{upodobitev}
       Naj bo $G$ grupa in $V$ vektorski prostor nad poljem
@@ -527,22 +543,24 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       lastnosti. Limite različnih trajektorij (\emph{kritične točke
       sistema}) so natanko ničle $\nabla\loss(\phi) = 0$ gradienta
       (\cite[poglavje 9.3]{Hirsch2012dynamical-systems}).
+      \begin{opomba}
+        Enačbe gradientnih tokov nimajo vedno enostavnih  rešitev v
+        zaprti obliki
+        \cite{park2024absenceclosedformdescriptionsgradient}. Običajno se jih
+        računa numerično.
 
-      Enačbe gradientnih tokov nimajo vedno enostavnih  rešitev v
-      zaprti obliki. (Glej
-        \cite{park2024absenceclosedformdescriptionsgradient} za
-      gradientne tokove nevronskih mrež, \TODO{?}) Običajno se jih
-      računa numerično.
-
-      V tem delu enostavne\footnote{Za uporabo Runge-Kutte moramo
-        poznati gradient $\nabla \loss$. Eksplicitni izračun $\nabla
-        \loss $ z naraščajočim številom parametrov postane težaven in
-        nepraktičen. V tem primeru se v delu numerične integracije
-      lotimo z avtogradom, ki sam izračuna gradient.}  gradientne
-      tokove (\TODO{katere }) integriramo s Runge-Kutto (s pythonovo
-      metodo  \verb|scipy.integrate.solve_ivp.|), enačbe zapletenih
-      gradientnih tokov rešujemo z avtograd implementacijo Adama
-      (pythonova knjižnica \verb|torch|).
+        V delu enostavne\footnote{Za uporabo Runge-Kutte moramo
+          poznati gradient $\nabla \loss$. Eksplicitni izračun $\nabla
+          \loss $ z naraščajočim številom parametrov postane težaven in
+          nepraktičen. V tem primeru se v delu numerične integracije
+        lotimo z avtogradom, ki sam izračuna gradient.}  gradientne
+        tokove (ciklične in diedrske grupe) integriramo s Runge-Kutto
+        (s pythonovo
+        metodo  \verb|scipy.integrate.solve_ivp.|), enačbe zapletenih
+        gradientnih tokov rešujemo z avtograd implementacijo Adama
+        (pythonova knjižnica \verb|torch|).
+      \end{opomba}
+      %%%%%%%%%%%%
       \subsection{Ciklične grupe}
       \label{subsection : ciklicčne grupe}
       Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
@@ -597,7 +615,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       unitarne nerazcepne upodobitve.
       \begin{izrek}
         \label{izrek:kritične točke ciklične}
-        Edini lokalni ekstremi preslikave $(x,y) \mapsto ||(x + iy)^n
+        Edine kritične točke preslikave $(x,y) \mapsto ||(x + iy)^n
         -1||^2$ so $e^\frac{2 \pi i k}{n}$  za $k \in \{0,1, \dotsc,
         n-1\}$ in $(0,0)$.
         % Točka $(0,0)$ je odbojna točka, ostale pa privlačne.
@@ -685,9 +703,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       pa gradientni spust iz $[-1,0]\times[-1,1]$ nikoli ne doseže
       ničelne napake. Enake lastnosti opazimo na širši množici
       diedrskih grup - glej \TODO{grafi za ostalo}
-
-      \TODO{to je od -1 do 1. zanimiv bi blo vift, kaj se zgodi, če
-      to razširimo!}.
+      %%%%%%%%%%%%%
       \begin{figure}[h!]
         \centering
         \begin{minipage}{0.49\textwidth}
@@ -768,12 +784,11 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         ||R^iS||_F^2)    - 1\right )^2.
       \end{align*}
       \paragraph{Numerične rešitve}
-      Slika \ref{figure : dihedral 2d trajectories} prikazuje
+      Slika \ref{fig:diedrska-2dim-trajektorije} prikazuje
       numerične rešitve za različne začetne parametre. Trajektorije
       rešitev $(R(t), S(t))$ vizualiziramo v $\R^2$ kot
       $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
           \begin{figure}[h!]
-            \label{figure : dihedral 2d trajectories}
             \centering
             \begin{minipage}{0.49\textwidth}
               \centering
@@ -834,15 +849,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           \end{table}
           %%%%%%%%%%%%%%%%%%%%%%%%%
           %%%%%%%%%%%%%%%%%%%
-          \subsection{Parametrizacija ortogonalne grupe}
-          \TODO{Študiramo $p \colon \R \to O_2$}.
-          % %%%%%%%%%%%%%%%%%%%%%%
-          % %%%%%%%%%%%%%%%%%%
-          % %%%%%%%%%%%%%%%%%%%%%%%%%
-          % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-          % //////////////////////
-          %%%%%%%%%%%%%%%%%%%%%%%%%%
-          %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          %  \subsection{Parametrizacija ortogonalne grupe}
+          % \TODO{Študiramo $p \colon \R \to O_2$}.
+          % out of scope for now
+          %
+          %
+          %
           \clearpage%newpage pusti floatom, da so prej!
           \section{Iskanje delovanj}
           Na podoben način lahko iščemo delovanja grup. Naj bo $G$
@@ -862,15 +874,14 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           prostor vektorjev $\{[f(i)]_{i=1, \dotsc n} | f \in
           \funnn{n}\}$ diskreten.
 
-          V strojnem učenju nad diskreten prostor izidov $D$ običajno
-          definiramo gladko družino porazdelitev
-          $\{\mathcal{P}_\phi(D)\}$ in minimiziramo  $-\log(P_\phi
-          (\text{opaženi izidi}))$.
-
           Nad prostorom funkcij $\funnn{n}$ definiramo gladko družino
           porazdelitev. Generatorje grupe sprva slikamo v poljubne
           porazdelitve, nato pa spreminjamo porazdelitve, da je
-          verjetnost za homomorfizem čim večja.
+          verjetnost za homomorfizem čim večja.\footnote{V strojnem
+            učenju nad diskreten prostor izidov $D$ običajno
+            definiramo gladko družino porazdelitev
+            $\{\mathcal{P}_\phi(D)\}$ in minimiziramo  $-\log(P_\phi
+          (\text{opaženi izidi}))$.}
 
           Model $\hat \rho$ delovanja $\rho \colon G \to S_n$ bo
           preslikava $\hat \rho \colon G \to \mathcal{P}(\funnn{n})$,
@@ -887,8 +898,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           \end{equation}
           in implicitno (glej enačbo  \eqref{eq: implicitna
           definicija upodovbitve}) drugje. Matrika $P_s =
-          \hat\rho(s)$ definira slučajno preslikavo\footnote{Tukaj
-            izrabimo notacijo in s $s$ označimo tako generator  kot
+          \hat\rho(s)$ definira slučajno preslikavo\footnote{Izraba
+            notacije. S $s$ označimo tako generator  kot
             slučajno funkcijo nad $[n]$, ki je porazdeljena s
             porazdelitvijo $P(s = f) = \prod _{i=1}^n P(s(i) = f(i)$.
               Prav tako za poljuben element $g=s_1s_2\dotsm s_m \in G$
@@ -989,7 +1000,29 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 \end{equation}
               \end{definicija}
               \subsection{Pretvorba modela v delovanje}
-              \TODO{dopišiiiiiiiiii}
+              \TODO{Ko loss skovnergira do $\loss < \epsilon$, za
+                delovanje vzamemo kar
+                najbolj verjetno preslikavo iz porazdelitve. Naj bo
+                permutacijska matrika preslikave generatorja $s$,
+                ki je podan z matriko $P_s$, označena s $\tilde{P_s}$.
+
+                Če je $\loss$ majhen, potem se za relacijo $r$ da dokazati?
+                $$
+                P_r = I + E_r,
+                $$
+                kjer je $(E_r)_{i,j} < \varepsilon$.
+
+                Treba je dokazati, da je preslikava $s \mapsto
+                \tilde{P_s}$ homomorfizem, torej da je
+                za $r = s_1 s_2 \dotsm s_m$
+                $$
+                \tilde{P_{s_1}} \tilde{P_{s_2}} \dotsm \tilde{P_{s_m}} = I
+                $$
+                S tem imamo zagotovilo, da lahko za zelo majhen loss
+                iz naše metode sploh dobimo delovanje.
+              }
+              %
+              %
               \subsection{Delovanje ciklične grupe}
               Študiramo model za delovanje ciklične grupe $C_n = <z |
               z^n=1>$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
@@ -1048,8 +1081,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 \caption[Stohastične matrike na začetku in po \TODO
                 korakih gradientnega spusta.]{Stohastične matrike na
                   začetku in po \TODO korakih gradientnega
-                spusta\footnote{\TODO kaka implementacija}.}
-                \TODO{Nekje je napaka! POženi ponovno, ne more met C}
+                spusta.}
                 \label{fig:actions-cn}
               \end{figure}
               \subsection{Delovanje diedrske grupe}
@@ -1148,6 +1180,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               Sledi, da je  $\sum_{\sigma  \in S_n}  \prod_{i=1}^n
               p_{i, \sigma(i)} =  \sum_{\sigma  \in \funnn{n}}
               \prod_{i=1}^n p_{i, \sigma(i)} $ in posledično je vsota
+              \\
               $
               \sum_{\sigma  \in \funnn{n} \setminus S_n}
               \prod_{i=1}^n p_{i, \sigma(i)}
@@ -1234,6 +1267,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               podrobneje opisana v poglavju \ref{section:graph_matching}.
             \end{opomba}
             \subsection{Rezultati}
+            \label{subsection : rezultati_grafi_vanilla}
             \begin{primer}
               Poglejmo si preprost graf \ref{fig:primer_grafa} na
               petih točkah $\{0,1,2,3,4\}$, s povezavami $\{0 \sim 4,
@@ -1257,135 +1291,17 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             nad različnimi naključno tvorjenimi grafi pa v
             \ref{dodatek:naključni grafi}.
 
-            \clearpage
-            \section{Preparametrizacije}
-            \label{section:overparametrisation}
-            Metode, predstavljene v prejšnjih poglavjih, so zanimive iz
-            teoretičnega stališča, a niso uporabne v praksi,
-            saj je dinamika gradientnih tokov preveč kaotična in
-            verjetnost za neuspešno konvergenco previsoka.
-
-            Aplikativnosti se lahko približamo z
-            \emph{overparametrzicaijo}. Stohastično matriko $P$ lahko
-            definiramo z večjim modelom $P(\phi)$, ki je odvisen od
-            velikega števila parametrov $\phi \in \R^d, d \gg n^2$. Z
-            dovolj veliko modelom (in ustrezno parametrično
-            redundanco) je mogoče v teoriji doseči ničelno izgubo.
-            \subsection{Nevronske mreže}
-            Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
-            mrežami}. Definicija nevronske mreže je povzeta po
-            \cite{prince2023understandingdeeplearning}.
-            \begin{definicija}[Nevronska mreža]
-              Naj bodo $W_1 \colon \R^{d_0} \to \R^{d_1}, W_2 \colon
-              \R^{d_1} \to \R^{d_2}, \dotsc , W_l \colon \R^{d_{l-1}}
-              \to \R^{d_l}$ \emph{afine} preslikave. Za vsak $i \in
-              \{1, 2, \dotsc, l\}$ in $x \in R^{d_{i-1}}$ velja
-              $W_i(x) = \Omega_i x + b_i$ za $\Omega_i \in
-              \R^{d_{i-1} \times d_i}$ in $b_i \in \R^{d_{i}}$.
-
-              Naj bodo $\sigma_1, \dotsc, \sigma_l$ realne funkcije v
-              eni spremenljivki. Za poljuben $d \in \N$ definiramo
-              $\sigma_i \colon \R^d \to \R^d$ po elementih s
-              predpisom $\sigma(x)_i = \sigma(x_i)$. Preslikavam
-              $\sigma_i$ rečemo \emph{aktivatorske funkcije}.
-              Običajno aktivacijske funkcije izberemo izmed
-              $\operatorname{ReLU}\footnote{$\operatorname{ReLU}(x) =
-                \begin{cases}
-                  0 & x \leq 0 \\
-                  x & x > 0
-                \end{cases}
-              $}, \operatorname{softmax}, \arctan, \operatorname{GeLU}$.
-
-              \emph{Nevronska mreža} globine $l$ je model
-              $$
-              M_\phi = \sigma_l \circ W_l \circ \sigma_{l-1} \circ
-              W_{l-1} \circ \dotsm \circ \sigma_1 \circ W_1 \colon
-              \R^{d_0} \to \R^{d_l},
-              $$
-              odvisen od parametrov $\phi  = \Omega_0, b_0, \Omega_1,
-              b_1, \dotsc, \Omega_l, b_l$. Če je $l \geq$ rečemo, da
-              je mreža globoka.
-            \end{definicija}
-            \begin{definicija}[Regresija]
-              Eden od klasičnih problemov, pri katerem se uporabljajo
-              nevronske mreže, je \emph{regresija}.
-
-              Za slučajni spremenljivki $X \in \R^{d_1}$ in $Y \in
-              \R^{d_2}$ iščemo model $\hat Y (X)$, ki čim bolje opiše $E[Y|X]$.
-
-              Predpostavimo, da imamo množico vzorcev $S_\text{train}
-              = \{(x_i, y_i) \mid i \in [n]\}$ slučajne spremenljivke
-              $(X,Y)$ in nevronsko mrežo $M_{\phi_0} \colon \R^{d_0}
-              \to \R^{d_l}$ z naključno izbranimi začetnimi parametri
-              $\phi$ in z gradientnim spustom minimaliziramo
-              $$
-              \Loss{regresija} (\phi) = \frac{1}{|S_\text{train}
-              |}\sum _{(x, y) \in S_\text{train}} ||M_\phi (x) - y  ||^2.
-              $$
-              Uspešnost modela nato testiramo na množici vzorcev
-              $S_\text{test} \subset S_\text{train}^c$.
-            \end{definicija}
-            %
-            \begin{definicija}[Grafovska nevronska mreža]
-              \TODO{}
-            \end{definicija}
-
-            \subsection{Nevronske mreže dosežejo globalni minimum
-            funckije izgube}
-            Izkaže se, da z večanjem nevronske mreže $M(\phi)$
-            poljubna gladka funkcija izgube $\loss (\phi) $ postaja vse
-            bolj konveksna. V praksi to pomeni, da za velike
-            nevronske mreže gradientni spust najde globalni minimum.
-            Spodnji izrek je povzet po
-            \cite{allenzhu2019convergencetheorydeeplearning}.
-            \begin{izrek}[Allen-Zhu, Li, Song]
-              \label{izrek:allen-zhu-global-minima}
-              Naj bo $\loss \colon \R^d \to [0, \infty)$ gladka \TODO{}
-
-              Naj bo $S_\text{train}$ taka množica vzorcev, da
-              obstaja $\delta > 0$, da za dva  vzorca $(x_i, y_i),
-              (x_j,y_j) \in S_\text{train}$ z različnima indeksoma $i
-              \neq j $ velja $||x_i - x_j|| > \delta$.
-
-              Naj bo $M = \operatorname{ReLU} \circ W_l \circ
-              \operatorname{ReLU} \circ W_{l-1} \circ \dotsm \circ
-              \operatorname{ReLU} \circ W_1$  taka $l$-plastna
-              nevronska mreža, da velja $d_1 = d_2 = \dotsm = d_{l-1}
-              = m \in \N > d_0 \cdot \operatorname{poly}(n, l, \delta^{-1})$.
-
-              Potem gradinetni spust s hitrostjo učenja $\eta =
-              \Theta (d_0 \frac{\delta}{m \cdot
-              \operatorname{poly}(n, l)})$ z verjetnostjo vsaj $1 -
-              e^{- \Omega(\log^2 m)}$  po
-              $\Theta(\operatorname{poly}(n, l) \delta^{-2} \epsilon
-              ^{-1})$ korakih najde parametre $\phi$, za katere velja
-              $\Loss{regresija}(\phi) < \epsilon$.
-            \end{izrek}
-            Dovolj velika nevronska mreža s preprosto obliko lahko
-            poljubno dobro aproksimira povprečno kvadratno napako pri
-            regresiji. Podoben izrek velja za poljubno gladko funkcijo izgube.
-
-            Z overparametrizacijo se lahko znebimo konvergence do
-            lokalnih minimumov in z gradientnim spustom poljubno
-            verjetno konvergiramo do globalne rešitve. Iskano
-            stohastično matriko $P(\phi)$ lahko definiramo z
-            nevronsko mrežo, izračunano na nekem konstantnem vektorju
-            $x_0 \in \R^{d_0}$.
-            \TODO{Rajši daj že splošen rezultat za poljuben loss.
-            Glej stran 38 v članku}
-            % Vir: \cite{allenzhu2019convergencetheorydeeplearning}
-
             \subsection{Quadratic assigment \\ Graph matching \TODO{slo?}}
             \label{section:graph_matching}
             \begin{definicija}
               Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
-              na $n$ vozljiščih. \emph{Graph matching} (glej
-              \cite{lyzinski2015graphmatchingrelaxrisk}) je problem
+              na $n$ vozljiščih. \emph{Graph matching}
+              \cite{lyzinski2015graphmatchingrelaxrisk} je problem
               iskanja minimuma
               $$
               \operatorname{argmin}_{P \in \Pi} ||M_1 - PM_2P^T ||_F^2,
               $$
-              kjer je $\Pi$ množica vseh $n \times n$ permutacijskih  matrik.
+              po  množici vseh $n \times n$ permutacijskih  matrik $\Pi$.
 
               Če matriki $M_1$ in $M_2$ pripadata izomorfnima
               grafoma, potem iščemo izomorfizem (glej opombo
@@ -1397,29 +1313,32 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             rešujejo z relaksacijami funkcije izgube $||M_1 - P M_2
             P^T||_F^2$ nad večje družine matrik $P$ in prevedbo
             končne matrike nazaj na permutacijsko
-            (\cite{lyzinski2015graphmatchingrelaxrisk},
-            \cite{aflalo2025convexrelaxation}).
+            \cite{lyzinski2015graphmatchingrelaxrisk},
+            \cite{aflalo2025convexrelaxation}.
 
             Novejše metode se problema lotevajo z globokim učenjem.
+            \TODO{Ali dodam opise nekaterim metod?}
+            %%%%%%%%%
+            %   \subsubsection{REINFORCE}
+            %   \TODO{Kaj je reinforce, kako se ga uporabi tukaj}
+            %   \subsubsection{Relaksacija permutacijske matrike}
+            %   \TODO{Kako to uporabljajo ,vir}
+            %
+            \subsection{Uporaba tabele inverzij}
+            V poglavju \ref{subsection : rezultati_grafi_vanilla}
+            izomorfizem iščemo v podprostoru
+            distribucij nad $\funnn{n}$, ki ga parametriziramo s
+            $(\R ^{n \times n})^{|S|}$. V tem poglavju predstavimo
+            alternativen pristop,
+            ki izomorfizem išče v podprostoru distribucij nad $S_n$. S tem
+            se ognemo potrebi po uporabi funkcije izgube za bijektivnost.
+            %
+            %
 
-            \TODO{relaksacija, gradientne metode, reinforce vs
-            relaksacija. A je moja metoda boljša?}
-
-            \subsubsection{REINFORCE}
-            \TODO{Kaj je reinforce, kako se ga uporabi tukaj}
-            \subsubsection{Relaksacija permutacijske matrike}
-            \TODO{Kako to uporabljajo ,vir}
-            \subsubsection{Overparametrizacija naše metode}
-            V poglavju \TODO{grafi} parametriziramo prostor
-            distribucij nad $\funnn{n}$ in maksimiziramo verjetnost,
-            da je slučajna preslikava izomorfizem.
-            Metodo lahko trivialno overparametriziramo z uvedbo
-            nevronske mreže in njen izhod zložimo v matriko $\phi$.
-            Ta naiven pristop žal ne daje dobrih rezultatov.
-
-            Kot v \TODO{REINFORCE} zoožamo prostor distribucij in se
-            omejimo na verjetnostne porazdelitve nad $S_n$.
-
+            Množico permutacij predstavimo s tabelami inverzij. Nad
+            slednjimi lahko na
+            trivialen način definiramo gladko družino porazdelitev z
+            $O(n^2)$ parametri.
             \subsubsection{Porazdelitve nad tabelo inverzij}
             \begin{definicija}(Tabela inverzij)
               Naj bo $\sigma \in S_n$ permutacija. Za vsak $k \in [n]$
@@ -1435,7 +1354,9 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \end{definicija}
             Tabela inverzij $TI \colon S_n \to [0, n-1] \times [0,
             n-2 ] \times \dotsm \times [0]$
-            je bijekcija (\TODO{vir?}). Porazdelitev vektorjev iz
+            je bijekcija \cite[Trditev
+            1.~3.~12]{ernumerativecombinatorics2011volume1}.
+            Porazdelitev vektorjev iz
             $\prod_{i=n-1}^0 [0, i]$ trivialno inducira porazdelitev nad $S_n$.
 
             Tabelo inverzij lahko razumemo kot proces tvorbe
@@ -1448,7 +1369,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             prosto mesto.
             \begin{primer}
               \label{primer:tabela_inverzij}
-              Naj bo  $\operatorname{TI}(\sigma) = (2, 2, 1)$.
+              Naj bo  $\operatorname{TI}(\sigma) = (2, 1, 0)$.
               Začnemo s prazno tabelo
               $$[ \_, \_, \_]$$
               dolžine $3$. Postavimo $1$ na $3$-to mesto
@@ -1596,14 +1517,13 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             Z uporabo zgornjih rekurzivnih
             enačb lahko funkcijo izgube izračunamo v času
             $O(n^5)$. S pametnim preoblikovanjem funkcije izgube lahko
-            časovno zahtevnost znižamo na $O(n^3)$\footnote{\TODO{to
-            je dovolj }}.
+            časovno zahtevnost znižamo na $O(n^3)$.
             %
             \paragraph{Izračun v $O(n^3)$}
             %
             Računamo
             $\loss = \sum_{i,j} \left ((M_1)_{i,j} - \sum_{k,h}p(i, k, j,
-            h, 1) (M_2)_{k,h} \right )^2$. 
+            h, 1) (M_2)_{k,h} \right )^2$.
             Definiramo pomožne funkcije
             \begin{align*}
               U_{j, m, k} &= \sum_h q(j, h, m)(M_2)_{k, h} \\
@@ -1611,46 +1531,190 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               T_{i, j, m} &= \sum_{k,h} p(i, k, j, h, m) (M_2)_{k,h}
             \end{align*}
             Očitno je $\loss = \sum_{i,j} \left ((M_1)_{i,j} - T_{i,
-            j, 0} \right )^2$. Iz rekurzivnih zvez za $p$ in $q$ 
-            sledi 
+            j, 0} \right )^2$. Iz rekurzivnih zvez za $p$ in $q$
+            sledi
             \begin{align*}
-T_{i, j, m} &={} &
-   &+\sum_h  P(a_m = i) q(j-1, h, m+1) (M_2)_{m,h}  \\
-          &   & 
-   &+\sum_h  P(a_m = j) q(i, k, m+1) (M_2)_{k,m} \\
-          &   &
-  &+ \sum_{k, h}  
-      p(i-1, k, j-1, h, m+1) S_m^<(i-1) (M_2)_{k,h} \\
-          &   &
-   &+\sum_{k, h}   
-      p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1)(M_2)_{k,h} \\ 
-          &   &
-   &+\sum_{k, h}  
-      p(i, k, j, h, m+1) S_m^>(j+1) (M_2)_{k,h} \\
-   &={} &
-   &P(a_m=i)  U_{j-1, m+1, m} +
-   P(a_m=j) V_{i, m+1, m} \\
-   & & &+  
-   T_{i-1, j-1, m+1}  S_m^<(i-1) +
-   T_{i, j-1, m+1}  S_m^{\text{mid}}(i+1, j-1) +
-   T_{i, j, m+1}  S_m^>(j+1)
-\end{align*}
-Z uporabo teh formul lahko funkcijo izgube izračunamo v
-času $O(n^3)$. Če želimo še hitrejši izračun, lahko 
-naključno izberemo podmnožico indeksov $(i,j)$ in
-izračunamo stohastični približek funkcije izgube na podmnožici.
+              T_{i, j, m} &={} &
+              &+\sum_h  P(a_m = i) q(j-1, h, m+1) (M_2)_{m,h}  \\
+              &   &
+              &+\sum_h  P(a_m = j) q(i, k, m+1) (M_2)_{k,m} \\
+              &   &
+              &+ \sum_{k, h}
+              p(i-1, k, j-1, h, m+1) S_m^<(i-1) (M_2)_{k,h} \\
+              &   &
+              &+\sum_{k, h}
+              p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1)(M_2)_{k,h} \\
+              &   &
+              &+\sum_{k, h}
+              p(i, k, j, h, m+1) S_m^>(j+1) (M_2)_{k,h} \\
+              &={} &
+              &P(a_m=i)  U_{j-1, m+1, m} +
+              P(a_m=j) V_{i, m+1, m} \\
+              & & &+
+              T_{i-1, j-1, m+1}  S_m^<(i-1) +
+              T_{i, j-1, m+1}  S_m^{\text{mid}}(i+1, j-1) +
+              T_{i, j, m+1}  S_m^>(j+1)
+            \end{align*}
+            Z uporabo teh formul lahko funkcijo izgube izračunamo v
+            času $O(n^3)$. Če želimo še hitrejši izračun, lahko
+            naključno izberemo podmnožico indeksov $(i,j)$ in
+            izračunamo stohastični približek funkcije izgube na podmnožici.
 
-Naj bo $S \subset [n] \times [n]$ naključno izbrana
-podmnožica indeksov. Za približek funkcije izgube lahko
-vzamemo
-\begin{equation*}
-  \loss_\approx = \sum_{(i, j) \in S}
-  \left ((M_1)_{i,j} - T_{i, j, 1} \right )^2.
-\end{equation*}
-Časovna zahtevnost izračuna približka je
-$O(|S| n^2)$.
-%
-\TODO{Rezultati}
+            Naj bo $S \subset [n] \times [n]$ naključno izbrana
+            podmnožica indeksov. Za približek funkcije izgube lahko
+            vzamemo
+            \begin{equation*}
+              \loss_\approx = \sum_{(i, j) \in S}
+              \left ((M_1)_{i,j} - T_{i, j, 1} \right )^2.
+            \end{equation*}
+            Časovna zahtevnost izračuna približka je
+            $O(|S| n^2)$.
+            %
+            \subsubsection{Overparametrizacija z nevronskimi mrežami}
+            Verjetnost uspešne konvergence lahko poizkusimo
+            izboljšati s overparametrizacijo proglema.
+            Matriko $P$ definiramo kot izhod globoke nevronske mreže
+            (glej dodatek \ref{poglavje:nn}) in spreminjamo njene
+            parametre.
+
+            Overparametrizacija z nevronskimi mrežami deluje za
+            \emph{gradient dominante}
+            funkcije izgube
+            \cite{allenzhu2019convergencetheorydeeplearning}, glej
+            \ref{poglavje:konvergenca-globokih-mrez}. Za splošne
+            funkcije izgube obstajajo
+            empirični rezultati, ki kažejo, da z rahlo
+            overparametrizacijo in gradientnim spustom lahko dosežemo
+            uspešno konvergenco \cite{safran2021effectsmildoverparameterizationoptimization, simon2024bettermodernmachinelearning}.
+            .
+            \subsection{Rezultati}
+            \TODO{}
+
+            \section{Overparametrizacija}
+
+            \section*{Dodatek: Konvergenca globokih mrež}
+            \addcontentsline{toc}{section}{Dodatek: Konvergenca globokih mrež}
+            \label{poglavje:konvergenca-globokih-mrez}
+            \TODO{Sem gredo definicije mrež in }
+
+            \clearpage
+            \section{Preparametrizacije}
+            \label{section:overparametrisation}
+            Metode, predstavljene v prejšnjih poglavjih, so zanimive iz
+            teoretičnega stališča, a niso uporabne v praksi,
+            saj je dinamika gradientnih tokov preveč kaotična in
+            verjetnost za neuspešno konvergenco previsoka.
+
+            Aplikativnosti se lahko približamo z
+            \emph{overparametrzicaijo}. Stohastično matriko $P$ lahko
+            definiramo z večjim modelom $P(\phi)$, ki je odvisen od
+            velikega števila parametrov $\phi \in \R^d, d \gg n^2$.
+            V
+            \subsection{Nevronske mreže}
+            \label{poglavje:nn}
+            Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
+            mrežami}. Definicija nevronske mreže je povzeta po
+            \cite{prince2023understandingdeeplearning}.
+            \begin{definicija}[Nevronska mreža]
+              Naj bodo $W_1 \colon \R^{d_0} \to \R^{d_1}, W_2 \colon
+              \R^{d_1} \to \R^{d_2}, \dotsc , W_l \colon \R^{d_{l-1}}
+              \to \R^{d_l}$ \emph{afine} preslikave. Za vsak $i \in
+              \{1, 2, \dotsc, l\}$ in $x \in R^{d_{i-1}}$ velja
+              $W_i(x) = \Omega_i x + b_i$ za $\Omega_i \in
+              \R^{d_{i-1} \times d_i}$ in $b_i \in \R^{d_{i}}$.
+
+              Naj bodo $\sigma_1, \dotsc, \sigma_l$ realne funkcije v
+              eni spremenljivki. Za poljuben $d \in \N$ definiramo
+              $\sigma_i \colon \R^d \to \R^d$ po elementih s
+              predpisom $\sigma(x)_i = \sigma(x_i)$. Preslikavam
+              $\sigma_i$ rečemo \emph{aktivatorske funkcije}.
+              Običajno aktivacijske funkcije izberemo izmed
+              $\operatorname{ReLU}\footnote{$\operatorname{ReLU}(x) =
+                \begin{cases}
+                  0 & x \leq 0 \\
+                  x & x > 0
+                \end{cases}
+              $}, \operatorname{softmax}, \arctan, \operatorname{GeLU}$.
+
+              \emph{Nevronska mreža} globine $l$ je model
+              $$
+              M_\phi = \sigma_l \circ W_l \circ \sigma_{l-1} \circ
+              W_{l-1} \circ \dotsm \circ \sigma_1 \circ W_1 \colon
+              \R^{d_0} \to \R^{d_l},
+              $$
+              odvisen od parametrov $\phi  = \Omega_0, b_0, \Omega_1,
+              b_1, \dotsc, \Omega_l, b_l$. Če je $l \geq$ rečemo, da
+              je mreža globoka.
+            \end{definicija}
+            \begin{definicija}[Regresija]
+              Eden od klasičnih problemov, pri katerem se uporabljajo
+              nevronske mreže, je \emph{regresija}.
+
+              Za slučajni spremenljivki $X \in \R^{d_1}$ in $Y \in
+              \R^{d_2}$ iščemo model $\hat Y (X)$, ki čim bolje opiše $E[Y|X]$.
+
+              Predpostavimo, da imamo množico vzorcev $S_\text{train}
+              = \{(x_i, y_i) \mid i \in [n]\}$ slučajne spremenljivke
+              $(X,Y)$ in nevronsko mrežo $M_{\phi_0} \colon \R^{d_0}
+              \to \R^{d_l}$ z naključno izbranimi začetnimi parametri
+              $\phi$ in z gradientnim spustom minimaliziramo
+              $$
+              \Loss{regresija} (\phi) = \frac{1}{|S_\text{train}
+              |}\sum _{(x, y) \in S_\text{train}} ||M_\phi (x) - y  ||^2.
+              $$
+              Uspešnost modela nato testiramo na množici vzorcev
+              $S_\text{test} \subset S_\text{train}^c$.
+            \end{definicija}
+            %
+            \begin{definicija}[Grafovska nevronska mreža]
+              \TODO{}
+            \end{definicija}
+
+            \subsection{Nevronske mreže dosežejo globalni minimum
+            funckije izgube}
+            Izkaže se, da z večanjem nevronske mreže $M(\phi)$
+            poljubna gladka funkcija izgube $\loss (\phi) $ postaja vse
+            bolj konveksna. V praksi to pomeni, da za velike
+            nevronske mreže gradientni spust najde globalni minimum.
+            Spodnji izrek je povzet po
+            \cite{allenzhu2019convergencetheorydeeplearning}.
+            \begin{izrek}[Allen-Zhu, Li, Song]
+              \label{izrek:allen-zhu-global-minima}
+              Naj bo $\loss \colon \R^d \to [0, \infty)$ gladka \TODO{}
+
+              Naj bo $S_\text{train}$ taka množica vzorcev, da
+              obstaja $\delta > 0$, da za dva  vzorca $(x_i, y_i),
+              (x_j,y_j) \in S_\text{train}$ z različnima indeksoma $i
+              \neq j $ velja $||x_i - x_j|| > \delta$.
+
+              Naj bo $M = \operatorname{ReLU} \circ W_l \circ
+              \operatorname{ReLU} \circ W_{l-1} \circ \dotsm \circ
+              \operatorname{ReLU} \circ W_1$  taka $l$-plastna
+              nevronska mreža, da velja $d_1 = d_2 = \dotsm = d_{l-1}
+              = m \in \N > d_0 \cdot \operatorname{poly}(n, l, \delta^{-1})$.
+
+              Potem gradinetni spust s hitrostjo učenja $\eta =
+              \Theta (d_0 \frac{\delta}{m \cdot
+              \operatorname{poly}(n, l)})$ z verjetnostjo vsaj $1 -
+              e^{- \Omega(\log^2 m)}$  po
+              $\Theta(\operatorname{poly}(n, l) \delta^{-2} \epsilon
+              ^{-1})$ korakih najde parametre $\phi$, za katere velja
+              $\Loss{regresija}(\phi) < \epsilon$.
+            \end{izrek}
+            Dovolj velika nevronska mreža s preprosto obliko lahko
+            poljubno dobro aproksimira povprečno kvadratno napako pri
+            regresiji. Podoben izrek velja za poljubno gladko funkcijo izgube.
+
+            Z overparametrizacijo se lahko znebimo konvergence do
+            lokalnih minimumov in z gradientnim spustom poljubno
+            verjetno konvergiramo do globalne rešitve. Iskano
+            stohastično matriko $P(\phi)$ lahko definiramo z
+            nevronsko mrežo, izračunano na nekem konstantnem vektorju
+            $x_0 \in \R^{d_0}$.
+            \TODO{Rajši daj že splošen rezultat za poljuben loss.
+            Glej stran 38 v članku}
+            % Vir: \cite{allenzhu2019convergencetheorydeeplearning}
+            \TODO{Rezultati}
             \section{Dodatek}
             \subsection{Izomorfizmi Cayleyevih grafov}
             \label{dodatek:cayley}
@@ -1660,8 +1724,9 @@ $O(|S| n^2)$.
             \subsection{Izomorfizmi naključnih grafov}
             \label{dodatek:naključni grafi}
             \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
-%            \subsection{Dovolj so upodobitve nad končnimi množicami}
-%
+            %            \subsection{Dovolj so upodobitve nad
+            % končnimi množicami}
+            %
             % \section{Integrali po \texorpdfstring{$\omega$}{ω}-kompleksih}
             % \subsection{Definicija}
             % \begin{definicija}
