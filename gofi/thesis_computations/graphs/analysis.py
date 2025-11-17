@@ -46,7 +46,6 @@ def add_nn_into_comparison(run_name : str, override=True, print_error=False):
             print(f"Error at index: {index}. Skipping.")
             if print_error:
                 print(e)
-                e.print_traceback()
             continue
 
 def collect_results(run_name : str):
