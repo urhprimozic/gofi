@@ -1023,6 +1023,171 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               }
               %
               %
+              \paragraph{Spomin:} Za grupo
+              $G = <S|R>$  definiramo model 
+              $s \mapsto P_s$  med generatorji in \textbf{stohastičnimi} matrikami.
+              Za element grupe $g = s_1 s_2 \dotsm s_m \in G$ definiramo
+              $P_g = P_{s_1} P_{s_2} \dotsm P_{s_m}$. In minimiziramo
+              funkcijo izgube
+              $$
+              \sum_{r \in R} |P(r =\operatorname{id}) - 1|.
+              $$ 
+%
+%
+              \begin{lema}[Z minimaliziranjem $\loss$ je lahko $P_r$
+                poljubno blizu $I$.]
+                \label{lema:Pr_blizu_I}
+                Za $\epsilon > 0$ obstaja $\delta>0$, da iz   $1 -
+                P(r = \operatorname{id}) < \delta$ sledi $P_r = I +
+                E_r$ za $||E_e||_F < \epsilon$
+              \end{lema}
+              \begin{dokaz}
+                Ocenimo
+                $$ 1 - (P_r)_{i,i} \leq  1 - (P_r)_{1,1}
+                (P_r)_{2,2} \dotsm (P_r)_{n,n}
+                = 1 - P(r=\operatorname{id})< \delta.$$
+                %
+                $P_r$ je stohastična, torej velja
+                $\sum_{j=1}^n (P_r)_{i,j} = 1$. Iz tega sledi
+                $\sum_{j \neq i}
+                (P_r)_{i,j} < \delta$. Sledi
+                $$
+                P_{i, j} < \sum_{j \neq i} P_{i,j} < \delta,
+                $$
+                za $i \neq j$. Iz tega sledi $||E_r||_F < n
+                \delta$.
+              \end{dokaz}
+              %%%%%%%%%%
+              \begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrlnjiva]
+                Obstaja $\epsilon_0$, da za vsak $0 < \epsilon <
+                \epsilon_0$ in $P_r = I + E_r$ z $||E_r||_F^2 <
+                \epsilon$ velja, da je $P_s$ obrnjiva za vsak
+                generator $s \in S$.
+              \end{lema}
+              \begin{dokaz}
+                Vemo, da obstaja $\varepsilon_0$, da je za
+                $||E||_F < \epsilon$ matrika $I + E$ obrnljiva. (Vzameš zvezno preslikavo
+                  $f(A) =  \det (I + A)$ in opaziš, da je
+                  $0 \in f^{-1}(\frac{1}{2}, \frac{3}{2})$, iz česar
+                  zaradi zveznosti sledi,
+                  da $K_\varepsilon(0) \in  f^{-1}(\frac{1}{2},
+                  \frac{3}{2})$ za dovolj majhen $\varepsilon > 0$.
+                )
+
+                Naj bo $r = s_1 s_2 \dotsm s_m \in R$. Za dovolj
+                majhen $\epsilon$ je
+                $P_r = I + E_r = P_{s_1}  P_{s_2} \dotsm  P_{s_n}$
+                obrnljiva, torej so vse $ P_{s_i}$ obrnljive.
+              \end{dokaz}
+              %%%%%%%%%%%
+              \begin{lema}[Če je permanent (stohastične) matrike
+                blizu $1$, je matrika skoraj permutacijska]
+                Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
+                $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
+                majhen $\delta >0$, potem je $S = \overline{S} + E$
+                in $||E||_F^2 < \epsilon$.
+              \end{lema}
+              \begin{dokaz}
+                Naj bo $\mathcal{S} \subset \R^{n \times n}$ množica
+                stohastičnih matrik. Očitno je kompaktna.
+
+                Najprej dokažimo, da je $S = P + E$ za neko permutacijsko
+                matriko $P$ in  $||E||_F < \epsilon.$.
+
+                Opazujmo zvezno preslikavo $\operatorname{Perm}
+                \colon \mathcal{S} \to \R$.
+                Množica $\Pi  \subset \mathcal{S}$ permutacijskih
+                matrik je kompakt v $\mathcal{S}$. Definiramo množico
+                $$
+                U = \{ A \in \mathcal{S} \mid \operatorname{d}(\Pi,
+                A) > \epsilon  \}
+                $$
+                in opazimo, da je kompaktna. Označimo
+                $$
+                \max _{A \in U} \operatorname{Perm}(A) = 1 - \delta_0 < 1
+                $$
+                %
+                - zadnja neenakost sledi, ker so maksimumi
+                $\operatorname{Perm}$ natanko $Pi$.
+
+                Naj bo stohastična matrika $S \in \mathcal{S}$ taka, da je
+                $\operatorname{Perm}(S) > 1 - \delta_0$. Potem $S \notin U$,
+                torej obstaja permutacijska matrika $P$, da je
+                $$
+                \operatorname{d}(S, P) = ||S - P || \leq \epsilon.
+                $$
+                Definiramo $E = S - P$. Sledi $||E||_F < \epsilon$.
+                Očitno je $P = \overline{S} = \overline{P + E} $ za vsak
+                $\epsilon < \frac{1}{2}$.
+                %
+              \end{dokaz}
+              %
+              %%%%%%%%%
+              \begin{trditev}[Če sta $\Loss{rel}$ in $\Loss{bij}$
+                majhna, je $s \mapsto \overline{P_s}$ homomomorfizem]
+                Obstajata $\delta_1, \delta_2 > 0$, da iz
+                %
+                $\operatorname{Perm}(P_s) <  \delta_1$ za vsak
+                generator $s \in S$ in
+                $P(r \in R) < \delta_2$ za vsak $r \in R$ sledi, da je
+                preslikava $f \colon s \mapsto \overline{P_s}$ homomorfizem.
+              \end{trditev}
+              \begin{dokaz}
+                Izberemo $\epsilon >0$.
+                Naj bo $r = s_1 s_2 \dotsm s_m \in R$ taka, da je
+                $P_r = I + E_r$ in $||E_r||_F^2 < \epsilon$.
+                Naj bodo $P_{s_i} = \overline{P_{s_i}} + E_{s_i}$ za
+                $||E_{s_i}||_F^2 < \epsilon$.
+
+                Dokažimo, da je $$\overline{P_{s_1}} \overline{P_{s_2}}
+                \dotsm \overline{P_{s_m}} = I.$$
+
+                Velja
+                \begin{align*}
+                  P_r &= P_{s_1} P_{s_2} \dotsm P_{s_m}
+                  \\
+                  &=
+                  (\overline{P_{s_1}} + E_{s_1})
+                  (\overline{P_{s_2}} + E_{s_2}) \dotsm
+                  (\overline{P_{s_m}} + E_{s_m})
+                  \\
+                  &=
+                  \overline{P_{s_1}} \overline{P_{s_2}} \dotsm
+                  \overline{P_{s_m}} +
+                  \sum_{Z \subsetneqq [m]} \prod_{i \in Z} \overline{P_{s_i}}
+                  \prod_{j \notin Z} E_{s_j}
+                  \\
+                  &= I + E_r.
+                \end{align*}
+                %
+                Ocenimo
+                \begin{align*}
+                  ||\prod_{i=1}^m \overline{P_{s_i}} - I ||
+                  &= ||E_r - \sum_{Z \subsetneqq [n]} \prod_{i \in Z}
+                  \overline{P_{s_i}}
+                  \prod_{j \notin Z} E_{s_j} || \\
+                  &\leq
+                  ||E_r|| +
+                  \sum_{Z \subsetneqq [m]} \prod_{i \in Z}
+                  ||\overline{P_{s_i}}|| \prod_{j \notin Z} ||E_{s_j} || \\
+                  &\leq \epsilon  +
+                  \sum_{Z \subsetneqq [m]} \prod_{i \in Z}
+                  \sqrt{m} \prod_{j \notin Z} \epsilon
+                  \\
+                  &=
+                  \epsilon(1 + m^\frac{3}{2}(2^{m-1}-1))
+                  \xrightarrow{\epsilon \to 0} 0.
+                \end{align*}
+                Ker sta $\prod_{i=1}^m \overline{P_{s_i}}$ in $I$ permutacijski
+                matriki, je norma njune razlike vsaj $1$, če nista enaki.
+                %
+                %
+                %
+                %
+                %
+                %
+              \end{dokaz}
+              %%
               \subsection{Delovanje ciklične grupe}
               Študiramo model za delovanje ciklične grupe $C_n = <z |
               z^n=1>$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
@@ -1585,7 +1750,9 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             funkcije izgube obstajajo
             empirični rezultati, ki kažejo, da z rahlo
             overparametrizacijo in gradientnim spustom lahko dosežemo
-            uspešno konvergenco \cite{safran2021effectsmildoverparameterizationoptimization, simon2024bettermodernmachinelearning}.
+            uspešno konvergenco
+            \cite{safran2021effectsmildoverparameterizationoptimization,
+            simon2024bettermodernmachinelearning}.
             .
             \TODO{deep network --> malo minimumov, veliko sedlov , kar je gut}
             \subsection{Rezultati}
