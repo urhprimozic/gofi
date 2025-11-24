@@ -10,28 +10,27 @@ import itertools
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+vertices = [5, 7, 8, 9, 10, 10, 10]
+noise_scales = [0.01, 0.001, 0.0001]
+grad_thresholds = [0.01, 0.001]
+cooldowns = [2, 5, 10]
+decalys = [0.9, 0.99]
+parameters_list = [
+    {
+        "lr": 0.005,
+        "noise_scale": noise_scale,
+        "grad_threshold": grad_threshold,
+        "cooldown_steps": cooldown_steps,
+        "decay": decay,
+    }
+    for noise_scale, grad_threshold, cooldown_steps, decay in itertools.product(
+        noise_scales, grad_thresholds, cooldowns, decalys
+    )
+]
+
+graph_tuples = []
+
 if "__main__" == __name__:
-
-    vertices = [5, 7, 8, 9, 10, 10, 10]
-    noise_scales = [0.01, 0.001, 0.0001]
-    grad_thresholds = [0.01, 0.001]
-    cooldowns = [2, 5, 10]
-    decalys = [0.9, 0.99]
-    parameters_list = [
-        {
-            "lr": 0.005,
-            "noise_scale": noise_scale,
-            "grad_threshold": grad_threshold,
-            "cooldown_steps": cooldown_steps,
-            "decay": decay,
-        }
-        for noise_scale, grad_threshold, cooldown_steps, decay in itertools.product(
-            noise_scales, grad_thresholds, cooldowns, decalys
-        )
-    ]
-
-    graph_tuples = []
-
     with tqdm.tqdm(total=len(vertices) * len(parameters_list)) as pbar:
         for n in vertices:
             # get new graph
