@@ -36,7 +36,7 @@ def denumpy(x):
 
 
 
-def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **adam_params):
+def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009, grad_eps=None, **adam_params):
     '''
     Run vanilla inversion table model
     '''
@@ -64,9 +64,9 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **adam_params):
         M1,
         M2,
         loss_function=norm_loss_normalized,
-        grad_eps=1e-4 / 2,
-        eps=0.001,
-        max_steps=5000,
+        grad_eps=None,
+        eps=eps,
+        max_steps=max_steps,
         scheduler=ReduceLROnPlateau,
         scheduler_parameters=scheduler_parameters,
         scheduler_input=scheduler_input,
@@ -92,7 +92,7 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **adam_params):
     return results
 
 
-def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise", **adam_params):
+def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, grad_eps=None, **adam_params):
 
     # TODO : different adam parameters for noise
 
@@ -122,9 +122,9 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise", **adam_params):
         M1,
         M2,
         loss_function=norm_loss_normalized,
-        grad_eps=1e-4 / 2,
-        eps=0.001,
-        max_steps=5000,
+        grad_eps=None,
+        eps=eps,
+        max_steps=max_steps,
         scheduler=ReduceLROnPlateau,
         scheduler_parameters=scheduler_parameters,
         scheduler_input=scheduler_input,

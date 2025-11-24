@@ -17,7 +17,7 @@ cooldowns = [2, 5, 10]
 decalys = [0.9, 0.99]
 parameters_list = [
     {
-        "lr": 0.002,
+        "lr": 0.005,
         "noise_scale": noise_scale,
         "grad_threshold": grad_threshold,
         "cooldown_steps": cooldown_steps,
@@ -46,6 +46,8 @@ with tqdm.tqdm(total=len(vertices) * len(parameters_list)) as pbar:
                 M2,
                 T=5,
                 verbose=0,
+                max_steps=600,
+                eps=0.01,
                 **params,
             )
             result_vanilla = run_vanilla_it(
@@ -54,6 +56,9 @@ with tqdm.tqdm(total=len(vertices) * len(parameters_list)) as pbar:
                 M2,
                 T=5,
                 verbose=0,
+                max_steps=600,
+                eps=0.01,
+                **params,
             )
             result = {
                 "n": n,
