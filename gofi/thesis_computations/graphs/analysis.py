@@ -7,8 +7,10 @@ import gofi.plot.colors as gc
 from comparison import run_nn
 import os
 import re
+import hyperparams
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 # Custom unpickler that maps CUDA tensors to CPU
 class CPU_Unpickler(pickle.Unpickler):
@@ -160,5 +162,49 @@ def scan_and_join_results(results_dir: str = "./results", verbose: bool = False,
     all_graphs, all_results = join_results(run_names)
     return run_names, all_graphs, all_results
 
+def plot_loss_over_time(method_to_results, output_filename):
+    '''
+    Expects a dictionary {label : results, 'vanilla_it' : results, ...}
+    Plot loss over time for different methods.'''
+    plt.figure()
+    for label, results in method_to_results.items():
+        losses = results["losses"]
+        plt.plot(losses, label=label)
+    plt.yscale("log")
+    plt.xlabel("Korak")
+    plt.ylabel("Napaka")
+    plt.title(f"Napaka različnih metod skozi čas")
+    plt.legend()
+    plt.savefig(f"./results/loss_over_time_{output_filename}.pdf")
+    
 
 
+def plot_hyperparams_results():
+    #with open("./results/hyperparams_graphs.pkl", "rb") as f:
+     #   graph_tuples = pickle.load(f)
+    final_losses_nn=[]
+    final_losses_vanilla=[]
+    #for graph_index, (M1, Q, M2) in enumerate(graph_tuples):
+    for n in hyperparams.vertices:
+     #""   n = M1.shape[0]
+        for params in hyperparams.parameters_list:
+            try:
+                with open(
+                    f"./results/hyperparams_n{n}_ns{params['noise_scale']}_gt{params['grad_threshold']}_cd{params['cooldown_steps']}_decay{params['decay']}.pkl",
+                    "rb",
+                ) as f:
+                    result = pickle.load(f)
+            except Exception as e:
+                print(f"Error at n: {n} with params: {params}. Skipping.")
+                print(e)
+                break
+            plot_loss_over_time({"Nevronske mreže": result["nn"],"Brez": result["vanilla"]} , "test")
+            # store final losses 
+            results_nn = result["nn"]
+            results_vanilla = result["vanilla"]
+            final_losses_nn.append( results_nn["final_loss"])
+            final_losses_vanilla.append( results_vanilla["final_loss"])
+           
+    # average
+    print("Average final loss nn:", sum(final_losses_nn)/len(final_losses_nn))
+    print("Average final loss vanilla:", sum(final_losses_vanilla)/len(final_losses_vanilla))
