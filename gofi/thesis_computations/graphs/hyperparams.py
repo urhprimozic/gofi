@@ -46,7 +46,7 @@ with tqdm.tqdm(total=len(vertices) * len(parameters_list)) as pbar:
                 M2,
                 T=5,
                 verbose=0,
-                adam_params=params,
+                **params,
             )
             result_vanilla = run_vanilla_it(
                 M1,

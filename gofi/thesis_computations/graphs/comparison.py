@@ -36,7 +36,7 @@ def denumpy(x):
 
 
 
-def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **params):
+def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **adam_params):
     '''
     Run vanilla inversion table model
     '''
@@ -44,6 +44,11 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **params):
     n = M1.shape[0]
     model = VanillaModel(n, T=T)
     dist = PermModel(model, n)
+
+    if adam_params is None:
+        adam_params = {"lr": 0.03}
+    elif adam_params.get("lr") is None:
+        adam_params["lr"] = 0.03
 
     scheduler = ReduceLROnPlateau
     scheduler_parameters = {
@@ -66,7 +71,7 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **params):
         scheduler_parameters=scheduler_parameters,
         scheduler_input=scheduler_input,
         verbose=verbose,
-        adam_parameters={"lr": 0.03},
+        adam_parameters=adam_params,
         store_relation_loss=True,
     )
 
@@ -108,9 +113,9 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise", **adam_params):
     scheduler_input = "loss"
 
     if adam_params is None:
-        adam_params = {"lr": 0.001}
+        adam_params = {"lr": 0.01}
     elif adam_params.get("lr") is None:
-        adam_params["lr"] = 0.001
+        adam_params["lr"] = 0.01
 
     losses, relation_losses = optit.training(
         dist,
