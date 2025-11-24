@@ -36,7 +36,7 @@ def denumpy(x):
 
 
 
-def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009, grad_eps=None, **adam_params):
+def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009,amp=True, grad_eps=None, **adam_params):
     '''
     Run vanilla inversion table model
     '''
@@ -44,6 +44,11 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009, grad_eps
     n = M1.shape[0]
     model = VanillaModel(n, T=T)
     dist = PermModel(model, n)
+
+    if amp:
+        if torch.cuda.is_available():
+            from torch.amp import GradScaler
+            optit.scaler = GradScaler('cuda')
 
     if adam_params is None:
         adam_params = {"lr": 0.03}
@@ -92,7 +97,7 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009, grad_eps
     return results
 
 
-def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, grad_eps=None, **adam_params):
+def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, amp=True, grad_eps=None, **adam_params):
 
     # TODO : different adam parameters for noise
 
@@ -111,6 +116,11 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps
         "min_lr": 1e-5,
     }
     scheduler_input = "loss"
+
+    if amp:
+        if torch.cuda.is_available():
+            from torch.amp import GradScaler
+            optit.scaler = GradScaler('cuda')
 
     if adam_params is None:
         adam_params = {"lr": 0.01}
