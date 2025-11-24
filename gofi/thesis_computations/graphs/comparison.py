@@ -35,7 +35,12 @@ def denumpy(x):
     return x
 
 
-def run_vanilla_it(M1, Q, M2, T=5, verbose=0):
+
+def run_vanilla_it(M1, Q, M2, T=5, verbose=0, **params):
+    '''
+    Run vanilla inversion table model
+    '''
+    
     n = M1.shape[0]
     model = VanillaModel(n, T=T)
     dist = PermModel(model, n)
@@ -82,7 +87,10 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0):
     return results
 
 
-def run_nn_it(M1, Q, M2, T=5, verbose=0):
+def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise", **adam_params):
+
+    # TODO : different adam parameters for noise
+
     n = M1.shape[0]
 
     layer_size = int(n**2)
@@ -99,6 +107,11 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0):
     }
     scheduler_input = "loss"
 
+    if adam_params is None:
+        adam_params = {"lr": 0.001}
+    elif adam_params.get("lr") is None:
+        adam_params["lr"] = 0.001
+
     losses, relation_losses = optit.training(
         dist,
         M1,
@@ -111,7 +124,8 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0):
         scheduler_parameters=scheduler_parameters,
         scheduler_input=scheduler_input,
         verbose=verbose,
-        adam_parameters={"lr": 0.001},
+        adam_parameters=adam_params,
+        adam_version="noise",
         store_relation_loss=True,
     )
 

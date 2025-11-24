@@ -1,0 +1,1 @@
+      python3 run.py 10 --layer_size 200 --lr 0.001 --T 10 --verbose 1  --opt noise 
