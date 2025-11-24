@@ -45,17 +45,20 @@ with tqdm.tqdm(total=len(vertices) * len(parameters_list)) as pbar:
                 Q,
                 M2,
                 T=5,
-                verbose=1,
+                verbose=0,
                 max_steps=600,
                 eps=0.01,
                 **params,
             )
+            # change lr
+            params["lr"] = 0.03
+
             result_vanilla = run_vanilla_it(
                 M1,
                 Q,
                 M2,
                 T=5,
-                verbose=1,
+                verbose=0,
                 max_steps=600,
                 eps=0.01,
                 **params,
