@@ -275,6 +275,7 @@ if "__main__" == __name__:
     parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If no, adds current time in run name")
     parser.add_argument("--nn", type=str, choices=["yes", "no"], default="no" , help="Also trains nn + vanilla")
     parser.add_argument("--vanilla", type=str, choices=["yes", "no"], default="yes" , help="Also trains vanilla")
+    parser.add_argument("--noise", nargs="*"    , type=float, help="Noise parameters for AdamWN: noise_scale (1e-3), grad_threshold (1e-2), cooldown_steps (10), decay (1). Values in () are defaults.")
     args = parser.parse_args()
 
     rg = args.rg
@@ -283,6 +284,23 @@ if "__main__" == __name__:
         rg = [] 
     if cg is None:
         cg = []
+
+    # noise args
+    defaults = [ 
+ 1e-3,
+ 1e-2,
+ 10,
+ 1,]
+    keys = ["noise_scale" ,"grad_threshold" ,"cooldown_steps" ,"decay"]
+    if args.noise is None:
+        args.noise = [] 
+    for i, v in enumerate(args.noise):
+        defaults[i] = v
+
+    nn_it_adam_params={
+      key: setting for key, setting in zip(keys, defaults)
+        }
+    
 
     run_name = args.name 
     if args.timeless == "no":
@@ -306,18 +324,18 @@ if "__main__" == __name__:
             results_vanilla = None
         results_vanilla_it = run_vanilla_it(M1, Q, M2, max_steps=1200)
         
-        nn_it_adam_params={
-        "lr" : 1e-3, 
-        "betas" : (0.9, 0.999), 
-        "eps" : 1e-8,
-        "weight_decay" : 1e-4,
-        # perturbation-specific
-        "noise_max" : 1,
-        "noise_scale" : 1e-3,
-        "grad_threshold" : 1e-2,
-        "cooldown_steps" : 10,
-        "decay" : 1,
-        }
+     #   nn_it_adam_params={
+     #   "lr" : 1e-3, 
+     #   "betas" : (0.9, 0.999), 
+     #   "eps" : 1e-8,
+     #   "weight_decay" : 1e-4,
+     #   # perturbation-specific
+     #   "noise_max" : 1,
+     #   "noise_scale" : 1e-3,
+     #   "grad_threshold" : 1e-2,
+     #   "cooldown_steps" : 10,
+     #   "decay" : 1,
+     #   }
         results_nn_it = run_nn_it(M1, Q, M2, max_steps=1200, **nn_it_adam_params)
         if args.nn == "yes":
             results_nn = run_nn(M1, Q, M2)
