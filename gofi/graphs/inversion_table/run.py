@@ -211,6 +211,11 @@ if "__main__" == __name__:
     elif loss_function_name == "stochastic":
         loss_function = stochastic_norm_loss
         print("Using stochastic loss")
+
+    if args.opt == "adam":
+        print("Using Adam optimizer")
+    else:
+        print("Using Adam with noise optimizer")
     # train
 
     losses = opt.training(
