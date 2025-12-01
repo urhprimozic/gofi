@@ -111,9 +111,9 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps
     if scheduler == "cosine":
         scheduler = CosineAnnealingWarmRestarts
         scheduler_parameters = {
-            "T_0": args.cos_T0,
-            "T_mult": args.cos_Tmult,
-            "eta_min": args.cos_eta_min,
+            "T_0": 10,
+            "T_mult": 3,
+            "eta_min": (0.1e-4),
         }
         scheduler_input = None  # step every iteration
     else:
@@ -170,14 +170,14 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps
     return results
 
 
-def run_vanilla(M1, Q, M2, verbose=0):
+def run_vanilla(M1, Q, M2, max_steps=1000, verbose=0):
     n = M1.shape[0]
     f = RandomMap(n).to(device)
     losses, relation_losses = optv.training(
         f,
         M1,
         M2,
-        max_steps=5000,
+        max_steps=max_steps,
         eps=1e-4,
         adam_parameters={"lr": 0.01},
         store_relation_loss=True,
@@ -273,6 +273,7 @@ if "__main__" == __name__:
     parser.add_argument("-rg", nargs="*"    , type=int, help="List of random graph sizes")
     parser.add_argument("-cg", nargs="*"    , type=int, help="List of cayley graph sizes for S_n")
     parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If no, adds current time in run name")
+    parser.add_argument("--nn", type=str, choices=["yes", "no"], default="no" , help="Also trains nn + vanilla")
     args = parser.parse_args()
 
     rg = args.rg
@@ -298,10 +299,13 @@ if "__main__" == __name__:
 
     for index, (graph_type, M1, Q, M2) in tqdm.tqdm(enumerate(all_graphs), total=len(all_graphs)):
         # get results
-        results_vanilla = run_vanilla(M1, Q, M2)
-        results_vanilla_it = run_vanilla_it(M1, Q, M2)
-        results_nn_it = run_nn_it(M1, Q, M2)
-        results_nn = run_nn(M1, Q, M2)
+        results_vanilla = run_vanilla(M1, Q, M2, max_steps=1200)
+        results_vanilla_it = run_vanilla_it(M1, Q, M2, max_steps=1200)
+        results_nn_it = run_nn_it(M1, Q, M2, max_steps=1200)
+        if args.nn == "yes":
+            results_nn = run_nn(M1, Q, M2)
+        else:
+            results_nn = None
         # save results 
         results = {"vanilla" : results_vanilla,
                    "vanilla_it" : results_vanilla_it,
