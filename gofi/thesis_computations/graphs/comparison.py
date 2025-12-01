@@ -274,6 +274,7 @@ if "__main__" == __name__:
     parser.add_argument("-cg", nargs="*"    , type=int, help="List of cayley graph sizes for S_n")
     parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If no, adds current time in run name")
     parser.add_argument("--nn", type=str, choices=["yes", "no"], default="no" , help="Also trains nn + vanilla")
+    parser.add_argument("--vanilla", type=str, choices=["yes", "no"], default="yes" , help="Also trains vanilla")
     args = parser.parse_args()
 
     rg = args.rg
@@ -299,9 +300,25 @@ if "__main__" == __name__:
 
     for index, (graph_type, M1, Q, M2) in tqdm.tqdm(enumerate(all_graphs), total=len(all_graphs)):
         # get results
-        results_vanilla = run_vanilla(M1, Q, M2, max_steps=1200)
+        if args.vanilla == "yes":
+            results_vanilla = run_vanilla(M1, Q, M2, max_steps=1200)
+        else:
+            results_vanilla = None
         results_vanilla_it = run_vanilla_it(M1, Q, M2, max_steps=1200)
-        results_nn_it = run_nn_it(M1, Q, M2, max_steps=1200)
+        
+        nn_it_adam_params={
+        "lr" : 1e-3, 
+        "betas" : (0.9, 0.999), 
+        "eps" : 1e-8,
+        "weight_decay" : 1e-4,
+        # perturbation-specific
+        "noise_max" : 1,
+        "noise_scale" : 1e-3,
+        "grad_threshold" : 1e-2,
+        "cooldown_steps" : 10,
+        "decay" : 1,
+        }
+        results_nn_it = run_nn_it(M1, Q, M2, max_steps=1200, **nn_it_adam_params)
         if args.nn == "yes":
             results_nn = run_nn(M1, Q, M2)
         else:
