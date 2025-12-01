@@ -375,3 +375,4 @@ def main():
     list_of_results = collect_results()
     # plot loss on size
     average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it", methods=["vanilla_it", "vanilla"],markers=["o","o","o","o"])
+    average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it_vs_nn_it", methods=["vanilla_it", "vanilla", "nn_it"],markers=["o","o","o","o"])

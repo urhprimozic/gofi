@@ -3,7 +3,7 @@ import pickle
 from gofi.graphs.inversion_table.distributions import VanillaModel
 import gofi.graphs.inversion_table.opt as optit
 from gofi.graphs.inversion_table.loss import norm_loss_normalized
-from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch.optim.lr_scheduler import ReduceLROnPlateau, CosineAnnealingWarmRestarts
 import gofi.graphs.opt as optv
 from gofi.models import RandomMap, ToMatrix
 from gofi.graphs.inversion_table.models import PermDistConnected, LinearNN
@@ -97,7 +97,7 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009,amp=True,
     return results
 
 
-def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, amp=True, grad_eps=None, **adam_params):
+def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, amp=True, grad_eps=None, scheduler="cosine",**adam_params):
 
     # TODO : different adam parameters for noise
 
@@ -108,14 +108,23 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps
     model = PermDistConnected(n, 4, layer_size, T=T)
     dist = PermModel(model, n)
 
-    scheduler = ReduceLROnPlateau
-    scheduler_parameters = {
-        "mode": "min",
-        "factor": 0.5,
-        "patience": 300,
-        "min_lr": 1e-5,
-    }
-    scheduler_input = "loss"
+    if scheduler == "cosine":
+        scheduler = CosineAnnealingWarmRestarts
+        scheduler_parameters = {
+            "T_0": args.cos_T0,
+            "T_mult": args.cos_Tmult,
+            "eta_min": args.cos_eta_min,
+        }
+        scheduler_input = None  # step every iteration
+    else:
+        scheduler = ReduceLROnPlateau
+        scheduler_parameters = {
+            "mode": "min",
+            "factor": 0.5,
+            "patience": 300,
+            "min_lr": 1e-5,
+        }
+        scheduler_input = "loss"
 
     if amp:
         if torch.cuda.is_available():
