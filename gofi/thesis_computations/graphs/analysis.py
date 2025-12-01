@@ -128,7 +128,7 @@ def plot_loss_over_time(method_to_results, output_filename, suptitle=""):
     Plot loss over time for different methods.'''
     plt.figure()
     for label, results in method_to_results.items():
-        losses = results["losses"]
+        losses = results["relation_losses"]
         plt.plot(losses, label=label)
     plt.yscale("log")
     plt.xlabel("Korak")
@@ -229,19 +229,25 @@ def plot_hyperparams_nn_vs_nn(log_scale=True, mute_errors=True):
             continue
 
 
-def collect_results():
+def collect_results(run_name=None):
     '''
     Scans ./results for files. Expects files, saved by running compparison.py
     Returns list of dictionaries with results.
+
+    if run_name is given, only files starting with results_{run_name} are considered.
     '''
+    if run_name is None:
+        run_name="" 
+
     path = "./results"
     filenames = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    # remove bad names 
+    filenames = [f for f in filenames if f.startswith(f"results_{run_name}")]
 
     list_of_results = []
 
     for filename in tqdm.tqdm(filenames, total=len(filenames)):
-        if not filename.startswith("results_") or not filename.endswith(".pkl"):
-            continue
+        
         full_path = os.path.join(path, filename)
         try:
             with open(full_path, "rb") as f:
