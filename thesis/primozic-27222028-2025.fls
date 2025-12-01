@@ -603,6 +603,11 @@ INPUT ./images/random_samples_big_random_graph_1_on_5.png
 INPUT ./images/random_samples_big_random_graph_1_on_5.png
 INPUT ./images/random_samples_big_random_graph_1_on_5.png
 INPUT ./images/random_samples_big_random_graph_1_on_5.png
+INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
+INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
+INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
+INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
+INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri8.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri7.tfm
 INPUT ./primozic-27222028-2025.ind

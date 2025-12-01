@@ -1024,16 +1024,17 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               %
               %
               \paragraph{Spomin:} Za grupo
-              $G = <S|R>$  definiramo model 
-              $s \mapsto P_s$  med generatorji in \textbf{stohastičnimi} matrikami.
+              $G = <S|R>$  definiramo model
+              $s \mapsto P_s$  med generatorji in
+              \textbf{stohastičnimi} matrikami.
               Za element grupe $g = s_1 s_2 \dotsm s_m \in G$ definiramo
               $P_g = P_{s_1} P_{s_2} \dotsm P_{s_m}$. In minimiziramo
               funkcijo izgube
               $$
               \sum_{r \in R} |P(r =\operatorname{id}) - 1|.
-              $$ 
-%
-%
+              $$
+              %
+              %
               \begin{lema}[Z minimaliziranjem $\loss$ je lahko $P_r$
                 poljubno blizu $I$.]
                 \label{lema:Pr_blizu_I}
@@ -1066,7 +1067,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \end{lema}
               \begin{dokaz}
                 Vemo, da obstaja $\varepsilon_0$, da je za
-                $||E||_F < \epsilon$ matrika $I + E$ obrnljiva. (Vzameš zvezno preslikavo
+                $||E||_F < \epsilon$ matrika $I + E$ obrnljiva.
+                (Vzameš zvezno preslikavo
                   $f(A) =  \det (I + A)$ in opaziš, da je
                   $0 \in f^{-1}(\frac{1}{2}, \frac{3}{2})$, iz česar
                   zaradi zveznosti sledi,
@@ -1735,6 +1737,23 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             Časovna zahtevnost izračuna približka je
             $O(|S| n^2)$.
             %
+            \paragraph{Primerjava}
+            Na sliki \ref{fig:loss_computation_time_comparison} je
+            prikazana primerjava metode iz poglavja
+            \ref{subsection : rezultati_grafi_vanilla} in metode z
+            uporabo tabele inverzij. Z uporabo tabele inverzij
+            dosežemo bolšje rezultate.
+            \begin{figure}[h!]
+              \centering
+              \includegraphics[width=0.7\linewidth]{images/average_loss_on_size_vanilla_vs_it.pdf}
+              \caption{Primerjava napak glede na velikost grafa.
+                Za vsak $n$ sta metodi preizkušeni na istih $10$-tih
+                naključno izbranih grafih. Vsaka točka je povprečje
+                napak na teh grafih.
+              }
+              \label{fig:loss_computation_time_comparison}
+            \end{figure}
+            %
             \subsubsection{Overparametrizacija z nevronskimi mrežami}
             Verjetnost uspešne konvergence lahko poizkusimo
             izboljšati s overparametrizacijo proglema.
@@ -1757,32 +1776,29 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \TODO{deep network --> malo minimumov, veliko sedlov , kar je gut}
             \subsection{Rezultati}
             \TODO{}
-
-            \section{Overparametrizacija}
-
+            %
+            %\section{Overparametrizacija}
+            %
+            \clearpage
             \section*{Dodatek: Konvergenca globokih mrež}
             \addcontentsline{toc}{section}{Dodatek: Konvergenca globokih mrež}
             \label{poglavje:konvergenca-globokih-mrez}
-            \TODO{Sem gredo definicije mrež in }
-
-            \clearpage
-            \section{Preparametrizacije}
             \label{section:overparametrisation}
-            Metode, predstavljene v prejšnjih poglavjih, so zanimive iz
-            teoretičnega stališča, a niso uporabne v praksi,
-            saj je dinamika gradientnih tokov preveč kaotična in
-            verjetnost za neuspešno konvergenco previsoka.
-
-            Aplikativnosti se lahko približamo z
-            \emph{overparametrzicaijo}. Stohastično matriko $P$ lahko
-            definiramo z večjim modelom $P(\phi)$, ki je odvisen od
-            velikega števila parametrov $\phi \in \R^d, d \gg n^2$.
-            V
+            %Metode, predstavljene v prejšnjih poglavjih, so zanimive iz
+            %teoretičnega stališča, a niso uporabne v praksi,
+            %saj je dinamika gradientnih tokov preveč kaotična in
+            %verjetnost za neuspešno konvergenco previsoka.
+            %
+            %           Aplikativnosti se lahko približamo z
+            %          \emph{overparametrzicaijo}. Stohastično matriko $P$ lahko
+            %          definiramo z večjim modelom $P(\phi)$, ki je odvisen od
+            %          velikega števila parametrov $\phi \in \R^d, d \gg n^2$.
+            %          V
             \subsection{Nevronske mreže}
             \label{poglavje:nn}
-            Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
-            mrežami}. Definicija nevronske mreže je povzeta po
-            \cite{prince2023understandingdeeplearning}.
+            %Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
+            %mrežami}. Definicija nevronske mreže je povzeta po
+            %\cite{prince2023understandingdeeplearning}.
             \begin{definicija}[Nevronska mreža]
               Naj bodo $W_1 \colon \R^{d_0} \to \R^{d_1}, W_2 \colon
               \R^{d_1} \to \R^{d_2}, \dotsc , W_l \colon \R^{d_{l-1}}
@@ -1834,14 +1850,10 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               $S_\text{test} \subset S_\text{train}^c$.
             \end{definicija}
             %
-            \begin{definicija}[Grafovska nevronska mreža]
-              \TODO{}
-            \end{definicija}
-
             \subsection{Nevronske mreže dosežejo globalni minimum
             funckije izgube}
             Izkaže se, da z večanjem nevronske mreže $M(\phi)$
-            poljubna gladka funkcija izgube $\loss (\phi) $ postaja vse
+            poljubna $\sigma$-\emph{gradient dominantna} funkcija izgube $\loss (\phi) $ postaja vse
             bolj konveksna. V praksi to pomeni, da za velike
             nevronske mreže gradientni spust najde globalni minimum.
             Spodnji izrek je povzet po
