@@ -144,7 +144,7 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps
         grad_eps=None,
         eps=eps,
         max_steps=max_steps,
-        scheduler=ReduceLROnPlateau,
+        scheduler=scheduler,
         scheduler_parameters=scheduler_parameters,
         scheduler_input=scheduler_input,
         verbose=verbose,
