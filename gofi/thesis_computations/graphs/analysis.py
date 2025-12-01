@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt 
 import pickle
 import tqdm
@@ -50,7 +51,7 @@ def add_nn_into_comparison(run_name : str, override=True, print_error=False):
                 print(e)
             continue
 
-def collect_results(run_name : str):
+def collect_results_deprecated(run_name : str):
     # collect dataset
     with open(f'./results/dataset_{run_name}.pkl', 'rb') as f:
         dataset = CPU_Unpickler(f).load() #pickle.load(f)
@@ -81,52 +82,11 @@ def join_results(run_names):
 
 
 
-def loss_on_size(all_results, filename, nn=True):
-    '''
-    Points in 2d space of n_vertices * loss. Each method has its own color.
 
-    For every method (vanilla, vanilla_it, nn_it) and for every graph pair (M1, M2), there is a point (M1.shape[0], loss(method, M1, M2)), colored by method's color.
-    '''
-    # prepare n_vertices and loss 
-    n_vertices = []
-    loss_vanilla_it = []
-    loss_vanilla = []
-    loss_nn_it = []
-    loss_nn = []
 
-    for results in all_results:
-        # size
-        M1, _, _ = results["graph_tuple"]
-        n = M1.shape[0]
-        n_vertices.append(n)
-        # loss 
-        loss_vanilla_it.append(results["vanilla_it"]["final_loss"])
-        loss_vanilla.append(results["vanilla"]["final_loss"])
-        loss_nn_it.append(results["nn_it"]["final_loss"])
-        if nn:
-            if "nn" in results:
-                loss_nn.append(results["nn"]["final_loss"])
-            else:
-                print("Warning: nn results missing!")
 
-    fig, ax = plt.subplots(ncols=1)
-    ax.scatter(n_vertices, loss_vanilla_it, c=gc.lightorange, label="$\mathbb{R}^n$", marker='D')#, fillstyle='left')
-    ax.scatter(n_vertices, loss_vanilla, c = gc.lightblue, label="$S_n$", marker='o')#, fillstyle='right')
-    ax.scatter(n_vertices, loss_nn_it, c = gc.black, label="$S_n$ + nn", marker='P')#, fillstyle='full')
-    if nn:
-        ax.scatter(n_vertices, loss_nn, c = gc.darkorange, label="$$\mathbb{R}^n$ + nn", marker='X')#, fillstyle='full')
 
-    plt.legend()
-    plt.savefig(f"{filename}.pdf")
-
-    fig, ax = plt.subplots(ncols=1)
-    ax.scatter(n_vertices, loss_vanilla_it, c=gc.orange, label="$\mathbb{R}^n$", marker='D')#, fillstyle='left')
-    ax.scatter(n_vertices, loss_nn_it, c = gc.black,s=5, label="$S_n$ + nn", marker='P')#, fillstyle='full')
-
-    plt.legend()
-    plt.savefig(f"{filename}_it.pdf")
-
-def scan_and_join_results(results_dir: str = "./results", verbose: bool = False, nn=True):
+def scan_and_join_results(results_dir: str = "./results", verbose: bool = False, nn=False):
     """
     Scan results_dir for dataset_<run_name>.pkl files, extract run_names,
     then join their collected results.
@@ -162,7 +122,7 @@ def scan_and_join_results(results_dir: str = "./results", verbose: bool = False,
     all_graphs, all_results = join_results(run_names)
     return run_names, all_graphs, all_results
 
-def plot_loss_over_time(method_to_results, output_filename):
+def plot_loss_over_time(method_to_results, output_filename, suptitle=""):
     '''
     Expects a dictionary {label : results, 'vanilla_it' : results, ...}
     Plot loss over time for different methods.'''
@@ -173,21 +133,27 @@ def plot_loss_over_time(method_to_results, output_filename):
     plt.yscale("log")
     plt.xlabel("Korak")
     plt.ylabel("Napaka")
+    plt.suptitle(suptitle, fontsize=8)
     plt.title(f"Napaka različnih metod skozi čas")
     plt.legend()
     plt.savefig(f"./results/loss_over_time_{output_filename}.pdf")
+    plt.close()
     
 
 
-def plot_hyperparams_results():
+def plot_hyperparams_nn_vs_vanilla(skip_nn_vanilla=False):
     #with open("./results/hyperparams_graphs.pkl", "rb") as f:
      #   graph_tuples = pickle.load(f)
     final_losses_nn=[]
     final_losses_vanilla=[]
+
+    nn_losses= []
     #for graph_index, (M1, Q, M2) in enumerate(graph_tuples):
+    index=0
     for n in hyperparams.vertices:
      #""   n = M1.shape[0]
         for params in hyperparams.parameters_list:
+            index += 1
             try:
                 with open(
                     f"./results/hyperparams_n{n}_ns{params['noise_scale']}_gt{params['grad_threshold']}_cd{params['cooldown_steps']}_decay{params['decay']}.pkl",
@@ -198,8 +164,10 @@ def plot_hyperparams_results():
                 print(f"Error at n: {n} with params: {params}. Skipping.")
                 print(e)
                 break
-            plot_loss_over_time({"Nevronske mreže": result["nn"],"Brez": result["vanilla"]} , "test")
+            if not skip_nn_vanilla:
+                plot_loss_over_time({"Nevronske mreže": result["nn"],"Brez": result["vanilla"]} , f"test_{index}_n{n}", suptitle=f"Graf z  {n} vozljišči\nNastavitve: noise_scale={params['noise_scale']}, grad_threshold={params['grad_threshold']}, cooldown_steps={params['cooldown_steps']}, decay={params['decay']}")
             # store final losses 
+            nn_losses.append( result["nn"]["losses"])
             results_nn = result["nn"]
             results_vanilla = result["vanilla"]
             final_losses_nn.append( results_nn["final_loss"])
@@ -208,3 +176,202 @@ def plot_hyperparams_results():
     # average
     print("Average final loss nn:", sum(final_losses_nn)/len(final_losses_nn))
     print("Average final loss vanilla:", sum(final_losses_vanilla)/len(final_losses_vanilla))
+
+    # plot nn losses over time
+    
+def plot_hyperparams_nn_vs_nn(log_scale=True, mute_errors=True):
+    nn_losses= []
+    best = []
+    cmap = plt.get_cmap('gist_rainbow')
+    cmap2 = plt.get_cmap('inferno')
+    colors = [cmap(i) for i in np.linspace(0.2, 0.9, 20)] + [cmap2(i) for i in np.linspace(0, 1, 16)]
+    index=0
+    for n in hyperparams.vertices:
+        params_to_final_loss = {}
+        final_loss_to_params = {}
+        plt.figure()
+        for params in hyperparams.parameters_list:
+            index += 1
+            try:
+                with open(
+                    f"./results/hyperparams_n{n}_ns{params['noise_scale']}_gt{params['grad_threshold']}_cd{params['cooldown_steps']}_decay{params['decay']}.pkl",
+                    "rb",
+                ) as f:
+                    result = pickle.load(f)
+                    # add loss to plot 
+                    graph_of_loss = result["nn"]["losses"]
+                    params_to_final_loss[(params['noise_scale'], params['grad_threshold'], params['cooldown_steps'], params['decay'])] = result["nn"]["final_loss"]
+                    final_loss_to_params[result["nn"]["final_loss"]] = (params['noise_scale'], params['grad_threshold'], params['cooldown_steps'], params['decay'])
+                    plt.plot(graph_of_loss,color=colors[index-1], label=f"ns={params['noise_scale']}, gt={params['grad_threshold']}, cd={params['cooldown_steps']}, decay={params['decay']}")
+
+            except Exception as e:
+                if mute_errors:
+                    continue
+                print(f"Error at n: {n} with params: {params}. Skipping.")
+                continue
+        # save plot
+        if log_scale:
+            plt.yscale("log")
+        plt.xlabel("Korak")
+        plt.ylabel("Napaka")
+        plt.suptitle(f"Graf z  {n} vozljišči", fontsize=7)
+        plt.title(f"Napaka nevronskih mrež skozi čas za različne nastavitve hiperparametrov")
+        plt.legend(fontsize=6  )
+        plt.savefig(f"./results/hyperparams_nn_{index}_n{n}.pdf")
+        plt.close()
+
+        best.append((params_to_final_loss, final_loss_to_params))
+    for pf, fp in best:
+        try:
+            min_loss = min(fp.keys())
+            print(f"Best final loss: {min_loss} with params: {fp[min_loss]}")
+        except:
+            continue
+
+
+def collect_results():
+    '''
+    Scans ./results for files. Expects files, saved by running compparison.py
+    Returns list of dictionaries with results.
+    '''
+    path = "./results"
+    filenames = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+
+    list_of_results = []
+
+    for filename in tqdm.tqdm(filenames, total=len(filenames)):
+        if not filename.startswith("results_") or not filename.endswith(".pkl"):
+            continue
+        full_path = os.path.join(path, filename)
+        try:
+            with open(full_path, "rb") as f:
+                results = CPU_Unpickler(f).load() #TODO a to kej zjeba??!
+                list_of_results.append(results)
+        except Exception as e:
+            print(f"Error reading {filename}, skipping.")
+            print(e)
+            continue
+    return list_of_results
+
+
+def loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn"], markers = ['.', '.', '+', 'x']):
+    '''
+    Points in 2d space of n_vertices * loss. Each method has its own color.
+
+    For every method (vanilla, vanilla_it, nn_it) and for every graph pair (M1, M2), there is a point (M1.shape[0], loss(method, M1, M2)), colored by method's color.
+    '''
+    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn"]
+
+    # prepare n_vertices and loss 
+    n_vertices = []
+    loss = {
+        "vanilla_it" : [],
+        "vanilla" : [],
+        "nn_it" : [],
+        "nn" : [],
+
+    }
+    for results in list_of_results:
+        # get n
+        M1, _, _ = results["graph_tuple"]
+        n = M1.shape[0]
+        n_vertices.append(n)
+        # final RELATION    loss
+        for method in methods:
+            if method not in all_methods:
+                raise ValueError(f"Unknown method: {method}")
+            loss[method].append(results[method]["relation_losses"][-1])
+
+    fig, ax = plt.subplots(ncols=1)
+
+    labels = {
+        "vanilla_it" : "Tabela inverzij",
+        "vanilla" : "Brez tabele inverzij",
+        "nn_it" : "Nevronske mreže in tabela inverzij",
+        "nn" : "Nevronske mreže brez tabele inverzij",
+    }
+
+    colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange]
+  
+    for method, color, marker in zip(all_methods, colors, markers):
+        if method in methods:
+            ax.scatter(n_vertices, loss[method], c=color, label=labels[method], marker=marker, alpha=0.8)
+        
+      
+    plt.legend()
+    plt.xlabel("Število vozlišč")
+    plt.ylabel("Napaka")
+    plt.title("Napake različnih metod glede na velikosti grafov")
+    plt.savefig(f"{filename}.pdf")
+    plt.close()
+
+
+def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn"], markers = ['.', '.', '+', 'x']):
+    '''
+    Points in 2d space of n_vertices * loss. Each method has its own color.
+
+    For every method (vanilla, vanilla_it, nn_it) and for every graph size n, there is a point (n, E[loss(method)]), colored by method's color.
+    '''
+    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn"]
+
+    # prepare n_vertices and loss 
+    
+    
+    loss = {
+        "vanilla_it" : {},
+        "vanilla" : {},
+        "nn_it" : {},
+        "nn" : {},
+
+    }
+    for results in list_of_results:
+        # get n
+        M1, _, _ = results["graph_tuple"]
+        n = M1.shape[0]
+
+        # final RELATION    loss
+        for method in methods:
+            if method not in all_methods:
+                raise ValueError(f"Unknown method: {method}")
+            # adds new loss to n
+            if n not in loss[method]:
+                loss[method][n] = []
+            loss[method][n] = [results[method]["relation_losses"][-1]] + loss[method][n]
+            
+    # average
+    for method in methods:
+        for n in loss[method]:
+           # print(method, " - ", n, " - ", loss[method][n])
+            loss[method][n] = sum(loss[method][n]) / len(loss[method][n])
+
+    fig, ax = plt.subplots(ncols=1)
+
+    labels = {
+        "vanilla_it" : "Tabela inverzij",
+        "vanilla" : "Brez tabele inverzij",
+        "nn_it" : "Nevronske mreže in tabela inverzij",
+        "nn" : "Nevronske mreže brez tabele inverzij",
+    }
+
+    colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange]
+  
+    for method, color, marker in zip(all_methods, colors, markers):
+        if method in methods:
+            # collect n and loss
+            n_vertices = list(loss[method].keys())
+            loss_values = [loss[method][n] for n in n_vertices]
+            ax.scatter(n_vertices, loss_values, c=color, label=labels[method], marker=marker, alpha=0.8)
+        
+      
+    plt.legend()
+    plt.xlabel("Število vozlišč")
+    plt.ylabel("Napaka")
+    plt.title("Napake različnih metod glede na velikosti grafov")
+    plt.savefig(f"average_{filename}.pdf")
+    plt.close()
+
+def main():
+    # collect results
+    list_of_results = collect_results()
+    # plot loss on size
+    average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it", methods=["vanilla_it", "vanilla"],markers=["o","o","o","o"])
