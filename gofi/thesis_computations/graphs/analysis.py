@@ -267,7 +267,7 @@ def loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "
 
     For every method (vanilla, vanilla_it, nn_it) and for every graph pair (M1, M2), there is a point (M1.shape[0], loss(method, M1, M2)), colored by method's color.
     '''
-    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn"]
+    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"]
 
     # prepare n_vertices and loss 
     n_vertices = []
@@ -319,7 +319,7 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
 
     For every method (vanilla, vanilla_it, nn_it) and for every graph size n, there is a point (n, E[loss(method)]), colored by method's color.
     '''
-    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn"]
+    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"]
 
     # prepare n_vertices and loss 
     
@@ -329,6 +329,7 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         "vanilla" : {},
         "nn_it" : {},
         "nn" : {},
+        "mild_nn_it" : {},
 
     }
     for results in list_of_results:
@@ -358,6 +359,7 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         "vanilla" : "Brez tabele inverzij",
         "nn_it" : "Nevronske mreže in tabela inverzij",
         "nn" : "Nevronske mreže brez tabele inverzij",
+        "mild_nn_it" : "Blaga overparametrizacija in tabela inverzij",
     }
 
     colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange]
