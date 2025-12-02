@@ -347,7 +347,7 @@ if "__main__" == __name__:
     parser.add_argument("--nn", type=str, choices=["yes", "no"], default="no" , help="Also trains nn + vanilla")
     parser.add_argument("--vanilla", type=str, choices=["yes", "no"], default="yes" , help="Also trains vanilla")
     parser.add_argument("--mild_nn_it", type=str, choices=["yes", "no"], default="yes" , help="Also trains mild nn overparametrisation of it")
-    parser.add_argument("--noise", nargs="*"    , type=float, help="Noise parameters for AdamWN: noise_scale (1e-3), grad_threshold (1e-2), cooldown_steps (10), decay (1). Values in () are defaults.")
+    parser.add_argument("--noise", nargs="*"    , type=float, help="Noise parameters for AdamWN: noise_scale (1e-2 / 5), grad_threshold (1e-2), cooldown_steps (1), decay (1). Values in () are defaults.")
     args = parser.parse_args()
 
     rg = args.rg
@@ -359,9 +359,9 @@ if "__main__" == __name__:
 
     # noise args
     defaults = [ 
- 1e-3,
+ (1e-2) / 5,
  1e-2,
- 10,
+ 1,
  1,]
     keys = ["noise_scale" ,"grad_threshold" ,"cooldown_steps" ,"decay"]
     if args.noise is None:
