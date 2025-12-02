@@ -122,13 +122,14 @@ def scan_and_join_results(results_dir: str = "./results", verbose: bool = False,
     all_graphs, all_results = join_results(run_names)
     return run_names, all_graphs, all_results
 
-def plot_loss_over_time(method_to_results, output_filename, suptitle=""):
+def plot_loss_over_time(method_to_results, output_filename, suptitle="", loss_key="relation_losses"):
     '''
     Expects a dictionary {label : results, 'vanilla_it' : results, ...}
     Plot loss over time for different methods.'''
     plt.figure()
     for label, results in method_to_results.items():
-        losses = results["relation_losses"]
+        #print(label)
+        losses = results[loss_key]
         plt.plot(losses, label=label)
     plt.yscale("log")
     plt.xlabel("Korak")
@@ -382,3 +383,14 @@ def main():
     # plot loss on size
     average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it", methods=["vanilla_it", "vanilla"],markers=["o","o","o","o"])
     average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it_vs_nn_it", methods=["vanilla_it", "vanilla", "nn_it"],markers=["o","o","o","o"])
+
+def lor_plot_losses(lor, output_filename,methods, suptitle="", loss_key="relation_losses"):
+    '''
+    Plots list of results losses. Combine with collect results
+    '''
+    for index, all_results in enumerate(lor):
+        labels_to_results = {
+            method : all_results[method] for method in methods
+        }
+        of = output_filename + str(index)
+        plot_loss_over_time(labels_to_results, output_filename=of, suptitle=suptitle, loss_key=loss_key)

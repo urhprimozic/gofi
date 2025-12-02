@@ -97,6 +97,77 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009,amp=True,
     return results
 
 
+def run_mild_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, amp=True, grad_eps=None, scheduler="cosine",**adam_params):
+
+    # TODO : different adam parameters for noise
+
+    n = M1.shape[0]
+
+    layer_size = n
+
+    model = PermDistConnected(n, 2, layer_size, T=T)
+    dist = PermModel(model, n)
+
+    if scheduler == "cosine":
+        scheduler = CosineAnnealingWarmRestarts
+        scheduler_parameters = {
+            "T_0": 10,
+            "T_mult": 3,
+            "eta_min": (0.1e-4),
+        }
+        scheduler_input = None  # step every iteration
+    else:
+        scheduler = ReduceLROnPlateau
+        scheduler_parameters = {
+            "mode": "min",
+            "factor": 0.5,
+            "patience": 300,
+            "min_lr": 1e-5,
+        }
+        scheduler_input = "loss"
+
+    if amp:
+        if torch.cuda.is_available():
+            from torch.amp import GradScaler
+            optit.scaler = GradScaler('cuda')
+
+    if adam_params is None:
+        adam_params = {"lr": 0.01}
+    elif adam_params.get("lr") is None:
+        adam_params["lr"] = 0.01
+
+    losses, relation_losses = optit.training(
+        dist,
+        M1,
+        M2,
+        loss_function=norm_loss_normalized,
+        grad_eps=None,
+        eps=eps,
+        max_steps=max_steps,
+        scheduler=scheduler,
+        scheduler_parameters=scheduler_parameters,
+        scheduler_input=scheduler_input,
+        verbose=verbose,
+        adam_parameters=adam_params,
+        adam_version="noise",
+        store_relation_loss=True,
+    )
+
+    mpp = permutation_to_permutation_matrix(dist.most_probable_permutation())
+
+    with torch.no_grad():
+        results = {
+            "losses": losses,
+            "relation_losses": relation_losses,
+            "final_loss": losses[-1],
+            "most_probable_permutation": dist.most_probable_permutation(),
+            "target_permutation": denumpy(
+                list(torch.argmax(Q, axis=1).cpu().numpy() + 1)
+            ),
+            "diff_target_result": torch.norm(M2 - mpp.T @ M1 @ mpp).item(),
+            "model": "mild_nn_it",
+        }
+    return results
 def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, amp=True, grad_eps=None, scheduler="cosine",**adam_params):
 
     # TODO : different adam parameters for noise
@@ -275,6 +346,7 @@ if "__main__" == __name__:
     parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If no, adds current time in run name")
     parser.add_argument("--nn", type=str, choices=["yes", "no"], default="no" , help="Also trains nn + vanilla")
     parser.add_argument("--vanilla", type=str, choices=["yes", "no"], default="yes" , help="Also trains vanilla")
+    parser.add_argument("--mild_nn_it", type=str, choices=["yes", "no"], default="yes" , help="Also trains mild nn overparametrisation of it")
     parser.add_argument("--noise", nargs="*"    , type=float, help="Noise parameters for AdamWN: noise_scale (1e-3), grad_threshold (1e-2), cooldown_steps (10), decay (1). Values in () are defaults.")
     args = parser.parse_args()
 
@@ -318,6 +390,10 @@ if "__main__" == __name__:
 
     for index, (graph_type, M1, Q, M2) in tqdm.tqdm(enumerate(all_graphs), total=len(all_graphs)):
         # get results
+        if args.mild_nn_it == "yes":
+            results_mild_nn_it = run_mild_nn_it(M1, Q, M2, max_steps=1200, **nn_it_adam_params)
+        else:
+            results_mild_nn_it = None
         if args.vanilla == "yes":
             results_vanilla = run_vanilla(M1, Q, M2, max_steps=1200)
         else:
@@ -346,6 +422,7 @@ if "__main__" == __name__:
                    "vanilla_it" : results_vanilla_it,
                    "nn_it" : results_nn_it,
                    "nn" : results_nn,
+                   "mild_nn_it" : results_mild_nn_it,
                    "graph_tuple" : (M1, Q, M2)
                     }
         with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl" , "wb") as f:
