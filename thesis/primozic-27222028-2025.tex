@@ -187,6 +187,7 @@ Struktura: \TODO{dopiši na koncu}
   %
   % $\phi$ & Parametri modela. \\
   %
+  $\Pi$ & Množica permutacijskih matrik. \\
 \end{tabularx}
 %
 %
@@ -316,7 +317,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
     \operatorname{flatten}(f(g_2), \dotsc,
     \operatorname{flatten}(f(g_{m}) )$.} $1:1$ korespondenca med
     preslikavami končnih grup v evklidske prostore  $f\colon G \to
-    \R^{n \times n} $ in prostorom $K = \R^{n^2 |G|}$.
+    \R^{n \times n} $ in prostorom $K = {\R^{n \times n}}^{|G|}\cong
+    \R^{n^2 |G|}$.
 
     Definiramo lahko gladko funkcijo $\loss \colon K \to [0,
     \infty)$, za katero je $\loss (x) = 0$ natanko tedaj, ko $x$
@@ -540,8 +542,9 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       začetnih parametrov z različnimi limitami.
 
       Diferencialne enačbe gradientnih tokov imajo nekatere lepe
-      lastnosti. Limite različnih trajektorij (\emph{kritične točke
-      sistema}) so natanko ničle $\nabla\loss(\phi) = 0$ gradienta
+      lastnosti. Limite različnih trajektorij
+      % (\emph{kritične točke sistema})
+      so natanko ničle $\nabla\loss(\phi) = 0$ gradienta
       (\cite[poglavje 9.3]{Hirsch2012dynamical-systems}).
       \begin{opomba}
         Enačbe gradientnih tokov nimajo vedno enostavnih  rešitev v
@@ -1000,66 +1003,68 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 \end{equation}
               \end{definicija}
               \subsection{Pretvorba modela v delovanje}
-              \TODO{Ko loss skovnergira do $\loss < \epsilon$, za
-                delovanje vzamemo kar
-                najbolj verjetno preslikavo iz porazdelitve. Naj bo
-                permutacijska matrika preslikave generatorja $s$,
-                ki je podan z matriko $P_s$, označena s $\tilde{P_s}$.
+              Rezultati na sliki \ref{fig:actions-cn} namigujejo, da
+              ob konvergenci $\Loss{rel} \to 0$ matrika
+              $P_z$ konvergira do permutacijske matrike
+              $\overline{P_z}$. To inducira delovanje
+              $z \mapsto P_z$.
 
-                Če je $\loss$ majhen, potem se za relacijo $r$ da dokazati?
-                $$
-                P_r = I + E_r,
-                $$
-                kjer je $(E_r)_{i,j} < \varepsilon$.
-
-                Treba je dokazati, da je preslikava $s \mapsto
-                \tilde{P_s}$ homomorfizem, torej da je
-                za $r = s_1 s_2 \dotsm s_m$
-                $$
-                \tilde{P_{s_1}} \tilde{P_{s_2}} \dotsm \tilde{P_{s_m}} = I
-                $$
-                S tem imamo zagotovilo, da lahko za zelo majhen loss
-                iz naše metode sploh dobimo delovanje.
-              }
+              Za splošno grupo $G=<S|R>$ lahko definiramo sledeč
+              postopek pretvorbe modela
+              $\hat \rho \colon s \to P_s$ v preslikavo $\rho \colon G
+              \to  \Pi$ med grupo $G$ in grupo permutacijskih matrik
+              $\Pi$\footnote{To je ekvivalentno preslikavi $G \to
+              S_n$, saj je $S_n\cong \Pi$.}.
+              \begin{itemize}
+                \item Za matriko $P$ definiramo $\overline{P}$ kot
+                  matriko, ki ima v vsaki vrstici $1$ na mestu
+                  največjega elementa v vrstici matrike $P$ in $0$ drugje.
+                \item Definiramo $\rho \colon G \to \R^{n \times n}$
+                  s predpisom $s \to \overline{P_s}$.
+              \end{itemize}
+              V tem razdelku dokažemo, da je za model $\hat \rho$ z
+              dovolj majhno funkcijo izgube nad relacijami
+              $\Loss{rel}(\hat \rho)$ inducirana preslikava $\rho$
+              homomorfizem med $G$ in $\Pi$.
               %
-              %
-              \paragraph{Spomin:} Za grupo
-              $G = <S|R>$  definiramo model
-              $s \mapsto P_s$  med generatorji in
-              \textbf{stohastičnimi} matrikami.
-              Za element grupe $g = s_1 s_2 \dotsm s_m \in G$ definiramo
-              $P_g = P_{s_1} P_{s_2} \dotsm P_{s_m}$. In minimiziramo
-              funkcijo izgube
-              $$
-              \sum_{r \in R} |P(r =\operatorname{id}) - 1|.
-              $$
-              %
-              %
-              \begin{lema}[Z minimaliziranjem $\loss$ je lahko $P_r$
-                poljubno blizu $I$.]
-                \label{lema:Pr_blizu_I}
-                Za $\epsilon > 0$ obstaja $\delta>0$, da iz   $1 -
-                P(r = \operatorname{id}) < \delta$ sledi $P_r = I +
-                E_r$ za $||E_e||_F < \epsilon$
+              Naj bo $r\in R$ in $s \in S$ poljuben generator.
+              Najprej pokažemo, da je za dovolj majhno
+              vrednost izgube nad relacijami matrika $P_r$ blizu
+              identitete, matrika $P_s$ pa obrnljiva
+              \begin{lema}
+                \label{lema:Pr blizu I}
+                Za $\epsilon > 0$ obstaja $\delta>0$, da iz
+                $\Loss{rel}(\hat\rho) < \delta$ sledi $P_r = I +
+                E_r$ za $||E_e||_F < \epsilon$.
               \end{lema}
               \begin{dokaz}
+                Najprej računamo
+                \begin{align*}
+                  - \frac{1}{|R|} \sum_{r \in
+                  R} \operatorname{tr}(\log(P_r)) &< \delta \\
+                  -\log(\prod_{i=1}^n(P_r)_{i,i}) &< \delta |R| \\
+                  \log(P(r = \operatorname{id})) &> -\delta |R| \\
+                  1 - P(r = \operatorname{id}) &< 1 - e^{-\delta |R|} =: \gamma.
+                \end{align*}
+
                 Ocenimo
                 $$ 1 - (P_r)_{i,i} \leq  1 - (P_r)_{1,1}
                 (P_r)_{2,2} \dotsm (P_r)_{n,n}
-                = 1 - P(r=\operatorname{id})< \delta.$$
+                = 1 - P(r=\operatorname{id})< \gamma.$$
                 %
                 $P_r$ je stohastična, torej velja
                 $\sum_{j=1}^n (P_r)_{i,j} = 1$. Iz tega sledi
                 $\sum_{j \neq i}
-                (P_r)_{i,j} < \delta$. Sledi
+                (P_r)_{i,j} < \gamma$. Sledi
                 $$
-                P_{i, j} < \sum_{j \neq i} P_{i,j} < \delta,
+                P_{i, j} < \sum_{j \neq i} P_{i,j} < \gamma,
                 $$
                 za $i \neq j$. Iz tega sledi $||E_r||_F < n
-                \delta$.
+                \gamma = n(1 - e^{-\delta |R|})$. Za dovolj majhno
+                izbiro $\delta > 0$ je $||E_r||_F < \epsilon$.
               \end{dokaz}
-              %%%%%%%%%%
               \begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrlnjiva]
+                \label{lema : Ps je obrnljiva}
                 Obstaja $\epsilon_0$, da za vsak $0 < \epsilon <
                 \epsilon_0$ in $P_r = I + E_r$ z $||E_r||_F^2 <
                 \epsilon$ velja, da je $P_s$ obrnjiva za vsak
@@ -1081,70 +1086,119 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 $P_r = I + E_r = P_{s_1}  P_{s_2} \dotsm  P_{s_n}$
                 obrnljiva, torej so vse $ P_{s_i}$ obrnljive.
               \end{dokaz}
-              %%%%%%%%%%%
-              \begin{lema}[Če je permanent (stohastične) matrike
-                blizu $1$, je matrika skoraj permutacijska]
-                Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
-                $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
-                majhen $\delta >0$, potem je $S = \overline{S} + E$
-                in $||E||_F^2 < \epsilon$.
+              Zdaj bomo dokazali, da je za dovolj majhen $\Loss{rel}$
+              in poljuben generator $s \in S$ matrika $P_s$ blizu
+              permutacijske matrike.
+              Za to potrebujemo spodnji izrek \ref{izrek:obrnljiva
+              stohasticna} in lemo
+              \ref{lema:inv~stohasticen->inv~permutacijska}.
+              \begin{izrek}
+                \label{izrek:obrnljiva stohasticna}
+                Obrnljiva stohastična matrika je permutacijska
+                natanko tedaj, ko je njen inverz stohastičen.
+              \end{izrek}
+              Elementaren dokaz izreka je v
+              \cite{Ding01032013stohasticmatrixinversestohasticcondition}.
+              \begin{lema}
+                \label{lema:inv~stohasticen->inv~permutacijska}
+                Naj bo $Q$ obrnljiva stohastična matrika.
+                Za poljuben $\epsilon> 0$ obstaja $\delta$, da iz
+                $||Q^{-1} - R|| <\delta$ za neko
+                permutacijsko matriko $R$ sledi
+                $Q = \overline{Q} + F$ za
+                $||F||<\epsilon$.
               \end{lema}
               \begin{dokaz}
-                Naj bo $\mathcal{S} \subset \R^{n \times n}$ množica
-                stohastičnih matrik. Očitno je kompaktna.
+                Naj bo $||Q^-1-R || <\delta$. Potem je
+                $$
+                ||QR - I|| < \delta\sqrt{n}.
+                $$
+                Na parih stohastičnih matrik definiramo zvezno
+                preslikavo $g \colon (X,Y) \mapsto ||XY - I||$.
+                Opazujmo kompaktno podmnožico domene
+                $$
+                Z = \{(X,Y) \mid  d(X, \Pi) \geq \epsilon \}.
+                $$
+                Na njej $g$ doseže minimum $c \geq 0$.
 
-                Najprej dokažimo, da je $S = P + E$ za neko permutacijsko
-                matriko $P$ in  $||E||_F < \epsilon.$.
+                Če je za stohastični matriki $X$ in $Y$ $g(X,Y) = 0$,
+                je $Y = X^-1$ in sta po izreku
+                \ref{izrek:obrnljiva stohasticna} obe permutacijski.
+                Na množici $Z$
+                je torej $g$ neničelen, iz česar sledi $\min_{(X,Y)
+                \in Z}g(X,Y) = c > 0$.
 
-                Opazujmo zvezno preslikavo $\operatorname{Perm}
-                \colon \mathcal{S} \to \R$.
-                Množica $\Pi  \subset \mathcal{S}$ permutacijskih
-                matrik je kompakt v $\mathcal{S}$. Definiramo množico
-                $$
-                U = \{ A \in \mathcal{S} \mid \operatorname{d}(\Pi,
-                A) > \epsilon  \}
-                $$
-                in opazimo, da je kompaktna. Označimo
-                $$
-                \max _{A \in U} \operatorname{Perm}(A) = 1 - \delta_0 < 1
-                $$
+                Za $\delta < \frac{c}{\sqrt{n}}$ je $||QR - I|| = g(Q, R) < c$
+                iz česar sledi, da je $d(Q, \Pi) < \epsilon$.
+                Naj bo $P \in \Pi$ taka, da velja $||Q - P|| < \epsilon$.
+                Potem za $E=Q-P$ veljha $||E|| < \epsilon$.
+
+                Če je $\epsilon < \frac{1}{2}$, je
+                $\overline{Q} = \overline{E + P} = P$, torej je $Q =
+                \overline{Q} + E$.
                 %
-                - zadnja neenakost sledi, ker so maksimumi
-                $\operatorname{Perm}$ natanko $Pi$.
-
-                Naj bo stohastična matrika $S \in \mathcal{S}$ taka, da je
-                $\operatorname{Perm}(S) > 1 - \delta_0$. Potem $S \notin U$,
-                torej obstaja permutacijska matrika $P$, da je
-                $$
-                \operatorname{d}(S, P) = ||S - P || \leq \epsilon.
-                $$
-                Definiramo $E = S - P$. Sledi $||E||_F < \epsilon$.
-                Očitno je $P = \overline{S} = \overline{P + E} $ za vsak
-                $\epsilon < \frac{1}{2}$.
                 %
               \end{dokaz}
-              %
-              %%%%%%%%%
-              \begin{trditev}[Če sta $\Loss{rel}$ in $\Loss{bij}$
-                majhna, je $s \mapsto \overline{P_s}$ homomomorfizem]
-                Obstajata $\delta_1, \delta_2 > 0$, da iz
-                %
-                $\operatorname{Perm}(P_s) <  \delta_1$ za vsak
-                generator $s \in S$ in
-                $P(r \in R) < \delta_2$ za vsak $r \in R$ sledi, da je
-                preslikava $f \colon s \mapsto \overline{P_s}$ homomorfizem.
-              \end{trditev}
+              Zdaj lahko dokažemo glavni rezultat tega razdelka.
+              \begin{izrek}
+                Obstaja $\delta_0 > 0$, da iz $\Loss{rel}(\hat\rho) <
+                \delta_0$ sledi, da je preslikava
+                $\rho \colon G \to \Pi$ homomorfizem.
+              \end{izrek}
               \begin{dokaz}
-                Izberemo $\epsilon >0$.
-                Naj bo $r = s_1 s_2 \dotsm s_m \in R$ taka, da je
-                $P_r = I + E_r$ in $||E_r||_F^2 < \epsilon$.
-                Naj bodo $P_{s_i} = \overline{P_{s_i}} + E_{s_i}$ za
-                $||E_{s_i}||_F^2 < \epsilon$.
+                Naj bo $r=s_1 s_2 \dotsm s_m \in R$ in $s_1, s_2,
+                \dotsc, s_m \in S$. Dovolj je pokazati, da velja
+                $$
+                \overline{P_{s_1} }\overline{P_{s_2}} \dotsm
+                \overline{P_{s_m}} = I.
+                $$
+                Če je izguba nad relacijami dovolj majhna,
+                preko leme \ref{lema:Pr blizu I}
+                sledi, da je
+                \begin{equation}
+                  \label{eq : P_r ~ id}
+                  P_r = P_{s_1} P_{s_2} \dotsm P_{s_m} = I + E_r
+                \end{equation}
+                %$$
+                %
+                %$$
+                za $||E_r||_F < \epsilon$. Dodatno lema  \ref{lema :
+                Ps je obrnljiva}
+                zagotovi, da za dovolj majhno vrednost $\Loss{rel}(\hat\rho)$
+                matrika $P_s$ obrnljiva za vsak generator $s \in S$.
 
-                Dokažimo, da je $$\overline{P_{s_1}} \overline{P_{s_2}}
-                \dotsm \overline{P_{s_m}} = I.$$
+                Iz enačbe \eqref{eq : P_r ~ id} sledi
+                \begin{equation}
+                  \label{eq:Ps1_inv}
+                  P_{s_1}^{-1} = P_{s_2} P_{s_3} \dotsm P_{s_m} -
+                  P_{s_1} ^{-1}E_r.
+                \end{equation}
+                Matrika $P_{s_2} P_{s_3} \dotsm P_{s_m}$ je
+                stohastična, saj je produkt stohastičnih matrik.
+                Poleg tega je $||P_{s_2} P_{s_3} \dotsm P_{s_m} -
+                P_{s_1}^-1|| = ||P_{s_1}^{-1}||||E_r|| <
+                ||P_{s_1}^{-1}||\epsilon$. Če je $\epsilon$ dovolj
+                majhen, je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
+                $$
+                P_{s_1} = \overline{P_{s_1}} + E_{s_1}
+                $$
+                za $||E_{s_1}|| < \epsilon_1$.
 
-                Velja
+              
+                Enačbo \eqref{eq:Ps1_inv} z desne pomnožimo z $P_{s_1}$, z leve pa
+                z $P_{s_2}^{-1}$ in dobimo
+                $$
+                P_{s_2}^{-1} = P_{s_3} \dotsm P_{s_m}P_{s_1} - P_{s_1}^{-1}E_r P_{s_1},
+                $$          
+                iz česar za $||E_{s_2}|| < \epsilon_1$ sledi 
+                $P_{s_2} = \overline{P_{s_2}} + E_{s_2}$.
+                Induktivno nadaljujemo. Za vsak $j \in [m]$ obstaja
+                $||E_{s_j}|| < \epsilon_j$, da je
+                $$
+                P_{s_j} = \overline{P_{s_j}} + E_{s_j}.
+                $$
+                Računamo 
+                %
                 \begin{align*}
                   P_r &= P_{s_1} P_{s_2} \dotsm P_{s_m}
                   \\
@@ -1180,16 +1234,18 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                   \epsilon(1 + m^\frac{3}{2}(2^{m-1}-1))
                   \xrightarrow{\epsilon \to 0} 0.
                 \end{align*}
-                Ker sta $\prod_{i=1}^m \overline{P_{s_i}}$ in $I$ permutacijski
-                matriki, je norma njune razlike vsaj $1$, če nista enaki.
-                %
-                %
-                %
-                %
-                %
-                %
+                Velja  $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi$. Razdalje med različnimi permutacijskimi matrikami
+                ne morejo biti manjše od $1$. Iz tega sledi, da je $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi = 1$.
               \end{dokaz}
-              %%
+              %
+              \begin{lema}[Če je permanent (stohastične) matrike
+                blizu $1$, je matrika skoraj permutacijska]
+                Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
+                $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
+                majhen $\delta >0$, potem je $S = \overline{S} + E$
+                in $||E||_F^2 < \epsilon$.
+              \end{lema}
+            %
               \subsection{Delovanje ciklične grupe}
               Študiramo model za delovanje ciklične grupe $C_n = <z |
               z^n=1>$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
@@ -1853,7 +1909,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \subsection{Nevronske mreže dosežejo globalni minimum
             funckije izgube}
             Izkaže se, da z večanjem nevronske mreže $M(\phi)$
-            poljubna $\sigma$-\emph{gradient dominantna} funkcija izgube $\loss (\phi) $ postaja vse
+            poljubna $\sigma$-\emph{gradient dominantna} funkcija
+            izgube $\loss (\phi) $ postaja vse
             bolj konveksna. V praksi to pomeni, da za velike
             nevronske mreže gradientni spust najde globalni minimum.
             Spodnji izrek je povzet po

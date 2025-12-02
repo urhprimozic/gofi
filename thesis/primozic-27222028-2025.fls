@@ -559,6 +559,8 @@ INPUT ./images/dihedral/2d/prob_of_convergence_D_8.png
 INPUT ./images/dihedral/2d/prob_of_convergence_D_8.png
 INPUT ./images/dihedral/2d/prob_of_convergence_D_8.png
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr5.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri8.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx8.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx6.tfm
@@ -568,6 +570,7 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmmib7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmbsy10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmbsy10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmbsy7.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT ./images/actions/C6_on_6_sample8_initial.pdf
 INPUT ./images/actions/C6_on_6_sample8_initial.pdf
 INPUT ./images/actions/C6_on_6_sample8_initial.pdf
@@ -608,8 +611,6 @@ INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri8.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri7.tfm
 INPUT ./primozic-27222028-2025.ind
 INPUT ./primozic-27222028-2025.ind
 INPUT primozic-27222028-2025.ind
@@ -620,7 +621,6 @@ INPUT primozic-27222028-2025.run.xml
 OUTPUT primozic-27222028-2025.run.xml
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbsy10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx8.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb
