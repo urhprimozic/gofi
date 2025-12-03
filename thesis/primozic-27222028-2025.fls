@@ -514,15 +514,18 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmtt12.tfm
-INPUT ./images/C3 trajektorije.pdf
-INPUT ./images/C3 trajektorije.pdf
-INPUT ./images/C3 trajektorije.pdf
-INPUT ./images/C3 trajektorije.pdf
-INPUT ./images/C3 trajektorije.pdf
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri8.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ts1-lmr12.tfm
+INPUT ./images/C3 trajektorije.pdf
+INPUT ./images/C3 trajektorije.pdf
+INPUT ./images/C3 trajektorije.pdf
+INPUT ./images/C3 trajektorije.pdf
+INPUT ./images/C3 trajektorije.pdf
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT ./images/dihedral/Dn_1dim_n1.pdf
 INPUT ./images/dihedral/Dn_1dim_n1.pdf
 INPUT ./images/dihedral/Dn_1dim_n1.pdf
@@ -559,8 +562,6 @@ INPUT ./images/dihedral/2d/prob_of_convergence_D_8.png
 INPUT ./images/dihedral/2d/prob_of_convergence_D_8.png
 INPUT ./images/dihedral/2d/prob_of_convergence_D_8.png
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr5.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri8.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx8.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx6.tfm
@@ -570,7 +571,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmmib7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmbsy10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmbsy10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/lmbsy7.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT ./images/actions/C6_on_6_sample8_initial.pdf
 INPUT ./images/actions/C6_on_6_sample8_initial.pdf
 INPUT ./images/actions/C6_on_6_sample8_initial.pdf

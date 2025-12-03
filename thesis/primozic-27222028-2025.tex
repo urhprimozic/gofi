@@ -188,6 +188,7 @@ Struktura: \TODO{dopiši na koncu}
   % $\phi$ & Parametri modela. \\
   %
   $\Pi$ & Množica permutacijskih matrik. \\
+  $F_S$ & Prosta grupa nad množico $S$.\\
 \end{tabularx}
 %
 %
@@ -418,16 +419,19 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         \end{bmatrix},
       \end{align}
       ki vsak generator grupe preslika v poljubno matriko.
-      Preslikavo $\hat \rho$ implicitno razširimo na celo grupo. Za
-      generator $s \in S$ nastavimo $\hat \rho(s^{-1}) =
-      \hat\rho(s)^{-1}$, za poljuben produkt elementov $s_1, s_2,
-      \dotsc, s_n \in S \cup S^{-1}$
-      pa definiramo
-      \begin{equation}
-        \label{eq: implicitna definicija upodovbitve}
-        \hat \rho(s_1 s_2 \dotsm s_m) = \hat\rho(s_1)\hat\rho(s_2)
-        \dotsm \hat\rho(s_m).
-      \end{equation}
+      %  Preslikavo $\hat \rho$ implicitno razširimo na celo grupo. Za
+      %  generator $s \in S$ nastavimo $\hat \rho(s^{-1}) =
+      %  \hat\rho(s)^{-1}$, za poljuben produkt elementov $s_1, s_2,
+      %  \dotsc, s_n \in S \cup S^{-1}$
+      %  pa definiramo
+      %  \begin{equation}
+      %    \label{eq: implicitna definicija upodovbitve}
+      %    \hat \rho(s_1 s_2 \dotsm s_m) = \hat\rho(s_1)\hat\rho(s_2)
+      %    \dotsm \hat\rho(s_m).
+      %  \end{equation}
+      Razširitev preslikave $\hat \rho$ na celo grupo $G$
+      je opisana v poglavju \ref{subsection : razširitev na upodobitev}.
+
       Preslikava $\hat \rho$ ni nujno upodobitev, služi pa nam lahko
       kot model upodobitve, odvisen od parametrov $\phi = \{s_{i,j}
       \mid s \in S, 1 \leq i, j \leq n\}$.
@@ -564,6 +568,113 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         (pythonova knjižnica \verb|torch|).
       \end{opomba}
       %%%%%%%%%%%%
+      \subsection{Obstoj rešitve}
+      \label{subsection : obstoj resitve}
+
+      Če je napaka modela $\Loss{rel}(\hat \rho)$ velika,
+      smo zagotovo stran od upodobitve.
+      Zanima nas, če velja obrat: ali iz majhne napake modela
+      $\hat \rho$ lahko sklepamo na obstoj
+      upodobitve $\rho$, ki je blizu modelu $\hat \rho$?
+
+      Za smiselnost zgornje metode iskanja upodobitev mora biti
+      odgovor pozitiven.
+      Z numerično optimizacijo v splošnem najdemo
+      le model z napako $\Loss{rel}(\hat \rho) > 0$.
+      Le tako bo model $\hat \rho$ z majhno napako zagotovo dober
+      približek upodobitve.
+      To nam zagotavlja spodnji izrek.
+      %
+      \begin{izrek}[Obstoj rešitve]
+        Naj bo $\hat \rho \colon G \to \C^{n \times n}$
+        taka preslikava, da  za nek za $\epsilon < \frac{1}{100}$
+        velja
+        $
+        \Loss{rel}(\hat \rho) < \epsilon
+        $
+        .
+        Potem obstaja upodobitev $\rho \colon G \to
+        GL_n(\C) $, da velja
+        $$
+        \sup_{s \in S} ||\hat \rho(s) - \rho(s) || \leq 2\epsilon.
+        $$
+      \end{izrek}
+      Izrek dokažemo s pomočjo rezultata iz \cite[Theorem II.5 na
+      strani 7]{gamm2011epsilonrepresentations}.
+      \begin{dokaz}[Kazhdan]
+        Za $\epsilon < \frac{1}{100}$ in preslikavo
+        $\mu \colon G \to U(\mathcal H)$ v unitarne operatorje na
+        Hilbertovem prostoru $\mathcal H$, za katero velja
+        $$
+        \sup_{g,h \in G} ||\mu(gh) - \mu(g)\mu(h)|| < \epsilon,
+        $$
+        obstaja upodobitev $\pi \colon G \to U(\mathcal H)$, da velja
+        $$
+        \sup_{g \in G} ||\pi(g) - \mu(g) || \leq 2\epsilon.
+        $$
+      \end{dokaz}
+      \subsubsection{Razširitev modela na upodobitev}
+      \label{subsection : razširitev na upodobitev}
+      \begin{definicija}
+       % 
+      %
+      \label{def:razširitev upodobitev}
+      Preslikavo $\hat \rho$ razširimo na celo grupo $G=<S|R>$ na slednji način:
+      \begin{itemize}
+        \item Za vsak $g \in G\setminus \{1  \}$ izberemo
+          takega \emph{kanoničnega predstavnika} $w_g \in F_S$ izmed
+          proste grupe nad $S$,
+          ki predstavlja $g$ v $G$ in ima izmed vseh besed, ki
+          predstavljajo $g$, najkrajšo
+          dolžino\footnote{Očitno je $w_1$ prazen niz in $|g| = |g^{-1}|$.}.
+          Dodatno zahtevamo $w_ {g^{-1}} = w_g^{-1}$.
+        \item Za $g$ s kanoničnim predstavnikom 
+        $w_g = s_1^{e_1} s_2^{e_2} \dotsm s_m^{e_m}$, kjer so
+        $e_i \in \{ -1, 1\}$, 
+        definiramo
+        $$
+        \hat \rho(g) = \hat \rho(s_1)^{e_1} \hat \rho(s_2)^{e_2} \dotsm
+        \hat \rho(s_m)^{e_m}.
+        $$
+      \end{itemize}
+      %
+      \end{definicija}
+      Definicija je dobra le, če so vse matrike $P(s)$ obrnljive. Po spodnji lemi
+      to drži, če je napaka modela $\Loss{rel}(\hat \rho)$ dovolj majhna.
+      \begin{lema}
+        \label{lema:obrnljivost R}
+        %GOTO
+        Ostaja $\delta_0>0$, da za vsak $0 < \delta \leq \delta_0 $
+        iz $\Loss{rel}(\hat \rho) < \delta$ sledi, da je 
+        $\hat \rho(r)$ obrnljiva za vsak $r \in R$.
+      \end{lema}
+      \begin{dokaz}
+        Opazujmo zvezno preslikavo $X \mapsto \det(X)$. Zaradi zveznosti 
+        obstaja $\delta_0$, da je krogla $K_{\delta_0}(I) \subset \det ^{-1}(\frac{1}{2}, 1 + \frac{1}{2})$.
+        Če je $\Loss{rel}(\hat \rho) < \delta_0$, potem za vsak $r \in R$ velja
+        $\det(\hat \rho(r)) \in (\frac{1}{2} , 1 + \frac{1}{2})$, torej je 
+        $\hat \rho(r)$ obrnljiva.
+      \end{dokaz}
+      Po definiciji \ref{def:razširitev upodobitev} 
+      je za $r = s_1^{e_1} s_2^{e_2} \dotsm s_m^{e_m}$
+      slika  
+      $\hat \rho(r) = \hat \rho(s_1)^{e_1}
+       \hat \rho(s_2)^{e_2} \dotsm \hat \rho(s_m)^{e_m}$. 
+       Če je $\hat \rho(r)$ obrlnjiva, so očitno obrnljive
+       tudi vse matrike $\hat \rho(s_i)$. Ker operiramo v končnih grupah 
+       se vsak generator $s$ pojavi v neki relaciji $r \in R$, torej so za dovolj majhno funkcijo izgube 
+       vse matrike $\hat \rho(s)$ obrnljive. S tem je definicija
+        \ref{def:razširitev upodobitev} dobra.
+      \TODO{
+      Treba je dokazat še 
+       \begin{enumerate}
+        \item obstaja nek $ \mu $ blizu $\hat \rho$, ki je unitaren
+        \item je tud $\Loss{homo}(\hat \rho)$ majhen , iz zveznosti gre pol to tud na $\mu$.
+       \end{enumerate}
+
+      }
+  
+
       \subsection{Ciklične grupe}
       \label{subsection : ciklicčne grupe}
       Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
@@ -614,7 +725,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       V splošnem lahko pri optimizaciji funkcije izgube pričakujemo
       lokalne minimume, v katerih je vrednost $\loss$ neničelna.
       Edine privlačne točke enačbe $\frac{d(x,y)}{dt} = -\nabla ||(x
-      + iy)³n -1||^2$ pa so koreni enote $z^n=1$, torej natanko
+      + iy)^n -1||^2$ pa so koreni enote $z^n=1$, torej natanko
       unitarne nerazcepne upodobitve.
       \begin{izrek}
         \label{izrek:kritične točke ciklične}
@@ -897,10 +1008,9 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               P(s(2) = 1) & P(s(2) = 2) & \dotsm & P(s(2) = n) \\
               \vdots & \vdots & & \vdots \\
               P(s(n) = 1) & P(s(n) = 2) & \dotsm & P(s(n) = n) \\
-            \end{bmatrix}
+            \end{bmatrix}.
           \end{equation}
-          in implicitno (glej enačbo  \eqref{eq: implicitna
-          definicija upodovbitve}) drugje. Matrika $P_s =
+          Matrika $P_s =
           \hat\rho(s)$ definira slučajno preslikavo\footnote{Izraba
             notacije. S $s$ označimo tako generator  kot
             slučajno funkcijo nad $[n]$, ki je porazdeljena s
@@ -910,9 +1020,29 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             $s \in \funnn{n}$ s porazdelitvijo
             $$P(s = f) = \prod _{i=1}^n P(s(i) = f(i)$$
               za $f \in \funnn{n}$.
-
+              %
+              \begin{definicija}
+                Preslikavo $\hat \rho$ lahko podobno kot v poglavju
+                \ref{subsection : razširitev na upodobitev} raširimo na
+                celotno grupo:
+                \begin{itemize}
+                  \item Za vsak $g \in G$ izberemo
+                    takega predstavnika $v_g \in F_S$, ki je sestavljen le iz
+                    generatorjev $s \in S$, ne pa iz njihovih
+                    inverzov\footnote{To lahko v končnih grupah vedno
+                      naredimo. Za $s \in S$ velja $s^{-1} =
+                    s^{\operatorname{red}(s) -1}$.}.
+                  \item Za $g$ s predstavnikom $v_g = s_1 s_2 \dotsm
+                    s_m$ definiramo
+                    $\hat \rho(g) :=  P_{s_1} P_{s_2} \dotsc P_{s_m}$.
+                \end{itemize}
+              \end{definicija}
+              %
+              V delu bomo za $g\in G$ s predstavnikom
+              $v_g = s_1 s_2 \dotsm s_m  $ pisali kar
+              $g = s_1 s_2 \dotsm s_m$.
               Lahko je preveriti, da za  $g = s_1 s_2 \dotsm s_m\in G$ velja $$
-              \hat \rho (g) = P_{s_1} P_{s_2} \dotsc P_{s_m} =
+              P_{s_1} P_{s_2} \dotsc P_{s_m} =
               \begin{bmatrix}
                 P(g(1) = 1) & P(g(1) = 2) & \dotsm & P(g(1) = n) \\
                 P(g(2) = 1) & P(g(2) = 2) & \dotsm & P(g(2) = n) \\
@@ -920,6 +1050,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 P(g(n) = 1) & P(g(n) = 2) & \dotsm & P(g(n) = n) \\
               \end{bmatrix}.
               $$
+
               Naš model elemente grupe slika v stohastične matrike,
               ki definirajo verjetnostne porazdelitve slučajnih
               funkcij nad $n$. Parametre modela bomo optimizirali
@@ -1184,20 +1315,21 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 $$
                 za $||E_{s_1}|| < \epsilon_1$.
 
-              
-                Enačbo \eqref{eq:Ps1_inv} z desne pomnožimo z $P_{s_1}$, z leve pa
+                Enačbo \eqref{eq:Ps1_inv} z desne pomnožimo z
+                $P_{s_1}$, z leve pa
                 z $P_{s_2}^{-1}$ in dobimo
                 $$
-                P_{s_2}^{-1} = P_{s_3} \dotsm P_{s_m}P_{s_1} - P_{s_1}^{-1}E_r P_{s_1},
-                $$          
-                iz česar za $||E_{s_2}|| < \epsilon_1$ sledi 
+                P_{s_2}^{-1} = P_{s_3} \dotsm P_{s_m}P_{s_1} -
+                P_{s_1}^{-1}E_r P_{s_1},
+                $$
+                iz česar za $||E_{s_2}|| < \epsilon_1$ sledi
                 $P_{s_2} = \overline{P_{s_2}} + E_{s_2}$.
                 Induktivno nadaljujemo. Za vsak $j \in [m]$ obstaja
                 $||E_{s_j}|| < \epsilon_j$, da je
                 $$
                 P_{s_j} = \overline{P_{s_j}} + E_{s_j}.
                 $$
-                Računamo 
+                Računamo
                 %
                 \begin{align*}
                   P_r &= P_{s_1} P_{s_2} \dotsm P_{s_m}
@@ -1234,8 +1366,10 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                   \epsilon(1 + m^\frac{3}{2}(2^{m-1}-1))
                   \xrightarrow{\epsilon \to 0} 0.
                 \end{align*}
-                Velja  $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi$. Razdalje med različnimi permutacijskimi matrikami
-                ne morejo biti manjše od $1$. Iz tega sledi, da je $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi = 1$.
+                Velja  $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi$.
+                Razdalje med različnimi permutacijskimi matrikami
+                ne morejo biti manjše od $1$. Iz tega sledi, da je
+                $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi = 1$.
               \end{dokaz}
               %
               \begin{lema}[Če je permanent (stohastične) matrike
@@ -1245,14 +1379,14 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 majhen $\delta >0$, potem je $S = \overline{S} + E$
                 in $||E||_F^2 < \epsilon$.
               \end{lema}
-            %
+              %
               \subsection{Delovanje ciklične grupe}
               Študiramo model za delovanje ciklične grupe $C_n = <z |
               z^n=1>$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
               Minimaliziramo
               $$
               \loss(\phi) = - \operatorname{tr}(\log
-              \left(\operatorname{softmax}(Z^n) \right ) ),
+              \left (\operatorname{softmax}(Z^n) \right ) ),
               $$
               kjer je $Z \in \R^{m \times m}$.
               \paragraph{Rezultati}
