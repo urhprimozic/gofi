@@ -504,28 +504,28 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ts1-lmr12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
 INPUT ./images/trajektorije_S3_to_R.pdf
 INPUT ./images/trajektorije_S3_to_R.pdf
 INPUT ./images/trajektorije_S3_to_R.pdf
 INPUT ./images/trajektorije_S3_to_R.pdf
 INPUT ./images/trajektorije_S3_to_R.pdf
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmtt12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri8.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri7.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ts1-lmr12.tfm
 INPUT ./images/C3 trajektorije.pdf
 INPUT ./images/C3 trajektorije.pdf
 INPUT ./images/C3 trajektorije.pdf
 INPUT ./images/C3 trajektorije.pdf
 INPUT ./images/C3 trajektorije.pdf
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT ./images/dihedral/Dn_1dim_n1.pdf
 INPUT ./images/dihedral/Dn_1dim_n1.pdf
 INPUT ./images/dihedral/Dn_1dim_n1.pdf

@@ -141,6 +141,7 @@ the content and not the structure of your work.}
 % V tem primeru namesto ukaza \newcommand uporabite \renewcommand
 \newcommand{\C}{\mathbb C}
 \newcommand{\Q}{\mathbb Q}
+\newcommand{\mon}{(S\cup S ^{-1})^*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ZAČETEK VSEBINE
@@ -189,6 +190,7 @@ Struktura: \TODO{dopiši na koncu}
   %
   $\Pi$ & Množica permutacijskih matrik. \\
   $F_S$ & Prosta grupa nad množico $S$.\\
+  $A^*$ & Prosti monoid nad množico $A$. \\
 \end{tabularx}
 %
 %
@@ -420,17 +422,46 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       \end{align}
       ki vsak generator grupe preslika v poljubno matriko.
       %  Preslikavo $\hat \rho$ implicitno razširimo na celo grupo. Za
-      %  generator $s \in S$ nastavimo $\hat \rho(s^{-1}) =
-      %  \hat\rho(s)^{-1}$, za poljuben produkt elementov $s_1, s_2,
-      %  \dotsc, s_n \in S \cup S^{-1}$
-      %  pa definiramo
-      %  \begin{equation}
-      %    \label{eq: implicitna definicija upodovbitve}
-      %    \hat \rho(s_1 s_2 \dotsm s_m) = \hat\rho(s_1)\hat\rho(s_2)
-      %    \dotsm \hat\rho(s_m).
-      %  \end{equation}
-      Razširitev preslikave $\hat \rho$ na celo grupo $G$
-      je opisana v poglavju \ref{subsection : razširitev na upodobitev}.
+      \begin{definicija}
+        %
+        %
+        \label{def:razširitev upodobitev}
+        Preslikavo $\hat \rho$ razširimo na $S^*$ s predpisom
+        $$
+        \hat \rho(s_1 s_2 \dotsm s_m) = \hat \rho(s_1) \hat \rho(s_2)
+        \dotsm \hat \rho(s_m).
+        $$
+      \end{definicija}
+      \begin{opomba}
+        Ker so vse grupe v tem delu končne\footnote{V splošnem je $w_g \in \mon$.
+        V končnih grupah za $s \in S$ velja $s^{-1} =
+        s^{\operatorname{red}(s) -1}$.}., lahko za
+        vsak element grupe $G$ izberemo predstavnika
+        $w_g \in S^*$, da velja
+        $w_g \equiv g \mod G$.
+        S tem lahko za vsak element $g \in G$
+        definiramo preslikavo $\hat \rho(g)$ kot
+        $\hat \rho(w_g)$
+      \end{opomba}
+      %GOTO
+      \begin{definicija}
+        Preslikavo $\hat \rho$ definiramo na grupi $G$ na slednji način:
+        \begin{itemize}
+        \item Za vsak $g \in G\setminus \{1\}$ izberemo
+          \emph{kanoničnega predstavnika} $w_g \in S^*$.
+        \item Za $1 \in G$ definiramo $w_1$ kot prazno besedo. 
+      \end{itemize}
+      Za $g \in G$ s kanoničnim predstavnikom $w_g \in S^*$ definiramo
+      $$
+      \hat \rho(g) = \hat \rho(w_g).
+      $$
+      \end{definicija}
+
+      
+      %
+
+      %  Razširitev preslikave $\hat \rho$ na celo grupo $G$
+      %je opisana v poglavju \ref{subsection : razširitev repr modela}.
 
       Preslikava $\hat \rho$ ni nujno upodobitev, služi pa nam lahko
       kot model upodobitve, odvisen od parametrov $\phi = \{s_{i,j}
@@ -586,22 +617,26 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       To nam zagotavlja spodnji izrek.
       %
       \begin{izrek}[Obstoj rešitve]
-        Naj bo $\hat \rho \colon G \to \C^{n \times n}$
-        taka preslikava, da  za nek za $\epsilon < \frac{1}{100}$
-        velja
+        \label{izrek : obstoj rešitve upodobitve}
+        Za vsak $\epsilon >0$
+        obstaja $\delta >0$, da iz
+        iz
         $
-        \Loss{rel}(\hat \rho) < \epsilon
+        \Loss{rel}(\hat \rho) < \delta
         $
-        .
-        Potem obstaja upodobitev $\rho \colon G \to
-        GL_n(\C) $, da velja
+        sledi, da
+        obstaja upodobitev $\rho \colon G \to
+        GL_n(\C) $, za katero velja
         $$
-        \sup_{s \in S} ||\hat \rho(s) - \rho(s) || \leq 2\epsilon.
+        \sup_{s \in S} ||\hat \rho(s) - \rho(s) || \leq \epsilon.
         $$
       \end{izrek}
       Izrek dokažemo s pomočjo rezultata iz \cite[Theorem II.5 na
       strani 7]{gamm2011epsilonrepresentations}.
-      \begin{dokaz}[Kazhdan]
+      \begin{izrek}[Kazhdan]
+        \label{izrek : kazhdan}
+        Naj bo $G$ končna\footnote{Izrek v splošnem velja za vse
+        \emph{amenabilne} grupe.} grupa.
         Za $\epsilon < \frac{1}{100}$ in preslikavo
         $\mu \colon G \to U(\mathcal H)$ v unitarne operatorje na
         Hilbertovem prostoru $\mathcal H$, za katero velja
@@ -612,69 +647,122 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         $$
         \sup_{g \in G} ||\pi(g) - \mu(g) || \leq 2\epsilon.
         $$
+      \end{izrek}
+      Izrek \ref{izrek : obstoj rešitve upodobitve} dokažemo po korakih.
+      Najprej pokažemo, da je model z majhno napako
+      skoraj homomorfizem.
+      \begin{lema}
+        \label{lema : zveznost na besedah}
+        Naj bo $\hat \rho$ tak, da velja 
+        $\Loss{rel}(\hat \rho)  < \epsilon$.
+        Potem za besedo $w \in S^*$, ki predstavlja $1 \in G$, velja 
+        $$
+        ||\hat \rho(w) - I||_F < \text{\TODO{}}.
+        $$
+      \end{lema}
+      \begin{dokaz}
+        Vse besede $w$, za katere velja $w \equiv 1 \mod G$,
+        so generiraje z besedami oblike 
+        $v r u$, kjer je $r \in R$ in $vu \equiv 1 \mod G$.
+        
+        Dokaz izvedemo z indukcijo po dolžini besede $v r u$.
+        Za $|v r u| = |r|$ je po predpostavki 
+        $||\hat \rho(r) - I||_F < \text{\TODO{}}.$.
+
+        Naj bo $|v| + |u| > 0$. Ker je $|r| \geq 1$ in 
+        $vu \equiv 1 \mod G$, po indukcijski predpostavki velja
+        $
+        \hat \rho(vu) = I + E_{vu}
+        $ za $ ||E_{uv}|| < \text{\TODO{}}$.
+
+        Velja
+        \begin{align*}
+          \hat \rho (v) \hat \rho(r) \hat \rho(u) &=
+          \hat \rho(v) (I + E_r) \hat \rho(u) \\
+          &= \hat \rho(v) \hat \rho(u) +
+          \hat \rho(v) E_r \hat \rho(u) \\
+          &= I + E_{vu} + \hat \rho(v) E_r \hat \rho(u) \\ 
+          &= I + E_{vru}
+        \end{align*}
+        za $|| E_{vru}|| = ||E_{vu} + \hat \rho(v) E_r \hat \rho(u)||
+        = \text{\TODO{}}$.
+        
+
+        
+
       \end{dokaz}
-      \subsubsection{Razširitev modela na upodobitev}
-      \label{subsection : razširitev na upodobitev}
-      \begin{definicija}
-       % 
-      %
-      \label{def:razširitev upodobitev}
-      Preslikavo $\hat \rho$ razširimo na celo grupo $G=<S|R>$ na slednji način:
-      \begin{itemize}
-        \item Za vsak $g \in G\setminus \{1  \}$ izberemo
-          takega \emph{kanoničnega predstavnika} $w_g \in F_S$ izmed
-          proste grupe nad $S$,
-          ki predstavlja $g$ v $G$ in ima izmed vseh besed, ki
-          predstavljajo $g$, najkrajšo
-          dolžino\footnote{Očitno je $w_1$ prazen niz in $|g| = |g^{-1}|$.}.
-          Dodatno zahtevamo $w_ {g^{-1}} = w_g^{-1}$.
-        \item Za $g$ s kanoničnim predstavnikom 
-        $w_g = s_1^{e_1} s_2^{e_2} \dotsm s_m^{e_m}$, kjer so
-        $e_i \in \{ -1, 1\}$, 
-        definiramo
+
+
+      \begin{lema}
+        \label{lema : model ~ homomorfizem}
+        Naj bo $\hat \rho$ model, da velja
+        $\Loss{rel}(\hat \rho)  < \text{TODO}$.
+        Potem za vsak $g, h \in G$ velja
         $$
-        \hat \rho(g) = \hat \rho(s_1)^{e_1} \hat \rho(s_2)^{e_2} \dotsm
-        \hat \rho(s_m)^{e_m}.
+        ||\hat \rho(gh) - \hat \rho(g) \hat \rho(h)||_F < \text{TODO}.
         $$
-      \end{itemize}
+      \end{lema}
+      \begin{dokaz}
+        Za kanonične predstavnike $w_g, w_h, w_{gh} \in S^*$
+        velja $w_g w_h  \equiv w_{gh} \mod G$.
+        \TODO{sledi iz zgornjega...}
+      \end{dokaz}
+
+      \TODO{
+        Treba je dokazat še
+        \begin{enumerate}
+          \item done
+          \item je tud $\Loss{homo}(\hat \rho)$ majhen , iz zveznosti
+            gre pol to tud na $\mu$.
+        \end{enumerate}
+
+      }
       %
-      \end{definicija}
-      Definicija je dobra le, če so vse matrike $P(s)$ obrnljive. Po spodnji lemi
-      to drži, če je napaka modela $\Loss{rel}(\hat \rho)$ dovolj majhna.
+     % \subsubsection{Razširitev modela na celotno grupo}
+      %\label{subsection : razširitev repr modela}
+     %
+      %Definicija je dobra le, če so vse matrike $P(s)$ obrnljive. Po
+      %spodnji lemi
+      %to drži, če je napaka modela $\Loss{rel}(\hat \rho)$ dovolj majhna.
       \begin{lema}
         \label{lema:obrnljivost R}
         %GOTO
-        Ostaja $\delta_0>0$, da za vsak $0 < \delta \leq \delta_0 $
-        iz $\Loss{rel}(\hat \rho) < \delta$ sledi, da je 
+        Ostaja $\delta_0>0$, da
+        %za vsak $0 < \delta \leq \delta_0 $
+        iz $\Loss{rel}(\hat \rho) < \delta_0$ sledi,
+        da je
         $\hat \rho(r)$ obrnljiva za vsak $r \in R$.
       \end{lema}
       \begin{dokaz}
-        Opazujmo zvezno preslikavo $X \mapsto \det(X)$. Zaradi zveznosti 
-        obstaja $\delta_0$, da je krogla $K_{\delta_0}(I) \subset \det ^{-1}(\frac{1}{2}, 1 + \frac{1}{2})$.
+        Opazujmo preslikavo $X \mapsto \det(X)$. Zaradi zveznosti
+        obstaja $\delta_0$, da je krogla $K_{\delta_0}(I) \subset
+        \det ^{-1}(\frac{1}{2}, 1 + \frac{1}{2})$.
         Če je $\Loss{rel}(\hat \rho) < \delta_0$, potem za vsak $r \in R$ velja
-        $\det(\hat \rho(r)) \in (\frac{1}{2} , 1 + \frac{1}{2})$, torej je 
+        $\det(\hat \rho(r)) \in (\frac{1}{2} , 1 + \frac{1}{2})$, torej je
         $\hat \rho(r)$ obrnljiva.
       \end{dokaz}
-      Po definiciji \ref{def:razširitev upodobitev} 
-      je za $r = s_1^{e_1} s_2^{e_2} \dotsm s_m^{e_m}$
-      slika  
-      $\hat \rho(r) = \hat \rho(s_1)^{e_1}
-       \hat \rho(s_2)^{e_2} \dotsm \hat \rho(s_m)^{e_m}$. 
-       Če je $\hat \rho(r)$ obrlnjiva, so očitno obrnljive
-       tudi vse matrike $\hat \rho(s_i)$. Ker operiramo v končnih grupah 
-       se vsak generator $s$ pojavi v neki relaciji $r \in R$, torej so za dovolj majhno funkcijo izgube 
-       vse matrike $\hat \rho(s)$ obrnljive. S tem je definicija
-        \ref{def:razširitev upodobitev} dobra.
-      \TODO{
-      Treba je dokazat še 
-       \begin{enumerate}
-        \item obstaja nek $ \mu $ blizu $\hat \rho$, ki je unitaren
-        \item je tud $\Loss{homo}(\hat \rho)$ majhen , iz zveznosti gre pol to tud na $\mu$.
-       \end{enumerate}
-
-      }
-  
-
+      % Tole je narobe:
+      % r = 1, ion ga p o def slikam v 1.
+      % lahko pa definiram zadevo na F_S in tm to računam...
+      % pravino je tkole:
+      % najprej dokažem ,da se bi ekvivalentne besede slikajo blizu
+      % pol gledam, kam se slika beseda ki predstavlja r in ni 1, pa se moree
+      % slikat blizu 1
+      % Po definiciji \ref{def:razširitev upodobitev}
+      % je za $r = s_1^{e_1} s_2^{e_2} \dotsm s_m^{e_m}$
+      % slika
+      % $\hat \rho(r) = \hat \rho(s_1)^{e_1}
+      % \hat \rho(s_2)^{e_2} \dotsm \hat \rho(s_m)^{e_m}$.
+      % Če je $\hat \rho(r)$ obrlnjiva, so očitno obrnljive
+      % tudi vse matrike $\hat \rho(s_i)$. Ker operiramo v končnih grupah
+      % se vsak generator $s$ pojavi v neki relaciji $r \in R$, torej
+      % so za dovolj majhno funkcijo izgube
+      % vse matrike $\hat \rho(s)$ obrnljive. S tem je definicija
+      % \ref{def:razširitev upodobitev} dobra.
+%
+      %\subsubsection{Dokaz izreka o obstoju rešitve}
+ %     
+%
       \subsection{Ciklične grupe}
       \label{subsection : ciklicčne grupe}
       Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
@@ -1023,7 +1111,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               %
               \begin{definicija}
                 Preslikavo $\hat \rho$ lahko podobno kot v poglavju
-                \ref{subsection : razširitev na upodobitev} raširimo na
+                \ref{subsection : razširitev repr modela} raširimo na
                 celotno grupo:
                 \begin{itemize}
                   \item Za vsak $g \in G$ izberemo
@@ -1455,11 +1543,11 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             $P_s=\operatorname{softmax}(S)$ in    $R, S \in \R^{m \times m}$.
             \paragraph{Rezultati}
             \TODO{setup, popravi imena grafov}
-
-            \subsection{Rekurzivni pristop}
-
-            \TODO{DOdaj rekurzivni (strojnoučenjaški) pristop. Potestiraj ga}
-
+% 
+%             \subsection{Rekurzivni pristop}
+% 
+%             \TODO{DOdaj rekurzivni (strojnoučenjaški) pristop. Potestiraj ga}
+% 
             \clearpage
             \section{Iskanje izomorfizmov grafov}
             S podobnim pristopom kot v \ref{eq: repr model na S}
