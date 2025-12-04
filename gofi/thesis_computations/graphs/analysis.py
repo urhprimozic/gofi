@@ -313,7 +313,7 @@ def loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "
     plt.close()
 
 
-def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn"], markers = ['.', '.', '+', 'x']):
+def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"], markers = ['.', '.', '+', 'x', '.']):
     '''
     Points in 2d space of n_vertices * loss. Each method has its own color.
 
@@ -362,7 +362,7 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         "mild_nn_it" : "Blaga overparametrizacija in tabela inverzij",
     }
 
-    colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange]
+    colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange, gc.green]
   
     for method, color, marker in zip(all_methods, colors, markers):
         if method in methods:
