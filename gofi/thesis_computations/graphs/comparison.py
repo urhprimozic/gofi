@@ -359,9 +359,9 @@ if "__main__" == __name__:
 
     # noise args
     defaults = [ 
- (1e-2) / 5,
- 1e-2,
- 1,
+0.001,
+ 0.001,
+ 5,
  1,]
     keys = ["noise_scale" ,"grad_threshold" ,"cooldown_steps" ,"decay"]
     if args.noise is None:

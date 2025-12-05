@@ -122,7 +122,7 @@ def scan_and_join_results(results_dir: str = "./results", verbose: bool = False,
     all_graphs, all_results = join_results(run_names)
     return run_names, all_graphs, all_results
 
-def plot_loss_over_time(method_to_results, output_filename, suptitle="", loss_key="relation_losses"):
+def plot_loss_over_time(method_to_results, output_filename, suptitle="", loss_key="relation_losses", log_scale=True):
     '''
     Expects a dictionary {label : results, 'vanilla_it' : results, ...}
     Plot loss over time for different methods.'''
@@ -131,7 +131,8 @@ def plot_loss_over_time(method_to_results, output_filename, suptitle="", loss_ke
         #print(label)
         losses = results[loss_key]
         plt.plot(losses, label=label)
-    plt.yscale("log")
+    if log_scale:
+        plt.yscale("log")
     plt.xlabel("Korak")
     plt.ylabel("Napaka")
     plt.suptitle(suptitle, fontsize=8)
@@ -386,7 +387,7 @@ def main():
     average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it", methods=["vanilla_it", "vanilla"],markers=["o","o","o","o"])
     average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it_vs_nn_it", methods=["vanilla_it", "vanilla", "nn_it"],markers=["o","o","o","o"])
 
-def lor_plot_losses(lor, output_filename,methods, suptitle="", loss_key="relation_losses"):
+def lor_plot_losses(lor, output_filename,methods, suptitle="", loss_key="relation_losses", log_scale=True):
     '''
     Plots list of results losses. Combine with collect results
     '''
@@ -394,5 +395,10 @@ def lor_plot_losses(lor, output_filename,methods, suptitle="", loss_key="relatio
         labels_to_results = {
             method : all_results[method] for method in methods
         }
-        of = output_filename + str(index)
-        plot_loss_over_time(labels_to_results, output_filename=of, suptitle=suptitle, loss_key=loss_key)
+        of = output_filename + "_" + str(index)
+
+        # suptitle 
+        M1, _, _ = all_results["graph_tuple"]
+        suptitle = f"Graf z {M1.shape[0]} vozlišči"
+        
+        plot_loss_over_time(labels_to_results, output_filename=of, suptitle=suptitle, loss_key=loss_key, log_scale=log_scale)
