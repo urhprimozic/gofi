@@ -311,6 +311,18 @@ kjer so $\alpha > 0, \beta \in [0,1), \delta \in [0,1 )$ parametri modela.
 Zaradi dobrih empiričnih rezultatov se v praksi v strojen učenju
 namesto surovega gradientnega spusta za optimizacijo uporablja
 algoritem Adam.
+\subsection{Preturbniran gradientni spust}
+\label{subsection : PGD}
+Gradientni spust lahko obtiči v sedlih. 
+Iz sedla lahko pridemo z dodajanjem naključne perturacije 
+parametrov, ko je gradient ciljne funkcije majhen 
+\cite{jin2017escapesaddlepointsefficiently}.
+
+Za $\nabla \loss(\phi) < \epsilon$ definiramo 
+$$
+\phi_{i+1} = \phi_i - \eta \nabla \loss(\phi_i) + \xi_i,
+$$
+kjer je $\xi_i \sim U[K_0(r)]$ za izbrana hiperparametra $r$ in $\epsilon$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 \clearpage
@@ -649,8 +661,22 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         $$
       \end{izrek}
       Izrek \ref{izrek : obstoj rešitve upodobitve} dokažemo po korakih.
+      Za začetek pokažemo, da iz dovolj majhne vrednosti 
+      $\Loss{unitary}(\hat \rho)$ lahko sklepamo na 
+      omejeno normo $||\hat \rho(s)||$ za vsak $s \in S$.ž
+\begin{lema}
+        Za $\epsilon>0$ obstaja $\delta>0$, 
+       da iz  $\Loss{unit}(\hat \rho) < \delta $ sledi, da je 
+       $||\hat \rho(s) - U_s|| < \epsilon$ za $s \in S$ in 
+       $U \in U_n(\C)$.    
+      \end{lema}
+      \begin{dokaz}
+        Opazujmo preslikavo 
+      \end{dokaz}
+
       Najprej pokažemo, da je model z majhno napako
       skoraj homomorfizem.
+      
       \begin{lema}
         \label{lema : zveznost na besedah}
         Naj bo $\hat \rho$ tak, da velja 
