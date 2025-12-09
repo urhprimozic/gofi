@@ -142,6 +142,7 @@ the content and not the structure of your work.}
 \newcommand{\C}{\mathbb C}
 \newcommand{\Q}{\mathbb Q}
 \newcommand{\mon}{(S\cup S ^{-1})^*}
+\newcommand{\s}{\hat \rho (s)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ZAČETEK VSEBINE
@@ -172,7 +173,7 @@ Struktura: \TODO{dopiši na koncu}
 \addcontentsline{toc}{section}{Oznake}
 
 \label{section:oznake}
-\begin{tabularx}{\linewidth}[h!]{l p{0.9\linewidth}}
+\begin{tabularx}{\linewidth}[ht]{l p{0.9\linewidth}}
   $[n]$ & Množica števil $\{1, 2, \dotsc, n\}$. \\
   $\operatorname{flatten}$ &  Sploščitev matrike
   $\operatorname{flatten} \colon \R^{n \times n} \to \R^{n^2}$.
@@ -191,6 +192,9 @@ Struktura: \TODO{dopiši na koncu}
   $\Pi$ & Množica permutacijskih matrik. \\
   $F_S$ & Prosta grupa nad množico $S$.\\
   $A^*$ & Prosti monoid nad množico $A$. \\
+  $\operatorname{diag}(\sigma_1, \sigma_2 , \dotsc, \sigma_n)$
+  & Diagonalna matrika z elementi $\sigma_1, \sigma_2, \dotsc,
+  \sigma_n$ na diagonali. \\
 \end{tabularx}
 %
 %
@@ -313,12 +317,12 @@ namesto surovega gradientnega spusta za optimizacijo uporablja
 algoritem Adam.
 \subsection{Preturbniran gradientni spust}
 \label{subsection : PGD}
-Gradientni spust lahko obtiči v sedlih. 
-Iz sedla lahko pridemo z dodajanjem naključne perturacije 
-parametrov, ko je gradient ciljne funkcije majhen 
+Gradientni spust lahko obtiči v sedlih.
+Iz sedla lahko pridemo z dodajanjem naključne perturacije
+parametrov, ko je gradient ciljne funkcije majhen
 \cite{jin2017escapesaddlepointsefficiently}.
 
-Za $\nabla \loss(\phi) < \epsilon$ definiramo 
+Za $\nabla \loss(\phi) < \epsilon$ definiramo
 $$
 \phi_{i+1} = \phi_i - \eta \nabla \loss(\phi_i) + \xi_i,
 $$
@@ -364,7 +368,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
     \begin{definicija}
       Upodobitvi $\rho \colon G \to \operatorname{GL}(V)$ in
       $\sigma \colon G \to \operatorname{GL}(W)$ sta
-      \emph{ekvivalentni}, če obstaja izomorfizem vektorskih
+      \emph{ekvivalentni}, če obstaja izomorfizemvektorskih
       prostorov $\Phi \colon  V \to W$, da za vsak $g \in G$ in vsak
       $v \in V$ velja
       $$
@@ -445,8 +449,9 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         $$
       \end{definicija}
       \begin{opomba}
-        Ker so vse grupe v tem delu končne\footnote{V splošnem je $w_g \in \mon$.
-        V končnih grupah za $s \in S$ velja $s^{-1} =
+        Ker so vse grupe v tem delu končne\footnote{V splošnem je
+          $w_g \in \mon$.
+          V končnih grupah za $s \in S$ velja $s^{-1} =
         s^{\operatorname{red}(s) -1}$.}., lahko za
         vsak element grupe $G$ izberemo predstavnika
         $w_g \in S^*$, da velja
@@ -455,21 +460,21 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         definiramo preslikavo $\hat \rho(g)$ kot
         $\hat \rho(w_g)$
       \end{opomba}
-      %GOTO
+      %
       \begin{definicija}
+        \label{def : razširitev repr modela}
         Preslikavo $\hat \rho$ definiramo na grupi $G$ na slednji način:
         \begin{itemize}
-        \item Za vsak $g \in G\setminus \{1\}$ izberemo
-          \emph{kanoničnega predstavnika} $w_g \in S^*$.
-        \item Za $1 \in G$ definiramo $w_1$ kot prazno besedo. 
-      \end{itemize}
-      Za $g \in G$ s kanoničnim predstavnikom $w_g \in S^*$ definiramo
-      $$
-      \hat \rho(g) = \hat \rho(w_g).
-      $$
+          \item Za vsak $g \in G\setminus \{1\}$ izberemo
+            \emph{kanoničnega predstavnika} $w_g \in S^*$.
+          \item Za $1 \in G$ definiramo $w_1$ kot prazno besedo.
+        \end{itemize}
+        Za $g \in G$ s kanoničnim predstavnikom $w_g \in S^*$ definiramo
+        $$
+        \hat \rho(g) = \hat \rho(w_g).
+        $$
       \end{definicija}
 
-      
       %
 
       %  Razširitev preslikave $\hat \rho$ na celo grupo $G$
@@ -661,45 +666,100 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         $$
       \end{izrek}
       Izrek \ref{izrek : obstoj rešitve upodobitve} dokažemo po korakih.
-      Za začetek pokažemo, da iz dovolj majhne vrednosti 
-      $\Loss{unitary}(\hat \rho)$ lahko sklepamo na 
-      omejeno normo $||\hat \rho(s)||$ za vsak $s \in S$.ž
-\begin{lema}
-        Za $\epsilon>0$ obstaja $\delta>0$, 
-       da iz  $\Loss{unit}(\hat \rho) < \delta $ sledi, da je 
-       $||\hat \rho(s) - U_s|| < \epsilon$ za $s \in S$ in 
-       $U \in U_n(\C)$.    
+      Za začetek pokažemo, da iz dovolj majhne vrednosti
+      $\Loss{unitary}(\hat \rho)$ lahko sklepamo, da je
+      $\hat \rho(s)$ zelo blizu unitarne matrike za vsak
+      $s \in S$.
+      \begin{lema}
+        Iz  $\Loss{unit}(\hat \rho) < |S|\epsilon $ sledi, da je
+        $||\hat \rho(s) - Q_s|| < \epsilon$ za neko unitarno matriko
+        $Q_s$.
       \end{lema}
       \begin{dokaz}
-        Opazujmo preslikavo 
-      \end{dokaz}
+        Naj bo $s \in S$ poljuben.% in označimo $Z =\hat\rho(s)$.
+        Matriko $\hat\rho(s)$ lahko s \emph{polarno dekompozicijo} izrazimo kot
+        $\s = Q_s H_s$, kjer je $Q_s$ unitarna matrika in $H_s = (\s
+        \s ^*)^\frac{1}{2} \geq 0$.
 
-      Najprej pokažemo, da je model z majhno napako
-      skoraj homomorfizem.
-      
+        Iz $\s - Q_s = Q_s(H_s-I)$ sledi
+        $$
+        ||\s - Q_s||_F = ||H_s - I||_F,
+        $$
+        ker je matrika $Q_s$ unitarna.
+
+        Z $\sigma_1 \geq \sigma_2 \geq \dotsm \geq \sigma_n \geq 0$
+        označimo singularne vrednosti matrike $\s$. Očitno
+        so to natanko lastne vrednosti matrike $H_s$.
+
+        Ker je $H_s$ pozitivno semidefinitna, velja
+        $H_s = V \operatorname{diag}(\sigma_1, \sigma_2, \dotsc, \sigma_n) V^*$
+        za neko unitarno matriko $V$.
+        %
+        Računamo
+        $$
+        ||H_s - I||_F^2 = ||\operatorname{diag}(\sigma_1, \sigma_2,
+        \dotsc, \sigma_n)  - I||_F^2
+        = \sum_{i=1}^n (\sigma_i -1)^2.
+        $$
+        Podobno je
+        $$
+        ||\s \s^* - I||_F^2 = \sum_{i=1}^n (\sigma_i^2 -1)^2
+        $$
+        in očitno velja
+        $
+        |\sigma_i -1| \leq |\sigma_i^2 -1|
+        $.
+        Iz tega sledi
+        $$
+        ||\s - Q_s||_F^2 = ||H_s - I||_F^2 \leq ||\s \s^* - I||_F^2 < \epsilon.
+        $$
+
+      \end{dokaz}
+      Če je  $\Loss{unitary}(\hat\rho) < \epsilon$, lahko zapišemo
+      $\s = Q_s + F_s$ za $||F_s||_F < \epsilon$. Iz tega sledi ocena
+      %
+      $$
+      ||\s||_F \leq ||Q_s||_F + ||F_s||_F < \sqrt{n} + \epsilon.
+      $$
+      Z njo dokažemo, da model z majhno napako
+      različne zapise iz $S^*$ istega elementa grupe preslika
+      blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
       \begin{lema}
         \label{lema : zveznost na besedah}
-        Naj bo $\hat \rho$ tak, da velja 
-        $\Loss{rel}(\hat \rho)  < \epsilon$.
-        Potem za besedo $w \in S^*$, ki predstavlja $1 \in G$, velja 
+        Naj bo $\hat \rho$ tak, da velja
+        $\Loss{rel}(\hat \rho) < |R| \epsilon$ in $
+        \Loss{unitary}(\hat \rho)  < |S| \epsilon$.
+        Potem za besedo $w \in S^*$, ki predstavlja $1 \in G$, velja
         $$
-        ||\hat \rho(w) - I||_F < \text{\TODO{}}.
+        ||\hat \rho(w) - I||_F <\left( 1 + (\sqrt{n} +
+        \epsilon)^{|w|} |w| \epsilon \right)^L - 1
         $$
+        % $$
+        % ||\hat \rho(w) - I||_F < (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon.
+        % $$
       \end{lema}
       \begin{dokaz}
         Vse besede $w$, za katere velja $w \equiv 1 \mod G$,
-        so generiraje z besedami oblike 
+        so generiraje z besedami oblike
         $v r u$, kjer je $r \in R$ in $vu \equiv 1 \mod G$.
-        
-        Dokaz izvedemo z indukcijo po dolžini besede $v r u$.
-        Za $|v r u| = |r|$ je po predpostavki 
-        $||\hat \rho(r) - I||_F < \text{\TODO{}}.$.
+        Najprej za te generatorje pokažemo, da velja
+        $||\hat \rho(v r u) - I||_F < (\sqrt{n} + \epsilon)^{|v u|}
+        |v r u| \epsilon.$
+        % $$
+        % ||\hat \rho(v r u) - I||_F < (\sqrt{n} + \epsilon)^{|v r
+        % u|} |v r u| \epsilon.
+        % $$
 
-        Naj bo $|v| + |u| > 0$. Ker je $|r| \geq 1$ in 
+        Dokaz izvedemo z indukcijo po dolžini besede $v r u$.
+        Za $|v r u| = |r|$ je po predpostavki
+        $||\hat \rho(r) - I||_F < \epsilon < |r|\epsilon$. %
+        % (\sqrt{n}+ \epsilon)^{|r|}
+
+        Naj bo $|v| + |u| > 0$. Ker je $|r| \geq 1$ in
         $vu \equiv 1 \mod G$, po indukcijski predpostavki velja
         $
         \hat \rho(vu) = I + E_{vu}
-        $ za $ ||E_{uv}|| < \text{\TODO{}}$.
+        $ za $ ||E_{uv}|| < (\sqrt{n}+ \epsilon)^{|vu|} |vu| \epsilon$.
 
         Velja
         \begin{align*}
@@ -707,18 +767,65 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           \hat \rho(v) (I + E_r) \hat \rho(u) \\
           &= \hat \rho(v) \hat \rho(u) +
           \hat \rho(v) E_r \hat \rho(u) \\
-          &= I + E_{vu} + \hat \rho(v) E_r \hat \rho(u) \\ 
+          &= I + E_{vu} + \hat \rho(v) E_r \hat \rho(u) \\
           &= I + E_{vru}
         \end{align*}
-        za $|| E_{vru}|| = ||E_{vu} + \hat \rho(v) E_r \hat \rho(u)||
-        = \text{\TODO{}}$.
-        
+        za $|| E_{vru}|| = %||E_{vu} + \hat \rho(v) E_r \hat \rho(u)||
+        \leq (\sqrt{n}+ \epsilon)^{|vu|}|vru|\epsilon$.
 
-        
+        \TODO{a rabimo upoštevat tud generatorje oblike
+        $u^{-1} r ^{-1} v^{-1}$? Ne, ker so besede samo nad $S$?}
 
+        Splošna beseda $w \equiv 1 \mod G$ je oblike
+        $w = v_1 r_1  u_1 v_2 r_2 u_2 \dotsm v_L r_L u_L$.
+        Računamo
+        \begin{align*}
+          \hat \rho (w) &=
+          \hat \rho (v_1 r _1 u_1) \hat \rho (v_2 r _2 u_2) \dotsm
+          \hat \rho (v_L r _L u_L) \\
+          &= (I + E_{v_1 r_1 u_1}) (I + E_{v_2 r_2 u_2}) \dotsm
+          (I + E_{v_L r_L u_L}) \\
+          &= I + \sum_{\emptyset \neq T \subseteq [L] }
+          \prod_{t \in T} E_{v_t r_t u_t}
+        \end{align*}
+        in ocenimo
+        \begin{align*}
+          \left\| \sum_{\emptyset \neq T \subseteq [L] }
+          \prod_{t \in T} E_{v_t r_t u_t} \right\| _F
+          &\leq
+          \sum_{\emptyset \neq T \subseteq [L] }
+          \prod_{t \in T} (\sqrt{n} + \epsilon)^{|v_t u_t|} |v_t r_t
+          u_t| \epsilon \\
+          &\leq
+          \sum_{\emptyset \neq T \subseteq [L] }
+          \prod_{t \in T} (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon \\
+          &\leq
+          \left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon \right)^L - 1
+        \end{align*}
+        \TODO{Groba ocena - lahko tudi bolje ocenim..}
       \end{dokaz}
-
-
+      \begin{lema}
+        Naj bo
+        $\Loss{rel}(\hat \rho) < |R| \epsilon$ in $
+        \Loss{unitary}(\hat \rho)  < |S| \epsilon$.
+        Potem za taki besedi $w, v \in S ^*$, da velja
+        $w \equiv v^{-1}\mod G$ velja
+        $$
+        ||\hat \rho(w) - \hat \rho(v)^{-1}||
+        < \frac{\left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon
+        \right)^L - 1}{||\hat \rho(v)^{-1} ||}.
+        $$
+      \end{lema}
+      \begin{dokaz}
+        Opazimo, da za $A, B \in GL_n$ iz
+        $||AB-I|| < \delta$ sledi
+        $|| B - A^{-1}|| < \frac{\delta}{||A^{-1}||}$.
+        Za dovolj majhen $\epsilon$ so matrike $\hat \rho(v)$ obrnljive.
+        %
+        Dokaz sledi iz prejšnje leme \ref{lema : zveznost na besedah}
+        in zgornje opazke.
+      \end{dokaz}
+      %
       \begin{lema}
         \label{lema : model ~ homomorfizem}
         Naj bo $\hat \rho$ model, da velja
@@ -730,65 +837,97 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       \end{lema}
       \begin{dokaz}
         Za kanonične predstavnike $w_g, w_h, w_{gh} \in S^*$
-        velja $w_g w_h  \equiv w_{gh} \mod G$.
-        \TODO{sledi iz zgornjega...}
+        velja $w_g w_h  \equiv w_{gh}^{-1} \mod G$.
+
+        Ocenimo
+        \begin{align*}
+          ||\hat \rho(w_g w_h) -   \hat \rho(w_{gh})||_F
+          &\leq
+          ||\hat \rho(w_{gh}^{-1}) ||_F||\hat \rho(w_g w_h) \hat
+          \rho(w_{gh})^{-1} - I||_F
+          %
+          %&=
+          %||\hat \rho(w_g w_h) -   \hat \rho(w_{gh})||_F \\
+          \\
+          &\leq
+          ||\hat \rho(w_{gh}^{-1}) ||_F||\hat \rho(w_g w_h) \hat
+          \rho(w_{gh})^{-1}-   \hat \rho(w_g w_h) \hat \rho(w_{gh}^{-1})||_F
+          \\
+          & +
+          ||\hat \rho(w_{gh}^{-1}) ||_F||\hat \rho(w_g w_h) \hat
+          \rho(w_{gh}^{-1}) - I||_F \\
+          %
+          &\leq
+          ||\hat \rho(w_{gh}^{-1}) ||_F
+          ||\hat \rho(w_g w_h)||_F
+          ||\hat \rho(w_{gh})^{-1} - \hat \rho(w_{gh}^{-1})||_F \\
+          &+
+          ||\hat \rho(w_{gh}^{-1}) ||_F
+          ||\hat \rho(w_g w_h) \hat \rho(w_{gh}^{-1}) - I||_F \\
+          &= o(\epsilon).
+          %
+        \end{align*}
       \end{dokaz}
-
-      \TODO{
-        Treba je dokazat še
-        \begin{enumerate}
-          \item done
-          \item je tud $\Loss{homo}(\hat \rho)$ majhen , iz zveznosti
-            gre pol to tud na $\mu$.
-        \end{enumerate}
-
-      }
       %
-     % \subsubsection{Razširitev modela na celotno grupo}
-      %\label{subsection : razširitev repr modela}
-     %
-      %Definicija je dobra le, če so vse matrike $P(s)$ obrnljive. Po
-      %spodnji lemi
-      %to drži, če je napaka modela $\Loss{rel}(\hat \rho)$ dovolj majhna.
+      % \begin{lema}
+      %   \label{lema:obrnljivost R}
+      %   %GOTO
+      %   Ostaja $\delta_0>0$, da
+      %   %za vsak $0 < \delta \leq \delta_0 $
+      %   iz $\Loss{rel}(\hat \rho) < \delta_0$ sledi,
+      %   da je
+      %   $\hat \rho(r)$ obrnljiva za vsak $r \in R$.
+      % \end{lema}
+      % \begin{dokaz}
+      %   Opazujmo preslikavo $X \mapsto \det(X)$. Zaradi zveznosti
+      %   obstaja $\delta_0$, da je krogla $K_{\delta_0}(I) \subset
+      %   \det ^{-1}(\frac{1}{2}, 1 + \frac{1}{2})$.
+      %   Če je $\Loss{rel}(\hat \rho) < \delta_0$, potem za vsak $r
+      % \in R$ velja
+      %   $\det(\hat \rho(r)) \in (\frac{1}{2} , 1 + \frac{1}{2})$, torej je
+      %   $\hat \rho(r)$ obrnljiva.
+      % \end{dokaz}
+      S tem smo dokazali, da je model $\hat \rho$ z dovolj majhno napako
+      skoraj homomorfizem. Dokazali bomo še, da obstaja
+      preslikava $$\mu \colon G \to U(n)$$ v unitarne matrike,
+      ki je blizu modelu $\hat \rho$.
+      Nato bo iz izreka
+      \ref{izrek :
+      kazhdan} sledilo, da obstaja prava upodobitev $\rho$ blizu
+      modelu $\hat \rho$.
+
+      Za model $\hat \rho$ z majhno napako definiramo
+      preslikavo $\mu \colon S \to U(n)$ s predpisom
+      $$
+      \mu \colon s \mapsto Q_s.
+      $$
+      Preslikavo implicitno razširimo
+      na $S^*$ in na $G$ enako kot $\hat \rho$.
       \begin{lema}
-        \label{lema:obrnljivost R}
-        %GOTO
-        Ostaja $\delta_0>0$, da
-        %za vsak $0 < \delta \leq \delta_0 $
-        iz $\Loss{rel}(\hat \rho) < \delta_0$ sledi,
-        da je
-        $\hat \rho(r)$ obrnljiva za vsak $r \in R$.
+        Za preslikavo $\mu \colon G \to U(n)$, inducirana iz 
+        modela $\hat \rho$ z $\Loss(unitary) < |S|\epsilon$
+        in $\Loss{rel}(\hat \rho) < |R| \epsilon$, 
+        velja 
+        $$
+        ||\mu(gh) - \mu(g)\mu(h)||_F < o(\epsilon)
+        $$
       \end{lema}
       \begin{dokaz}
-        Opazujmo preslikavo $X \mapsto \det(X)$. Zaradi zveznosti
-        obstaja $\delta_0$, da je krogla $K_{\delta_0}(I) \subset
-        \det ^{-1}(\frac{1}{2}, 1 + \frac{1}{2})$.
-        Če je $\Loss{rel}(\hat \rho) < \delta_0$, potem za vsak $r \in R$ velja
-        $\det(\hat \rho(r)) \in (\frac{1}{2} , 1 + \frac{1}{2})$, torej je
-        $\hat \rho(r)$ obrnljiva.
+        Ocenimo 
+        \begin{align*}
+          ||\mu(gh) - \mu(g)\mu(h)||_F 
+          &\leq 
+          ||\mu(gh) - \hat \rho(gh)||_F 
+          + ||\hat \rho(gh) - \hat \rho(g)\hat \rho(h)||_F \\
+          &+
+          ||\hat \rho(g)\hat \rho(h) - \mu(g)\mu(h)||_F \\
+          &=
+          o(\epsilon).
+        \end{align*}
       \end{dokaz}
-      % Tole je narobe:
-      % r = 1, ion ga p o def slikam v 1.
-      % lahko pa definiram zadevo na F_S in tm to računam...
-      % pravino je tkole:
-      % najprej dokažem ,da se bi ekvivalentne besede slikajo blizu
-      % pol gledam, kam se slika beseda ki predstavlja r in ni 1, pa se moree
-      % slikat blizu 1
-      % Po definiciji \ref{def:razširitev upodobitev}
-      % je za $r = s_1^{e_1} s_2^{e_2} \dotsm s_m^{e_m}$
-      % slika
-      % $\hat \rho(r) = \hat \rho(s_1)^{e_1}
-      % \hat \rho(s_2)^{e_2} \dotsm \hat \rho(s_m)^{e_m}$.
-      % Če je $\hat \rho(r)$ obrlnjiva, so očitno obrnljive
-      % tudi vse matrike $\hat \rho(s_i)$. Ker operiramo v končnih grupah
-      % se vsak generator $s$ pojavi v neki relaciji $r \in R$, torej
-      % so za dovolj majhno funkcijo izgube
-      % vse matrike $\hat \rho(s)$ obrnljive. S tem je definicija
-      % \ref{def:razširitev upodobitev} dobra.
-%
-      %\subsubsection{Dokaz izreka o obstoju rešitve}
- %     
-%
+      \TODO{$o(\epsilon)$ lahko točno izračunam.}
+      Iskana upodobitev očitno $\rho$ sledi iz izreka
+      \ref{izrek : kazhdan}.
       \subsection{Ciklične grupe}
       \label{subsection : ciklicčne grupe}
       Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
@@ -932,7 +1071,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       ničelne napake. Enake lastnosti opazimo na širši množici
       diedrskih grup - glej \TODO{grafi za ostalo}
       %%%%%%%%%%%%%
-      \begin{figure}[h!]
+      \begin{figure}[ht]
         \centering
         \begin{minipage}{0.49\textwidth}
           \centering
@@ -986,8 +1125,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       čas $t_{r_0, s_0}$, ob katerem je rešitev $(r(t), s(t))$ z
       začetnimi parametri $(r_0, s_0)$ prvič v $\epsilon = TODO$ pasu
       njene limite v neskončnosti.
-      \begin{figure}[h!]
-        \label{figure : limit points and speed for dihedral}
+      \begin{figure}[ht]
+
         \centering
         \includegraphics[width=0.8\linewidth]{images/dihedral/grid/plot_dihedral_grid_n4_-3_3_1000.pdf}
         \caption{Hitrosti konvergenc različnih začetnih parametrov.
@@ -997,7 +1136,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           rešitve $(r(t), s(t))$. Svetlejša, kot je barva, manjši je
           prvi $t_1$, v katerem se $(r(t_1), s(t_1))$ razlikuje od
         limite za manj kot $\epsilon = 0.01$.}
-        \label{fig:enter-label}
+        \label{figure : limit points and speed for dihedral}
       \end{figure}
       \subsubsection{Dvodimenzionalne upodobitve}
       Model dvorazsežne upodobitve $D_n$ je določen z matrikama $\hat
@@ -1016,7 +1155,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       numerične rešitve za različne začetne parametre. Trajektorije
       rešitev $(R(t), S(t))$ vizualiziramo v $\R^2$ kot
       $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
-          \begin{figure}[h!]
+          \begin{figure}[ht]
             \centering
             \begin{minipage}{0.49\textwidth}
               \centering
@@ -1136,8 +1275,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               za $f \in \funnn{n}$.
               %
               \begin{definicija}
-                Preslikavo $\hat \rho$ lahko podobno kot v poglavju
-                \ref{subsection : razširitev repr modela} raširimo na
+                Preslikavo $\hat \rho$ lahko podobno kot v definiciji
+                \ref{def : razširitev repr modela} raširimo na
                 celotno grupo:
                 \begin{itemize}
                   \item Za vsak $g \in G$ izberemo
@@ -1509,7 +1648,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               ciklične grupe $C_n$. Podatki so bili priodobljeni z
               \TODO{Adam, settings, kaj vse}. Več rezultatov je v
               dodatku \TODO{}.
-              \begin{figure}[h!]
+              \begin{figure}[ht]
                 \centering
                 \begin{minipage}{0.49\textwidth}
                   \centering
@@ -1569,11 +1708,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             $P_s=\operatorname{softmax}(S)$ in    $R, S \in \R^{m \times m}$.
             \paragraph{Rezultati}
             \TODO{setup, popravi imena grafov}
-% 
-%             \subsection{Rekurzivni pristop}
-% 
-%             \TODO{DOdaj rekurzivni (strojnoučenjaški) pristop. Potestiraj ga}
-% 
+            %
+            %             \subsection{Rekurzivni pristop}
+            %
+            %             \TODO{DOdaj rekurzivni (strojnoučenjaški)
+            % pristop. Potestiraj ga}
+            %
             \clearpage
             \section{Iskanje izomorfizmov grafov}
             S podobnim pristopom kot v \ref{eq: repr model na S}
@@ -1745,7 +1885,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               4 \sim 3, 3 \sim 0, 3 \sim 1, 2 \sim 0\}$. Očitno je
               grupa avtomorfizmov tega grafa izomorfna diedrski grupi
               trikotnika $D_3$.
-              \begin{figure}[h!]
+              \begin{figure}[ht]
                 \centering
                 \includegraphics[width=0.5\linewidth]{images/random_samples_big_random_graph_1_on_5.png}
                 \caption{Graf na petih vozljiščih.}
@@ -1762,7 +1902,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             nad različnimi naključno tvorjenimi grafi pa v
             \ref{dodatek:naključni grafi}.
 
-            \subsection{Quadratic assigment \\ Graph matching \TODO{slo?}}
+            \subsection{Graph matching - SLO??}
             \label{section:graph_matching}
             \begin{definicija}
               Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
@@ -2047,7 +2187,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \ref{subsection : rezultati_grafi_vanilla} in metode z
             uporabo tabele inverzij. Z uporabo tabele inverzij
             dosežemo bolšje rezultate.
-            \begin{figure}[h!]
+            \begin{figure}[ht]
               \centering
               \includegraphics[width=0.7\linewidth]{images/average_loss_on_size_vanilla_vs_it.pdf}
               \caption{Primerjava napak glede na velikost grafa.

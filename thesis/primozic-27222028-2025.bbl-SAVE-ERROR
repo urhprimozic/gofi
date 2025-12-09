@@ -209,6 +209,33 @@
       \verb https://doi.org/10.4169/college.math.j.44.2.108
       \endverb
     \endentry
+    \entry{gamm2011epsilonrepresentations}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=089ca0e84f6e2d39b082f074bac5e049}{%
+           family={Gamm},
+           familyi={G\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Master thesis, Georg-August-Universität Göttingen. 21}%
+      }
+      \strng{namehash}{089ca0e84f6e2d39b082f074bac5e049}
+      \strng{fullhash}{089ca0e84f6e2d39b082f074bac5e049}
+      \strng{fullhashraw}{089ca0e84f6e2d39b082f074bac5e049}
+      \strng{bibnamehash}{089ca0e84f6e2d39b082f074bac5e049}
+      \strng{authorbibnamehash}{089ca0e84f6e2d39b082f074bac5e049}
+      \strng{authornamehash}{089ca0e84f6e2d39b082f074bac5e049}
+      \strng{authorfullhash}{089ca0e84f6e2d39b082f074bac5e049}
+      \strng{authorfullhashraw}{089ca0e84f6e2d39b082f074bac5e049}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{$\varepsilon$-representations of groups and Ulam stability}
+      \field{type}{phdthesis}
+      \field{year}{2011}
+    \endentry
     \entry{Hirsch2012dynamical-systems}{book}{}{}
       \name{author}{3}{}{%
         {{hash=697b9e10d72a5f4aec2034a99cf01a9b}{%
