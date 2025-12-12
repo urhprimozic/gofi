@@ -405,6 +405,27 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       polje. Vse upodobitve $G$ nad poljem $F$ so polenostavne če in
       samo če $\operatorname{char}F \nmid |G|$.
     \end{izrek}
+    Za grupo $G$ množico njenih neizomorfnih nerazcepnih upodobitev
+    označimo z $\operatorname{Irr}(G)$, za poljubno upodobitev
+    $\rho$ pa definiramo \emph{normo karaterja}
+    \begin{equation}
+      \label{eq:norma karaterja}
+      |\chi_\rho| = \frac{1}{|G|} \sum\limits_{g \in G}
+      \operatorname{tr}(\rho(g)) \operatorname{tr}(\rho(g^{-1})).
+    \end{equation}
+    \begin{izrek}
+      \label{izrek:celostevilski_karakter}
+      Za končno grupo $G$ in polenostavno upodobitev $\rho \colon G
+      \to \operatorname{GL}_n(\C)$ velja
+      $$
+      |\chi_\rho| = \sum\limits_{\pi \in \operatorname{Irr}(G)}
+      \operatorname{mult}_\rho(\pi)^2,
+      $$
+      kjer je $\operatorname{mult}_\rho(\pi) \in \N$ število kopij
+      nerazcepne upodobitve
+      $\pi$ v razcepu upodobitve $\rho = \oplus_{\pi \in
+      \operatorname{Irr}(G)} \operatorname{mult}_\rho(\pi) \pi$.
+    \end{izrek}
     \begin{izrek}
       Naj bo $G$ končna grupa in $\rho \colon G \to
       \operatorname{GL}(V)$ končno-razsežna upodobitev nad
@@ -452,7 +473,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         Ker so vse grupe v tem delu končne\footnote{V splošnem je
           $w_g \in \mon$.
           V končnih grupah za $s \in S$ velja $s^{-1} =
-        s^{\operatorname{red}(s) -1}$.}., lahko za
+        s^{\operatorname{red}(s) -1}$.}, lahko za
         vsak element grupe $G$ izberemo predstavnika
         $w_g \in S^*$, da velja
         $w_g \equiv g \mod G$.
@@ -636,17 +657,18 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       \begin{izrek}[Obstoj rešitve]
         \label{izrek : obstoj rešitve upodobitve}
         Za vsak $\epsilon >0$
-        obstaja $\delta >0$, da iz
+        obstaja $\delta>0$, da iz
         iz
         $
         \Loss{rel}(\hat \rho) < \delta
         $
         sledi, da
-        obstaja upodobitev $\rho \colon G \to
+        obstaja nerazcepna upodobitev $\rho \colon G \to
         GL_n(\C) $, za katero velja
         $$
         \sup_{s \in S} ||\hat \rho(s) - \rho(s) || \leq \epsilon.
         $$
+        Velja še $\delta = o(\epsilon)$.
       \end{izrek}
       Izrek dokažemo s pomočjo rezultata iz \cite[Theorem II.5 na
       strani 7]{gamm2011epsilonrepresentations}.
@@ -871,7 +893,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       %
       % \begin{lema}
       %   \label{lema:obrnljivost R}
-      %   %GOTO
+      %
       %   Ostaja $\delta_0>0$, da
       %   %za vsak $0 < \delta \leq \delta_0 $
       %   iz $\Loss{rel}(\hat \rho) < \delta_0$ sledi,
@@ -904,20 +926,20 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       Preslikavo implicitno razširimo
       na $S^*$ in na $G$ enako kot $\hat \rho$.
       \begin{lema}
-        Za preslikavo $\mu \colon G \to U(n)$, inducirana iz 
+        Za preslikavo $\mu \colon G \to U(n)$, inducirana iz
         modela $\hat \rho$ z $\Loss(unitary) < |S|\epsilon$
-        in $\Loss{rel}(\hat \rho) < |R| \epsilon$, 
-        velja 
+        in $\Loss{rel}(\hat \rho) < |R| \epsilon$,
+        velja
         $$
         ||\mu(gh) - \mu(g)\mu(h)||_F < o(\epsilon)
         $$
       \end{lema}
       \begin{dokaz}
-        Ocenimo 
+        Ocenimo
         \begin{align*}
-          ||\mu(gh) - \mu(g)\mu(h)||_F 
-          &\leq 
-          ||\mu(gh) - \hat \rho(gh)||_F 
+          ||\mu(gh) - \mu(g)\mu(h)||_F
+          &\leq
+          ||\mu(gh) - \hat \rho(gh)||_F
           + ||\hat \rho(gh) - \hat \rho(g)\hat \rho(h)||_F \\
           &+
           ||\hat \rho(g)\hat \rho(h) - \mu(g)\mu(h)||_F \\
@@ -925,9 +947,41 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           o(\epsilon).
         \end{align*}
       \end{dokaz}
-      \TODO{$o(\epsilon)$ lahko točno izračunam.}
-      Iskana upodobitev očitno $\rho$ sledi iz izreka
-      \ref{izrek : kazhdan}.
+      %
+      Iz definicije preslikave $\mu$ za modele z majhno napako očitno
+      sledi  $||\mu(g) - \rho(g)|| \leq o(\epsilon)$.
+      Iskana upodobitev $\rho$ sledi iz izreka
+      \ref{izrek : kazhdan}. Treba je preveriti še, da je upodobitev
+      nerazcepna.
+      Povzenimo posledice  konstrukcije  $\mu$ in izreka \ref{izrek : kazhdan}
+      v spodnji lemi.
+      \begin{lema}
+        Naj bo $\hat \rho$ model z
+        $\Loss{rel}(\hat \rho) < |R| \epsilon$ in
+        $\Loss{unitary}(\hat \rho) < |S| \epsilon$.
+        Za inducirano preslikavo $\mu$ in upodobitev $\rho$,
+        definirano kot zgoraj,
+        velja
+        $$
+        ||\hat \rho(s) - \rho(s)||_F < o(\epsilon)
+        $$
+        in
+        $$
+        ||\hat \rho(s) -\mu(s)||_F < o(\epsilon).
+        $$
+      \end{lema}
+      Opazujmo \emph{normo karakterja} preslikave $\rho$. Iz pogojev
+      zgornje leme
+      sledi
+      $$
+      |\chi_\rho| = |\chi_{\hat \rho}| + o(\epsilon).
+      $$
+      Za dovolj majhno $\epsilon$ je
+      $|\chi_{\hat \rho}| < 2$, iz česar po izreku
+      \ref{izrek:celostevilski_karakter} sledi, da je upodobitev
+      $\rho$ nerazcepna. S tem je izrek
+      \ref{izrek : obstoj rešitve upodobitve} dokazan.
+      %%%%%%%%%%%%
       \subsection{Ciklične grupe}
       \label{subsection : ciklicčne grupe}
       Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
@@ -1387,6 +1441,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 \end{equation}
               \end{definicija}
               \subsection{Pretvorba modela v delovanje}
+              \label{section:pretvorba modela v delovanje}
               Rezultati na sliki \ref{fig:actions-cn} namigujejo, da
               ob konvergenci $\Loss{rel} \to 0$ matrika
               $P_z$ konvergira do permutacijske matrike
@@ -1750,6 +1805,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
 
             Za stohastične matrike velja spodnja lema.
             \begin{lema}
+              \label{lema:permanent stohasticne matrike}
               Za stohastično matriko $P$ velja
               $\operatorname{Perm}(P)=1$ natanko tedaj, ko je $P$ permutacijska.
             \end{lema}
@@ -1867,7 +1923,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T).
               \end{align*}
             \end{definicija}
-
+            %
             \begin{opomba}
               \label{opomba:loss_function_qap}
               Ekvivalentno lahko funkcijo izgube definiramo kot
@@ -1877,6 +1933,70 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               Slednja se uporablja pri \emph{graph matchingu} in je
               podrobneje opisana v poglavju \ref{section:graph_matching}.
             \end{opomba}
+            \subsection{Prehod na izomorfizem}
+            Kot v poglavju
+            \ref{section:pretvorba modela v delovanje} lahko tudi model
+            izomorfizma grafov pretvorimo v dejansko izomorfizem, če je le
+            vrednost funkcije izgube dovolj majhna.
+            \begin{definicija}
+              Za majhno vrednost $\Loss{unitary}(P) + \loss_\sim(P)$
+              model $P$ inducira izomorfizem med grafoma, podan s permutacijsko
+              matriko $\overline{P}$, ki ima v vrstici $i$ enico na mestu
+              $\operatorname{argmax}_j (P_{i,j})$.
+            \end{definicija}
+            Treba je preveriti, da je $\overline{P}$ res bijekcija in
+            da predstavlja izomorfizem.
+            %
+            \begin{lema}
+              Obstaja $\epsilon > 0$, da iz
+              $\Loss{unitary}(P) < \epsilon$
+              sledi, da je  $\overline{P}$
+              permutacijska matrika.
+            \end{lema}
+            \begin{dokaz}
+              Opazujmo preslikavo
+              $X \mapsto ||XX^*  - I||$, definirano na
+              stohastičnih matrikah. Naj bo $\delta > 0$.
+              Kompaktna podmnožica
+              $$
+              \{X \text{ stohastična } \mid d(X, \Pi) \geq \delta   \}
+              $$
+              na njen doseže minimum $c_\delta$. Ker je stohastična matrika
+              permutacijska natanko tedaj, ko je unitarna, je $c_delta > 0$.
+
+              Če je $\Loss{unitary}(P) < c_\delta$, je
+              $ P=Q + E $ za permutacijsko matriko $Q$ in
+              $||E|| < \delta$.
+              Za $\delta < \frac{1}{2}$ je
+              $$
+              \overline{P}  = \overline{Q + E} = Q.
+              $$
+            \end{dokaz}
+            \begin{lema}
+              Obstaja $\epsilon_0$, da iz
+              $$
+              \loss_\sim(P) < \epsilon_0
+              $$
+            \end{lema}
+            Opazujmo funkcijo izgube
+            $f \colon X \mapsto || M_1 - X M_2 X^T ||_F$.
+            Če je $X$ permutacijska matrika, je
+            $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
+            vozljišča grafa $M_2$ preslikamo z permutacijo $X$. 
+            Vrednosti funkcije izgube nad množico permutacijskih matrik so
+            torej diskretne. 
+            $|| M_1 - X M_2 X^T ||_F = $ $0$ natanko tedaj, 
+            ko $X$ predstavlja izomorfizem med grafoma $M_1$ in $M_2$, sicer pa je 
+            $|| M_1 - X M_2 X^T ||_F \geq \sqrt{2} > 1$.
+            
+            Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$, 
+            da iz $||P - X|| < \delta$ sklepamo na 
+            $ |f(P) - f(X)| < \frac{1}{2}$.
+
+            Za $f(P) < \frac{1}{2}$ in $\Loss{unitary}(P) < c_\delta$
+            je $\overline{P}$ permutacijska matrika, ki predstavlja izomorfizem
+            med grafoma $M_1$ in $M_2$.
+            %
             \subsection{Rezultati}
             \label{subsection : rezultati_grafi_vanilla}
             \begin{primer}
