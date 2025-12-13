@@ -520,7 +520,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         \begin{equation}
           \label{eq:funkcija izgube nad relacijami            }
           \Loss{rel}(\hat\rho) = \frac{1}{|R|} \sum \limits_{r \in R}
-          ||\hat \rho(r) - I  ||_F^2.
+          ||\hat \rho(r) - I  ||_F.
         \end{equation}
       \end{definicija}
       Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
@@ -563,7 +563,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         \hat\rho(gh)=\hat\rho(g) \hat\rho(h)$. Za funkcijo izgube lahko vzamemo
         $$
         \Loss{homo} = \frac{1}{|G|^2}\sum_{i=1}^n \sum_{j=1}^n ||
-        \hat\rho(gh)-\hat\rho(g) \hat\rho(h)||_F^2.
+        \hat\rho(gh)-\hat\rho(g) \hat\rho(h)||_F.
         $$
         in iskanje upodobitev spet prevedemo na optimizacijski problem.
 
@@ -719,13 +719,13 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         %
         Računamo
         $$
-        ||H_s - I||_F^2 = ||\operatorname{diag}(\sigma_1, \sigma_2,
-        \dotsc, \sigma_n)  - I||_F^2
+        ||H_s - I||_F = ||\operatorname{diag}(\sigma_1, \sigma_2,
+        \dotsc, \sigma_n)  - I||_F
         = \sum_{i=1}^n (\sigma_i -1)^2.
         $$
         Podobno je
         $$
-        ||\s \s^* - I||_F^2 = \sum_{i=1}^n (\sigma_i^2 -1)^2
+        ||\s \s^* - I||_F = \sum_{i=1}^n (\sigma_i^2 -1)^2
         $$
         in očitno velja
         $
@@ -733,7 +733,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
         $.
         Iz tega sledi
         $$
-        ||\s - Q_s||_F^2 = ||H_s - I||_F^2 \leq ||\s \s^* - I||_F^2 < \epsilon.
+        ||\s - Q_s||_F = ||H_s - I||_F \leq ||\s \s^* - I||_F < \epsilon.
         $$
 
       \end{dokaz}
@@ -1197,12 +1197,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       \rho(s) = S \in \R^{2\times 2}$ in $\hat \rho(r) = R \in \R^{n
       \times n}$. Funkcije izgube so enake
       \begin{align*}
-        \Loss{rel} &= \frac{1}{3} \left( ||S^2 -1||_F^2 + ||R^n
-        -1||_F^2  + ||(RS)^2 -1||_F^2  \right )\\
-        \Loss{unit} &=  \frac{1}{2} \left ( ||R^2 -1||_F^2 + ||S ^2
-        -1||_F^2  \right)  \\
-        \Loss{irr} &= \left ( \frac{1}{2n}\sum_{i=0}^n(||R^i||_F^2 +
-        ||R^iS||_F^2)    - 1\right )^2.
+        \Loss{rel} &= \frac{1}{3} \left( ||S^2 -1||_F + ||R^n
+        -1||_F  + ||(RS)^2 -1||_F  \right )\\
+        \Loss{unit} &=  \frac{1}{2} \left ( ||R^2 -1||_F + ||S ^2
+        -1||_F  \right)  \\
+        \Loss{irr} &= \left ( \frac{1}{2n}\sum_{i=0}^n(||R^i||_F +
+        ||R^iS||_F)    - 1\right )^2.
       \end{align*}
       \paragraph{Numerične rešitve}
       Slika \ref{fig:diedrska-2dim-trajektorije} prikazuje
@@ -1278,6 +1278,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           %
           \clearpage%newpage pusti floatom, da so prej!
           \section{Iskanje delovanj}
+          \label{section:iskanje delovanj}
           Na podoben način lahko iščemo delovanja grup. Naj bo $G$
           končna grupa in $[n] =    \{1,2,\dotsc, n\}$ končna
           množica. Iščemo homomorfizem $\rho \colon G \to S_n$.
@@ -1505,7 +1506,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrlnjiva]
                 \label{lema : Ps je obrnljiva}
                 Obstaja $\epsilon_0$, da za vsak $0 < \epsilon <
-                \epsilon_0$ in $P_r = I + E_r$ z $||E_r||_F^2 <
+                \epsilon_0$ in $P_r = I + E_r$ z $||E_r||_F <
                 \epsilon$ velja, da je $P_s$ obrnjiva za vsak
                 generator $s \in S$.
               \end{lema}
@@ -1677,16 +1678,16 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 Velja  $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi$.
                 Razdalje med različnimi permutacijskimi matrikami
                 ne morejo biti manjše od $1$. Iz tega sledi, da je
-                $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi = 1$.
+                $\prod_{i=1}^m \overline{P_{s_i}} = 1$.
               \end{dokaz}
               %
-              \begin{lema}[Če je permanent (stohastične) matrike
-                blizu $1$, je matrika skoraj permutacijska]
-                Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
-                $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
-                majhen $\delta >0$, potem je $S = \overline{S} + E$
-                in $||E||_F^2 < \epsilon$.
-              \end{lema}
+             % \begin{lema}[Če je permanent (stohastične) matrike
+             %   blizu $1$, je matrika skoraj permutacijska]
+             %   Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
+             %   $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
+             %   majhen $\delta >0$, potem je $S = \overline{S} + E$
+             %   in $||E||_F < \epsilon$.
+             % \end{lema}
               %
               \subsection{Delovanje ciklične grupe}
               Študiramo model za delovanje ciklične grupe $C_n = <z |
@@ -1911,28 +1912,63 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             P(f(i) \sim_2 f(j)) = \sum_{k= 1}^n \sum_{h = 1}^n p_{i,
             k} p_{j, h} m_{k,h}^{(2)}
             % = f_j^T M_1 f_i
-            = (P M_2 P^T)_{i, j}
+            = (P M_2 P^T)_{i, j}.
             $$
             \begin{definicija}
-              \emph{Funkcijo izgube za povezanost}\footnote{$\log$
-              računamo po elementih}. lahko definiramo kot
-              \begin{align*}
-                \mathcal{L}_\sim &= -\sum_{i \sim_1 j} \log P(f(i) \sim_2 f(j))
-                \\&= -\sum_{i=1}^n\sum_{j=1}^n log(f_j^T M_2
-                f_i)m_{i,j}^{(1)}\\&=
-                -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T).
-              \end{align*}
-            \end{definicija}
+            %  
             %
-            \begin{opomba}
-              \label{opomba:loss_function_qap}
-              Ekvivalentno lahko funkcijo izgube definiramo kot
+            Želeli bi si, da je $P(f(i) \sim_2 f(j)) = (M_1)_{i,j}$. 
+            Funkcijo izgube za povezanost lahko definiramo kot
+            $$
+            \loss_\sim = ||M_1 - P M_2 P^T||_F.
+            $$
+            % \begin{opomba}
+            %   Alternativno lahko definiramo 
+            % %
+            %   $$
+            %     \Loss{log} = -\sum_{i \sim_1 j} \log P(f(i) \sim_2 f(j))
+            %    =
+            %     -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T).
+            %   $$
+            % Za 
+          %  \end{opomba}
+            %
+            %
+            Naš cilj je poiskati permutacijsko matriko $P$, ki minimalizira
+            $\loss_\sim(P)$. Rešujemo problem 
+            \emph{ujemnaja grafov}.
+            \end{definicija}
+            \begin{definicija}
+              \label{def:graph_matching}
+              Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
+              na $n$ vozljiščih. Problem ujemanja graphov 
+              \emph{(graph matching)}
+              \cite{lyzinski2015graphmatchingrelaxrisk} je 
+              definiran kot 
+              iskanje minimuma
               $$
-              \loss = ||M_1 - PM_2P^T ||_F^2.
+              \operatorname{argmin}_{P \in \Pi} ||M_1 - PM_2P^T ||_F,
               $$
-              Slednja se uporablja pri \emph{graph matchingu} in je
-              podrobneje opisana v poglavju \ref{section:graph_matching}.
-            \end{opomba}
+              po  množici vseh $n \times n$ permutacijskih  matrik $\Pi$.
+
+              Če matriki $M_1$ in $M_2$ pripadata izomorfnima
+              grafoma, potem iščemo izomorfizem.
+            \end{definicija}
+            Problem \emph{ujemanja grafov} je NP-težek
+            \cite{sahni1976qapisnphard}. Klasični pristopi ga
+            rešujejo z relaksacijami funkcije izgube $||M_1 - P M_2
+            P^T||_F$ nad večje družine matrik $P$ in prevedbo
+            končne matrike nazaj na permutacijsko
+            \cite{lyzinski2015graphmatchingrelaxrisk},
+            \cite{aflalo2025convexrelaxation}.
+            Novejše metode se problema lotevajo z globokim učenjem.
+
+            V tem delu se s primerjavo različnih metod za ujemanje grafov ne ukvarjamo.
+            Osredotočeni smo na posplošitev metod iz poglavij 
+            \ref{subsection: Iskanje upodobitev z gradientnim spustom} in 
+            \ref{section:iskanje delovanj} 
+            %na problem ujemanja grafov
+            .
             \subsection{Prehod na izomorfizem}
             Kot v poglavju
             \ref{section:pretvorba modela v delovanje} lahko tudi model
@@ -1990,7 +2026,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             $|| M_1 - X M_2 X^T ||_F \geq \sqrt{2} > 1$.
             
             Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$, 
-            da iz $||P - X|| < \delta$ sklepamo na 
+            da iz $||P - X||_F < \delta$ sklepamo na 
             $ |f(P) - f(X)| < \frac{1}{2}$.
 
             Za $f(P) < \frac{1}{2}$ in $\Loss{unitary}(P) < c_\delta$
@@ -2021,40 +2057,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \ref{dodatek:cayley},
             nad različnimi naključno tvorjenimi grafi pa v
             \ref{dodatek:naključni grafi}.
-
-            \subsection{Graph matching - SLO??}
-            \label{section:graph_matching}
-            \begin{definicija}
-              Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
-              na $n$ vozljiščih. \emph{Graph matching}
-              \cite{lyzinski2015graphmatchingrelaxrisk} je problem
-              iskanja minimuma
-              $$
-              \operatorname{argmin}_{P \in \Pi} ||M_1 - PM_2P^T ||_F^2,
-              $$
-              po  množici vseh $n \times n$ permutacijskih  matrik $\Pi$.
-
-              Če matriki $M_1$ in $M_2$ pripadata izomorfnima
-              grafoma, potem iščemo izomorfizem (glej opombo
-              \ref{opomba:loss_function_qap}).
-            \end{definicija}
-
-            \emph{Graph matching} je NP-težek problem
-            \cite{sahni1976qapisnphard}. Klasični pristopi problem
-            rešujejo z relaksacijami funkcije izgube $||M_1 - P M_2
-            P^T||_F^2$ nad večje družine matrik $P$ in prevedbo
-            končne matrike nazaj na permutacijsko
-            \cite{lyzinski2015graphmatchingrelaxrisk},
-            \cite{aflalo2025convexrelaxation}.
-
-            Novejše metode se problema lotevajo z globokim učenjem.
-            \TODO{Ali dodam opise nekaterim metod?}
-            %%%%%%%%%
-            %   \subsubsection{REINFORCE}
-            %   \TODO{Kaj je reinforce, kako se ga uporabi tukaj}
-            %   \subsubsection{Relaksacija permutacijske matrike}
-            %   \TODO{Kako to uporabljajo ,vir}
-            %
+%
             \subsection{Uporaba tabele inverzij}
             V poglavju \ref{subsection : rezultati_grafi_vanilla}
             izomorfizem iščemo v podprostoru
