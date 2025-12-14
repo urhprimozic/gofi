@@ -30,22 +30,23 @@ def save_model(model, group, filename):
             "s": model.P("s").clone().cpu().detach()
         }, filename)
 
+if __name__ == "__main__":
 
-for group_name in ["dihedral", "cyclic"]:
-    for n in tqdm(range(5, N), total=N-5):
-        for m in range(5, n):
-            group = get_group(group_name, n)
-
-
-
-            model = ActionModel(group,  n).to(device)
-            
-            save_model(model, group, f"./results/initial_{group.name}_n={n}_m={m}.pt")
+    for group_name in ["dihedral", "cyclic"]:
+        for n in tqdm(range(5, N), total=N-5):
+            for m in range(5, n):
+                group = get_group(group_name, n)
 
 
-            training(model, eps=0.001, max_steps=500, adam_parameters={"lr":0.01}, verbose=0)
 
-            loss = loss_function(model)
+                model = ActionModel(group,  n).to(device)
+                
+                save_model(model, group, f"./results/initial_{group.name}_n={n}_m={m}.pt")
 
-            save_model(model, group, f"./results/final_{group.name}_n={n}_m={m}.pt")
+
+                training(model, eps=0.001, max_steps=500, adam_parameters={"lr":0.01}, verbose=0)
+
+                loss = loss_function(model)
+
+                save_model(model, group, f"./results/final_{group.name}_n={n}_m={m}.pt")
 
