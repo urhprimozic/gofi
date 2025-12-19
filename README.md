@@ -5,6 +5,23 @@ pip install -e .
 ```
 iz lokacije, v kateri je ta README. To instalira paket gofi, zraven pa sledi vsem spremembam.
 
+# Magistrska naloga
+Magistrska naloga se nahaja v mapi `thesis`. 
+
+## Grafi
+Koda za grafe v delu se nahaja v mapi `gofi/thesis_computations`.
+
+### Delovanja
+**Grafi matrik $P_s$ za generatorje $s \in S$ pred in po učenju:** 
+iz mape `gofi/thesis_computations/actions` poženi
+```
+python3 compute.py
+python3 plot.py
+```
+Grafi bodo v mapi `gofi/thesis_computations/actions/results`.
+![Grafi matrik $P_s$ pred in po učenju.](/gofi/thesis_computations/actions/results/plot_C19_n=19_m=18.png)
+
+
 ## Simulacije
 ### Dinamika 1dim D_n - Hitrost konvergence začetnih parametrov (dihedral grid)
 Barva pixla pove, kam konvergiramo iz njega. Odtenek  pove, kako hitro konvergiramo. 
