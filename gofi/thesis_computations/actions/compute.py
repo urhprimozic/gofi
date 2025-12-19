@@ -6,6 +6,8 @@ from gofi.plot.colors import blueorange
 from gofi.actions.opt import training
 from tqdm import tqdm
 import torch
+import pickle
+
 #from gofi.actions.experiment.sample import plot_model_cyclic, plot_model_dihedral
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -46,7 +48,10 @@ if __name__ == "__main__":
 
                 training(model, eps=0.001, max_steps=500, adam_parameters={"lr":0.01}, verbose=0)
 
-                loss = loss_function(model)
+                loss = loss_function(model).item()
+
+                with open(f"./results/loss_{group.name}_n={n}_m={m}.pkl", "wb") as f:
+                    pickle.dump(loss, f)
 
                 save_model(model, group, f"./results/final_{group.name}_n={n}_m={m}.pt")
 
