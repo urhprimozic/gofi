@@ -5,9 +5,18 @@ import numpy as np
 import argparse
 import pickle
 from matplotlib.colors import LogNorm
+from matplotlib.colors import LinearSegmentedColormap
+import matplotlib.cm as cm
 
-# cmaps  =["OrRd", "YlGn", cmap_orange, cmap_blue]
-cmaps = ["OrRd", "YlGn", "Oranges", "Blues"]
+def truncated_cmap(name, minval=0.0, maxval=0.8, n=256):
+    base = cm.get_cmap(name, n)
+    colors = base(np.linspace(minval, maxval, n))
+    return LinearSegmentedColormap.from_list(
+        f"{name}_trunc", colors
+    )
+
+cmaps_eventless  =["Reds", "Greens", "Oranges", "Blues"]
+cmaps = [cmap_blue, truncated_cmap("hot", 0.0, 0.7), "Oranges", "Blues"]
 
 
 def closest_corner(x, y):
@@ -37,6 +46,7 @@ def plot_grid(
     t_max=1,
     expscale=False,
     gamma=0.03,
+    cmaps=cmaps,
 ):
     """
     If time_len = True, time of convergence will be measured by the nubmer of steps instead of time till losss  < eps
@@ -108,7 +118,7 @@ def plot_grid(
     ax.set_title(
         f"Hitrost konvergence različnih začetnih parametrov\n"
         f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$"
-    )
+   , fontsize=20 )
     ax.set_xlabel("r")
     ax.set_ylabel("s")
 
@@ -171,6 +181,7 @@ def plot_grid_eventless(
     expscale=False,
     gamma=0.03,
     eps=0.06,
+    cmaps=cmaps_eventless,
 ):
     """
     If time_len = True, time of convergence will be measured by the nubmer of steps instead of time till losss  < eps
@@ -216,6 +227,7 @@ def plot_grid_eventless(
     # ims = []
     # caxs = []
     # candidates = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
+    fig, ax = plt.subplots(figsize=(resolution / 100, resolution / 100), dpi=100)
     for i in range(4):
         grid = grids[i].astype(np.float32)
         cmap = cmaps[i]
@@ -227,30 +239,34 @@ def plot_grid_eventless(
 
         # grid_normalized = np.log1p(np.log1p(grid)+ 0.0001)
         grid_normalized = grid
-        plt.imshow(
+        ax.imshow(
             grid_normalized,
             cmap=cmap,
-            norm=LogNorm(),
+            vmin=0,
+            vmax=max_times[i],
             alpha=(grid != -1).astype(np.float32),
-        )  # , norm=LogNorm())#vmin=0, vmax=max_times[i],
-    # plt.colorbar()
-    # ims.append(im)
-    # cax = divider.append_axes("right", size="5%", pad=0.05)
-    # caxs.append(cax)
-    # fig.colorbar(im, cax=cax, label=f"Converges to ${candidates[i]}$")
+        )
 
-    plt.title(
-        f"Limit points and convergence speed of initial parameters\n$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to R$"
-    )
-    plt.xlabel("r")
-    plt.ylabel("s")
+    ax.set_title(
+        f"Hitrost konvergence različnih začetnih parametrov\n"
+        f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$"
+   , fontsize=20 )
+    ax.set_xlabel("r")
+    ax.set_ylabel("s")
+
     ticks_res = 6
     labels = np.linspace(min_value, max_value, ticks_res)
     labels = [round(x, 2) for x in labels]
-    plt.xticks(np.linspace(0, resolution, ticks_res), labels)  # positions, labels
-    plt.yticks(np.linspace(0, resolution, ticks_res), labels)  # positions, labels
-    plt.tight_layout()
-    plt.savefig("_eventless" + filename)
+
+    ax.set_xticks(np.linspace(0, resolution, ticks_res))
+    ax.set_xticklabels(labels)
+
+    ax.set_yticks(np.linspace(0, resolution, ticks_res))
+    ax.set_yticklabels(labels)
+
+    # plt.tight_layout()
+    fig.savefig("_eventless_" + filename, bbox_inches="tight")
+    plt.close(fig)
 
 
 if __name__ == "__main__":
