@@ -56,8 +56,8 @@ def grid(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("n", type=str, help="Order of rotation . Encodes n at D2n.")
-    parser.add_argument("min_value", type=str, help="Minimal value of the grid")
-    parser.add_argument("max_value", type=str, help="Max value of the grid")
+    parser.add_argument("min_value", type=float, help="Minimal value of the grid")
+    parser.add_argument("max_value", type=float, help="Max value of the grid")
     parser.add_argument("resolution", type=str, help="Grid resolution")
     parser.add_argument("filename", type=str, help="Filename to save the result")
     parser.add_argument("--eps",default="0.01", type=str, help="Eps")
@@ -67,8 +67,8 @@ if __name__ == "__main__":
     n = int(args.n)
     eps = float(args.eps)
     t_max = float(args.t_max)
-    min_value = int(args.min_value)
-    max_value = int(args.max_value)
+    min_value = float(args.min_value)
+    max_value = float(args.max_value)
     resolution = int(args.resolution)
     filename = args.filename
 

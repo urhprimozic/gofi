@@ -87,7 +87,7 @@ def read_and_plot(group_name, n, m, test=False):
             Ps_initial,
             Ps_final,
             loss,
-            title=f"$C_n \\curvearrowright [{m}]$",
+            title=f"$C_{{{n}}} \\curvearrowright [{m}]$",
             filename=filename,
         )
     else:
@@ -110,7 +110,7 @@ def read_and_plot(group_name, n, m, test=False):
             Ps_initial,
             Ps_final,
             loss,
-            title=f"$D_n \\curvearrowright [{m}]$",
+            title=f"$D_{{{n}}} \\curvearrowright [{m}]$",
             filename=filename,
         )
 
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         # save everything
         for group_name in ["dihedral", "cyclic"]:
             for n in tqdm(range(5, N), total=N-5):
-                for m in range(5, n):
+                for m in range(5, n+1):
                     
                     read_and_plot(group_name, n, m)
 

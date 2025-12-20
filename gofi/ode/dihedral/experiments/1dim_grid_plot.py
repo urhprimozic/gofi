@@ -78,35 +78,58 @@ def plot_grid(min_value, max_value, resolution, grid_dict : dict, filename : str
     #ims = []
     #caxs = []
     #candidates = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
+    fig, ax = plt.subplots(
+    figsize=(resolution/100, resolution/100),
+    dpi=100
+)
     for i in range(4):
         grid = grids[i].astype(np.float32)
         cmap = cmaps[i]
 
 
-
-        #norm = Normalize(vmin=0, vmax=max_times[i])
-        #plt.imshow(grid, cmap=cmap,norm=norm, alpha=(grid != -1).astype(np.float32))
-        # plot just this grid
-       # gamma = 0.3  # smaller = more contrast in dark areas
-        
-        #grid_normalized = np.log1p(np.log1p(grid)+ 0.0001)
         grid_normalized = grid
-        plt.imshow(grid_normalized, cmap=cmap, vmin=0, vmax=max_times[i],alpha=(grid != -1).astype(np.float32))#, norm=LogNorm())#vmin=0, vmax=max_times[i],
-       # plt.colorbar()
-        #ims.append(im)
-        #cax = divider.append_axes("right", size="5%", pad=0.05)
-        #caxs.append(cax)
-        #fig.colorbar(im, cax=cax, label=f"Converges to ${candidates[i]}$")
-    plt.title(f"Limit points and convergence speed of initial parameters\n$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to R$")
-    plt.xlabel("r")
-    plt.ylabel("s")
+        ax.imshow(
+        grid,
+        cmap=cmap,
+        vmin=0,
+        vmax=max_times[i],
+        interpolation="none",
+        alpha=(grid != -1).astype(np.float32),
+        origin="lower"
+    )
+
+    ax.set_title(
+        f"Hitrost konvergence različnih začetnih parametrov\n"
+        f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$"
+    )
+    ax.set_xlabel("r")
+    ax.set_ylabel("s")
+
     ticks_res = 6
     labels = np.linspace(min_value, max_value, ticks_res)
-    labels = [round(x, 2) for x in labels ]
-    plt.xticks(np.linspace(0, resolution, ticks_res) , labels )  # positions, labels
-    plt.yticks(np.linspace(0, resolution, ticks_res) , labels )  # positions, labels
-    plt.tight_layout()
-    plt.savefig(filename)
+    labels = [round(x, 2) for x in labels]
+
+    ax.set_xticks(np.linspace(0, resolution, ticks_res))
+    ax.set_xticklabels(labels)
+
+    ax.set_yticks(np.linspace(0, resolution, ticks_res))
+    ax.set_yticklabels(labels)
+
+   # plt.tight_layout()
+    fig.savefig(filename, bbox_inches="tight")
+    plt.close(fig)
+
+    #     plt.imshow(grid_normalized, cmap=cmap, vmin=0, vmax=max_times[i],alpha=(grid != -1).astype(np.float32))#, norm=LogNorm())#vmin=0, vmax=max_times[i],
+    # plt.title(f"Limit points and convergence speed of initial parameters\n$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to R$")
+    # plt.xlabel("r")
+    # plt.ylabel("s")
+    # ticks_res = 6
+    # labels = np.linspace(min_value, max_value, ticks_res)
+    # labels = [round(x, 2) for x in labels ]
+    # plt.xticks(np.linspace(0, resolution, ticks_res) , labels )  # positions, labels
+    # plt.yticks(np.linspace(0, resolution, ticks_res) , labels )  # positions, labels
+    # plt.tight_layout()
+    # plt.savefig(filename)
 
 def get_time_of_entry(solution, limit, eps=0.06):
     """
@@ -214,8 +237,8 @@ def plot_grid_eventless(min_value, max_value, resolution, grid_dict : dict, file
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("n", type=str, help="Order of rotation . Encodes n at D2n.")
-    parser.add_argument("min_value", type=str, help="Minimal value of the grid")
-    parser.add_argument("max_value", type=str, help="Max value of the grid")
+    parser.add_argument("min_value", type=float, help="Minimal value of the grid")
+    parser.add_argument("max_value", type=float, help="Max value of the grid")
     parser.add_argument("resolution", type=str, help="Grid resolution")
     parser.add_argument("filename", type=str, help="Filename of the grid")
     parser.add_argument("plotname", type=str, help="Filename of the plot to save")
@@ -225,8 +248,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # collect args
     n = int(args.n)
-    min_value = int(args.min_value)
-    max_value = int(args.max_value)
+    min_value = float(args.min_value)
+    max_value = float(args.max_value)
     resolution = int(args.resolution)
     filename = args.filename
     plotname = args.plotname

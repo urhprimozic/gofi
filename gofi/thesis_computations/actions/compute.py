@@ -32,11 +32,16 @@ def save_model(model, group, filename):
             "s": model.P("s").clone().cpu().detach()
         }, filename)
 
+
+fix = False
 if __name__ == "__main__":
 
     for group_name in ["dihedral", "cyclic"]:
         for n in tqdm(range(5, N), total=N-5):
-            for m in range(5, n):
+            for m in range(5, n+1):
+                if fix:
+                    if m < n:
+                        continue
                 group = get_group(group_name, n)
 
 
@@ -46,7 +51,7 @@ if __name__ == "__main__":
                 save_model(model, group, f"./results/initial_{group.name}_n={n}_m={m}.pt")
 
 
-                training(model, eps=0.001, max_steps=500, adam_parameters={"lr":0.01}, verbose=0)
+                training(model, eps=0.001, max_steps=2000, adam_parameters={"lr":0.01}, verbose=0)
 
                 loss = loss_function(model).item()
 

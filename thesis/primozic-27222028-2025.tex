@@ -256,11 +256,11 @@ enačbe \emph{gradientnega toka} z Eulerjevo metodo (glej
 \cite{dherin2025learningsolvingdifferentialequations}).
 
 \begin{opomba}
-  V globokem učenju (\TODO{referenca na deep learning}) se za
+  V globokem učenju \cite{optimizationmethods2021survey} se za
   optimizacijo uporabljajo
-  metode, ki temeljijo na gradientnem spustu, a nimajo nujne povezave
-  z gradientnim
-  tokom. Med drugim lahko z uporabo šuma v izračunu gradienta
+  metode, ki sicer temeljijo na gradientnem spustu, ampak 
+  niso numerični ekvivalent reševanja gradientnega toka.
+   Med drugim lahko z uporabo šuma v izračunu gradienta
   dobimo metodo, ki z visoko verjetnostjo pobegne iz sedel
   \cite{jin2017escapesaddlepointsefficiently}. Te lastnosti
   nima nobena rešitev enačb gradientnega toka.
@@ -2346,9 +2346,11 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             %
             %\section{Overparametrizacija}
             %
+            \appendix
             \clearpage
-            \section*{Dodatek: Konvergenca globokih mrež}
-            \addcontentsline{toc}{section}{Dodatek: Konvergenca globokih mrež}
+            \section{Konvergenca globokih mrež}
+           % \section*{Dodatek: Konvergenca globokih mrež}
+            %\addcontentsline{toc}{section}{Dodatek: Konvergenca globokih mrež}
             \label{poglavje:konvergenca-globokih-mrez}
             \label{section:overparametrisation}
             %Metode, predstavljene v prejšnjih poglavjih, so zanimive iz
@@ -2361,7 +2363,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             %          definiramo z večjim modelom $P(\phi)$, ki je odvisen od
             %          velikega števila parametrov $\phi \in \R^d, d \gg n^2$.
             %          V
-            \subsection{Nevronske mreže}
+          %  \subsection{Nevronske mreže}
             \label{poglavje:nn}
             %Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
             %mrežami}. Definicija nevronske mreže je povzeta po
@@ -2462,16 +2464,95 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \TODO{Rajši daj že splošen rezultat za poljuben loss.
             Glej stran 38 v članku}
             % Vir: \cite{allenzhu2019convergencetheorydeeplearning}
-            \TODO{Rezultati}
-            \section{Dodatek}
-            \subsection{Izomorfizmi Cayleyevih grafov}
-            \label{dodatek:cayley}
-            \TODO{}
-            % \includepdf[pages=-]{pdfs/aut_calyey.pdf}
+            \clearpage
+            %
+            %
+            \section{Rezultati simulacij}
+            \subsection{Upodobitve}
+            \subsubsection{Diedrska grupa}
+            \paragraph{Dinamika enodimenzionalnega modela}
+           %
+            Rešujemo diferencialno enačbo gradientnega toka 
+            za enodimenzionalni model realne upodobitve nad 
+            diedrsko grupo in opazujemo čas $t_{r_0,s_0}$, v katerem 
+            model z začetnima parametroma 
+            $\rho(r)_0 = r_0, \rho(s)_0 = s_0$ prvič skonvergira do 
+            $\epsilon$-okolice limite trajektorije.
+            %
 
-            \subsection{Izomorfizmi naključnih grafov}
-            \label{dodatek:naključni grafi}
-            \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
+             \TODO{Več gridov. Za vsakega navedi domeno začetnih parametrov in epsilon}
+            %
+            \paragraph{Dvodimenzionalen model}
+            Opazujemo realen model $\rho \colon D_n \to \R^{2 \times 2}$ 
+            upodobitve diedrske grupe, podan z matrikama 
+            $R := \rho (r)$ in 
+              $S := \rho (s)$. 
+          
+            Za $5000$ naključno izbranih začetnih parametrov 
+            $(R_0, S_0) \sim U[(-1,1)^8]$ rešujemo diferencialno enačbo 
+            $$
+            \frac{d(R,S)}{dt} = - \nabla \loss(R,S)
+            $$
+            z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$. 
+
+            Na sklikah \ref{fig:trajektorije_diedrska_grupa_2d-1}\TODO{} so prikazana trajektorije 
+            $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$
+            za različne začetne parametre. 
+
+            Enačbo rešujemo z metodo Dormand-Prince \cite{solvingordinarydifferentialequations1993nonstiff} (Runge-Kutta 
+            5. reda s 4. redom ocene napake). Gradient 
+            $\nabla \loss$ je izračunan analitično.
+            \label{dodatek:dihedral repr}
+            \begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_3.png}
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_4.png}
+
+  \medskip
+
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_5.png}
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_6.png}
+
+  \caption{Trajektorije učenja modelov $D_n \to \R^{2 \times 2}$ z različnimi začetnimi parametri. 
+              Model $D_n \to \R^{2 \times 2}$ je definiran z vrednostima $R := \rho (r)$ in 
+              $S := \rho (s)$. Opazujemo trajektorije $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$.
+  Črne pike predfstavljajo začetne parametre. Modre 
+  trajektorije konvergirajo do upodobitve.
+  }
+  \label{fig:trajektorije_diedrska_grupa_2d-1}
+\end{figure}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_7.png}
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_8.png}
+%
+  \medskip
+%
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_9.png}
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_10.png}
+%
+\medskip
+%
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_11.png}
+  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_12.png}
+  \caption{Trajektorije učenja (nadaljevanje).}
+  %
+  \label{fig:trajektorije_diedrska_grupa_2d-2}
+\end{figure}
+\subsection{Delovanja}
+| \TODO{}
+%
+           % 
+           % \TODO{Rezultati}
+           % \section{Dodatek}
+           % \subsection{Izomorfizmi Cayleyevih grafov}
+           % \label{dodatek:cayley}
+           % \TODO{}
+           % % \includepdf[pages=-]{pdfs/aut_calyey.pdf}
+%
+           % \subsection{Izomorfizmi naključnih grafov}
+           % \label{dodatek:naključni grafi}
+           % \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
             %            \subsection{Dovolj so upodobitve nad
             % končnimi množicami}
             %
