@@ -23,7 +23,7 @@ Grafi bodo v mapi `gofi/thesis_computations/actions/results`.
 
 
 ## Simulacije
-### Dinamika 1dim D_n - Hitrost konvergence začetnih parametrov (dihedral grid)
+### Dinamika $D_n \to \mathbb R$: Hitrost konvergence začetnih parametrov (dihedral grid)
 Barva pixla pove, kam konvergiramo iz njega. Odtenek  pove, kako hitro konvergiramo. 
 Koda za simulacije:
 ```
