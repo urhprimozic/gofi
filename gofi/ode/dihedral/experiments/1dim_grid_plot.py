@@ -110,6 +110,7 @@ def plot_grid(
         grid_normalized = grid
         ax.imshow(
             grid_normalized.T,
+            origin="lower",
             cmap=cmap,
             vmin=0,
             vmax=max_times[i],
