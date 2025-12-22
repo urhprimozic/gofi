@@ -8,15 +8,16 @@ from matplotlib.colors import LogNorm
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.cm as cm
 
+
 def truncated_cmap(name, minval=0.0, maxval=0.8, n=256):
     base = cm.get_cmap(name, n)
     colors = base(np.linspace(minval, maxval, n))
-    return LinearSegmentedColormap.from_list(
-        f"{name}_trunc", colors
-    )
+    return LinearSegmentedColormap.from_list(f"{name}_trunc", colors)
 
-cmaps_eventless  =["Reds", "Greens", "Oranges", "Blues"]
-cmaps = [cmap_blue, truncated_cmap("hot", 0.0, 0.7), "Oranges", "Blues"]
+
+# cmaps_eventless  =["Reds", "YlOrBr", "Oranges", "Blues"]
+cmaps_eventless = ["Blues", "Blues", "Blues", "Blues"]
+cmaps = ["Purples", "Greys", "Oranges", "Blues"]
 
 
 def closest_corner(x, y):
@@ -108,7 +109,7 @@ def plot_grid(
 
         grid_normalized = grid
         ax.imshow(
-            grid_normalized,
+            grid_normalized.T,
             cmap=cmap,
             vmin=0,
             vmax=max_times[i],
@@ -117,8 +118,9 @@ def plot_grid(
 
     ax.set_title(
         f"Hitrost konvergence različnih začetnih parametrov\n"
-        f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$"
-   , fontsize=20 )
+        f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$",
+        fontsize=20,
+    )
     ax.set_xlabel("r")
     ax.set_ylabel("s")
 
@@ -134,6 +136,7 @@ def plot_grid(
 
     # plt.tight_layout()
     fig.savefig(filename, bbox_inches="tight")
+    fig.savefig(filename + ".png", bbox_inches="tight")
     plt.close(fig)
 
     #     plt.imshow(grid_normalized, cmap=cmap, vmin=0, vmax=max_times[i],alpha=(grid != -1).astype(np.float32))#, norm=LogNorm())#vmin=0, vmax=max_times[i],
@@ -249,8 +252,9 @@ def plot_grid_eventless(
 
     ax.set_title(
         f"Hitrost konvergence različnih začetnih parametrov\n"
-        f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$"
-   , fontsize=20 )
+        f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$",
+        fontsize=20,
+    )
     ax.set_xlabel("r")
     ax.set_ylabel("s")
 
@@ -318,14 +322,26 @@ if __name__ == "__main__":
         expscale=expscale,
         time_len=time_len,
     )
-    plot_grid_eventless(
+    plot_grid(
         min_value,
         max_value,
         resolution,
         grid_dict,
-        plotname,
+        "_one_color" + plotname,
         n,
         t_max=t_max,
         expscale=expscale,
-        eps=0.06,
+        time_len=time_len,
+        cmaps=cmaps_eventless
     )
+   #  plot_grid_eventless(
+   #      min_value,
+   #      max_value,
+   #      resolution,
+   #      grid_dict,
+   #      plotname,
+   #      n,
+   #      t_max=t_max,
+   #      expscale=expscale,
+   #      eps=0.06,
+   #  )
