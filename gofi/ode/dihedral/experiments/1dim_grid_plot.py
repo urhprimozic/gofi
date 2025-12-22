@@ -8,6 +8,13 @@ from matplotlib.colors import LogNorm
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.cm as cm
 
+def radius_mask(A, i, j, R=30):
+    h, w = A.shape
+    Y, X = np.ogrid[:h, :w]
+
+    mask = (X - j)**2 + (Y - i)**2 <= R**2
+    return mask
+
 
 def truncated_cmap(name, minval=0.0, maxval=0.8, n=256):
     base = cm.get_cmap(name, n)
@@ -54,49 +61,62 @@ def plot_grid(
 
     """
 
+    location_of_plus_minus = None
+
     grids = [np.zeros((resolution, resolution)) - 1 for i in range(4)]
     # coordinate grid
     values = np.linspace(min_value, max_value, resolution)
-    points_r, points_s = np.meshgrid(*[values] * 2)
+    points_r, points_s = np.meshgrid(*[values] * 2, indexing="ij")
     iterator = zip(points_r.flatten(), points_s.flatten())
 
     max_times = [0, 0, 0, 0]
-    for index, (r, s) in enumerate(iterator):
+
+    for i in range(resolution):
+        for j in range(resolution):
+    #for index, (r, s) in enumerate(iterator):
         # collect solution data
-        solution = grid_dict[(r.item(), s.item())]
-        # catch errors at computation
-        if solution is None:
-            # save to "closest grid"
-            # skip
-            continue
+            r = points_r[i, j]
+            s = points_s[i, j]
 
-        if time_len:
-            time = smooth_time(len(solution.t))
+          #   if (r.item(), s.item()) == (1., -1.):
+          #       location_of_plus_minus = (j, i)
+          #       print("Located (1,-1) at ", location_of_plus_minus)
 
-        else:
-            # extract time
-            if solution.t_events is None:
-                time = solution.t[-1]
-            elif solution.t_events[0].shape == (0,):
-                time = solution.t[-1]
+            solution = grid_dict[(r.item(), s.item())]
+            # catch errors at computation
+            if solution is None:
+                # save to "closest grid"
+                # skip
+                continue
+
+            if time_len:
+                time = smooth_time(len(solution.t))
+
             else:
-                # print(solution.t_events, " ", solution.t_events[0].shape, "  !!!!!\n" )
-                time = solution.t_events[0][0]
-        # time = solution.t[-1]
-        pr = solution.y[0]
-        ps = solution.y[1]
-        limit = closest_corner(pr[-1], ps[-1])
+                # extract time
+                if solution.t_events is None:
+                    time = solution.t[-1]
+                elif solution.t_events[0].shape == (0,):
+                    time = solution.t[-1]
+                else:
+                    # print(solution.t_events, " ", solution.t_events[0].shape, "  !!!!!\n" )
+                    time = solution.t_events[0][0]
+            # time = solution.t[-1]
+            pr = solution.y[0]
+            ps = solution.y[1]
+            limit = closest_corner(pr[-1], ps[-1])
 
-        if expscale:
-            time = math.log(time)
+            if expscale:
+                time = math.log(time)
 
-        # update max time
-        max_times[limit] = max(max_times[limit], time)
+            # update max time
+            max_times[limit] = max(max_times[limit], time)
 
-        # save to the right grid
-        row = index % resolution
-        column = index // resolution
-        grids[limit][row][column] = time
+            # save to the right grid
+            # row = index % resolution
+            # column = index // resolution
+            # grids[limit][row][column] = time
+            grids[limit][j, i] = time 
 
     # plot grids
     # ims = []
@@ -109,18 +129,32 @@ def plot_grid(
 
         grid_normalized = grid
         ax.imshow(
-            grid_normalized.T,
-            origin="lower",
+            grid_normalized,
             cmap=cmap,
+            origin="lower",
             vmin=0,
             vmax=max_times[i],
             alpha=(grid != -1).astype(np.float32),
         )
 
+   #  # color red 
+   #  red_pixel = np.zeros((resolution, resolution)) - 1 
+   #  mask = radius_mask(red_pixel, location_of_plus_minus[0], location_of_plus_minus[1])
+   #  red_pixel[mask] = 1.0
+# 
+   #  ax.imshow(
+   #      red_pixel,
+   #      cmap="Reds",
+   #      origin="lower",
+   #      vmin=0,
+   #      vmax=1.0,
+   #      alpha=(red_pixel != -1).astype(np.float32),
+   #  )
+
     ax.set_title(
         f"Hitrost konvergence različnih začetnih parametrov\n"
         f"$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to \\mathbb{{R}}$",
-        fontsize=20,
+        fontsize=resolution // 25,
     )
     ax.set_xlabel("r")
     ax.set_ylabel("s")
@@ -130,27 +164,15 @@ def plot_grid(
     labels = [round(x, 2) for x in labels]
 
     ax.set_xticks(np.linspace(0, resolution, ticks_res))
-    ax.set_xticklabels(labels)
+    ax.set_xticklabels(labels, fontsize=resolution // 40)
 
     ax.set_yticks(np.linspace(0, resolution, ticks_res))
-    ax.set_yticklabels(labels)
+    ax.set_yticklabels(labels, fontsize=resolution // 40)
 
-    # plt.tight_layout()
     fig.savefig(filename, bbox_inches="tight")
     fig.savefig(filename + ".png", bbox_inches="tight")
     plt.close(fig)
 
-    #     plt.imshow(grid_normalized, cmap=cmap, vmin=0, vmax=max_times[i],alpha=(grid != -1).astype(np.float32))#, norm=LogNorm())#vmin=0, vmax=max_times[i],
-    # plt.title(f"Limit points and convergence speed of initial parameters\n$\\hat \\rho \\colon D_{{2\\cdot{n}}} \\to R$")
-    # plt.xlabel("r")
-    # plt.ylabel("s")
-    # ticks_res = 6
-    # labels = np.linspace(min_value, max_value, ticks_res)
-    # labels = [round(x, 2) for x in labels ]
-    # plt.xticks(np.linspace(0, resolution, ticks_res) , labels )  # positions, labels
-    # plt.yticks(np.linspace(0, resolution, ticks_res) , labels )  # positions, labels
-    # plt.tight_layout()
-    # plt.savefig(filename)
 
 
 def get_time_of_entry(solution, limit, eps=0.06):
@@ -323,18 +345,18 @@ if __name__ == "__main__":
         expscale=expscale,
         time_len=time_len,
     )
-    plot_grid(
-        min_value,
-        max_value,
-        resolution,
-        grid_dict,
-        "_one_color" + plotname,
-        n,
-        t_max=t_max,
-        expscale=expscale,
-        time_len=time_len,
-        cmaps=cmaps_eventless
-    )
+    # plot_grid(
+    #     min_value,
+    #     max_value,
+    #     resolution,
+    #     grid_dict,
+    #     "_one_color" + plotname,
+    #     n,
+    #     t_max=t_max,
+    #     expscale=expscale,
+    #     time_len=time_len,
+    #     cmaps=cmaps_eventless
+    # )
    #  plot_grid_eventless(
    #      min_value,
    #      max_value,
