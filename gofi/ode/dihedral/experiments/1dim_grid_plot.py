@@ -345,18 +345,18 @@ if __name__ == "__main__":
         expscale=expscale,
         time_len=time_len,
     )
-    # plot_grid(
-    #     min_value,
-    #     max_value,
-    #     resolution,
-    #     grid_dict,
-    #     "_one_color" + plotname,
-    #     n,
-    #     t_max=t_max,
-    #     expscale=expscale,
-    #     time_len=time_len,
-    #     cmaps=cmaps_eventless
-    # )
+    plot_grid(
+        min_value,
+        max_value,
+        resolution,
+        grid_dict,
+        "_one_color" + plotname,
+        n,
+        t_max=t_max,
+        expscale=expscale,
+        time_len=time_len,
+        cmaps=cmaps_eventless
+    )
    #  plot_grid_eventless(
    #      min_value,
    #      max_value,
