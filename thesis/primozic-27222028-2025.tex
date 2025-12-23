@@ -258,9 +258,9 @@ enačbe \emph{gradientnega toka} z Eulerjevo metodo (glej
 \begin{opomba}
   V globokem učenju \cite{optimizationmethods2021survey} se za
   optimizacijo uporabljajo
-  metode, ki sicer temeljijo na gradientnem spustu, ampak 
+  metode, ki sicer temeljijo na gradientnem spustu, ampak
   niso numerični ekvivalent reševanja gradientnega toka.
-   Med drugim lahko z uporabo šuma v izračunu gradienta
+  Med drugim lahko z uporabo šuma v izračunu gradienta
   dobimo metodo, ki z visoko verjetnostjo pobegne iz sedel
   \cite{jin2017escapesaddlepointsefficiently}. Te lastnosti
   nima nobena rešitev enačb gradientnega toka.
@@ -1114,7 +1114,11 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       \paragraph{Numerične rešitve}
       Numerično rešujemo enačbo gradientnega toka
       $$\frac{d(r,s)}{dt} = -\nabla(\Loss{rel} + \Loss{unit} +
-      \Loss{irr}).$$ Za reševanje NDE uporabimo \verb|scipy.solve_ivp()|.
+      \Loss{irr}).$$
+      Enačbo rešujemo z metodo Dormand-Prince
+      \cite{solvingordinarydifferentialequations1993nonstiff}, implementirano v
+      knjižnici \texttt{SciPy} \cite{2020SciPy-NMeth}.
+
       % Implementacija simulacije je v \TODO{dodatek?}.
 
       Na sliki \ref{fig:Dn-trajektorije-demo} so različne rešitve
@@ -1172,21 +1176,25 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       %
       Opazimo, da vse numerične rešitve z začetnimi parametri $(r_0,
       s_0)$ konvergirajo k $\operatorname{sign}(r_0),
-      \operatorname{sign}(s_0)$. Za vsak par začetnih parametrov
+      \operatorname{sign}(s_0)$.
+
+      \paragraph{Dinamika} Za vsak par začetnih parametrov
       $(r_0, s_0) \in \R^2$ enodimenzionalnega modela lahko študiramo
-      hitrost konvergence h lokalnim ekstremom. Slika
+      hitrost konvergence h lokalnim ekstremom. 
+      Slika
       \ref{figure : limit points and speed for dihedral} prikazuje
       čas $t_{r_0, s_0}$, ob katerem je rešitev $(r(t), s(t))$ z
-      začetnimi parametri $(r_0, s_0)$ prvič v $\epsilon = TODO$ pasu
-      njene limite v neskončnosti.
+      začetnimi parametri $(r_0, s_0)$ prvič v $\epsilon = 0.01$ pasu
+      njene limite v neskončnosti. Različni grafi dinamike so v dodatku 
+      \ref{section:dinamika_1dim_Dn}.
       \begin{figure}[ht]
 
         \centering
-        \includegraphics[width=0.8\linewidth]{images/dihedral/grid/plot_dihedral_grid_n4_-3_3_1000.pdf}
+        \includegraphics[width=0.8\linewidth]{images/dihedral/grid/plot_grid_n4_-1_1_r2000.pdf}
         \caption{Hitrosti konvergenc različnih začetnih parametrov.
-          Barva točke $(r_0,s_0)$ določa limito - zelene točke
-          konvergirajo k $(1,1)$, modre k $(1,-1)$, oranžne k $(-1,-1)$
-          in rdeče k $(-1,1)$. Odtenek točke določa hitrost konvergence
+          Barva točke $(r_0,s_0)$ določa limito - modre točke
+          konvergirajo k $(1,1)$, vijolične k $(-1,-1)$, oranžne k $(-1,1)$
+          in sive k $(1,-1)$. Odtenek točke določa hitrost konvergence
           rešitve $(r(t), s(t))$. Svetlejša, kot je barva, manjši je
           prvi $t_1$, v katerem se $(r(t_1), s(t_1))$ razlikuje od
         limite za manj kot $\epsilon = 0.01$.}
@@ -1681,13 +1689,13 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 $\prod_{i=1}^m \overline{P_{s_i}} = 1$.
               \end{dokaz}
               %
-             % \begin{lema}[Če je permanent (stohastične) matrike
-             %   blizu $1$, je matrika skoraj permutacijska]
-             %   Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
-             %   $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
-             %   majhen $\delta >0$, potem je $S = \overline{S} + E$
-             %   in $||E||_F < \epsilon$.
-             % \end{lema}
+              % \begin{lema}[Če je permanent (stohastične) matrike
+              %   blizu $1$, je matrika skoraj permutacijska]
+              %   Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
+              %   $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
+              %   majhen $\delta >0$, potem je $S = \overline{S} + E$
+              %   in $||E||_F < \epsilon$.
+              % \end{lema}
               %
               \subsection{Delovanje ciklične grupe}
               Študiramo model za delovanje ciklične grupe $C_n = <z |
@@ -1915,36 +1923,36 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             = (P M_2 P^T)_{i, j}.
             $$
             \begin{definicija}
-            %  
-            %
-            Želeli bi si, da je $P(f(i) \sim_2 f(j)) = (M_1)_{i,j}$. 
-            Funkcijo izgube za povezanost lahko definiramo kot
-            $$
-            \loss_\sim = ||M_1 - P M_2 P^T||_F.
-            $$
-            % \begin{opomba}
-            %   Alternativno lahko definiramo 
-            % %
-            %   $$
-            %     \Loss{log} = -\sum_{i \sim_1 j} \log P(f(i) \sim_2 f(j))
-            %    =
-            %     -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T).
-            %   $$
-            % Za 
-          %  \end{opomba}
-            %
-            %
-            Naš cilj je poiskati permutacijsko matriko $P$, ki minimalizira
-            $\loss_\sim(P)$. Rešujemo problem 
-            \emph{ujemnaja grafov}.
+              %
+              %
+              Želeli bi si, da je $P(f(i) \sim_2 f(j)) = (M_1)_{i,j}$.
+              Funkcijo izgube za povezanost lahko definiramo kot
+              $$
+              \loss_\sim = ||M_1 - P M_2 P^T||_F.
+              $$
+              % \begin{opomba}
+              %   Alternativno lahko definiramo
+              % %
+              %   $$
+              %     \Loss{log} = -\sum_{i \sim_1 j} \log P(f(i) \sim_2 f(j))
+              %    =
+              %     -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T).
+              %   $$
+              % Za
+              %  \end{opomba}
+              %
+              %
+              Naš cilj je poiskati permutacijsko matriko $P$, ki minimalizira
+              $\loss_\sim(P)$. Rešujemo problem
+              \emph{ujemnaja grafov}.
             \end{definicija}
             \begin{definicija}
               \label{def:graph_matching}
               Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
-              na $n$ vozljiščih. Problem ujemanja graphov 
+              na $n$ vozljiščih. Problem ujemanja graphov
               \emph{(graph matching)}
-              \cite{lyzinski2015graphmatchingrelaxrisk} je 
-              definiran kot 
+              \cite{lyzinski2015graphmatchingrelaxrisk} je
+              definiran kot
               iskanje minimuma
               $$
               \operatorname{argmin}_{P \in \Pi} ||M_1 - PM_2P^T ||_F,
@@ -1963,10 +1971,11 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \cite{aflalo2025convexrelaxation}.
             Novejše metode se problema lotevajo z globokim učenjem.
 
-            V tem delu se s primerjavo različnih metod za ujemanje grafov ne ukvarjamo.
-            Osredotočeni smo na posplošitev metod iz poglavij 
-            \ref{subsection: Iskanje upodobitev z gradientnim spustom} in 
-            \ref{section:iskanje delovanj} 
+            V tem delu se s primerjavo različnih metod za ujemanje
+            grafov ne ukvarjamo.
+            Osredotočeni smo na posplošitev metod iz poglavij
+            \ref{subsection: Iskanje upodobitev z gradientnim spustom} in
+            \ref{section:iskanje delovanj}
             %na problem ujemanja grafov
             .
             \subsection{Prehod na izomorfizem}
@@ -2018,15 +2027,16 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             $f \colon X \mapsto || M_1 - X M_2 X^T ||_F$.
             Če je $X$ permutacijska matrika, je
             $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
-            vozljišča grafa $M_2$ preslikamo z permutacijo $X$. 
+            vozljišča grafa $M_2$ preslikamo z permutacijo $X$.
             Vrednosti funkcije izgube nad množico permutacijskih matrik so
-            torej diskretne. 
-            $|| M_1 - X M_2 X^T ||_F = $ $0$ natanko tedaj, 
-            ko $X$ predstavlja izomorfizem med grafoma $M_1$ in $M_2$, sicer pa je 
+            torej diskretne.
+            $|| M_1 - X M_2 X^T ||_F = $ $0$ natanko tedaj,
+            ko $X$ predstavlja izomorfizem med grafoma $M_1$ in
+            $M_2$, sicer pa je
             $|| M_1 - X M_2 X^T ||_F \geq \sqrt{2} > 1$.
-            
-            Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$, 
-            da iz $||P - X||_F < \delta$ sklepamo na 
+
+            Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$,
+            da iz $||P - X||_F < \delta$ sklepamo na
             $ |f(P) - f(X)| < \frac{1}{2}$.
 
             Za $f(P) < \frac{1}{2}$ in $\Loss{unitary}(P) < c_\delta$
@@ -2057,7 +2067,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \ref{dodatek:cayley},
             nad različnimi naključno tvorjenimi grafi pa v
             \ref{dodatek:naključni grafi}.
-%
+            %
             \subsection{Uporaba tabele inverzij}
             V poglavju \ref{subsection : rezultati_grafi_vanilla}
             izomorfizem iščemo v podprostoru
@@ -2349,7 +2359,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \appendix
             \clearpage
             \section{Konvergenca globokih mrež}
-           % \section*{Dodatek: Konvergenca globokih mrež}
+            % \section*{Dodatek: Konvergenca globokih mrež}
             %\addcontentsline{toc}{section}{Dodatek: Konvergenca globokih mrež}
             \label{poglavje:konvergenca-globokih-mrez}
             \label{section:overparametrisation}
@@ -2363,7 +2373,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             %          definiramo z večjim modelom $P(\phi)$, ki je odvisen od
             %          velikega števila parametrov $\phi \in \R^d, d \gg n^2$.
             %          V
-          %  \subsection{Nevronske mreže}
+            %  \subsection{Nevronske mreže}
             \label{poglavje:nn}
             %Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
             %mrežami}. Definicija nevronske mreže je povzeta po
@@ -2471,88 +2481,131 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \subsection{Upodobitve}
             \subsubsection{Diedrska grupa}
             \paragraph{Dinamika enodimenzionalnega modela}
-           %
-            Rešujemo diferencialno enačbo gradientnega toka 
-            za enodimenzionalni model realne upodobitve nad 
-            diedrsko grupo in opazujemo čas $t_{r_0,s_0}$, v katerem 
-            model z začetnima parametroma 
-            $\rho(r)_0 = r_0, \rho(s)_0 = s_0$ prvič skonvergira do 
-            $\epsilon$-okolice limite trajektorije.
+            \label{section:dinamika_1dim_Dn}
             %
-
-             \TODO{Več gridov. Za vsakega navedi domeno začetnih parametrov in epsilon}
+            Rešujemo diferencialno enačbo gradientnega toka
+            za enodimenzionalni model realne upodobitve nad
+            diedrsko grupo in opazujemo čas $t_{r_0,s_0}$, v katerem
+            model z začetnima parametroma
+            $\rho(r)_0 = r_0, \rho(s)_0 = s_0$ prvič skonvergira do
+            $\epsilon$-okolice limite trajektorije. Vse spodnje slike so bile
+            pridobljene z $\epsilon = 0.01$ in integracijskim
+            intervalov $t \in [0,1]$.
+            \begin{figure}[!ht]
+              \centering
+              \includegraphics[width=\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1_1_r1000.pdf.png}
+              %
+              \caption{Hitrosti konvergence enodimenzionalnega modela
+                $D_3 \to \R$ z različnimi začetnimi
+                parametri $(r_0, s_0)$. Na zgornji sliki so začetni
+                parametri izbrani iz kvadrata $[-1,1]^2$, na spodnji
+                pa iz kvadrata $[0.5, 1.5]^2$.
+              }
+              \label{fig:dihedral_1d_grid_n3}
+            \end{figure}
+            \begin{figure}[!hp]
+              \centering
+              \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1.5_-0.5_r2000.pdf.png}
+              \medskip
+              \includegraphics[width=0.77125\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_0.5_1.5_r3000.pdf.png}
+              \caption{Hitrosti konvergence enodimenzionalnega modela
+                $D_3 \to \R$ na 
+                $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji 
+                $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj).
+              }
+              \label{fig:dihedral_1d_grid_n3_zoomed}
+            \end{figure}
+            \begin{figure}
+               \centering
+               \includegraphics[width=0.81\textwidth]{./images/dihedral/grid/cut_colored_grid_n4_-2_2_r2000.pdf.png}
+               \medskip
+               \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png}
+              \caption{Hitrosti konvergence enodimenzionalnega modela
+                $D_4 \to \R$ na 
+                $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$. 
+              }
+              \label{fig:dihedral_1d_grid_n4}
+            %
+            \end{figure}
+            %
             %
             \paragraph{Dvodimenzionalen model}
-            Opazujemo realen model $\rho \colon D_n \to \R^{2 \times 2}$ 
-            upodobitve diedrske grupe, podan z matrikama 
-            $R := \rho (r)$ in 
-              $S := \rho (s)$. 
-          
-            Za $5000$ naključno izbranih začetnih parametrov 
-            $(R_0, S_0) \sim U[(-1,1)^8]$ rešujemo diferencialno enačbo 
+            Opazujemo realen model $\rho \colon D_n \to \R^{2 \times 2}$
+            upodobitve diedrske grupe, podan z matrikama
+            $R := \rho (r)$ in
+            $S := \rho (s)$.
+
+            Za $5000$ naključno izbranih začetnih parametrov
+            $(R_0, S_0) \sim U[(-1,1)^8]$ rešujemo diferencialno enačbo
             $$
             \frac{d(R,S)}{dt} = - \nabla \loss(R,S)
             $$
-            z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$. 
+            z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$.
 
-            Na sklikah \ref{fig:trajektorije_diedrska_grupa_2d-1}\TODO{} so prikazana trajektorije 
+            Na sklikah
+            \ref{fig:trajektorije_diedrska_grupa_2d-1}\TODO{} so
+            prikazana trajektorije
             $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$
-            za različne začetne parametre. 
+            za različne začetne parametre.
 
-            Enačbo rešujemo z metodo Dormand-Prince \cite{solvingordinarydifferentialequations1993nonstiff} (Runge-Kutta 
-            5. reda s 4. redom ocene napake). Gradient 
+            Enačbo rešujemo z metodo Dormand-Prince
+            \cite{solvingordinarydifferentialequations1993nonstiff} (Runge-Kutta
+            5. reda s 4. redom ocene napake). Gradient
             $\nabla \loss$ je izračunan analitično.
             \label{dodatek:dihedral repr}
             \begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_3.png}
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_4.png}
+              \centering
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_3.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_4.png}
 
-  \medskip
+              \medskip
 
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_5.png}
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_6.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_5.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_6.png}
 
-  \caption{Trajektorije učenja modelov $D_n \to \R^{2 \times 2}$ z različnimi začetnimi parametri. 
-              Model $D_n \to \R^{2 \times 2}$ je definiran z vrednostima $R := \rho (r)$ in 
-              $S := \rho (s)$. Opazujemo trajektorije $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$.
-  Črne pike predfstavljajo začetne parametre. Modre 
-  trajektorije konvergirajo do upodobitve.
-  }
-  \label{fig:trajektorije_diedrska_grupa_2d-1}
-\end{figure}
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_7.png}
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_8.png}
-%
-  \medskip
-%
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_9.png}
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_10.png}
-%
-\medskip
-%
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_11.png}
-  \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_12.png}
-  \caption{Trajektorije učenja (nadaljevanje).}
-  %
-  \label{fig:trajektorije_diedrska_grupa_2d-2}
-\end{figure}
-\subsection{Delovanja}
-| \TODO{}
-%
-           % 
-           % \TODO{Rezultati}
-           % \section{Dodatek}
-           % \subsection{Izomorfizmi Cayleyevih grafov}
-           % \label{dodatek:cayley}
-           % \TODO{}
-           % % \includepdf[pages=-]{pdfs/aut_calyey.pdf}
-%
-           % \subsection{Izomorfizmi naključnih grafov}
-           % \label{dodatek:naključni grafi}
-           % \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
+              \caption{Trajektorije učenja modelov $D_n \to \R^{2
+                \times 2}$ z različnimi začetnimi parametri.
+                Model $D_n \to \R^{2 \times 2}$ je definiran z
+                vrednostima $R := \rho (r)$ in
+                $S := \rho (s)$. Opazujemo trajektorije
+                $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$.
+                Črne pike predfstavljajo začetne parametre. Modre
+                trajektorije konvergirajo do upodobitve.
+              }
+              \label{fig:trajektorije_diedrska_grupa_2d-1}
+            \end{figure}
+            \begin{figure}[!ht]
+              \centering
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_7.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_8.png}
+              %
+              \medskip
+              %
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_9.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_10.png}
+              %
+              \medskip
+              %
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_11.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_12.png}
+              \caption{Trajektorije učenja (nadaljevanje).}
+              %
+              \label{fig:trajektorije_diedrska_grupa_2d-2}
+            \end{figure}
+            \subsection{Delovanja}
+            | \TODO{}
+            %
+            %
+            % \TODO{Rezultati}
+            % \section{Dodatek}
+            % \subsection{Izomorfizmi Cayleyevih grafov}
+            % \label{dodatek:cayley}
+            % \TODO{}
+            % % \includepdf[pages=-]{pdfs/aut_calyey.pdf}
+            %
+            % \subsection{Izomorfizmi naključnih grafov}
+            % \label{dodatek:naključni grafi}
+            % \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
             %            \subsection{Dovolj so upodobitve nad
             % končnimi množicami}
             %
