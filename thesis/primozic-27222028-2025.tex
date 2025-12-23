@@ -1127,33 +1127,33 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       trajektorije konvergirajo do nerazcepne upodobitve, za lih $n$
       pa gradientni spust iz $[-1,0]\times[-1,1]$ nikoli ne doseže
       ničelne napake. Enake lastnosti opazimo na širši množici
-      diedrskih grup - glej \TODO{grafi za ostalo}
+      diedrskih grup - glej dodatek \ref{images/dihedral/originals/cropped/Dn_1dim_n1.png}.
       %%%%%%%%%%%%%
       \begin{figure}[ht]
         \centering
         \begin{minipage}{0.49\textwidth}
           \centering
-          \includegraphics[width=\linewidth]{images/dihedral/Dn_1dim_n1.pdf}
-          \caption*{$n=1$}
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n1.png}
+          %\caption*{$n=1$}
         \end{minipage}
         \centering
         \begin{minipage}{0.49\textwidth}
           \centering
-          \includegraphics[width=\linewidth]{images/dihedral/Dn_1dim_n2.pdf}
-          \caption*{$n=2$}
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n2.png}
+          %\caption*{$n=2$}
         \end{minipage}
         \vspace{0.5em}
         \centering
         \begin{minipage}{0.49\textwidth}
           \centering
-          \includegraphics[width=\linewidth]{images/dihedral/Dn_1dim_n7.pdf}
-          \caption*{$n=7$}
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n7.png}
+          %\caption*{$n=7$}
         \end{minipage}
         \centering
         \begin{minipage}{0.49\textwidth}
           \centering
-          \includegraphics[width=\linewidth]{images/dihedral/Dn_1dim_n8.pdf}
-          \caption*{$n=8$}
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n8.png}
+          %\caption*{$n=8$}
         \end{minipage}
         \caption[Rešitve enačb gradientnega toka za različne $n$ in
           različne začetne parametre. Črne pike predstavljajo začetne
@@ -1169,7 +1169,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           rešitve kovergirajo k nerazcepni upodobitvi, oranžne pa v
           lokalni minimum $\loss$, ki ni globalni.
         Več grafov je v \TODO{Dodatek}.}
-        \label{fig:Dn-trajektorije-demo}
+        \label{fig:Dn-trajektorije-demo-dim1}
       \end{figure}
       %
       %
@@ -1221,12 +1221,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \centering
             \begin{minipage}{0.49\textwidth}
               \centering
-              \includegraphics[width=\linewidth]{images/dihedral/2d/prob_of_convergence_D_3.png}
+              \includegraphics[width=\linewidth]{images/dihedral/2d/cropped/prob_of_convergence_D_3.png}
               \caption*{$n=3$}
             \end{minipage}
             \begin{minipage}{0.49\textwidth}
               \centering
-              \includegraphics[width=\linewidth]{images/dihedral/2d/prob_of_convergence_D_8.png}
+              \includegraphics[width=\linewidth]{images/dihedral/2d/cropped/prob_of_convergence_D_8.png}
               \caption*{$n=8$}
             \end{minipage}
             \caption[Rešitve za različne $n$. Modre krivulje
@@ -2480,6 +2480,44 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \section{Rezultati simulacij}
             \subsection{Upodobitve}
             \subsubsection{Diedrska grupa}
+            Več trajektorij enodimenzionalnega modela iz slike 
+            \ref{fig:Dn-trajektorije-demo-dim1}.
+            \paragraph{Trajektorije}
+            \label{dodatek_1dim dn trajektorije}
+             \begin{figure}[ht]
+        \centering
+        \begin{minipage}{0.49\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n1.png}
+          %\caption*{$n=1$}
+        \end{minipage}
+        \centering
+        \begin{minipage}{0.49\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n2.png}
+          %\caption*{$n=2$}
+        \end{minipage}
+        \vspace{0.5em}
+        \centering
+        \begin{minipage}{0.49\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n7.png}
+          %\caption*{$n=7$}
+        \end{minipage}
+        \centering
+        \begin{minipage}{0.49\textwidth}
+          \centering
+          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n8.png}
+          %\caption*{$n=8$}
+        \end{minipage}
+        \caption{Trajektorije enodimenzionalnega modela
+          realne upodobitve diedrske grupe za različne vrednosti
+          $n$. Za vsako vrednost $n$ je prikazanih $5000$
+          naključno izbranih trajektorij z začetnimi
+          parametri iz $[-1,1]^2$.
+        }
+        \label{fig:Dn-trajektorije-demo}
+      \end{figure}
             \paragraph{Dinamika enodimenzionalnega modela}
             \label{section:dinamika_1dim_Dn}
             %
@@ -2529,6 +2567,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \end{figure}
             %
             %
+            \clearpage
             \paragraph{Dvodimenzionalen model}
             Opazujemo realen model $\rho \colon D_n \to \R^{2 \times 2}$
             upodobitve diedrske grupe, podan z matrikama
@@ -2543,9 +2582,13 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$.
 
             Na sklikah
-            \ref{fig:trajektorije_diedrska_grupa_2d-1}\TODO{} so
-            prikazana trajektorije
-            $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$
+            \ref{fig:trajektorije_diedrska_grupa_2d-1} in 
+            \ref{fig:trajektorije_diedrska_grupa_2d-2}
+            so
+            prikazane trajektorije
+            $\{ (\operatorname{tr}(R(t)), \operatorname{tr}(S)(t)) \mid
+            t \in [0,1]
+            \}$
             za različne začetne parametre.
 
             Enačbo rešujemo z metodo Dormand-Prince
@@ -2555,13 +2598,13 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \label{dodatek:dihedral repr}
             \begin{figure}[!ht]
               \centering
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_3.png}
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_4.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_3.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_4.png}
 
               \medskip
 
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_5.png}
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_6.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_5.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_6.png}
 
               \caption{Trajektorije učenja modelov $D_n \to \R^{2
                 \times 2}$ z različnimi začetnimi parametri.
@@ -2569,29 +2612,30 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 vrednostima $R := \rho (r)$ in
                 $S := \rho (s)$. Opazujemo trajektorije
                 $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$.
-                Črne pike predfstavljajo začetne parametre. Modre
+                Črne pike predstavljajo začetne parametre. Modre
                 trajektorije konvergirajo do upodobitve.
               }
               \label{fig:trajektorije_diedrska_grupa_2d-1}
             \end{figure}
             \begin{figure}[!ht]
               \centering
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_7.png}
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_8.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_7.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_8.png}
               %
               \medskip
               %
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_9.png}
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_10.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_9.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_10.png}
               %
               \medskip
               %
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_11.png}
-              \includegraphics[width=0.48\textwidth]{./images/dihedral/prob_of_convergence_D_12.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_11.png}
+              \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_12.png}
               \caption{Trajektorije učenja (nadaljevanje).}
               %
               \label{fig:trajektorije_diedrska_grupa_2d-2}
             \end{figure}
+            \clearpage
             \subsection{Delovanja}
             | \TODO{}
             %
