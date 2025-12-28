@@ -25,11 +25,16 @@ def loss_function(model: ActionModel):
 
 def save_model(model, group, filename):
     if group.name[0] == "C":
-        torch.save(model.P("z").clone().cpu().detach(), filename)
+        torch.save({
+            "z" : model.P("z").clone().cpu().detach(), 
+                    "mode": model.rm["z"].mode()
+                    }, filename)
     else:
         torch.save({
             "r": model.P("r").clone().cpu().detach(),
-            "s": model.P("s").clone().cpu().detach()
+            "s": model.P("s").clone().cpu().detach(),
+            "r_mode" : model.rm["r"].mode(),
+            "s_mode" : model.rm["s"].mode()
         }, filename)
 
 
