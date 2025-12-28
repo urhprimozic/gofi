@@ -1,5 +1,15 @@
+from typing import Any
 from gofi.autograd.models import GeneratorModel, GeneratorGroup
 from math import factorial
+from collections import deque
+from typing import Tuple
+
+Permutation = Tuple[int, ...]
+
+def compose(p: Permutation, q: Permutation) -> Permutation:
+    """Composition p ∘ q"""
+    return tuple(p[i] for i in q)
+
 
 class Group:
     """
@@ -8,8 +18,8 @@ class Group:
 
     def __init__(
         self,
-        generators: list[tuple[int]],
-        relations: list[list[int]],
+        generators: list[tuple[Any]],
+        relations: list[list[Any]],
         table : list | None = None 
     ) -> None:
         """
@@ -19,7 +29,7 @@ class Group:
         ----------
         generators : list
             List of generators.
-        relations : list[list[int]]
+        relations : list[list[Any]]
             List of relations of generators.
         table : list
             Table of all the elemets in the group.
@@ -47,6 +57,48 @@ class Group:
     def __str__(self) -> str:
         return f"Group of size {self.size} with generators {self.generators} and relations {self.relations}"
 
+def enumerate_Sn_words(n: int):
+    """
+    Enumerate S_n using generators:
+        s = (1 2)
+        t = (1 2 ... n)
+
+    Returns:
+        elements: list[tuple[str, ...]]
+    """
+    if n < 3:
+        raise ValueError("n must be >= 3")
+
+    # identity
+    id_perm = tuple(range(n))
+
+    # generators as permutations
+    s_perm = list(range(n))
+    s_perm[0], s_perm[1] = s_perm[1], s_perm[0]
+    s_perm = tuple(s_perm)
+
+    t_perm = tuple(range(1, n)) + (0,)
+
+    gens = {
+        "s": s_perm,
+        "t": t_perm,
+    }
+
+    # BFS
+    seen = {id_perm: ()}
+    queue = deque([id_perm])
+
+    while queue:
+        g = queue.popleft()
+        word = seen[g]
+
+        for name, perm in gens.items():
+            h = compose(perm, g)
+            if h not in seen:
+                seen[h] = word + (name,)
+                queue.append(h)
+
+    return list(seen.values())
 
 
 
@@ -63,32 +115,27 @@ demo_C3 = GeneratorGroup(
              table = [[], [0], [0,0]]
         )
 
-def coxeter_presentation(n : int):
-    '''
-    Returns a coxeter presetation of group Sn
 
-    Returns
-    ----------
-    Sn : GeneratorGroup
-        coxeter presentation
-    '''
-    raise NotImplementedError("TODO : create table (disjoin cycles; cycle to generator)")
-    generators = [(i, i+1) for i in range(1, n)]
-    size = factorial(n)
-    
-    # every trasposition squared is 1 
-    involution_relations = [[i, i] for i in range(len(generators))]
+def coxeter_presentation(n: int) -> GeneratorGroup:
+    """
+    S_n with two generators via Coxeter-type presentation,
+    including full enumeration of elements.
+    """
+    generators = ["s", "t"]
 
-    #commutativity for nonadjecent swaps
-    comm_relations = [[i, j, i, j] for i in range(len(generators)) for j in range(len(generators)) if (abs(i-j) >= 2) and (i < j) ]
+    relations = [
+        "ss",
+        "t" * n,
+        ("st") * (n - 1),
+    ]
 
-    # s_i s_(i+1) s_i =  s_(i+1) s_i  s_(i+1)
-    braid_relations = [[i, i+1, i, i+1, i, i+1] for i in range(len(generators) - 1)] 
-    
-    # all relations
-    relations = involution_relations + comm_relations + braid_relations
+    elements = enumerate_Sn_words(n)
 
-    # table of all elements
+    return GeneratorGroup(
+        generators=generators,
+        relations=relations,
+        table=elements,
+    )
 
     
 

@@ -8,6 +8,13 @@ from gofi.thesis_computations.actions.compute import get_group, N
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
+def perm_dict_to_table(perm, index=1):
+    ans = []
+    for i in range(index, len(perm) + index):
+        ans.append(perm[i])
+    return ans
+
+
 def plot_cyclic(
     Ps_initial, Ps_final, loss, permutation, title, filename, remove_axes=True
 ):
@@ -61,7 +68,12 @@ def plot_dihedral(
     # 2x2 plot grid + 1 colorbar column
     fig = plt.figure(constrained_layout=False, figsize=(8, 6))
     gs = fig.add_gridspec(
-        nrows=2, ncols=3, width_ratios=[1, 1, 0.05], height_ratios=[1, 1]
+        nrows=2, 
+        ncols=3, 
+        width_ratios=[1, 1, 0.05], 
+        hspace=0.15,
+        height_ratios=[1, 1]
+
     )
 
     ax00 = fig.add_subplot(gs[0, 0])
@@ -73,7 +85,7 @@ def plot_dihedral(
     im00 = ax00.imshow(Ps_initial, cmap=blueorange, vmin=vmin, vmax=vmax)
     ax00.set_title("Začetni parametri $P_s$", pad=2)
     im01 = ax01.imshow(Ps_final, cmap=blueorange, vmin=vmin, vmax=vmax)
-    ax01.set_title(f"\\overline{{P_s}} = {permutation_s}", pad=2)
+    ax01.set_title(f"$\\overline{{P_s}} = {permutation_s}$", pad=2)
 
     im10 = ax10.imshow(Pr_initial, cmap=blueorange, vmin=vmin, vmax=vmax)
     ax10.set_title("Začetni parametri $P_r$", pad=2)
@@ -99,16 +111,12 @@ def plot_dihedral(
 def read_and_plot(group_name, n, m, test=False):
     group = get_group(group_name, n)
     if group_name == "cyclic":
-        data_initial = (
-            torch.load(f"./results/initial_{group.name}_n={n}_m={m}.pt").cpu().detach()
-        )
+        data_initial = torch.load(f"./results/initial_{group.name}_n={n}_m={m}.pt")
         Ps_initial = data_initial["z"].cpu().detach()
 
-        data_final = (
-            torch.load(f"./results/final_{group.name}_n={n}_m={m}.pt").cpu().detach()
-        )
+        data_final = torch.load(f"./results/final_{group.name}_n={n}_m={m}.pt")
         Ps_final = data_final["z"].cpu().detach()
-        permutation = data_final["mode"]
+        permutation = perm_dict_to_table(data_final["mode"])
 
         with open(f"./results/loss_{group.name}_n={n}_m={m}.pkl", "rb") as f:
             loss = pickle.load(f)
@@ -132,8 +140,8 @@ def read_and_plot(group_name, n, m, test=False):
         data_final = torch.load(f"./results/final_{group.name}_n={n}_m={m}.pt")
         Pr_final = data_final["r"].cpu().detach()
         Ps_final = data_final["s"].cpu().detach()
-        permutation_r = data_final["r_mode"]
-        permutation_s = data_final["s_mode"]
+        permutation_r = perm_dict_to_table(data_final["r_mode"])
+        permutation_s = perm_dict_to_table(data_final["s_mode"])
         with open(f"./results/loss_{group.name}_n={n}_m={m}.pkl", "rb") as f:
             loss = pickle.load(f)
             loss = round(loss, 2)
