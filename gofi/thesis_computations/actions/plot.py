@@ -28,7 +28,7 @@ def plot_cyclic(
         "Začetni parametri $P_s$",
     )
     im1 = ax1.imshow(Ps_final, cmap=blueorange, vmin=vmin, vmax=vmax)
-    ax1.set_title(f"$\\overlineP_s = {permutation}$")
+    ax1.set_title(f"$\\overline{{P_s}} = {permutation}$")
 
     if remove_axes:
         ax0.axis("off")
@@ -73,12 +73,12 @@ def plot_dihedral(
     im00 = ax00.imshow(Ps_initial, cmap=blueorange, vmin=vmin, vmax=vmax)
     ax00.set_title("Začetni parametri $P_s$", pad=2)
     im01 = ax01.imshow(Ps_final, cmap=blueorange, vmin=vmin, vmax=vmax)
-    ax01.set_title(f"\\overlineP_s = {permutation_s}", pad=2)
+    ax01.set_title(f"\\overline{{P_s}} = {permutation_s}", pad=2)
 
     im10 = ax10.imshow(Pr_initial, cmap=blueorange, vmin=vmin, vmax=vmax)
     ax10.set_title("Začetni parametri $P_r$", pad=2)
     im11 = ax11.imshow(Pr_final, cmap=blueorange, vmin=vmin, vmax=vmax)
-    ax11.set_title(f"$\\overlineP_r = {permutation_r}$", pad=2)
+    ax11.set_title(f"$\\overline{{P_r}} = {permutation_r}$", pad=2)
 
     if remove_axes:
         for ax in (ax00, ax01, ax10, ax11):
