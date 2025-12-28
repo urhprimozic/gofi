@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
 
 
-                model = ActionModel(group,  n).to(device)
+                model = ActionModel(group,  m).to(device)
                 
                 save_model(model, group, f"./results/initial_{group.name}_n={n}_m={m}.pt")
 
