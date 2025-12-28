@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     for group_name in ["dihedral", "cyclic"]:
         for n in tqdm(range(5, N), total=N-5):
-            for m in range(5, n+1):
+            for m in range(max(5, n-5), n+1):
                 if fix:
                     if m < n:
                         continue
