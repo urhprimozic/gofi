@@ -152,6 +152,53 @@ the content and not the structure of your work.}
 
 \section*{Uvod}
 \addcontentsline{toc}{section}{Uvod}
+Nerazcepne upodobitve, delovanja in izomorfizme grafov lahko
+razumemo kot množico ničel gladke funkcije 
+$\loss \colon \R^n \to [0, \infty)$
+nad
+evklidskim prostorom. S tem iskanje diskretnih struktur
+prevedemo na optimizacijo gladkih funkcij.
+
+Optimizacije se lahko lotimo z gradientnim spustom, temeljno 
+optimizacijsko metodo v strojenem učenju, ki je 
+ekvivalentna numeričnemu reševanju diferencialne enačbe 
+$\frac{d\phi}{dt} = - \nabla \loss(\phi)$. Študiramo 
+lahko dinamiko rešitev in odvisnost konvergence od izbire 
+začetnih parametrov. 
+
+V delu predstavimo gradientne 
+optimizacijske metode in potrebno teoretično ozadje iz teorije 
+upodobitev končnih grup. Predstavimo 
+metodo iskanja nerazcepnih upodobitev z gradientnim spustom 
+in empirične rezultate na cikličnih in diedrskih grupah.
+Definiramo metodi za iskanje delovanj in 
+izomorfizmov grafov z gradientnim spustom in opišemo 
+empirične rezultate. Iskanje izomorfizmov grafov 
+povežemo s problemov ujemanja grafov. Na koncu 
+metodo razširimo z uporabo tabele inverzij, preko katere
+kandidate za izomorfizem iščemo med distribucijami nad $S_n$
+in podamo empirične rezultate metode v kombinaciji 
+s preparametrizacijo z nevronskimi mrežami. 
+
+Vse definirame metode teoretično obravnavamo in dokažemo, da
+ob dovolj majhni vrednosti $\loss( \phi)$ metoda 
+najde iskano strukturo. 
+
+Metode v delu so originalni rezultati 
+avtorja, mentorja in somentorja. Podoben pristop, kot 
+ga uporabimo za iskanje nerazcepnih upodobitev končnih grup,
+v \TODO{} uporabijo za iskanje upodobitev Lievih grup.
+
+Ujemanja grafov se preko strojnega učenja lotijo v 
+\TODO{}.
+
+
+
+
+Študiramo lahko 
+teoretične aspektne take optimizacije 
+
+
 \TODO{Kaj je zgodovinski uvod?}
 
 Napišite kratek zgodovinski in matematični uvod.  Pojasnite
@@ -302,7 +349,8 @@ parametra $\phi_{i+1} - \phi_i$ je s tem manj kaotična in bolj gladka.
 % \TODO{To sem mislil dodati kot motivacijo za Adama. A jo sploh potrebujemo?}
 \subsection{Adam}
 \label{adam}
-\emph{Adam} \index{adam}(\cite[stran 88]{prince2023understandingdeeplearning}) je
+\emph{Adam} \index{adam}(\cite[stran
+88]{prince2023understandingdeeplearning}) je
 iteracijski optimizacijski algoritem, podan s pravili
 \begin{align*}
   m_{i+1} &= \beta \cdot m_i + (1-\beta) \nabla \loss (\phi_i) \\
@@ -1134,7 +1182,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
       trajektorije konvergirajo do nerazcepne upodobitve, za lih $n$
       pa gradientni spust iz $[-1,0]\times[-1,1]$ nikoli ne doseže
       ničelne napake. Enake lastnosti opazimo na širši množici
-      diedrskih grup - glej dodatek \ref{images/dihedral/originals/cropped/Dn_1dim_n1.png}.
+      diedrskih grup - glej dodatek
+      \ref{images/dihedral/originals/cropped/Dn_1dim_n1.png}.
       %%%%%%%%%%%%%
       \begin{figure}[ht]
         \centering
@@ -1187,12 +1236,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
 
       \paragraph{Dinamika} Za vsak par začetnih parametrov
       $(r_0, s_0) \in \R^2$ enodimenzionalnega modela lahko študiramo
-      hitrost konvergence h lokalnim ekstremom. 
+      hitrost konvergence h lokalnim ekstremom.
       Slika
       \ref{figure : limit points and speed for dihedral} prikazuje
       čas $t_{r_0, s_0}$, ob katerem je rešitev $(r(t), s(t))$ z
       začetnimi parametri $(r_0, s_0)$ prvič v $\epsilon = 0.01$ pasu
-      njene limite v neskončnosti. Različni grafi dinamike so v dodatku 
+      njene limite v neskončnosti. Različni grafi dinamike so v dodatku
       \ref{section:dinamika_1dim_Dn}.
       \begin{figure}[ht]
 
@@ -1288,74 +1337,73 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           \subsection{Splošna dinamika}
           Za model $\rho$ s parametri iz $\R^N$ in funkcijo izgube
           $\loss \colon \R^N \to \R$ rešujemo enačbo gradientnega toka
-          $$\frac{d\phi(t)}{dt} = -\nabla \loss(\phi(t)), \quad \phi(0) = \phi_0$$
+          $$\frac{d\phi(t)}{dt} = -\nabla \loss(\phi(t)), \quad
+          \phi(0) = \phi_0$$
           kjer so $\phi_0$ poljubni začetni parametri.
-          
-          Za vsako izbiro začetnih parametrov $\phi_0$ obstaja
-          limita $\lim \limits_{t \to \infty} \phi(t) = \phi_\infty$, h kateri konvergira 
-          rešitev enačbe gradientnega toka. Zanimajo nas meje med območji
-          začetnih parametrov z istimi limitami. 
 
-          Limite so natanko kritične točke funkcije izgube $\loss$ 
+          Za vsako izbiro začetnih parametrov $\phi_0$ obstaja
+          limita $\lim \limits_{t \to \infty} \phi(t) = \phi_\infty$,
+          h kateri konvergira
+          rešitev enačbe gradientnega toka. Zanimajo nas meje med območji
+          začetnih parametrov z istimi limitami.
+
+          Limite so natanko kritične točke funkcije izgube $\loss$
           \cite[Trditev na strani 203]{Hirsch2012dynamical-systems}.
 
-          \TODO{Kaj so meje v splošnem?} 
-          %Označimo s 
-          %$\phi_{\phi_0}(t)$ rešitev enačbe gradientnega toka z začetnimi 
-          %parametri $\phi_0$. Definiramo 
-          %$V(x)   = \frac{d}{dt}|_{t=0} \phi_{\phi_0}(t)$. 
+          \TODO{Kaj so meje v splošnem?}
+          %Označimo s
+          %$\phi_{\phi_0}(t)$ rešitev enačbe gradientnega toka z začetnimi
+          %parametri $\phi_0$. Definiramo
+          %$V(x)   = \frac{d}{dt}|_{t=0} \phi_{\phi_0}(t)$.
           %\TODO{Verjetno so meje ravno $x$, kjer $V$ nima polnega ranga??}
           \subsubsection{Skalaren model grupe z dvema generatorjema}
-          Oglejmo si posllošitev modela diedrske grupe. Opazujemo model 
-          $\rho \colon G \to \R$ grupe $G=<s_G, z_G \mid R>$ z dvema generatorjema. 
+          Oglejmo si posllošitev modela diedrske grupe. Opazujemo model
+          $\rho \colon G \to \R$ grupe $G=<s_G, z_G \mid R>$ z dvema
+          generatorjema.
 
-          Brez škode za splošnost predpostavimo, da ima vsaka 
-          relacija v $R$ najmanj dve pojavitvi generatorja $s_G$, ali pa je 
-          oblike $z_G^{\operatorname{red}(z_G)}$ in simetrično za $z_G$. Označimo 
-          $R= \{ r_1, r_2, \dotsc, r_l\}$ in za model s parametroma 
-          $\rho(s_G) = s \in \R$ in $\rho(z_G) = z \in \R$ označimo 
+          Brez škode za splošnost predpostavimo, da ima vsaka
+          relacija v $R$ najmanj dve pojavitvi generatorja $s_G$, ali pa je
+          oblike $z_G^{\operatorname{red}(z_G)}$ in simetrično za
+          $z_G$. Označimo
+          $R= \{ r_1, r_2, \dotsc, r_l\}$ in za model s parametroma
+          $\rho(s_G) = s \in \R$ in $\rho(z_G) = z \in \R$ označimo
           $$
           \rho(r_i) = s^{a_i} z^{b_i}  \in \R.
           $$
-          Opazujmo enačbo gradientnega toka 
+          Opazujmo enačbo gradientnega toka
           $$
           \frac{d(s,z)}{dt} = -\nabla \Loss{rel}(s,z).
-           $$
-          Glejmo točke, v katerih sta parcialna odvoda ničelna.
-        %  \begin{align*}
-        $$
-            \frac{d}{ds} (\frac{1}{|R|} \sum_{i=1}^l (s^{a_i} z^{b_i} - 1)^2) = 
-            %\\& 
-            \frac{2}{|R|} \sum_{i=1}^l a_i s^{a_i -1} z^{b_i} (s^{a_i} t^{b_i} - 1)
           $$
-            %
-         % \end{align*}
+          Glejmo točke, v katerih sta parcialna odvoda ničelna.
+          %  \begin{align*}
+          $$
+          \frac{d}{ds} (\frac{1}{|R|} \sum_{i=1}^l (s^{a_i} z^{b_i} - 1)^2) =
+          %\\&
+          \frac{2}{|R|} \sum_{i=1}^l a_i s^{a_i -1} z^{b_i} (s^{a_i}
+          t^{b_i} - 1)
+          $$
+          %
+          % \end{align*}
           Očitno velja $\frac{d}{d_s}\Loss{rel}(0,z) =
           \frac{d}{d_z}\Loss{rel}(s,0) = 0  $.
-          Rešitev z začetnima parametroma  $s_0 = 0, z_0 \in \R$ je 
+          Rešitev z začetnima parametroma  $s_0 = 0, z_0 \in \R$ je
           $$
-          s(t) = 0, \quad z(t) = z_0 +  \frac{2}{|R|} z^{\operatorname{red}(z) -1},
+          s(t) = 0, \quad z(t) = z_0 +  \frac{2}{|R|}
+          z^{\operatorname{red}(z) -1},
           $$
           simetrično za $z_0 = 0$, kar ustreza rezultatu za diedrske grupe.
 
-          \TODO{znotraj kvadrantov maš poleg štirih rešitev $\pm 1$ 
-          lahko še kakšne rešitve - znam zkonstruirat, daj primer.
-          Ampak ostale limite so sam pike.
+          \TODO{znotraj kvadrantov maš poleg štirih rešitev $\pm 1$
+            lahko še kakšne rešitve - znam zkonstruirat, daj primer.
+            Ampak ostale limite so sam pike.
           }
 
 
-          
 
 
 
 
 
-
-          
-          
-
-
-          
           \label{subsection: realn z 2 generatorjema}
 
           \clearpage%newpage pusti floatom, da so prej!
@@ -1412,7 +1460,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               za $f \in \funnn{n}$.
               %
               \begin{definicija}
-              \index{model delovanja}
+                \index{model delovanja}
                 Preslikavo $\hat \rho$ lahko podobno kot v definiciji
                 \ref{def : razširitev repr modela} raširimo na
                 celotno grupo:
@@ -1785,12 +1833,16 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \paragraph{Rezultati}
               Na sliki \ref{fig:actions-cn} so predstavljene začetne
               in končne vredosti matrike $P(Z)$ pri iskanju delovanj
-              ciklične grupe $C_n$. 
-              Podatki so bili priodobljeni s \emph{torch} implementacijo algoritma \emph{Adam} 
-              \cite{paszke2019pytorch} z velikostjo koraka $10^{-2}$. Parametri so 
+              ciklične grupe $C_n$.
+              Podatki so bili priodobljeni s \emph{torch}
+              implementacijo algoritma \emph{Adam}
+              \cite{paszke2019pytorch} z velikostjo koraka $10^{-2}$.
+              Parametri so
               bili inicializirani z vzorčenjem iz normalne porazdelitve z
-              srednjo vrednostjo $0$ in standardnim odklonom $1$. Eksperiment smo prekinili po 
-              $2000$ korakih gradientnega spusta ali pa ko je vrednost funkcije izgube padla pod 
+              srednjo vrednostjo $0$ in standardnim odklonom $1$.
+              Eksperiment smo prekinili po
+              $2000$ korakih gradientnega spusta ali pa ko je
+              vrednost funkcije izgube padla pod
               $10^{-3}$.
               Več rezultatov je v dodatku \ref{appendix: actions-cyclic}.
               \begin{figure}[ht]
@@ -1798,14 +1850,14 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 \includegraphics[
                   width=0.9\textwidth
                 ]{images/actions/plot_C8_n=8_m=5.png}
-                \caption{Stohastična matrika 
-                $P_s$ na začetku in po $2000$ korakih gradientnega
-                spusta
-                med iskanjem delovanja ciklične grupe $C_8$ na
-                množici $[5]$.
-                Permutacijska matrika $\overline{P_s}$ pripada 
-                permutaciji $(1342)(2)$ reda $4$ in je ničla funkcije 
-                izgube.             
+                \caption{Stohastična matrika
+                  $P_s$ na začetku in po $2000$ korakih gradientnega
+                  spusta
+                  med iskanjem delovanja ciklične grupe $C_8$ na
+                  množici $[5]$.
+                  Permutacijska matrika $\overline{P_s}$ pripada
+                  permutaciji $(1342)(2)$ reda $4$ in je ničla funkcije
+                  izgube.
                 }
                 \label{fig:actions-cn}
               \end{figure}
@@ -1822,7 +1874,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             kjer je $P_r = \operatorname{softmax(R)},$
             $P_s=\operatorname{softmax}(S)$ in    $R, S \in \R^{m \times m}$.
             \paragraph{Rezultati}
-            Na sliki \ref{fig:actions-dn} so matrike 
+            Na sliki \ref{fig:actions-dn} so matrike
             $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega spusta
             med iskanjem delovanja diedrske grupe $D_9$ na množici $[9]$.
             Več rezultatov je v dodatku \ref{appendix: actions-dihedral}.
@@ -1831,20 +1883,20 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \includegraphics[
                 width=0.9\textwidth
               ]{images/actions/plot_D9_n=9_m=9.png}
-              \caption{Stohastični matriki 
-              $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega
-              spusta
-              med iskanjem delovanja diedrske grupe $D_9$ na
-              množici $[9]$.
-              Permutacijski matriki $\overline{P_r}$ in 
-              $\overline{P_s}$ pripadatata permutacijama 
-              $\sigma_s = (123456789)$ in $\sigma_r = (19)(28)(37)(46)(5)$.
-              Velja $\sigma_s^2 = \sigma_r^9=(\sigma_r \sigma_s)^2 = 1$,
-              torej je $s \mapsto \sigma_s, r \mapsto \sigma_r$ homomorfizem.
+              \caption{Stohastični matriki
+                $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega
+                spusta
+                med iskanjem delovanja diedrske grupe $D_9$ na
+                množici $[9]$.
+                Permutacijski matriki $\overline{P_r}$ in
+                $\overline{P_s}$ pripadatata permutacijama
+                $\sigma_s = (123456789)$ in $\sigma_r = (19)(28)(37)(46)(5)$.
+                Velja $\sigma_s^2 = \sigma_r^9=(\sigma_r \sigma_s)^2 = 1$,
+                torej je $s \mapsto \sigma_s, r \mapsto \sigma_r$ homomorfizem.
               }
               \label{fig:actions-dn}
             \end{figure}
-%
+            %
             \clearpage
             \section{Iskanje izomorfizmov grafov}
             S podobnim pristopom kot v \ref{eq: repr model na S}
@@ -2552,47 +2604,47 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \subsection{Upodobitve}
             \subsubsection{Diedrska grupa}
             \paragraph{Trajektorije}
-            Več trajektorij enodimenzionalnega modela iz slike 
+            Več trajektorij enodimenzionalnega modela iz slike
             \ref{fig:Dn-trajektorije-demo-dim1}. Enačbo gradientnega
             toka rešujemo z  metodo Dormand-Prince. Vsaka slika prikazuje
-            $500$ trajektorij z naključno izbranimi 
+            $500$ trajektorij z naključno izbranimi
             začetnimi parametri $r, s ~ U[-1, 1]$.
-%
+            %
             \label{dodatek_1dim dn trajektorije}
-             \begin{figure}[!hp]
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n1.png}
-          %\caption*{$n=1$}
-        \end{minipage}
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n2.png}
-          %\caption*{$n=2$}
-        \end{minipage}
-        \vspace{0.5em}
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n7.png}
-          %\caption*{$n=7$}
-        \end{minipage}
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n8.png}
-          %\caption*{$n=8$}
-        \end{minipage}
-        \caption{Trajektorije enodimenzionalnega modela
-          realne upodobitve diedrske grupe za različne vrednosti
-          $n$. Za vsako vrednost $n$ je prikazanih $500$
-          naključno izbranih trajektorij z začetnimi
-          parametri iz $[-1,1]^2$.
-        }
-        \label{fig:Dn-trajektorije-demo}
-      \end{figure}
+            \begin{figure}[!hp]
+              \centering
+              \begin{minipage}{0.49\textwidth}
+                \centering
+                \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n1.png}
+                %\caption*{$n=1$}
+              \end{minipage}
+              \centering
+              \begin{minipage}{0.49\textwidth}
+                \centering
+                \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n2.png}
+                %\caption*{$n=2$}
+              \end{minipage}
+              \vspace{0.5em}
+              \centering
+              \begin{minipage}{0.49\textwidth}
+                \centering
+                \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n7.png}
+                %\caption*{$n=7$}
+              \end{minipage}
+              \centering
+              \begin{minipage}{0.49\textwidth}
+                \centering
+                \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n8.png}
+                %\caption*{$n=8$}
+              \end{minipage}
+              \caption{Trajektorije enodimenzionalnega modela
+                realne upodobitve diedrske grupe za različne vrednosti
+                $n$. Za vsako vrednost $n$ je prikazanih $500$
+                naključno izbranih trajektorij z začetnimi
+                parametri iz $[-1,1]^2$.
+              }
+              \label{fig:Dn-trajektorije-demo}
+            \end{figure}
             \paragraph{Dinamika enodimenzionalnega modela}
             \label{section:dinamika_1dim_Dn}
             %
@@ -2601,10 +2653,10 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             diedrsko grupo in opazujemo čas $t_{r_0,s_0}$, v katerem
             model z začetnima parametroma
             $\rho(r)_0 = r_0, \rho(s)_0 = s_0$ prvič skonvergira do
-            $\epsilon$-okolice limite trajektorije. 
-            %Vse spodnje slike 
-            Slike \ref{fig:dihedral_1d_grid_n3}, 
-            \ref{fig:dihedral_1d_grid_n3_zoomed} in 
+            $\epsilon$-okolice limite trajektorije.
+            %Vse spodnje slike
+            Slike \ref{fig:dihedral_1d_grid_n3},
+            \ref{fig:dihedral_1d_grid_n3_zoomed} in
             \ref{fig:dihedral_1d_grid_n4}
             so bile
             pridobljene z $\epsilon = 0.01$ in integracijskim
@@ -2627,25 +2679,26 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \medskip
               \includegraphics[width=0.77125\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_0.5_1.5_r3000.pdf.png}
               \caption{Hitrosti konvergence enodimenzionalnega modela
-                $D_3 \to \R$ na 
-                $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji 
+                $D_3 \to \R$ na
+                $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji
                 $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj).
-                Barvna shema je izbrana, da poudari kontraste med regijami z različnimi 
+                Barvna shema je izbrana, da poudari kontraste med
+                regijami z različnimi
                 hitrostmi konvergenc.
               }
               \label{fig:dihedral_1d_grid_n3_zoomed}
             \end{figure}
             \begin{figure}
-               \centering
-               \includegraphics[width=0.81\textwidth]{./images/dihedral/grid/cut_colored_grid_n4_-2_2_r2000.pdf.png}
-               \medskip
-               \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png}
+              \centering
+              \includegraphics[width=0.81\textwidth]{./images/dihedral/grid/cut_colored_grid_n4_-2_2_r2000.pdf.png}
+              \medskip
+              \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png}
               \caption{Hitrosti konvergence enodimenzionalnega modela
-                $D_4 \to \R$ na 
-                $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$. 
+                $D_4 \to \R$ na
+                $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$.
               }
               \label{fig:dihedral_1d_grid_n4}
-            %
+              %
             \end{figure}
             %
             %
@@ -2664,12 +2717,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$.
 
             Na sklikah
-            \ref{fig:trajektorije_diedrska_grupa_2d-1} in 
+            \ref{fig:trajektorije_diedrska_grupa_2d-1} in
             \ref{fig:trajektorije_diedrska_grupa_2d-2}
             so
             prikazane trajektorije
             $\{ (\operatorname{tr}(R(t)), \operatorname{tr}(S)(t)) \mid
-            t \in [0,1]
+              t \in [0,1]
             \}$
             za različne začetne parametre.
 
@@ -2720,125 +2773,126 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \clearpage
             \subsection{Delovanja}
             \subsubsection{Ciklične grupe}
-            Opazujemo matrike $P_s$ pred in po optimizaciji 
-            kompleksnih modelov $\rho \colon C_n \to \funnn{m}$. Optimiziramo z algoritmom 
-            \emph{adam} s hitrostjo učenja $0.01$ in privzetimi 
-            parametri iz \cite{paszke2019pytorch}. 
-            Vsak model učimo največ 
+            Opazujemo matrike $P_s$ pred in po optimizaciji
+            kompleksnih modelov $\rho \colon C_n \to \funnn{m}$.
+            Optimiziramo z algoritmom
+            \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
+            parametri iz \cite{paszke2019pytorch}.
+            Vsak model učimo največ
             največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
-            učenje ustavimo prej. 
+            učenje ustavimo prej.
             \label{appendix: actions-cyclic}
             %
             %
             \begin {figure*}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C5_n=5_m=5.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C7_n=7_m=5.png}
-        \end {figure*}
-%
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C5_n=5_m=5.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C7_n=7_m=5.png}
+            \end {figure*}
+            %
             \begin {figure*}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C7_n=7_m=7.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C8_n=8_m=5.png}
-        \end {figure*}
-%
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C7_n=7_m=7.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C8_n=8_m=5.png}
+            \end {figure*}
+            %
             \begin {figure*}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C9_n=9_m=6.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C10_n=10_m=7.png}
-        \end {figure*}
-%
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C9_n=9_m=6.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C10_n=10_m=7.png}
+            \end {figure*}
+            %
             \begin {figure*}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C12_n=12_m=7.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C12_n=12_m=8.png}
-        \end {figure*}
-%
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C12_n=12_m=7.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C12_n=12_m=8.png}
+            \end {figure*}
+            %
             \begin {figure*}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C12_n=12_m=11.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C13_n=13_m=13.png}
-        \end {figure*}
-%
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C12_n=12_m=11.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C13_n=13_m=13.png}
+            \end {figure*}
+            %
             \begin {figure*}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C14_n=14_m=12.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C15_n=15_m=12.png}
-        \end {figure*}
-%
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C14_n=14_m=12.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C15_n=15_m=12.png}
+            \end {figure*}
+            %
             \begin {figure*}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C16_n=16_m=16.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C17_n=17_m=12.png}
-        \end {figure*}
-%
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C16_n=16_m=16.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C17_n=17_m=12.png}
+            \end {figure*}
+            %
             \begin {figure}[ht]
-                \centering
-                %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C18_n=18_m=15.png}
-        %
-                \includegraphics[
-                  width=0.49\textwidth
-                ] {images/actions/plot_C19_n=19_m=17.png}
-                \caption{
-                  Matrike $P_s$ pred in po optimizaciji
-                  modelov $\rho \colon C_n \to \funnn{m}$ za različne
-                  vrednosti $n$ in $m$.
-                }
-        \end {figure}
-        \clearpage
-        \subsubsection{Diedrske grupe}
-            Opazujemo matrike $P_s$ in $P_r$ pred in po optimizaciji 
-            modelov $\rho \colon D_n \to \funnn{m}$. Optimiziramo z algoritmom 
-            \emph{adam} s hitrostjo učenja $0.01$ in privzetimi 
-            parametri iz \cite{paszke2019pytorch}. 
-            Vsak model učimo največ 
+            \centering
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C18_n=18_m=15.png}
+            %
+            \includegraphics[
+              width=0.49\textwidth
+            ] {images/actions/plot_C19_n=19_m=17.png}
+            \caption{
+              Matrike $P_s$ pred in po optimizaciji
+              modelov $\rho \colon C_n \to \funnn{m}$ za različne
+              vrednosti $n$ in $m$.
+            }
+            \end {figure}
+            \clearpage
+            \subsubsection{Diedrske grupe}
+            Opazujemo matrike $P_s$ in $P_r$ pred in po optimizaciji
+            modelov $\rho \colon D_n \to \funnn{m}$. Optimiziramo z algoritmom
+            \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
+            parametri iz \cite{paszke2019pytorch}.
+            Vsak model učimo največ
             največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
-            učenje ustavimo prej. 
+            učenje ustavimo prej.
             \label{appendix: actions-dihedral}
             %
             \begin{figure}[ht]
@@ -2847,35 +2901,35 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 width=0.75\textwidth
               ]{images/actions/plot_D6_n=6_m=5.png}
             \end{figure}
-        %%
+            %%
             \begin{figure}[ht]
               \centering
               \includegraphics[
                 width=0.75\textwidth
               ]{images/actions/plot_D8_n=8_m=8.png}
             \end{figure}
-        %%
+            %%
             \begin{figure}[ht]
               \centering
               \includegraphics[
                 width=0.75\textwidth
               ]{images/actions/plot_D9_n=9_m=9.png}
             \end{figure}
-        %%
+            %%
             \begin{figure}[ht]
               \centering
               \includegraphics[
                 width=0.75\textwidth
               ]{images/actions/plot_D10_n=10_m=8.png}
             \end{figure}
-        %%
+            %%
             \begin{figure}[ht]
               \centering
               \includegraphics[
                 width=0.75\textwidth
               ]{images/actions/plot_D19_n=19_m=19.png}
             \end{figure}
-        %
+            %
             %
             %
             % \TODO{Rezultati}
