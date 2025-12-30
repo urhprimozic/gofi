@@ -153,51 +153,47 @@ the content and not the structure of your work.}
 \section*{Uvod}
 \addcontentsline{toc}{section}{Uvod}
 Nerazcepne upodobitve, delovanja in izomorfizme grafov lahko
-razumemo kot množico ničel gladke funkcije 
+razumemo kot množico ničel gladke funkcije
 $\loss \colon \R^n \to [0, \infty)$
 nad
 evklidskim prostorom. S tem iskanje diskretnih struktur
 prevedemo na optimizacijo gladkih funkcij.
 
-Optimizacije se lahko lotimo z gradientnim spustom, temeljno 
-optimizacijsko metodo v strojenem učenju, ki je 
-ekvivalentna numeričnemu reševanju diferencialne enačbe 
-$\frac{d\phi}{dt} = - \nabla \loss(\phi)$. Študiramo 
-lahko dinamiko rešitev in odvisnost konvergence od izbire 
-začetnih parametrov. 
+Optimizacije se lahko lotimo z gradientnim spustom, temeljno
+optimizacijsko metodo v strojenem učenju, ki je
+ekvivalentna numeričnemu reševanju diferencialne enačbe
+$\frac{d\phi}{dt} = - \nabla \loss(\phi)$. Študiramo
+lahko dinamiko rešitev in odvisnost konvergence od izbire
+začetnih parametrov.
 
-V delu predstavimo gradientne 
-optimizacijske metode in potrebno teoretično ozadje iz teorije 
-upodobitev končnih grup. Predstavimo 
-metodo iskanja nerazcepnih upodobitev z gradientnim spustom 
+V delu predstavimo gradientne
+optimizacijske metode in potrebno teoretično ozadje iz teorije
+upodobitev končnih grup. Predstavimo
+metodo iskanja nerazcepnih upodobitev z gradientnim spustom
 in empirične rezultate na cikličnih in diedrskih grupah.
-Definiramo metodi za iskanje delovanj in 
-izomorfizmov grafov z gradientnim spustom in opišemo 
-empirične rezultate. Iskanje izomorfizmov grafov 
-povežemo s problemov ujemanja grafov. Na koncu 
+Definiramo metodi za iskanje delovanj in
+izomorfizmov grafov z gradientnim spustom in opišemo
+empirične rezultate. Iskanje izomorfizmov grafov
+povežemo s problemov ujemanja grafov. Na koncu
 metodo razširimo z uporabo tabele inverzij, preko katere
 kandidate za izomorfizem iščemo med distribucijami nad $S_n$
-in podamo empirične rezultate metode v kombinaciji 
-s preparametrizacijo z nevronskimi mrežami. 
+in podamo empirične rezultate metode v kombinaciji
+s preparametrizacijo z nevronskimi mrežami.
 
 Vse definirame metode teoretično obravnavamo in dokažemo, da
-ob dovolj majhni vrednosti $\loss( \phi)$ metoda 
-najde iskano strukturo. 
+ob dovolj majhni vrednosti $\loss( \phi)$ metoda
+najde iskano strukturo.
 
-Metode v delu so originalni rezultati 
-avtorja, mentorja in somentorja. Podoben pristop, kot 
+Metode v delu so originalni rezultati
+avtorja, mentorja in somentorja. Podoben pristop, kot
 ga uporabimo za iskanje nerazcepnih upodobitev končnih grup,
 v \TODO{} uporabijo za iskanje upodobitev Lievih grup.
 
-Ujemanja grafov se preko strojnega učenja lotijo v 
+Ujemanja grafov se preko strojnega učenja lotijo v
 \TODO{}.
 
-
-
-
-Študiramo lahko 
-teoretične aspektne take optimizacije 
-
+Študiramo lahko
+teoretične aspektne take optimizacije
 
 \TODO{Kaj je zgodovinski uvod?}
 
@@ -1398,12 +1394,6 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             Ampak ostale limite so sam pike.
           }
 
-
-
-
-
-
-
           \label{subsection: realn z 2 generatorjema}
 
           \clearpage%newpage pusti floatom, da so prej!
@@ -2129,7 +2119,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \{X \text{ stohastična } \mid d(X, \Pi) \geq \delta   \}
               $$
               na njen doseže minimum $c_\delta$. Ker je stohastična matrika
-              permutacijska natanko tedaj, ko je unitarna, je $c_delta > 0$.
+              permutacijska natanko tedaj, ko je unitarna, je $c_\delta > 0$.
 
               Če je $\Loss{unitary}(P) < c_\delta$, je
               $ P=Q + E $ za permutacijsko matriko $Q$ in
@@ -2184,12 +2174,35 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               na drugih pa konvergira do limite, ki ni blizu avtomorfizma.
 
             \end{primer}
+            \paragraph{Avtomorfizmi cayleyevih grafov}
+            \label{aut-cayley-vanilla-setup}
+            Z metodo iščemo avtomorfizme Cayleyevih grafov simetrične grupe.
+            Oštevilčenje vozljišč (elemetov  $S_n$)
+            sledi metodi \\
+            \verb| list(itertools.permutations(range(1, n + 1)))|,
+            za množico generatorjev vzamemo transpozicijo
+            $(1 2)$ in cikel $(1 2 \dotsc, n)$, za $M_1 = M_2$ vzamemo
+            matriko sosednosti dobljenega grafa.
 
-            Rezultati simulacij nad različnim cayleyevim igrafi so v
-            \ref{dodatek:cayley},
-            nad različnimi naključno tvorjenimi grafi pa v
-            \ref{dodatek:naključni grafi}.
-            %
+            Funkcijo izgube optimiziramo z algoritmom Adam s hitrostjo učenja
+            $10^{-3}$, dokler norma gradienta ne pade pod
+            $\epsilon_\nabla = 10^{-12}$.
+            Na sliki \ref{fig:cayley-aut-demo} so prikazane matrike
+            $P$ na začetku in
+            na koncu optimizacije ta različne $n$. Več rezultatov je v dodatku
+            \ref{dodatek:cayley-vanilla}.
+            \begin{figure}[ht]
+              \centering
+              \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_demo_234.png}
+              \caption{Stohastična matrika $P$ na začetku in po
+                končani optimizaciji med iskanjem avtomorfizmov
+                Cayleyevih grafov simetrične grupe $S_n$ za
+                $n=2,3,4$.
+                Pri $n=2$ smo našli automorfizem $(0 1)$,
+                pri $n=3$ automorfizem $(0 5)(1 3)(2 4)$.
+              }
+              \label{fig:cayley-aut-demo}
+            \end{figure}
             \subsection{Uporaba tabele inverzij}
             V poglavju \ref{subsection : rezultati_grafi_vanilla}
             izomorfizem iščemo v podprostoru
@@ -2929,6 +2942,26 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 width=0.75\textwidth
               ]{images/actions/plot_D19_n=19_m=19.png}
             \end{figure}
+            \subsection{Grafi}
+            \subsubsection{Avtomorfizmi cayleyevih grafov}
+            \label{dodatek:cayley-vanilla}
+            Rezultati iskanja avtomorfizmov Cayleyevih grafov brez
+            uporabe tabele inverzij.
+            Parametri optimizacije
+            so opisani v poglavju \ref{aut-cayley-vanilla-setup}.
+            \begin{figure*}[ht]
+              \centering
+              \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_3.png}
+            \end{figure*}
+            \begin{figure*}[ht]
+              \centering
+              \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_4.png}
+            \end{figure*}
+            \begin{figure*}[ht]
+              \centering
+              \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_5.png}
+            \end{figure*}
+            %GOTO
             %
             %
             %
