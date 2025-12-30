@@ -247,7 +247,7 @@ def collect_results(run_name=None):
     path = "./results"
     filenames = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
     # remove bad names 
-    tuple_run_names = ("results_{name}" for name in run_name)
+    tuple_run_names = tuple("results_{name}" for name in run_name)
 
     filenames = [f for f in filenames if f.startswith(tuple_run_names)]
 
