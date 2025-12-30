@@ -2485,7 +2485,21 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             uspešno konvergenco
             \cite{safran2021effectsmildoverparameterizationoptimization,
             simon2024bettermodernmachinelearning}.
-            .
+            
+            Empirično testiramo dve izbiri preparametrizacije z nevronskimi mrežami. 
+            \emph{Blaga preparametrizacija} modela izomorfizma 
+            grafov velikosti $n$ je definirana kot 
+
+            \begin{figure}
+              \centering
+              \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/average_sample45_thesis.pdf.pdf}
+              \caption{
+              \TODO{EXTENDED VERSION!}  
+              Primerjava napak različnih metod glede 
+              na velikost grafa.}
+              \label{fig:loss_computation_time_comparison_nn}
+            \end{figure}
+
             \TODO{deep network --> malo minimumov, veliko sedlov , kar je gut}
             \subsection{Rezultati}
             \TODO{}
@@ -2711,6 +2725,16 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$.
               }
               \label{fig:dihedral_1d_grid_n4}
+              %
+            \end{figure}
+             \begin{figure}
+              \centering
+              \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png}
+              \caption{Hitrosti konvergence enodimenzionalnega modela
+                $D_4 \to \R$ na
+                $[0.5, 1.5]^2$. Resolucija slik je $2000\times 2000$.
+              }
+              \label{fig:dihedral_1d_grid_n4_2}
               %
             \end{figure}
             %

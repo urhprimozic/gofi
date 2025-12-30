@@ -596,6 +596,11 @@ INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
+INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
+INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
+INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
+INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
+INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
 INPUT ./images/dihedral/originals/cropped/Dn_1dim_n1.png
 INPUT ./images/dihedral/originals/cropped/Dn_1dim_n1.png
 INPUT ./images/dihedral/originals/cropped/Dn_1dim_n1.png
@@ -637,6 +642,11 @@ INPUT ./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png
 INPUT ./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png
 INPUT ./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png
 INPUT ./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png
+INPUT ./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png
+INPUT ./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png
+INPUT ./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png
+INPUT ./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png
+INPUT ./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png
 INPUT ./images/dihedral/2d/cropped/prob_of_convergence_D_3.png
 INPUT ./images/dihedral/2d/cropped/prob_of_convergence_D_3.png
 INPUT ./images/dihedral/2d/cropped/prob_of_convergence_D_3.png
