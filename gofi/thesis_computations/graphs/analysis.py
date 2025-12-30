@@ -237,14 +237,19 @@ def collect_results(run_name=None):
     Returns list of dictionaries with results.
 
     if run_name is given, only files starting with results_{run_name} are considered.
+    Multiple run names can be given in side a iterable
     '''
     if run_name is None:
-        run_name="" 
+        run_name=[""]
+    elif isinstance(run_name, str):
+        run_name = [run_name] 
 
     path = "./results"
     filenames = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
     # remove bad names 
-    filenames = [f for f in filenames if f.startswith(f"results_{run_name}")]
+    tuple_run_names = ("results_{name}" for name in run_name)
+
+    filenames = [f for f in filenames if f.startswith(tuple_run_names)]
 
     list_of_results = []
 
