@@ -434,7 +434,7 @@ if "__main__" == __name__:
         help="Gradient norm threshold for stopping criteria. Default None",
     )
     parser.add_argument(
-        "max_steps",
+        "--max_steps",
         type=int,
         default=1000,
         help="Maximum number of steps for optimizers. Default 1000",
