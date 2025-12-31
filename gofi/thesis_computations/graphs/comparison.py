@@ -439,6 +439,13 @@ if "__main__" == __name__:
         default=1000,
         help="Maximum number of steps for optimizers. Default 1000",
     )
+    parser.add_argument(
+        "--nn_it",
+        type=str,
+        choices=["yes", "no"],
+        default="yes",
+        help="Run nn_it. Default yes.",
+    )
     args = parser.parse_args()
 
     rg = args.rg
@@ -503,7 +510,12 @@ if "__main__" == __name__:
         else:
             results_vanilla = None
         results_vanilla_it = run_vanilla_it(
-            M1, Q, M2, max_steps=args.max_steps, verbose=args.verbose, grad_eps=args.grad_eps
+            M1,
+            Q,
+            M2,
+            max_steps=args.max_steps,
+            verbose=args.verbose,
+            grad_eps=args.grad_eps,
         )
 
         #   nn_it_adam_params={
@@ -518,15 +530,18 @@ if "__main__" == __name__:
         #   "cooldown_steps" : 10,
         #   "decay" : 1,
         #   }
-        results_nn_it = run_nn_it(
-            M1,
-            Q,
-            M2,
-            max_steps=args.max_steps,
-            verbose=args.verbose,
-            grad_eps=args.grad_eps,
-            **nn_it_adam_params,
-        )
+        if args.nn_it == "yes":
+            results_nn_it = run_nn_it(
+                M1,
+                Q,
+                M2,
+                max_steps=args.max_steps,
+                verbose=args.verbose,
+                grad_eps=args.grad_eps,
+                **nn_it_adam_params,
+            )
+        else:
+            results_nn_it = None
         if args.nn == "yes":
             results_nn = run_nn(M1, Q, M2)
         else:
