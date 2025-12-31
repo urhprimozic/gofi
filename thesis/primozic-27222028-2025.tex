@@ -2204,6 +2204,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \label{fig:cayley-aut-demo}
             \end{figure}
             \subsection{Uporaba tabele inverzij}
+            \label{subsection:uporaba tabele inverzij}
             V poglavju \ref{subsection : rezultati_grafi_vanilla}
             izomorfizem iščemo v podprostoru
             distribucij nad $\funnn{n}$, ki ga parametriziramo s
@@ -2263,7 +2264,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
 
             Na podoben način lahko definiramo porazdelitev nad permutacijami.
             Naj bo
-            $$P =
+            $$P_d =
             \begin{bmatrix}
               p_{1,1} & p_{1,2} & \dotsm & p_{2, n-1} & p_{1,n} \\
               p_{2,1} & p_{2,2} & \dotsm & p_{2, n-1} & 0 \\
@@ -2467,14 +2468,15 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \label{fig:loss_computation_time_comparison}
             \end{figure}
             %
-            \subsubsection{Overparametrizacija z nevronskimi mrežami}
+            \subsubsection{Preparametrizacija z nevronskimi mrežami}
             Verjetnost uspešne konvergence lahko poizkusimo
-            izboljšati s overparametrizacijo proglema.
+            izboljšati s preparametrizacijo
+            (\emph{overparametrisation}) proglema.
             Matriko $P$ definiramo kot izhod globoke nevronske mreže
             (glej dodatek \ref{poglavje:nn}) in spreminjamo njene
             parametre.
 
-            Overparametrizacija z nevronskimi mrežami deluje za
+            Preparametrizacija z nevronskimi mrežami deluje za
             \emph{gradient dominante}
             funkcije izgube
             \cite{allenzhu2019convergencetheorydeeplearning}, glej
@@ -2484,18 +2486,74 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             overparametrizacijo in gradientnim spustom lahko dosežemo
             uspešno konvergenco
             \cite{safran2021effectsmildoverparameterizationoptimization,
-            simon2024bettermodernmachinelearning}.
+            simon2024bettermodernmachinelearning} do globalnega minimuma.
+            Poleg tega empirični rezultati
+            \cite{pascanu2014saddlepointproblemnonconvex} kažejo, da so
+            pri nekonveksni parametrizaciji funkcij izgube v velikih dimenzijah
+            selda bolj razširjena od lokalnih minimumov. Z večanjem
+            števila parametrov
+            se v reliefu funkcije izgube pojavlja več sedel, iz katerih
+            lahko pobegnemo s preturbiranim gradientnim spustom,
+            predstavljenim v poglavju \ref{subsection : PGD}.
+
+            Empirično testiramo dve izbiri preparametrizacije z
+            nevronskimi mrežami.
+            \emph{Blaga preparametrizacija} modela izomorfizma
+            grafov iz poglavja \ref{subsection:uporaba tabele
+            inverzij} velikosti $n$ definiramo kot
+            nevronsko mrežo z vhodom velikosti $n$, skrito plastjo
+            velikosti $n$ in izhodom
+            veliksti $\frac{n^2 -n - 2}{2}$. Aktivacijska funkcija v
+            skriti plasti je $\operatorname{ReLu}$.
+            Na zadnji plasti oblike  $(x_{1,1}, \dotsc, x_{1, n},
+            x_{2, 1}, \dotsc x_{2, n -1}, \dotsc, x_{n-1, 1}, x_{n-1, 2} )^T$
+            uporabimo softmax po blokih
+            $$(p_{i, 1}, \dotsc, x_{i, n - i + 1}) =
+            \operatorname{softmax}(x_{i, 1}, \dotsc, x_{i, n - i + 1})$$,
+            kjer je $p_{i,j}$ verjetnost, da $i$ postavimo na $j$-to prosto mesto, če smo prej 
+            postavili $i-1$ elementov.
+            Velja 
+            $$
+              M_{\text{blaga preparametrizacija}} =
+              \operatorname{Softmax}_\text{po blokih} \circ W_2 \circ \operatorname{ReLU} \circ W_1,
+            $$
+            kjer sta $W_1 \colon \R^n \to \R^n$ in
+            $W_2 \colon \R^n \to \R^{\frac{n^2 - n - 2}{2}}$ afini preslikavi.
+            Distribucijo $P_d$ nad tabelami inverzij definiramo kot 
+            $$
+            \operatorname{flatten}(P_d) = M_{\text{blaga preparametrizacija}}(x_0).
+            $$
+            Vektor $x_0 \in \R^n$ in afini preslikavi $W_1, W_2$ so parametri modela.
+
+            \emph{Globoko preparametrizacijo} definiramo definiramo kot $5$ plastno nevronsko mrežo 
+            z vohdno in skritimi plastmi velikosti $n^2$ in izhodno plastjo velikosti
+            $\frac{n^2 - n - 2}{2}$. Aktivacijske funkcije v skritih plasteh so $\operatorname{ReLu}$, na zadnjih plasteh 
+            uporabimo softmax po blokih, kot v blagi preparametrizaciji.
+            Distribucijo $P_d$ nad tabelami inverzij izračunamo kot 
+            $$
+            \operatorname{flatten}(P_d) =
+            \operatorname{softmax}_\text{po blokih} \circ
+            W_4\circ
+            \operatorname{ReLu} \circ
+            w_3 \circ
+            \operatorname{ReLu} \circ
+            W_2 \circ
+            \operatorname{ReLu} \circ
+            W_1
+            (y_0).
+            $$,
+            za parametre modela vzamemo vektor $y_0 \in \R^{n^2}$ in afine preslikave
+            $W_i$.
+          
             
-            Empirično testiramo dve izbiri preparametrizacije z nevronskimi mrežami. 
-            \emph{Blaga preparametrizacija} modela izomorfizma 
-            grafov velikosti $n$ je definirana kot 
+
 
             \begin{figure}
               \centering
               \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/average_sample45_thesis.pdf.pdf}
               \caption{
-              \TODO{EXTENDED VERSION!}  
-              Primerjava napak različnih metod glede 
+                \TODO{EXTENDED VERSION!}
+                Primerjava napak različnih metod glede
               na velikost grafa.}
               \label{fig:loss_computation_time_comparison_nn}
             \end{figure}
@@ -2727,7 +2785,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \label{fig:dihedral_1d_grid_n4}
               %
             \end{figure}
-             \begin{figure}
+            \begin{figure}
               \centering
               \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png}
               \caption{Hitrosti konvergence enodimenzionalnega modela

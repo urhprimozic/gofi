@@ -345,6 +345,9 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
 
         # final RELATION    loss
         for method in methods:
+            if results[method] is None:
+                #skip empty methofs
+                continue
             if method not in all_methods:
                 raise ValueError(f"Unknown method: {method}")
             # adds new loss to n
@@ -363,9 +366,9 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
     labels = {
         "vanilla_it" : "Tabela inverzij",
         "vanilla" : "Brez tabele inverzij",
-        "nn_it" : "Nevronske mreže in tabela inverzij",
+        "nn_it" : "Globoka preparametrizacija",
         "nn" : "Nevronske mreže brez tabele inverzij",
-        "mild_nn_it" : "Blaga overparametrizacija in tabela inverzij",
+        "mild_nn_it" : "Blaga preparametrizacija in tabela inverzij",
     }
 
     colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange, gc.green]
@@ -407,3 +410,20 @@ def lor_plot_losses(lor, output_filename,methods, suptitle="", loss_key="relatio
         suptitle = f"Graf z {M1.shape[0]} vozlišči"
         
         plot_loss_over_time(labels_to_results, output_filename=of, suptitle=suptitle, loss_key=loss_key, log_scale=log_scale)
+
+
+def average_loss(list_of_results, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"]):
+    '''
+    returns dictionary of {method : average_loss}
+    '''
+    # collect final losses
+    final_rel_losses = {method  : [] for method in methods}    
+    for results in list_of_results:
+        for method in methods:
+            if results[method] is None:
+                #skip empty methods
+                continue
+            final_rel_losses[method].append(results[method]["relation_losses"][-1])
+    #average
+    avg_losses = {method : sum(final_rel_losses[method]) / len(final_rel_losses[method]) for method in methods if len(final_rel_losses[method]) > 0}
+    return avg_losses

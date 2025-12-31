@@ -1,5 +1,7 @@
 from matplotlib.colors import LinearSegmentedColormap
 
+
+
 # Define normalized RGB colors
 black  = (0.0, 0.0, 0.0)
 darkblue   =  (8 / 255, 80 / 255, 160 / 255)
@@ -41,3 +43,12 @@ cmap_dakblue_blue = LinearSegmentedColormap.from_list(
     [darkblue, blue, lightblue],
     N=600  # More steps = smoother gradient
     )
+
+graph_comparisons = {
+        "vanilla_it" :lightblue,
+        "vanilla" : darkorange,
+        "nn_it" : black,
+        "nn" : lightorange,
+        "mild_nn_it" : green,
+
+}
