@@ -1,3 +1,4 @@
+from torch.amp import GradScaler
 from gofi.thesis_computations.graphs.dataset import create_dataset
 import pickle
 from gofi.graphs.inversion_table.distributions import VanillaModel
@@ -35,20 +36,29 @@ def denumpy(x):
     return x
 
 
-
-def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009,amp=True, grad_eps=None, **adam_params):
-    '''
+def run_vanilla_it(
+    M1,
+    Q,
+    M2,
+    T=5,
+    verbose=0,
+    max_steps=1000,
+    eps=0.009,
+    amp=True,
+    grad_eps=None,
+    **adam_params,
+):
+    """
     Run vanilla inversion table model
-    '''
-    
+    """
+
     n = M1.shape[0]
     model = VanillaModel(n, T=T)
     dist = PermModel(model, n)
 
     if amp:
         if torch.cuda.is_available():
-            from torch.amp import GradScaler
-            optit.scaler = GradScaler('cuda')
+            optit.scaler = GradScaler("cuda")
 
     if adam_params is None:
         adam_params = {"lr": 0.03}
@@ -97,7 +107,20 @@ def run_vanilla_it(M1, Q, M2, T=5, verbose=0,max_steps=1000, eps=0.009,amp=True,
     return results
 
 
-def run_mild_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, amp=True, grad_eps=None, scheduler="cosine",**adam_params):
+def run_mild_nn_it(
+    M1,
+    Q,
+    M2,
+    T=5,
+    verbose=0,
+    adam_version="noise",
+    max_steps=1000,
+    eps=0.009,
+    amp=True,
+    grad_eps=None,
+    scheduler="cosine",
+    **adam_params,
+):
 
     # TODO : different adam parameters for noise
 
@@ -128,8 +151,7 @@ def run_mild_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000
 
     if amp:
         if torch.cuda.is_available():
-            from torch.amp import GradScaler
-            optit.scaler = GradScaler('cuda')
+            optit.scaler = GradScaler("cuda")
 
     if adam_params is None:
         adam_params = {"lr": 0.01}
@@ -168,7 +190,22 @@ def run_mild_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000
             "model": "mild_nn_it",
         }
     return results
-def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps=0.009, amp=True, grad_eps=None, scheduler="cosine",**adam_params):
+
+
+def run_nn_it(
+    M1,
+    Q,
+    M2,
+    T=5,
+    verbose=0,
+    adam_version="noise",
+    max_steps=1000,
+    eps=0.009,
+    amp=True,
+    grad_eps=None,
+    scheduler="cosine",
+    **adam_params,
+):
 
     # TODO : different adam parameters for noise
 
@@ -200,7 +237,8 @@ def run_nn_it(M1, Q, M2, T=5, verbose=0,adam_version="noise",max_steps=1000, eps
     if amp:
         if torch.cuda.is_available():
             from torch.amp import GradScaler
-            optit.scaler = GradScaler('cuda')
+
+            optit.scaler = GradScaler("cuda")
 
     if adam_params is None:
         adam_params = {"lr": 0.01}
@@ -252,7 +290,7 @@ def run_vanilla(M1, Q, M2, max_steps=1000, verbose=0):
         eps=1e-4,
         adam_parameters={"lr": 0.01},
         store_relation_loss=True,
-        verbose=verbose
+        verbose=verbose,
     )  # eps je za grad_norm < eps tukaj
 
     with torch.no_grad():
@@ -271,18 +309,21 @@ def run_vanilla(M1, Q, M2, max_steps=1000, verbose=0):
         }
     return results
 
+
 def run_nn(M1, Q, M2, T=1, verbose=0):
     n = M1.shape[0]
-    
+
     # prepare nn
     layer_size = int(n**2)
-    n_layers = 4
+    n_layers = 3
     args = ([layer_size] * n_layers) + [n**2]
     nn = LinearNN(*args, T=1, softmax=False, batch_normalisation=True).to(device)
     inner_model = ToMatrix(nn, n).to(device)
-    # use sinkhorn instead of softmax 
-    f = RandomMap(n, inner_model=inner_model, sinkhorn=True, sinkhorn_iters=10).to(device)
-    
+    # use sinkhorn instead of softmax
+    f = RandomMap(n, inner_model=inner_model, sinkhorn=True, sinkhorn_iters=10).to(
+        device
+    )
+
     scheduler = ReduceLROnPlateau
     scheduler_parameters = {
         "mode": "min",
@@ -312,7 +353,7 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
         # Anti-vanishing tweaks (opt-in; only for run_nn)
         anti_vanish=True,
         warmup_steps=max(100, n * 10),
-        sinkhorn_warmup_disable=True,   # row-softmax during warmup
+        sinkhorn_warmup_disable=True,  # row-softmax during warmup
         sinkhorn_iters_warmup=2,
         sinkhorn_iters_post=10,
         entropy_weight=0.01,
@@ -338,92 +379,166 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
         }
     return results
 
+
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()
     parser.add_argument("name", type=str, help="Run name")
-    parser.add_argument("-rg", nargs="*"    , type=int, help="List of random graph sizes")
-    parser.add_argument("-cg", nargs="*"    , type=int, help="List of cayley graph sizes for S_n")
-    parser.add_argument("--timeless", type=str, choices=["yes", "no"], default="no" , help="If no, adds current time in run name")
-    parser.add_argument("--nn", type=str, choices=["yes", "no"], default="no" , help="Also trains nn + vanilla")
-    parser.add_argument("--vanilla", type=str, choices=["yes", "no"], default="yes" , help="Also trains vanilla")
-    parser.add_argument("--mild_nn_it", type=str, choices=["yes", "no"], default="yes" , help="Also trains mild nn overparametrisation of it")
-    parser.add_argument("--noise", nargs="*"    , type=float, help="Noise parameters for AdamWN: noise_scale (1e-2 / 5), grad_threshold (1e-2), cooldown_steps (1), decay (1). Values in () are defaults.")
+    parser.add_argument("-rg", nargs="*", type=int, help="List of random graph sizes")
+    parser.add_argument(
+        "-cg", nargs="*", type=int, help="List of cayley graph sizes for S_n"
+    )
+    parser.add_argument(
+        "--timeless",
+        type=str,
+        choices=["yes", "no"],
+        default="no",
+        help="If no, adds current time in run name",
+    )
+    parser.add_argument(
+        "--nn",
+        type=str,
+        choices=["yes", "no"],
+        default="no",
+        help="Also trains vanilla nn. Default no",
+    )
+    parser.add_argument(
+        "--vanilla",
+        type=str,
+        choices=["yes", "no"],
+        default="no",
+        help="Also trains vanilla. Default no.",
+    )
+    parser.add_argument(
+        "--mild_nn_it",
+        type=str,
+        choices=["yes", "no"],
+        default="yes",
+        help="Also trains mild nn overparametrisation of it. Default yes.",
+    )
+    parser.add_argument(
+        "--noise",
+        nargs="*",
+        type=float,
+        help="Noise parameters for AdamWN: noise_scale (1e-2 / 5), grad_threshold (1e-2), cooldown_steps (1), decay (1). Values in () are defaults.",
+    )
+    parser.add_argument(
+        "--verbose",
+        type=int,
+        default=0,
+        help="Verbose every n steps. Default 0 (no verbose)",
+    )
+    parser.add_argument(
+        "--grad_eps",
+        type=float,
+        default=None,
+        help="Gradient norm threshold for stopping criteria. Default None",
+    )
+    parser.add_argument(
+        "max_steps",
+        type=int,
+        default=1000,
+        help="Maximum number of steps for optimizers. Default 1000",
+    )
     args = parser.parse_args()
 
     rg = args.rg
     cg = args.cg
     if rg is None:
-        rg = [] 
+        rg = []
     if cg is None:
         cg = []
 
     # noise args
-    defaults = [ 
-0.001,
- 0.001,
- 5,
- 1,]
-    keys = ["noise_scale" ,"grad_threshold" ,"cooldown_steps" ,"decay"]
+    defaults = [
+        0.001,
+        0.001,
+        5,
+        1,
+    ]
+    keys = ["noise_scale", "grad_threshold", "cooldown_steps", "decay"]
     if args.noise is None:
-        args.noise = [] 
+        args.noise = []
     for i, v in enumerate(args.noise):
         defaults[i] = v
 
-    nn_it_adam_params={
-      key: setting for key, setting in zip(keys, defaults)
-        }
-    
+    nn_it_adam_params = {key: setting for key, setting in zip(keys, defaults)}
 
-    run_name = args.name 
+    run_name = args.name
     if args.timeless == "no":
-        run_name += ( "_" + str(datetime.now()))
+        run_name += "_" + str(datetime.now())
+
+    #  scaler
+    optit.scaler = GradScaler("cuda")
 
     print("Running comparisons")
     # create  and save dataset
     dataset = create_dataset(rg, cg)
-    #dataset = create_dataset([4] , [3])
+    # dataset = create_dataset([4] , [3])
 
     with open(f"./results/dataset_{run_name}.pkl", "wb") as f:
         pickle.dump(dataset, f)
 
     random_graphs, cayley_graphs, all_graphs = dataset
 
-    for index, (graph_type, M1, Q, M2) in tqdm.tqdm(enumerate(all_graphs), total=len(all_graphs)):
+    for index, (graph_type, M1, Q, M2) in tqdm.tqdm(
+        enumerate(all_graphs), total=len(all_graphs)
+    ):
         # get results
         if args.mild_nn_it == "yes":
-            results_mild_nn_it = run_mild_nn_it(M1, Q, M2, max_steps=1200, **nn_it_adam_params)
+            results_mild_nn_it = run_mild_nn_it(
+                M1,
+                Q,
+                M2,
+                max_steps=args.max_steps,
+                verbose=args.verbose,
+                grad_eps=args.grad_eps,
+                **nn_it_adam_params,
+            )
         else:
             results_mild_nn_it = None
         if args.vanilla == "yes":
-            results_vanilla = run_vanilla(M1, Q, M2, max_steps=1200)
+            results_vanilla = run_vanilla(
+                M1, Q, M2, max_steps=args.max_steps, verbose=args.verbose
+            )
         else:
             results_vanilla = None
-        results_vanilla_it = run_vanilla_it(M1, Q, M2, max_steps=1200)
-        
-     #   nn_it_adam_params={
-     #   "lr" : 1e-3, 
-     #   "betas" : (0.9, 0.999), 
-     #   "eps" : 1e-8,
-     #   "weight_decay" : 1e-4,
-     #   # perturbation-specific
-     #   "noise_max" : 1,
-     #   "noise_scale" : 1e-3,
-     #   "grad_threshold" : 1e-2,
-     #   "cooldown_steps" : 10,
-     #   "decay" : 1,
-     #   }
-        results_nn_it = run_nn_it(M1, Q, M2, max_steps=1200, **nn_it_adam_params)
+        results_vanilla_it = run_vanilla_it(
+            M1, Q, M2, max_steps=args.max_steps, verbose=args.verbose, grad_eps=args.grad_eps
+        )
+
+        #   nn_it_adam_params={
+        #   "lr" : 1e-3,
+        #   "betas" : (0.9, 0.999),
+        #   "eps" : 1e-8,
+        #   "weight_decay" : 1e-4,
+        #   # perturbation-specific
+        #   "noise_max" : 1,
+        #   "noise_scale" : 1e-3,
+        #   "grad_threshold" : 1e-2,
+        #   "cooldown_steps" : 10,
+        #   "decay" : 1,
+        #   }
+        results_nn_it = run_nn_it(
+            M1,
+            Q,
+            M2,
+            max_steps=args.max_steps,
+            verbose=args.verbose,
+            grad_eps=args.grad_eps,
+            **nn_it_adam_params,
+        )
         if args.nn == "yes":
             results_nn = run_nn(M1, Q, M2)
         else:
             results_nn = None
-        # save results 
-        results = {"vanilla" : results_vanilla,
-                   "vanilla_it" : results_vanilla_it,
-                   "nn_it" : results_nn_it,
-                   "nn" : results_nn,
-                   "mild_nn_it" : results_mild_nn_it,
-                   "graph_tuple" : (M1, Q, M2)
-                    }
-        with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl" , "wb") as f:
+        # save results
+        results = {
+            "vanilla": results_vanilla,
+            "vanilla_it": results_vanilla_it,
+            "nn_it": results_nn_it,
+            "nn": results_nn,
+            "mild_nn_it": results_mild_nn_it,
+            "graph_tuple": (M1, Q, M2),
+        }
+        with open(f"./results/results_{run_name}_{index}_{graph_type}.pkl", "wb") as f:
             pickle.dump(results, f)
