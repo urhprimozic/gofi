@@ -4,7 +4,7 @@ import torch.nn as nn
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def LossGraphMatching(P, M1, M2):
-    return torch.norm(M2 - P.T @ M1 @ P)
+    return torch.norm(M1 - P.T @ M2 @ P)
 
 def LossGraphMatchingRandomMap(f : RandomMap, M1 : torch.Tensor, M2 : torch.Tensor):
     return LossGraphMatching(f.P().T, M1, M2)

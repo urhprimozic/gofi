@@ -3,6 +3,8 @@ import torch
 import torch.nn as nn
 from torch_geometric.nn import GCNConv
 
+from gofi.graphs.graph import permutation_matrix_to_permutation
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def sinkhorn(a, b, C, reg=0.1, num_iters=50, tol=1e-9):
@@ -59,8 +61,8 @@ def sinkhorn_matching(C, reg=0.1):
     return S
 
 def isomorphism_loss(M1, M2, S):
-    M1_hat = S.T @ M1 @ S
-    return torch.norm(M1_hat - M2, p='fro')
+    M2_hat = S.T @ M2 @ S
+    return torch.norm(M2_hat - M1, p='fro')
 
 def adj_to_edge_index(M):
     row, col = M.nonzero(as_tuple=True)
@@ -92,16 +94,30 @@ class OTGraphMatcher(nn.Module):
         return loss, S
     
     def train(self, M1, M2, lr=0.001, epochs=1000, verbose=0):
+        '''
+        Trains the GNN and returns 
+         losses, loss, S
+        '''
+
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
+        losses=[]
+
+        rm = RandomMapGNN(self, M1, M2)
+
         for epoch in range(epochs):
             optimizer.zero_grad()
             loss, S = self.forward(M1, M2)
             loss.backward()
+            losses.append(loss.item())
             optimizer.step()
             if verbose > 0:
                 if epoch % verbose == 0:
                     print(f"Epoch {epoch}, Loss: {loss.item()}", end='\r')
-        return loss, S
+            # get relation loss 
+            perm = rm.table()
+            mpp = permutation_matrix_to_permutation(perm)
+            relation_loss = isomorphism_loss(M1, M2, mpp)
+        return losses, loss, S
 
 
 
