@@ -61,8 +61,8 @@ def sinkhorn_matching(C, reg=0.1):
     return S
 
 def isomorphism_loss(M1, M2, S):
-    M2_hat = S.T @ M2 @ S
-    return torch.norm(M2_hat - M1, p='fro')
+    M1_hat = S.T @ M1 @ S
+    return torch.norm(M1_hat - M1, p='fro')
 
 def adj_to_edge_index(M):
     row, col = M.nonzero(as_tuple=True)
@@ -101,6 +101,7 @@ class OTGraphMatcher(nn.Module):
 
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
         losses=[]
+        relation_losses = []
 
         rm = RandomMapGNN(self, M1, M2)
 
@@ -116,8 +117,9 @@ class OTGraphMatcher(nn.Module):
             # get relation loss 
             perm = rm.table()
             mpp = permutation_matrix_to_permutation(perm)
-            relation_loss = isomorphism_loss(M1, M2, mpp)
-        return losses, loss, S
+            relation_loss = isomorphism_loss(M1, M2, mpp).item()
+            relation_losses.append(relation_loss)
+        return losses, relation_losses, S
 
 
 
