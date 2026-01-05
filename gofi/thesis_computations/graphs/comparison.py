@@ -1,4 +1,5 @@
 from torch.amp import GradScaler
+from gofi.graphs.gnn_vonc import OTGraphMatcher, RandomMapGNN
 from gofi.thesis_computations.graphs.dataset import create_dataset
 import pickle
 from gofi.graphs.inversion_table.distributions import VanillaModel
@@ -379,6 +380,27 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
         }
     return results
 
+def run_gnn_conv(M1, Q, M2):
+    n = M1.shape[0]
+    model = OTGraphMatcher(node_dim=n, hidden_dim=n**2, emb_dim=n).to(device)
+    losses, relation_losses, S = model.train(M1, M2, lr=0.4, epochs=50, verbose=1)
+
+    with torch.no_grad():
+        f = RandomMapGNN(model, M1, M2)
+        perm = f.table()
+        mpp = permutation_to_permutation_matrix(P)
+        results = {
+            "losses": losses,
+            "relation_losses": relation_losses,
+            "final_loss": losses[-1],
+            "most_probable_permutation": perm,
+            "target_permutation": denumpy(
+                list(torch.argmax(Q, axis=1).cpu().numpy() + 1)
+            ),
+            "diff_target_result": torch.norm(M2 - mpp.T @ M1 @ mpp).item(),
+            "model": "nn",
+        }
+    return results
 
 if "__main__" == __name__:
     parser = argparse.ArgumentParser()

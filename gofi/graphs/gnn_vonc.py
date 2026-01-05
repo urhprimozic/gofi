@@ -5,7 +5,8 @@ from torch_geometric.nn import GCNConv
 
 from gofi.graphs.graph import permutation_matrix_to_permutation
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 def sinkhorn(a, b, C, reg=0.1, num_iters=50, tol=1e-9):
     """
@@ -37,6 +38,7 @@ def sinkhorn(a, b, C, reg=0.1, num_iters=50, tol=1e-9):
     P = torch.diag(u).to(device) @ K @ torch.diag(v).to(device)
     return P
 
+
 class NodeEncoder(nn.Module):
     def __init__(self, in_dim, hidden_dim, out_dim):
         super().__init__()
@@ -47,6 +49,7 @@ class NodeEncoder(nn.Module):
         x = torch.relu(self.conv1(x, edge_index))
         x = self.conv2(x, edge_index)
         return x
+
 
 def cost_matrix(X, Y):
     # X: [n, d], Y: [n, d]
@@ -60,14 +63,16 @@ def sinkhorn_matching(C, reg=0.1):
     S = sinkhorn(a, b, C, reg)
     return S
 
+
 def isomorphism_loss(M1, M2, S):
-    M1_hat = S.T @ M1 @ S
-    return torch.norm(M1_hat - M1, p='fro')
+    return torch.norm(M1 - S @ M2 @ S.T, p="fro")
+
 
 def adj_to_edge_index(M):
     row, col = M.nonzero(as_tuple=True)
     edge_index = torch.stack([row, col], dim=0)
     return edge_index
+
 
 class OTGraphMatcher(nn.Module):
     def __init__(self, node_dim, hidden_dim, emb_dim):
@@ -83,7 +88,6 @@ class OTGraphMatcher(nn.Module):
         x1 = torch.eye(n).to(device)
         x2 = torch.eye(n).to(device)
 
-
         Z1 = self.encoder(x1, edge_index1)
         Z2 = self.encoder(x2, edge_index2)
 
@@ -92,15 +96,15 @@ class OTGraphMatcher(nn.Module):
 
         loss = isomorphism_loss(M1, M2, S)
         return loss, S
-    
+
     def train(self, M1, M2, lr=0.001, epochs=1000, verbose=0):
-        '''
-        Trains the GNN and returns 
+        """
+        Trains the GNN and returns
          losses, loss, S
-        '''
+        """
 
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
-        losses=[]
+        losses = []
         relation_losses = []
 
         rm = RandomMapGNN(self, M1, M2)
@@ -113,14 +117,13 @@ class OTGraphMatcher(nn.Module):
             optimizer.step()
             if verbose > 0:
                 if epoch % verbose == 0:
-                    print(f"Epoch {epoch}, Loss: {loss.item()}", end='\r')
-            # get relation loss 
+                    print(f"Epoch {epoch}, Loss: {loss.item()}", end="\r")
+            # get relation loss
             perm = rm.table()
             mpp = permutation_matrix_to_permutation(perm)
             relation_loss = isomorphism_loss(M1, M2, mpp).item()
             relation_losses.append(relation_loss)
         return losses, relation_losses, S
-
 
 
 def sinkhorn_matrix(log_alpha: torch.Tensor, n_iters=10, eps=1e-9):
@@ -130,8 +133,9 @@ def sinkhorn_matrix(log_alpha: torch.Tensor, n_iters=10, eps=1e-9):
         log_P = log_P - torch.logsumexp(log_P, dim=0, keepdim=True)
     return torch.exp(log_P).clamp_min(eps)
 
+
 class RandomMapGNN(nn.Module):
-    def __init__(self, graph_mathcer : OTGraphMatcher,M1, M2, *args, **kwargs):
+    def __init__(self, graph_mathcer: OTGraphMatcher, M1, M2, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.graph_matcher = graph_mathcer
         self.M1 = M1
@@ -142,10 +146,11 @@ class RandomMapGNN(nn.Module):
     def P(self):
         _, S = self.graph_matcher.forward(self.M1, self.M2)
         return S
+
     def relation_loss(self, M1, M2):
         loss, _ = self.graph_matcher.forward(M1, M2)
         return loss
-    
+
     def mode(self, programercic=False):
         """
         Returns the map between domain and codomain, which has the largest probability.
@@ -166,6 +171,7 @@ class RandomMapGNN(nn.Module):
             i + index_shift: mode_indices[i].item() + index_shift
             for i in range(self.domain)
         }
+
     def table(self):
         d = self.mode()
         return [d[i] for i in range(1, self.domain + 1)]
