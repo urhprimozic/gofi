@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from torch_geometric.nn import GCNConv
 
-from gofi.graphs.graph import permutation_matrix_to_permutation
+from gofi.graphs.graph import permutation_matrix_to_permutation, permutation_to_permutation_matrix
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -97,13 +97,15 @@ class OTGraphMatcher(nn.Module):
         loss = isomorphism_loss(M1, M2, S)
         return loss, S
 
-    def train(self, M1, M2, lr=0.001, epochs=1000, verbose=0):
+    def train(self, M1, M2, lr=0.001, epochs=1000, verbose=0, grad_eps=0.0001):
         """
         Trains the GNN and returns
          losses, loss, S
         """
-
-        optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
+        if grad_eps is None:
+            grad_eps = -1.0  # disable early stopping based on grad norm
+            
+        optimizer = torch.optim.Adam(self.parameters(), lr=lr)
         losses = []
         relation_losses = []
 
@@ -118,11 +120,23 @@ class OTGraphMatcher(nn.Module):
             if verbose > 0:
                 if epoch % verbose == 0:
                     print(f"Epoch {epoch}, Loss: {loss.item()}", end="\r")
+            
             # get relation loss
             perm = rm.table()
-            mpp = permutation_matrix_to_permutation(perm)
+            mpp = permutation_to_permutation_matrix(perm).to(device)
             relation_loss = isomorphism_loss(M1, M2, mpp).item()
             relation_losses.append(relation_loss)
+
+            # get grad norm
+            total_norm = 0.0
+            for p in self.parameters():
+                param_norm = p.grad.data.norm(2)
+                total_norm += param_norm.item() ** 2
+            total_norm = total_norm ** 0.5
+            if total_norm < grad_eps:
+                if verbose > 0:
+                    print(f"Stopping early at epoch {epoch} due to small gradient norm: {total_norm} < {grad_eps} while achieving loss {loss.item()}.")
+                break 
         return losses, relation_losses, S
 
 

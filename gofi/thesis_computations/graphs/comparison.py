@@ -380,15 +380,15 @@ def run_nn(M1, Q, M2, T=1, verbose=0):
         }
     return results
 
-def run_gnn_conv(M1, Q, M2):
+def run_gnn_conv(M1, Q, M2, max_steps= 1000, verbose=0, grad_eps=None, lr=0.01):
     n = M1.shape[0]
-    model = OTGraphMatcher(node_dim=n, hidden_dim=n**2, emb_dim=n).to(device)
-    losses, relation_losses, S = model.train(M1, M2, lr=0.4, epochs=50, verbose=1)
+    model = OTGraphMatcher(node_dim=n, hidden_dim=n**2, emb_dim=n**2).to(device)
+    losses, relation_losses, S = model.train(M1, M2, lr=lr, epochs=max_steps,grad_eps=grad_eps, verbose=verbose)
 
     with torch.no_grad():
         f = RandomMapGNN(model, M1, M2)
         perm = f.table()
-        mpp = permutation_to_permutation_matrix(P)
+        mpp = permutation_to_permutation_matrix(perm)
         results = {
             "losses": losses,
             "relation_losses": relation_losses,

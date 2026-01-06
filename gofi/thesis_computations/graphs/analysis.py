@@ -5,7 +5,7 @@ import tqdm
 import torch
 import io
 import gofi.plot.colors as gc
-from comparison import run_nn
+from comparison import run_nn, run_gnn_conv
 import os
 import re
 import hyperparams
@@ -427,3 +427,27 @@ def average_loss(list_of_results, methods = ["vanilla_it", "vanilla", "nn_it", "
     #average
     avg_losses = {method : sum(final_rel_losses[method]) / len(final_rel_losses[method]) for method in methods if len(final_rel_losses[method]) > 0}
     return avg_losses
+
+def add_gnn(lor):
+    '''
+    Adds gnn results into list of results.
+    '''
+    for index, results in enumerate(tqdm.tqdm(lor, total=len(lor))):
+        M1, Q, M2 = results["graph_tuple"]
+        try:
+            results_gnn = run_gnn_conv(M1.to(device), Q.to(device), M2.to(device), max_steps=1000, grad_eps=0.001, lr=0.01)
+            results["gnn"] = results_gnn
+        except Exception as e:
+            print(f"Error at index: {index}. Skipping..")
+            print(e)
+            continue
+    return lor
+
+def add_gnn_thesis():
+    '''
+    collects results with prefixes in ("dec5", "mild1", "mild_new_hp_big", "extension")
+    and adds gnn results into them.
+    '''
+
+    lor = collect_results(("dec5", "mild1", "mild_new_hp_big", "extension"))
+    return add_gnn(lor)
