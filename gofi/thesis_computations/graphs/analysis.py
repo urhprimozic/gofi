@@ -472,12 +472,14 @@ def add_gnn(lor, filename=None):
         save_lor(lor, filename)
     return lor
 
-def add_gnn_thesis():
+def add_gnn_thesis(filename=None):
     '''
     collects results with prefixes in ("dec5", "mild1", "mild_new_hp_big", "extension")
     and adds gnn results into them.
+
+    If filename is given, saves the new lor into that filename.
     '''
 
     lor = collect_results(("dec5", "mild1", "mild_new_hp_big", "extension"))
-    return add_gnn(lor)
+    return add_gnn(lor, filename=filename)
 
