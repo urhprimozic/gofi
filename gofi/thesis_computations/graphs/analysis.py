@@ -319,13 +319,15 @@ def loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "
     plt.close()
 
 
-def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"], markers = ['.', '.', '+', 'x', '.']):
+def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"], markers = ['.', '.', '+', 'x', '.', "o"], curve=False):
     '''
     Points in 2d space of n_vertices * loss. Each method has its own color.
 
     For every method (vanilla, vanilla_it, nn_it) and for every graph size n, there is a point (n, E[loss(method)]), colored by method's color.
+
+    If curve=True, a curve is drawn instead of points.
     '''
-    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"]
+    all_methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it", "gnn"]
 
     # prepare n_vertices and loss 
     
@@ -336,6 +338,7 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         "nn_it" : {},
         "nn" : {},
         "mild_nn_it" : {},
+        "gnn" : {},
 
     }
     for results in list_of_results:
@@ -369,6 +372,7 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         "nn_it" : "Globoka preparametrizacija",
         "nn" : "Nevronske mreže brez tabele inverzij",
         "mild_nn_it" : "Blaga preparametrizacija in tabela inverzij",
+        "gnn" : "GNN in sinkhorn",
     }
 
     colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange, gc.green]
@@ -377,8 +381,13 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         if method in methods:
             # collect n and loss
             n_vertices = list(loss[method].keys())
+            # sort 
+            n_vertices.sort()
             loss_values = [loss[method][n] for n in n_vertices]
-            ax.scatter(n_vertices, loss_values, c=color, label=labels[method], marker=marker, alpha=0.8)
+            if curve:
+                ax.plot(n_vertices, loss_values, c=color, label=labels[method], alpha=0.8)
+            else:
+                ax.scatter(n_vertices, loss_values, c=color, label=labels[method], marker=marker, alpha=0.8)
         
       
     plt.legend()
@@ -388,12 +397,29 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
     plt.savefig(f"average_{filename}.pdf")
     plt.close()
 
+def save_lor(lor, output_filename):
+    '''
+    Saves list of results into a pickle file.
+    '''
+    with open(f"./results/{output_filename}.pkl", "wb") as f:
+        pickle.dump(lor, f)
+
+def load_lor(input_filename):
+    '''
+    Loads list of results from a pickle file.
+    '''
+    with open(f"./results/{input_filename}.pkl", "rb") as f:
+        lor = CPU_Unpickler(f).load()
+    return lor
+
 def main():
     # collect results
     list_of_results = collect_results()
     # plot loss on size
     average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it", methods=["vanilla_it", "vanilla"],markers=["o","o","o","o"])
     average_loss_on_size(list_of_results, "loss_on_size_vanilla_vs_it_vs_nn_it", methods=["vanilla_it", "vanilla", "nn_it"],markers=["o","o","o","o"])
+
+
 
 def lor_plot_losses(lor, output_filename,methods, suptitle="", loss_key="relation_losses", log_scale=True):
     '''
@@ -428,7 +454,7 @@ def average_loss(list_of_results, methods = ["vanilla_it", "vanilla", "nn_it", "
     avg_losses = {method : sum(final_rel_losses[method]) / len(final_rel_losses[method]) for method in methods if len(final_rel_losses[method]) > 0}
     return avg_losses
 
-def add_gnn(lor):
+def add_gnn(lor, filename=None):
     '''
     Adds gnn results into list of results.
     '''
@@ -442,6 +468,8 @@ def add_gnn(lor):
             print(f"Error at index: {index}. Skipping..")
             print(e)
             continue
+    if filename is not None:
+        save_lor(lor, filename)
     return lor
 
 def add_gnn_thesis():
@@ -452,3 +480,4 @@ def add_gnn_thesis():
 
     lor = collect_results(("dec5", "mild1", "mild_new_hp_big", "extension"))
     return add_gnn(lor)
+
