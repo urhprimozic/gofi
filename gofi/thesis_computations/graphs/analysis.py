@@ -432,6 +432,7 @@ def add_gnn(lor):
     '''
     Adds gnn results into list of results.
     '''
+    print("Adding gnn results into list of results of lenght:", len(lor))
     for index, results in enumerate(tqdm.tqdm(lor, total=len(lor))):
         M1, Q, M2 = results["graph_tuple"]
         try:
