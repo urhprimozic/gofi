@@ -375,7 +375,7 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         "gnn" : "GNN in sinkhorn",
     }
 
-    colors = [gc.lightblue, gc.darkorange, gc.black, gc.lightorange, gc.green]
+    colors = [gc.lightblue, gc.yellow, gc.black, gc.lightorange, gc.green, gc.darkorange]
   
     for method, color, marker in zip(all_methods, colors, markers):
         if method in methods:
@@ -401,14 +401,14 @@ def save_lor(lor, output_filename):
     '''
     Saves list of results into a pickle file.
     '''
-    with open(f"./results/{output_filename}.pkl", "wb") as f:
+    with open(f"{output_filename}", "wb") as f:
         pickle.dump(lor, f)
 
 def load_lor(input_filename):
     '''
     Loads list of results from a pickle file.
     '''
-    with open(f"./results/{input_filename}.pkl", "rb") as f:
+    with open(f"{input_filename}", "rb") as f:
         lor = CPU_Unpickler(f).load()
     return lor
 
