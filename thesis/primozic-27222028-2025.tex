@@ -248,6 +248,7 @@ v \cite{li2019graphmatchingnetworkslearning}.
   $\operatorname{diag}(\sigma_1, \sigma_2 , \dotsc, \sigma_n)$
   & Diagonalna matrika z elementi $\sigma_1, \sigma_2, \dotsc,
   \sigma_n$ na diagonali. \\
+  $||A||$ & Frobeniusova norma matrike $A$ \\
 \end{tabularx}
 \subsection*{Oznake matrik}
 Za matriko $A = [a_{i,j}] \in \R^{n \times n}$
@@ -1251,7 +1252,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
           parametre\footnote{Na vsakem grafu je 200 različnih
             rešitev. Začetni parametri so vzorčeni iz enakomerne
             porazdelitve nad $[-1,1]^2$. Za implementacijo glej
-          \TODO{implementacija}}.
+          dodatek \ref{dodatek_1dim dn trajektorije}}.
           Črne pike predstavljajo začetne vrednosti rešitev. Modre
           rešitve kovergirajo k nerazcepni upodobitvi, oranžne pa v
           lokalni minimum $\loss$, ki ni globalni.
@@ -1665,12 +1666,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \end{dokaz}
               \begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrlnjiva]
                 \label{lema : Ps je obrnljiva}
-                Če je 
+                Če je
                 $\Loss{rel}(\hat\rho) \leq \frac{-1}{|R|}\log(1-\frac{1}{2n})$,
-                je 
+                je
                 %Obstaja $\epsilon_0$, da za vsak $0 < \epsilon <
                 %\epsilon_0$ in $P_r = I + E_r$ z $||E_r|| <
-                %\epsilon$ velja, da je 
+                %\epsilon$ velja, da je
                 matrika $P_s$ obrnjiva za vsak
                 generator $s \in S$.
               \end{lema}
@@ -1747,14 +1748,14 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 $
                 Ocenimo
                 $$
-                \frac{\epsilon^{2}}{n} < 
-                  \|x_i-e_k\|_{2}^{2}
-                  =(1-x_{i,k})^{2}+\sum_{j\ne k}x_{i,j}^{2}
-                  \le 2(1-x_{i,k}).
+                \frac{\epsilon^{2}}{n} <
+                \|x_i-e_k\|_{2}^{2}
+                =(1-x_{i,k})^{2}+\sum_{j\ne k}x_{i,j}^{2}
+                \le 2(1-x_{i,k}).
                 $$
                 Za vse $k$ sledi
                 $
-                  x_{i,k} \le 1- \frac{\epsilon^{2}}{2n}
+                x_{i,k} \le 1- \frac{\epsilon^{2}}{2n}
                 $.
                 Naj bo $Y$ poljubna stohastična matrika. Oglejmo si
                 $i$-to vrstico produkta $XY$.
@@ -1772,17 +1773,17 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 ||XY-I|| \ge \frac{\epsilon^{2}}{2n}.
                 $$
 
-                Iz $\|P^{-1}-R\|_F \le \frac{\epsilon^{2}}{2n^{3/2}}$ 
+                Iz $\|P^{-1}-R\|_F \le \frac{\epsilon^{2}}{2n^{3/2}}$
                 sledi
                 $$
                 ||PR - I|| \le ||P|| ||P^{-1}-R|| \le \frac{\epsilon^{2}}{2n}.
-                $$. 
-                Po zgornjem premisleku je 
+                $$.
+                Po zgornjem premisleku je
                 $$
                 ||P - Q|| \le \epsilon
                 $$
                 za neko permutacijsko matriko $Q$.
-                
+
                 Če je $\epsilon < \frac{1}{2}$, je očitno
                 $\overline{P} = \overline{ Q + (P-Q)} = Q$.
               \end{dokaz}
@@ -1807,18 +1808,18 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               %  Z = \{(X,Y) \mid  d(X, \Pi) \geq \epsilon \}.
               %  $$
               %  Na njej $g$ doseže minimum $c \geq 0$.
-%
+              %
               %  Če je za stohastični matriki $X$ in $Y$ $g(X,Y) = 0$,
               %  je $Y = X^{-1}$ in sta po izreku
               %  \ref{izrek:obrnljiva stohasticna} obe permutacijski.
               %  Sledi $\min_{(X,Y)
               %  \in Z}g(X,Y) = c > 0$.
-%
+              %
               %  Za $\delta < \frac{c}{\sqrt{n}}$ je $||QR - I|| = g(Q, R) < c$
               %  iz česar sledi, da je $d(Q, \Pi) < \epsilon$.
               %  Naj bo $P \in \Pi$ taka, da velja $||Q - P|| < \epsilon$.
               %  Potem za $E=Q-P$ veljha $||E|| < \epsilon$.
-%
+              %
               %  Če je $\epsilon < \frac{1}{2}$, je
               %  $\overline{Q} = \overline{E + P} = P$, torej je $Q =
               %  \overline{Q} + E$.
@@ -1827,13 +1828,13 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               %\end{dokaz}
               Zdaj lahko dokažemo glavni rezultat tega razdelka.
               \begin{izrek}
-               Če je 
-               $$
-\Loss{rel}(\hat \rho) <  n^{1-L}(1 + 
+                Če je
+                $$
+                \Loss{rel}(\hat \rho) <  n^{1-L}(1 +
                 L^\frac{3}{2}(2^{L-1}-1))^{-2},
-               $$
-               kjer je 
-                $L = \max_{r \in R} |r|$ 
+                $$
+                kjer je
+                $L = \max_{r \in R} |r|$
                 , je inducirana preslikava
                 $\rho \colon G \to \Pi$ homomorfizem.
                 %Obstaja $\delta_0 > 0$, da iz $\Loss{rel}(\hat\rho) <
@@ -1848,7 +1849,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 \overline{P_{s_m}} = I.
                 $$
                 Če je
-                 $\Loss{rel}(\hat\rho) \leq
+                $\Loss{rel}(\hat\rho) \leq
                 \frac{1}{|R|}-\log(1-\frac{\epsilon}{n}) $
                 po lemi \ref{lema:Pr blizu I}
                 sledi, da je
@@ -1859,8 +1860,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 %$$
                 %
                 %$$
-                za $||E_r|| < \epsilon$. 
-                Če je dodatno 
+                za $||E_r|| < \epsilon$.
+                Če je dodatno
                 $\epsilon < \frac{1}{2}$,
                 je po lemi   \ref{lema :
                 Ps je obrnljiva}
@@ -1876,8 +1877,8 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 stohastična, saj je produkt stohastičnih matrik.
                 Poleg tega je $||P_{s_2} P_{s_3} \dotsm P_{s_m} -
                 P_{s_1}^{-1}|| = ||P_{s_1}^{-1}||||E_r|| <
-                ||P_{s_1}^{-1}||\epsilon$. 
-                Če je $\epsilon_1 = \left( ||P_s^{-1}||\epsilon 2 
+                ||P_{s_1}^{-1}||\epsilon$.
+                Če je $\epsilon_1 = \left( ||P_s^{-1}||\epsilon 2
                 n^{\frac{3}{2}} \right) ^\frac{1}{2} < \frac{1}{2}$
                 , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
                 $$
@@ -1892,12 +1893,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 P_{s_2}^{-1} = P_{s_3} \dotsm P_{s_m}P_{s_1} -
                 P_{s_2}^{-1}P_{s_1}^{-1}E_r P_{s_1}.
                 $$
-                Če je 
-                $\epsilon_2 = 
+                Če je
+                $\epsilon_2 =
                 \left(
-                2 n^{\frac{3}{2}} ||P_{s_2}^{-1}||
-                ||P_{s_1}^{-1}||
-                ||P_{s_1}||\epsilon
+                  2 n^{\frac{3}{2}} ||P_{s_2}^{-1}||
+                  ||P_{s_1}^{-1}||
+                  ||P_{s_1}||\epsilon
                 \right)^\frac{1}{2}
                 <
                 \frac{1}{2}
@@ -1905,23 +1906,23 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
                 $P_{s_2} = \overline{P_{s_2}} + E_{s_2}$.
                 Induktivno nadaljujemo. Izberemo tak $\epsilon$
-                ,da je za vsak $j \in [m]$ 
-                $\epsilon_j 
+                ,da je za vsak $j \in [m]$
+                $\epsilon_j
                 =
                 \left(
-                2 n^{\frac{3}{2}}
-                ||P_{s_j}^{-1}||
-                \prod_{i=1}^{j-1}
-                ||P_{s_i}^{-1}||
-                \prod_{i=1}^{j-1}
-                ||P_{s_i}||
-                \epsilon
+                  2 n^{\frac{3}{2}}
+                  ||P_{s_j}^{-1}||
+                  \prod_{i=1}^{j-1}
+                  ||P_{s_i}^{-1}||
+                  \prod_{i=1}^{j-1}
+                  ||P_{s_i}||
+                  \epsilon
                 \right)^{\frac{1}{2}}
-                < \frac{1}{2}$. Potem je 
+                < \frac{1}{2}$. Potem je
                 $$
                 P_{s_j} = \overline{P_{s_j}} + E_{s_j}.
                 $$
-                 in $||E_{s_j}|| < \epsilon_j$.
+                in $||E_{s_j}|| < \epsilon_j$.
                 %Vzamemo $\epsilon_0 = \max_{j \in [m]} \epsilon_j$ in
                 Računamo
                 %
@@ -1962,27 +1963,27 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
                 \end{align*}
                 Velja  $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi$.
                 Razdalje med različnimi permutacijskimi matrikami
-                ne morejo biti manjše od $1$. 
-                Za dovolj majhen $\epsilon_m$ je 
+                ne morejo biti manjše od $1$.
+                Za dovolj majhen $\epsilon_m$ je
                 $\prod_{i=1}^m \overline{P_{s_i}} = 1$.
 
-                Norma stohastične matrike je 
-                manjša ali enaka $\sqrt{n}$. S to oceno lahko ocenimo 
+                Norma stohastične matrike je
+                manjša ali enaka $\sqrt{n}$. S to oceno lahko ocenimo
                 $
-                \epsilon_j 
+                \epsilon_j
                 \leq
                 \left(
                   n^{j-1} \epsilon
                 \right)^{\frac{1}{2}}
-                $.  Naj bo $L = \max_{r \in R} |r|$ največja 
-                dolžina relacije v $R$. 
-                Če je 
+                $.  Naj bo $L = \max_{r \in R} |r|$ največja
+                dolžina relacije v $R$.
+                Če je
                 $$
-                \Loss{rel}(\hat \rho) \leq \epsilon < n^{1-L}(1 + 
+                \Loss{rel}(\hat \rho) \leq \epsilon < n^{1-L}(1 +
                 L^\frac{3}{2}(2^{L-1}-1))^{-2},
                 $$
-                je $ \prod_{s \in r} \overline{P_s} = I$ 
-                za vsako relacijo $r \in R$ in je 
+                je $ \prod_{s \in r} \overline{P_s} = I$
+                za vsako relacijo $r \in R$ in je
                 $\rho \colon G \to \Pi$ homomorfizem.
               \end{dokaz}
               %
@@ -2288,37 +2289,79 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             da predstavlja izomorfizem.
             %
             \begin{lema}
-              Obstaja $\epsilon > 0$, da iz
-              $\Loss{unitary}(P) < \epsilon$
-              sledi, da je  $\overline{P}$
-              permutacijska matrika.
+              \label{lema:loss unitary mali -> P blizu P streha}
+              Naj bo $P=QH, Q \in U_n, H= \sqrt{PP^*}$ polarni razcep
+              matrike $P$.
+              Če je  $\Loss{unitary}(P)
+              = ||P P^* - I|| < \epsilon$,
+              je $||P-Q || < \epsilon$. Če je $\epsilon < \frac{1}{2}$,
+              je $\overline{P} = Q$.
             \end{lema}
             \begin{dokaz}
-              Opazujmo preslikavo
-              $X \mapsto ||XX^*  - I||$, definirano na
-              stohastičnih matrikah. Naj bo $\delta > 0$.
-              Kompaktna podmnožica
-              $$
-              \{X \text{ stohastična } \mid d(X, \Pi) \geq \delta   \}
-              $$
-              na njen doseže minimum $c_\delta$. Ker je stohastična matrika
-              permutacijska natanko tedaj, ko je unitarna, je $c_\delta > 0$.
-
-              Če je $\Loss{unitary}(P) < c_\delta$, je
-              $ P=Q + E $ za permutacijsko matriko $Q$ in
-              $||E|| < \delta$.
-              Za $\delta < \frac{1}{2}$ je
-              $$
-              \overline{P}  = \overline{Q + E} = Q.
-              $$
+              Glej dokaz leme
+              \ref{lema:rho_s - Q_s < eps}.
+              %
+              % Opazujmo preslikavo
+              % $X \mapsto ||XX^*  - I||$, definirano na
+              % stohastičnih matrikah. Naj bo $\delta > 0$.
+              % Kompaktna podmnožica
+              % $$
+              % \{X \text{ stohastična } \mid d(X, \Pi) \geq \delta   \}
+              % $$
+              % na njen doseže minimum $c_\delta$. Ker je stohastična matrika
+              % permutacijska natanko tedaj, ko je unitarna, je $c_\delta > 0$.
+              %
+              % Če je $\Loss{unitary}(P) < c_\delta$, je
+              % $ P=Q + E $ za permutacijsko matriko $Q$ in
+              % $||E|| < \delta$.
+              % Za $\delta < \frac{1}{2}$ je
+              % $$
+              % \overline{P}  = \overline{Q + E} = Q.
+              % $$
             \end{dokaz}
             \begin{lema}
-              Obstaja $\epsilon_0$, da iz
-              $$
-              \loss_\sim(P) < \epsilon_0
-              $$
+              \label{lema:ocena za graph mathcing}
+              Za preslikavo  
+              $$f \colon X \mapsto || M_1 - X M_2 X^T ||$$
+               velja
+              $|f(X) - f(Y)| \leq
+              ||M_2||(||X|| + ||Y||) ||X - Y||$.
+              %GOTO
             \end{lema}
-            Opazujmo funkcijo izgube
+            \begin{dokaz}
+              Ocenimo
+              \begin{align*}
+                |f(X) - f(Y)|
+                &\leq || (Y M_2 Y^T) - (X M_2 X^T) || \\
+                &\leq ||(Y - X) M_2 Y^T|| + ||X M_2 (Y^T - X^T)|| \\
+                &= ||M_2|| (||X|| + ||Y||) ||X - Y||.
+              \end{align*}
+            \end{dokaz}
+            \begin{lema}
+              Če je 
+              $$\loss_\sim(P) \le \epsilon < 
+              \min(  \frac{1}{2}
+              ,
+              \frac{\sqrt{2}}{1 + ||M_1||\sqrt{n}}
+              ),
+              $$ je permutacija, podana z $\overline{P}$
+               izomorfizem med grafoma z matrikama sosednosti
+              $M_1$ in $M_2$.
+            \end{lema}
+            \begin{dokaz}
+              Po lemi \ref{lema:loss unitary mali -> P blizu P streha}
+              je $||P - \overline{P}|| < \epsilon$.              
+              Po lemi \ref{lema:ocena za graph mathcing} 
+              pa velja 
+              $$
+              |f(P)-f(\overline{P})| \leq  ||M_2||(||P|| + ||\overline{P}||)\epsilon 
+              < ||M_2||(1 + \sqrt{n})\epsilon  
+              $$. Vrednost funkcije izgube v $\overline{P}$ je omejena:
+              $$
+              f(\overline{P}) < \epsilon(1 + ||M_2||\sqrt{n})
+              $$
+
+              Opazujmo funkcijo izgube
             $f \colon X \mapsto || M_1 - X M_2 X^T ||$.
             Če je $X$ permutacijska matrika, je
             $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
@@ -2330,13 +2373,20 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             $M_2$, sicer pa je
             $|| M_1 - X M_2 X^T || \geq \sqrt{2} > 1$.
 
-            Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$,
-            da iz $||P - X|| < \delta$ sklepamo na
-            $ |f(P) - f(X)| < \frac{1}{2}$.
-
-            Za $f(P) < \frac{1}{2}$ in $\Loss{unitary}(P) < c_\delta$
-            je $\overline{P}$ permutacijska matrika, ki predstavlja izomorfizem
-            med grafoma $M_1$ in $M_2$.
+            Če je 
+            $\epsilon < 
+              \min(  \frac{1}{2}
+              ,
+              \frac{\sqrt{2}}{1 + ||M_1||\sqrt{n}}
+              )$, je $f(\overline{P})=0$.
+            \end{dokaz}
+            %Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$,
+            %da iz $||P - X|| < \delta$ sklepamo na
+            %$ |f(P) - f(X)| < \frac{1}{2}$.
+            %
+            %Za $f(P) < \frac{1}{2}$ in $\Loss{unitary}(P) < c_\delta$
+            %je $\overline{P}$ permutacijska matrika, ki predstavlja izomorfizem
+            %med grafoma $M_1$ in $M_2$.
             %
             \subsection{Rezultati}
             \label{subsection : rezultati_grafi_vanilla}
@@ -2806,8 +2856,9 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \caption{Povprečne napake metod.}
               \label{table:povprečne napake različnih metod grafi}
             \end{table}
+
             \TODO{Kaj več o graph matchingu? Uničevanje simetrij z
-            naključnim šumom?}
+            naključnim šumom? Sinkhorn vs tabela inverzij?}
             %
             %
             \appendix
