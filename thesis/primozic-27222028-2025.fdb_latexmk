@@ -1,19 +1,19 @@
 # Fdb version 4
-["biber primozic-27222028-2025"] 1767177166.70068 "primozic-27222028-2025.bcf" "primozic-27222028-2025.bbl" "primozic-27222028-2025" 1767179056.03738 0
-  "literatura.bib" 1767173109.06183 14876 058a6c31a06076e47d86a682f6dbbee4 ""
-  "primozic-27222028-2025.bcf" 1767179055.79668 112076 ea2cba91aab3a8e9670f849ec38379f0 "pdflatex"
+["biber primozic-27222028-2025"] 1768560450.52357 "primozic-27222028-2025.bcf" "primozic-27222028-2025.bbl" "primozic-27222028-2025" 1768563394.81062 0
+  "literatura.bib" 1767798115.7767 17818 96eab967e3b2494e828a2ae43afbd22b ""
+  "primozic-27222028-2025.bcf" 1768563394.39212 112895 6f619b4d5656f166e3a13991c4288808 "pdflatex"
   (generated)
   "primozic-27222028-2025.bbl"
   "primozic-27222028-2025.blg"
   (rewritten before read)
-["makeindex primozic-27222028-2025.idx"] 1767089626.59095 "primozic-27222028-2025.idx" "primozic-27222028-2025.ind" "primozic-27222028-2025" 1767179056.03725 0
-  "primozic-27222028-2025.idx" 1767179055.79838 799 08d943e5d1567c79110a51363e530ed7 "pdflatex"
+["makeindex primozic-27222028-2025.idx"] 1768563312.06506 "primozic-27222028-2025.idx" "primozic-27222028-2025.ind" "primozic-27222028-2025" 1768563394.81048 0
+  "primozic-27222028-2025.idx" 1768563394.39312 799 588afca776b7d2cd221fb7142af74d06 "pdflatex"
   (generated)
   "primozic-27222028-2025.ilg"
   "primozic-27222028-2025.ind"
   (rewritten before read)
-["pdflatex"] 1767179041.25631 "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" "primozic-27222028-2025.pdf" "primozic-27222028-2025" 1767179056.03765 0
-  "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" 1767179036.99937 139053 e3d3668c25b3f91dc60b38a8a4e8db94 ""
+["pdflatex"] 1768563379.30363 "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" "primozic-27222028-2025.pdf" "primozic-27222028-2025" 1768563394.81089 0
+  "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" 1768563379.02473 153082 2068aada496020be280617bac3f397c3 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -86,6 +86,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmib10.pfb" 1254269338 30962 099bdeb826f0ac8e2d3f42a496d47e5f ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb" 1255129361 119235 f35b44530a1d90eb90fe15d9cba67ea0 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb" 1255129361 113634 f99c44d58bae0863375faf0e1d74d612 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr5.pfb" 1255129361 120387 212cad1e763d510fc9c3ce2466274a57 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr6.pfb" 1255129361 123394 d390152bb30feeb496aaaa93299ee9ba ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr7.pfb" 1255129361 121145 68312a933e2c689ed40ec0aba373e279 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb" 1255129361 122174 a7a08406857c9530a0320a2517f60370 ""
@@ -93,6 +94,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb" 1255129361 109265 32320cb6133d4d76bf83e27b5eb4009b ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri8.pfb" 1255129361 109952 3dd76c0c5c680d519bb6d59a066c0826 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb" 1254269338 27863 09ce3735688ffde955e72da27c95b61a ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy5.pfb" 1254269338 28210 987b40585e9bcf6463d6155bb4219492 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy6.pfb" 1254269338 28109 6d61305ed3d0eb794ebe36f15cf44aa0 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy7.pfb" 1254269338 27941 d1f5d03f61a46c3fcc3a2ba904ddda52 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy8.pfb" 1254269338 27802 5c876bb2c4040caaf035d60bd74a86bd ""
@@ -336,7 +338,7 @@
   "images/dihedral/originals/cropped/Dn_1dim_n2.png" 1766504777.69755 370635 6aeaa32e36d5384734ad59f7c7ea219d ""
   "images/dihedral/originals/cropped/Dn_1dim_n7.png" 1766504779.05854 436587 05ca523895b0a908cd8a9cc3b80bdbb1 ""
   "images/dihedral/originals/cropped/Dn_1dim_n8.png" 1766504779.31153 325458 921fc0f3e333956e452dec4d0684232f ""
-  "images/graphs/comparisons/average_sample45_thesis.pdf.pdf" 1767100723.61543 16630 f66412d1e31de5294730867ecf2ceee8 ""
+  "images/graphs/comparisons/average_curve_full.pdf.pdf" 1767788707.83999 16164 784f420ced3afbb8bdcd703218608a38 ""
   "images/graphs/vanilla/aut_Cn_3.png" 1767087495.56272 194643 88cbbdc1d16f80fab619edef0e1e229d ""
   "images/graphs/vanilla/aut_Cn_4.png" 1767090047.68404 323637 a3282e6ebd9b86043f0c8f3f952128c8 ""
   "images/graphs/vanilla/aut_Cn_5.png" 1767090113.75752 1478465 b86f10902fb08fbf5d1d30fbebd5115e ""
@@ -344,15 +346,15 @@
   "images/im:gradient_descent_example.pdf" 1757596918 21461 43ade6179bef649721e75c9821eecd75 ""
   "images/random_samples_big_random_graph_1_on_5.png" 1757596918 67894 0ee50cce9b60b4a466e908d70266aa5e ""
   "images/trajektorije_S3_to_R.pdf" 1757596918 107744 df26f5c8ee12e1db756c40dfd0d86969 ""
-  "pdfa.xmpi" 1767179042.37883 5628 4cb8b0b09774ce876bdf892698ee61ce "pdflatex"
-  "primozic-27222028-2025.aux" 1767179055.78968 30056 430028835bb29775e3d994a3bb4ee3cc "pdflatex"
-  "primozic-27222028-2025.bbl" 1767177168.22203 44696 a3f45dd6d0275078e8520a5ec3074618 "biber primozic-27222028-2025"
-  "primozic-27222028-2025.ind" 1767089626.74886 855 16b1cde7bd889e622fcaccd62fdbcf10 "makeindex primozic-27222028-2025.idx"
-  "primozic-27222028-2025.out" 1767179055.79568 4755 996e0167c5509b8b567e7049a0e40cf6 "pdflatex"
-  "primozic-27222028-2025.run.xml" 1767179055.79838 2431 1358ce42e48da3d979489b27bae1ae86 "pdflatex"
-  "primozic-27222028-2025.tex" 1767179036.99937 139053 e3d3668c25b3f91dc60b38a8a4e8db94 ""
-  "primozic-27222028-2025.toc" 1767179055.79838 5370 1d13b65c79d6aa3a04d399c9ae789150 "pdflatex"
-  "primozic-27222028-2025.xmpdata" 1767179042.08138 251 19b96d714a1319064317bf9ce4813ac1 "pdflatex"
+  "pdfa.xmpi" 1768563380.48527 5617 05c927a2136211be071e169433179267 "pdflatex"
+  "primozic-27222028-2025.aux" 1768563394.38212 32743 68dc7a62f65119dc023e47db7cb8aec5 "pdflatex"
+  "primozic-27222028-2025.bbl" 1768560452.38091 56882 8caa95ce61e6884ea56f5b79fcaee766 "biber primozic-27222028-2025"
+  "primozic-27222028-2025.ind" 1768563312.19796 855 8ea5cf2cabcc9ba9a4af1815330b057f "makeindex primozic-27222028-2025.idx"
+  "primozic-27222028-2025.out" 1768563394.39012 4833 3e3fc9a44e87a8d555f2c8ad9f70d343 "pdflatex"
+  "primozic-27222028-2025.run.xml" 1768563394.39312 2431 1358ce42e48da3d979489b27bae1ae86 "pdflatex"
+  "primozic-27222028-2025.tex" 1768563379.02473 153082 2068aada496020be280617bac3f397c3 ""
+  "primozic-27222028-2025.toc" 1768563394.39312 5489 37717aab073ee4882cdac5d87c67311b "pdflatex"
+  "primozic-27222028-2025.xmpdata" 1768563380.19527 240 b583de2487cd500fbf2e27fd01cd13ef "pdflatex"
   (generated)
   "pdfa.xmpi"
   "primozic-27222028-2025.aux"

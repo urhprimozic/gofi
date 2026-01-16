@@ -484,10 +484,10 @@ INPUT primozic-27222028-2025.toc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 OUTPUT primozic-27222028-2025.toc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmcsc10.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmri12.tfm
 INPUT ./images/im:gradient_descent_example.pdf
 INPUT ./images/im:gradient_descent_example.pdf
@@ -596,11 +596,11 @@ INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
 INPUT ./images/average_loss_on_size_vanilla_vs_it.pdf
-INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
-INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
-INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
-INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
-INPUT ./images/graphs/comparisons/average_sample45_thesis.pdf.pdf
+INPUT ./images/graphs/comparisons/average_curve_full.pdf.pdf
+INPUT ./images/graphs/comparisons/average_curve_full.pdf.pdf
+INPUT ./images/graphs/comparisons/average_curve_full.pdf.pdf
+INPUT ./images/graphs/comparisons/average_curve_full.pdf.pdf
+INPUT ./images/graphs/comparisons/average_curve_full.pdf.pdf
 INPUT ./images/dihedral/originals/cropped/Dn_1dim_n1.png
 INPUT ./images/dihedral/originals/cropped/Dn_1dim_n1.png
 INPUT ./images/dihedral/originals/cropped/Dn_1dim_n1.png
@@ -838,6 +838,7 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi8.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmib10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr5.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr6.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr7.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb
@@ -845,6 +846,7 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri8.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy5.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy6.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy7.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy8.pfb
