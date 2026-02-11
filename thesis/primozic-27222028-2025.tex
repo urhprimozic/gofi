@@ -43,15 +43,23 @@ descent}
 %   organizacije dela, torej v katerem razdelku je kaj, pač pa le opis vsebine.
 \povzetek{
   V delu predstavimo metodo iskanja
-  nerazcepnih upodobitev končnih grup z gradinentim spustom.
+  nerazcepnih upodobitev končnih grup z gradientnim spustom.
+  Preslikave med končnimi grupami in matrikami predstavimo z vektorji v
+  evklidskem prostoru in definiramo nenegativno funkcijo izgube,
+  ki doseže nič natanko v nerazcepnih unitarnih upodobitvah.
+
+  Predstavimo povezavo med gradientnim spustom in reševanjem
+  diferencialnih enačb.
   Vsako nerazcepno upodobitev izrazimo kot
-  limito gradientega toka gladke funkcije z ugodnimi začetnimi
+  limito gradientnega toka gladke funkcije z ugodnimi začetnimi
   parametri in preučujemo numerične rezultate za ciklične in
   diedrske grupe.
 
   Metodo razširimo na iskanje delovanj in
-  izomorfizmov grafov preko gladke družine distribucij
-  nad preslikavami končnih množic. Definiramo
+  izomorfizmov grafov.
+  Definiramo gladko družino distribucij nad preslikavami končnih množic
+  in maksimaliziramo verjetnost, da je slučajna preslikava morfizem.
+  Definiramo
   gladko družino distribucij nad
   tabelo inverzij, ki ponuja alternativo
   Sinkhornovemu algoritmu.
@@ -61,7 +69,12 @@ descent}
 \abstract{
   A method for finding irreducible representations of
   inite groups using gradient descent is presented.
-  Each irreducible representation is expressed as
+  Mappings between finite groups and matrices are represented as vectors in
+  Euclidean space and a non-negative loss function is defined, which is
+  zero exactly at irreducible unitary representations.
+
+  The connection between gradient descent and solving differential
+  equations is presented.  Each irreducible representation is expressed as
   a limit of the gradient flow of a
   smooth function with suitable
   initial parameters. Numerical results for
@@ -191,17 +204,28 @@ $\frac{d\phi}{dt} = - \nabla \loss(\phi)$. Študiramo
 dinamiko rešitev in odvisnost konvergence od izbire
 začetnih parametrov.
 
-V delu predstavimo gradientne
-optimizacijske metode in potrebno teoretično ozadje iz teorije
-upodobitev končnih grup. Predstavimo
+V poglavju \ref{section:Optimizacija z gradientnim spustom}
+predstavimo gradientne
+optimizacijske metode in povezavo med gradientnim spustom in
+reševanjem diferencialnih enačb.
+%
+V poglavju \ref{section:Iskanje upodobitev}
+predstavimo potrebno teoretično ozadje iz teorije
+upodobitev končnih grup.
+Uvedemo 
 metodo iskanja nerazcepnih upodobitev z gradientnim spustom
-in empirične rezultate na cikličnih in diedrskih grupah.
-Definiramo metodi za iskanje delovanj in
-izomorfizmov grafov z gradientnim spustom in opišemo
-empirične rezultate. Iskanje izomorfizmov grafov
-povežemo s problemov ujemanja grafov. Na koncu
+in predstavimo empirične rezultate na cikličnih in diedrskih grupah.
+%
+V poglavju \ref{section:iskanje delovanj}
+definiramo metodo za iskanje delovanj,
+v poglavju \ref{section:Iskanje izomorfizmov grafov}
+pa metodo za iskanje 
+izomorfizmov grafov. Iskanje izomorfizmov grafov
+povežemo s problemov ujemanja grafov. 
+V poglavju \ref{section:tabela inverzij} 
 metodo razširimo z uporabo tabele inverzij, preko katere
-kandidate za izomorfizem iščemo med distribucijami nad $S_n$
+kandidate za izomorfizem iščemo med distribucijami nad 
+množico permutacij $S_n$
 in podamo empirične rezultate metode v kombinaciji
 s preparametrizacijo z nevronskimi mrežami.
 
@@ -227,6 +251,7 @@ v \cite{li2019graphmatchingnetworkslearning}.
 
 \label{section:oznake}
 \begin{tabularx}{\linewidth}[ht]{l p{0.9\linewidth}}
+  $S_n$ & Množica permutacij števil $1, 2, \dotsc, n$. \\
   $[n]$ & Množica števil $\{1, 2, \dotsc, n\}$. \\
   $\operatorname{flatten}$ &  Sploščitev matrike
   $\operatorname{flatten} \colon \R^{n \times n} \to \R^{n^2}$.
@@ -259,6 +284,7 @@ $j$-ti stolpec z $a^j = [a_{1,j}, a_{2,j}, \dotsc, a_{n,j}]^T$.
 %
 \clearpage
 \section{Optimizacija z gradientnim spustom}
+\label{section:Optimizacija z gradientnim spustom}
 Na različne probleme v matematiki lahko gledamo kot na iskanje
 minimuma $\hat \phi = \operatorname{argmin}( \mathcal L(\phi) \mid
 \phi )$ funckionala $\loss$. Če je domena funkcionala evklidski
@@ -394,6 +420,7 @@ kjer je $\xi_i \sim U[K_0(r)]$ za izbrana hiperparametra $r$ in $\epsilon$.
 %
 \clearpage
 \section{Iskanje upodobitev}
+\label{section:Iskanje upodobitev}
 Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
   enačimo $f = (\operatorname{flatten}(f(g_1)),
     \operatorname{flatten}(f(g_2), \dotsc,
@@ -2073,6 +2100,7 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             %
             \clearpage
             \section{Iskanje izomorfizmov grafov}
+            \label{section:Iskanje izomorfizmov grafov}
             S podobnim pristopom kot v \ref{eq: repr model na S}
             lahko iščemo izomorfizme grafov. Iščemo model za
             bijektivno preslikavo $f \colon G_1 \to G_2$ med grafoma
@@ -2321,12 +2349,12 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
             \end{dokaz}
             \begin{lema}
               \label{lema:ocena za graph mathcing}
-              Za preslikavo  
+              Za preslikavo
               $$f \colon X \mapsto || M_1 - X M_2 X^T ||$$
-               velja
+              velja
               $|f(X) - f(Y)| \leq
               ||M_2||(||X|| + ||Y||) ||X - Y||$.
-              %GOTO
+              %
             \end{lema}
             \begin{dokaz}
               Ocenimo
@@ -2338,46 +2366,47 @@ Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
               \end{align*}
             \end{dokaz}
             \begin{lema}
-              Če je 
-              $$\loss_\sim(P) \le \epsilon < 
+              Če je
+              $$\loss_\sim(P) \le \epsilon <
               \min(  \frac{1}{2}
-              ,
-              \frac{\sqrt{2}}{1 + ||M_1||\sqrt{n}}
+                ,
+                \frac{\sqrt{2}}{1 + ||M_1||\sqrt{n}}
               ),
               $$ je permutacija, podana z $\overline{P}$
-               izomorfizem med grafoma z matrikama sosednosti
+              izomorfizem med grafoma z matrikama sosednosti
               $M_1$ in $M_2$.
             \end{lema}
             \begin{dokaz}
               Po lemi \ref{lema:loss unitary mali -> P blizu P streha}
-              je $||P - \overline{P}|| < \epsilon$.              
-              Po lemi \ref{lema:ocena za graph mathcing} 
-              pa velja 
+              je $||P - \overline{P}|| < \epsilon$.
+              Po lemi \ref{lema:ocena za graph mathcing}
+              pa velja
               $$
-              |f(P)-f(\overline{P})| \leq  ||M_2||(||P|| + ||\overline{P}||)\epsilon 
-              < ||M_2||(1 + \sqrt{n})\epsilon  
+              |f(P)-f(\overline{P})| \leq  ||M_2||(||P|| +
+              ||\overline{P}||)\epsilon
+              < ||M_2||(1 + \sqrt{n})\epsilon
               $$. Vrednost funkcije izgube v $\overline{P}$ je omejena:
               $$
               f(\overline{P}) < \epsilon(1 + ||M_2||\sqrt{n})
               $$
 
               Opazujmo funkcijo izgube
-            $f \colon X \mapsto || M_1 - X M_2 X^T ||$.
-            Če je $X$ permutacijska matrika, je
-            $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
-            vozljišča grafa $M_2$ preslikamo z permutacijo $X$.
-            Vrednosti funkcije izgube nad množico permutacijskih matrik so
-            torej diskretne.
-            $|| M_1 - X M_2 X^T || = $ $0$ natanko tedaj,
-            ko $X$ predstavlja izomorfizem med grafoma $M_1$ in
-            $M_2$, sicer pa je
-            $|| M_1 - X M_2 X^T || \geq \sqrt{2} > 1$.
+              $f \colon X \mapsto || M_1 - X M_2 X^T ||$.
+              Če je $X$ permutacijska matrika, je
+              $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
+              vozljišča grafa $M_2$ preslikamo z permutacijo $X$.
+              Vrednosti funkcije izgube nad množico permutacijskih matrik so
+              torej diskretne.
+              $|| M_1 - X M_2 X^T || = $ $0$ natanko tedaj,
+              ko $X$ predstavlja izomorfizem med grafoma $M_1$ in
+              $M_2$, sicer pa je
+              $|| M_1 - X M_2 X^T || \geq \sqrt{2} > 1$.
 
-            Če je 
-            $\epsilon < 
+              Če je
+              $\epsilon <
               \min(  \frac{1}{2}
-              ,
-              \frac{\sqrt{2}}{1 + ||M_1||\sqrt{n}}
+                ,
+                \frac{\sqrt{2}}{1 + ||M_1||\sqrt{n}}
               )$, je $f(\overline{P})=0$.
             \end{dokaz}
             %Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$,
