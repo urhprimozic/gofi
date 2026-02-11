@@ -148,10 +148,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/pdfpages/pppdftex.def
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/pdfpages/pppdftex.def
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/pdfpages/pppdftex.def
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/units/units.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/units/units.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/units/nicefrac.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/units/nicefrac.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/caption/subcaption.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/caption/subcaption.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption.sty
@@ -254,10 +250,14 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryplo
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/siunitx/siunitx.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/siunitx/siunitx.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/translations/translations.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/translations/translations.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/array.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
 OUTPUT primozic-27222028-2025.xmpdata
