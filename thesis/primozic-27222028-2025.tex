@@ -58,7 +58,7 @@ descent}
   Metodo razširimo na iskanje delovanj in
   izomorfizmov grafov.
   Definiramo gladko družino distribucij nad preslikavami končnih množic
-  in maksimaliziramo verjetnost, da je slučajna preslikava morfizem.
+  in maksimiziramo verjetnost, da je slučajna preslikava morfizem.
   Definiramo
   gladko družino distribucij nad
   tabelo inverzij, ki ponuja alternativo
@@ -199,7 +199,7 @@ evklidskim prostorom. S tem iskanje diskretnih struktur
 prevedemo na optimizacijo gladkih funkcij.
 
 Optimizacije se  lotimo z gradientnim spustom, temeljno
-optimizacijsko metodo v strojenem učenju, ki je
+optimizacijsko metodo v strojnem učenju, ki je
 ekvivalentna numeričnemu reševanju diferencialne enačbe
 $\frac{d\phi}{dt} = - \nabla \loss(\phi)$. Študiramo
 dinamiko rešitev in odvisnost konvergence od izbire
@@ -223,7 +223,7 @@ v poglavju \ref{section:Iskanje izomorfizmov grafov}
 pa metodo za iskanje
 izomorfizmov grafov. Iskanje izomorfizmov grafov
 povežemo s problemov ujemanja grafov.
-V poglavju \ref{section:tabela inverzij}
+V poglavju \ref{subsection:uporaba tabele inverzij}
 metodo razširimo z uporabo tabele inverzij, preko katere
 kandidate za izomorfizem iščemo med distribucijami nad
 množico permutacij $S_n$
@@ -377,7 +377,7 @@ je odvisna od izbire začetnih parametrov $\phi_0$.
 %
 % To ne velja v splošnem, kjer je konvergenca metode odvisna od
 % hitrosti učenja $\eta$. Če je $\eta$ prevelik, je lahko sprememba
-% parametrov prevelika, posledično pa se vrednost funckionala lahko poveča.
+% parametrov prevelika, posledično pa se vrednost funkcionala lahko poveča.
 % V \cite{prince2023understandingdeeplearning} avtor to lastnost izkorišča
 \subsection{Moment}
 Kljub gladkosti funckije $\loss$ so lahko spremembe parametrov pri
@@ -409,10 +409,10 @@ kjer so $\eta > 0, \beta \in [0,1), \delta \in [0,1 ), \gamma \in
 Zaradi dobrih empiričnih rezultatov se v praksi v strojen učenju
 namesto surovega gradientnega spusta za optimizacijo uporablja
 algoritem Adam.
-\subsection{Preturbniran gradientni spust}
+\subsection{Perturbiran gradientni spust}
 \label{subsection : PGD}
 Gradientni spust lahko obtiči v sedlih.
-Iz sedla lahko pridemo z dodajanjem naključne perturacije
+Iz sedla lahko pridemo z dodajanjem naključne perturbacije
 parametrov, ko je gradient ciljne funkcije majhen
 \cite{jin2017escapesaddlepointsefficiently}.
 
@@ -608,7 +608,7 @@ Parametre matrik $\hat\rho(s)$ bomo postopoma spreminjali s
 gradientnim spustom, da bo model vse bližje upodobitvi.
 
 \subsubsection{Funkcija izgube nad relacijami}
-\label{funckija izgube nad relacijami}
+\label{funkcija izgube nad relacijami}
 \index{funkcija izgube nad relacijami}
 Preslikava $\hat \rho$ je homomorfizem natanko tedaj, ko za
 vsako relacijo $r \in R$ velja
@@ -631,7 +631,7 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
   dimenzijske realne upodobitve permutacijske grupe na treh
   točkah za prezentacijo $S_3 = <(12), (13)\mid
   (12)^2=(13)^2=(13)^{(12)}(12)^{(13)}=1>$. Model je definiran
-  z vrednostmima
+  z vrednostima
   $\hat\rho((12)) = x$ in $\hat\rho((13)) = y$.
 
   Edini enodimenzionalni upodobitvi $S_3$ sta identiteta
@@ -647,7 +647,7 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
     \centering
     \includegraphics[width=0.6\textwidth]{images/trajektorije_S3_to_R.pdf}
     % \caption[caption za v kazalo]{Dolg caption pod sliko}
-    \caption[Trajektorje učenja modela $S_3 \to \R$.]{Različne
+    \caption[Trajektorije učenja modela $S_3 \to \R$.]{Različne
       trajektorije učenja modela $\hat\rho \colon S_3 \to \R$.
       Začetni parametri vplivajo na uspeh optimizacije in končno
     upodobitev. }
@@ -660,7 +660,7 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
     g_{i,j}
   \end{bmatrix}_{i,j=1,\dotsc, n}$, za parametre pa vzeli
   elemente matrik $\hat\rho(g)$. V tem primeru je model
-  homomomorfizem, če $\forall g, h \in G.
+  homomorfizem, če $\forall g, h \in G.
   \hat\rho(gh)=\hat\rho(g) \hat\rho(h)$. Za funkcijo izgube lahko vzamemo
   $$
   \Loss{homo} = \frac{1}{|G|^2}\sum_{i=1}^n \sum_{j=1}^n \|
@@ -690,7 +690,7 @@ nerazcepna, če je norma njenega \emph{karakterja} $\chi_\rho$ enaka 1.
   \end{equation}
 \end{definicija}
 Za poljuben model $\hat \rho$ lahko z gradientnim spustom
-minimaliziramo funckijo izgube $\Loss{rel} + \Loss{irr}$ in
+minimiziramo funkcijo izgube $\Loss{rel} + \Loss{irr}$ in
 iščemo \emph{nerazcepne} upodobitve.
 \subsubsection{Funkcija izgube za unitarnost}
 \index{funkcija izgube za unitarnost}
@@ -866,7 +866,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
 \end{lema}
 \begin{dokaz}
   Vse besede $w$, za katere velja $w \equiv 1 \mod G$,
-  so generiraje z besedami oblike
+  so generirane z besedami oblike
   $v r u$, kjer je $r \in R$ in $vu \equiv 1 \mod G$.
   Najprej za te generatorje pokažemo, da velja
   $\|\hat \rho(v r u) - I\| < (\sqrt{n} + \epsilon)^{|v u|}
@@ -1071,7 +1071,7 @@ sledi  $\|\mu(g) - \rho(g)\| \leq o(\epsilon)$.
 Iskana upodobitev $\rho$ sledi iz izreka
 \ref{izrek : kazhdan}. Treba je preveriti še, da je upodobitev
 nerazcepna.
-Povzenimo posledice  konstrukcije  $\mu$ in izreka \ref{izrek : kazhdan}
+Povzemimo posledice  konstrukcije  $\mu$ in izreka \ref{izrek : kazhdan}
 v spodnji lemi.
 \begin{lema}
   Naj bo $\hat \rho$ model z
@@ -1217,7 +1217,7 @@ kjer je $0 \leq k < \frac{n}{2} $. Vse nerazcepne upodobitve so
 realne, zato jih bomo iskali z realnimi modeli.
 \subsubsection{Enodimenzionalne upodobitve}
 Model enorazsežne upodobitve diedrske grupe
-je določen s slikama generatorjev\footnote{Izrabljamo notacijo
+je določen s slikama generatorjev\footnote{Izrabimo notacijo
   in z $r$ označimo abstraktni element grupe $D_n$ in realno
 število $r \in \R$, ki predstavlja sliko generatorja $r$.}
 %
@@ -1276,12 +1276,7 @@ diedrskih grup - glej dodatek
     %\caption*{$n=8$}
   \end{minipage}
   \caption[Rešitve enačb gradientnega toka za različne $n$ in
-    različne začetne parametre. Črne pike predstavljajo začetne
-    vrednosti rešitev. Modre rešitve kovergirajo k nerazcepni
-    upodobitvi, oranžne pa v lokalni minimum $\loss$, ki ni globalni.
-    Več grafov je v
-    poglavju \ref{dodatek_1dim dn trajektorije}.
-  ]
+  različne začetne parametre.  ]
   %
   {Rešitve enačb gradientnega
     toka za različne $n$ in različne začetne
@@ -1289,8 +1284,9 @@ diedrskih grup - glej dodatek
       rešitev. Začetni parametri so vzorčeni iz enakomerne
       porazdelitve nad $[-1,1]^2$. Za implementacijo glej
     dodatek \ref{dodatek_1dim dn trajektorije}}.
-    Črne pike predstavljajo začetne vrednosti rešitev. Modre
-    rešitve kovergirajo k nerazcepni upodobitvi, oranžne pa v
+    Črne pike predstavljajo vrednosti začetnih parametrov posameznih
+    rešitev. Modre
+    rešitve konvergirajo k nerazcepni upodobitvi, oranžne pa v
     lokalni minimum $\loss$, ki ni globalni.
     Več grafov je v
   dodatku \ref{dodatek_1dim dn trajektorije}.}
@@ -1377,7 +1373,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     parametrov, ki konvergirajo do ničel funkcije izgube.
     Verjetnosti v tabeli
     \ref{tab:verjetnost-konvergence-diedrska-2dim} so
-    izračunane iz iz vzorcov v dodatku
+    izračunane iz iz vzorcev v dodatku
     \ref{dodatek:dihedral-2d-trajektorije}.
     \begin{table}[ht]
       \centering
@@ -1518,2098 +1514,2098 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       z $g$ označimo tudi slučajno spremenljivko $s_1 s_2 \dotsm s_n$.}
       $s \in \funnn{n}$ s porazdelitvijo
       $$P(s = f) = \prod _{i=1}^n P(s(i)) = f(i)$$
-        za $f \in \funnn{n}$.
-        %
-        \begin{definicija}
-          \index{model delovanja}
-          Preslikavo $\hat \rho$ lahko podobno kot v definiciji
-          \ref{def : razširitev repr modela} raširimo na
-          celotno grupo:
-          \begin{itemize}
-            \item Za vsak $g \in G$ izberemo
-              takega predstavnika $v_g \in F_S$, ki je sestavljen le iz
-              generatorjev $s \in S$, ne pa iz njihovih
-              inverzov.
-              %\footnote{To lahko v končnih grupah vedno
-              %  naredimo. Za $s \in S$ velja $s^{-1} =
-              %s^{\operatorname{red}(s) -1}$.}
-              %.
-            \item Za $g$ s predstavnikom $v_g = s_1 s_2 \dotsm
-              s_m$ definiramo
-              $\hat \rho(g) :=  P_{s_1} P_{s_2} \dotsc P_{s_m}$.
-          \end{itemize}
-        \end{definicija}
-        %
-        V delu bomo za $g\in G$ s predstavnikom
-        $v_g = s_1 s_2 \dotsm s_m  $ pisali kar
-        $g = s_1 s_2 \dotsm s_m$.
-        Lahko je preveriti, da za  $g = s_1 s_2 \dotsm s_m\in G$ velja $$
-        P_{s_1} P_{s_2} \dotsc P_{s_m} =
-        \begin{bmatrix}
-          P(g(1) = 1) & P(g(1) = 2) & \dotsm & P(g(1) = n) \\
-          P(g(2) = 1) & P(g(2) = 2) & \dotsm & P(g(2) = n) \\
-          \vdots & \vdots & & \vdots \\
-          P(g(n) = 1) & P(g(n) = 2) & \dotsm & P(g(n) = n) \\
-        \end{bmatrix}.
-        $$
-
-        Naš model elemente grupe slika v stohastične matrike,
-        ki definirajo verjetnostne porazdelitve slučajnih
-        funkcij nad $n$. Parametre modela bomo optimizirali
-        tako, da bo homomorfizem najbolj verjeten.
-        \subsection{Parametrizacija stohastičnih matrik}
-        \label{section:parametrizacija stohastičnih matrik}
-        Definicija modela $\hat  \rho$ zahteva, da so matrike
-        $P_s$ stohastične\footnote{$P$ je stohastična, če je
-          vsota elementov v vsaki vrstici enaka $1$, vsi elementi
-        matrike pa so med $0$ in $1$.}. Iteracije gradientnega
-        spusta stohastičnosti ne ohranjajo. Če hočemo za
-        optimizacijo modela $\hat \rho$ uporabiti gradientni
-        spust, moramo metodo prilagoditi tako, da novi
-        parametri ostanejo v družini stohastičnih matrik.
-
-        Družino stohastičnih matrik lahko parametriziramo s
-        poljubno parametrizacijo $p \colon \R^{n \times n} \to
-        \{P \in \R^{n \times n} \mid P \text{ je stohastična}\}$, stohastične matrike $P_s$ pa definiramo kot
-        $p(\phi_s)$, kjer je $\phi = \{\phi_s | s\in S \}
-        \subset \R^{n \times n}$ množica poljubnih matrik.
-        \emph{Za parametre modela} vzamemo elemente matrik
-        $\phi_s$. Na ta način bodo matrike $P_s = P_s(\phi_s)$
-        vedno stohastične, ne glede na spremembo parametrov
-        $-\eta \nabla_\phi \loss(P)$.
-
-        Za parametrizacijo $p$ lahko vzamemo preslikavo
-        $\operatorname{softmax}$, ki vsako vrstico spremeni v
-        stohastični vektor.
-        \begin{definicija}
-          \label{def:softmax}
-          Preslikava $\operatorname{softmax} \colon \R^n \to
-          \R^n$ slika vektor $v = [v_1, v_2, \dotsc, v_n]^T$ v
-          vektor z elementi $\operatorname{softmax}(v)_i =
-          \frac{e^{v_i}}{\sum_{j = 1}^n e^{v_j}}$.
-
-          Za matriko $A =
-          \begin{bmatrix}
-            a_1^T \\
-            a_2^T \\
-            \vdots \\
-            a_n^T
-          \end{bmatrix}$ definiramo \emph{softmax po vrsticah} kot
-          $$\operatorname{softmax}(A) =
-          \begin{bmatrix}
-            \operatorname{softmax}(a_1)^T \\
-            \operatorname{softmax}(a_2)^T \\
-            \vdots \\
-            \operatorname{softmax}(a_n)^T
-          \end{bmatrix}.$$
-        \end{definicija}
-        Preslikava $\operatorname{softmax}$ očitno poljubne
-        matrike preslika v stohastične. Z njo lahko za
-        generator $s \in S$ matriko $P_s$ definiramo kot
-        $$
-        P_s = \operatorname{softmax}(\phi_s).
-        $$
-        Model za delovanja $\hat \rho = \hat \rho_\phi$
-        definiramo v odvisnosti od parametrov $\phi = \{\phi_s
-        \in \R^{n \times n } \mid s \in S\}$ kot
-        $$
-        \phi \mapsto ( s \mapsto \operatorname{softmax}(\phi_s))
-        $$
-        in spreminjamo elemente matrik $ \phi_s$, da model
-        $\hat \rho_\phi$ skoraj zagotovo predstavlja delovanje.
-
-        \subsection{Funkcija izgube nad relacijami}
-        \index{funkcija izgube nad relacijami!(delovanje)}
-        Naj bo $<S|R>$ prezentacija grupe $G$. Za vsako
-        relacijo $r \in R$ bi radi $P(r = \operatorname{id})
-        =1$ oziroma $0 = \log(P(r=\operatorname{id})) =
-        \log(\prod_{i=1}^n P(r(i)=i)) =
-        \operatorname{tr}(\log(P_r))$, kjer $\log(P_r)$
-        računamo po elementih.
-        \begin{definicija}
-          \emph{Funkcijo izgube nad relacijami} za delovanja
-          definiramo kot
-          \begin{equation}
-            \label{eq:relation loss actions}
-            \Loss{rel} (\hat\rho) = - \frac{1}{|R|} \sum_{r \in
-            R} \operatorname{tr}(\log(P_r)).
-          \end{equation}
-        \end{definicija}
-        \subsection{Pretvorba modela v delovanje}
-        \label{section:pretvorba modela v delovanje}
-        Rezultati na sliki \ref{fig:actions-cn} namigujejo, da
-        ob konvergenci $\Loss{rel} \to 0$ matrika
-        $P_z$ konvergira do permutacijske matrike
-        $\overline{P_z}$. To inducira delovanje
-        $z \mapsto P_z$.
-
-        Za splošno grupo $G=\left<S|R\right>$ lahko definiramo sledeč
-        postopek pretvorbe modela
-        $\hat \rho \colon s \to P_s$ v preslikavo $\rho \colon G
-        \to  \Pi$ med grupo $G$ in grupo permutacijskih matrik
-        $\Pi$\footnote{To je ekvivalentno preslikavi $G \to
-        S_n$, saj je $S_n\cong \Pi$.}.
+      za $f \in \funnn{n}$.
+      %
+      \begin{definicija}
+        \index{model delovanja}
+        Preslikavo $\hat \rho$ lahko podobno kot v definiciji
+        \ref{def : razširitev repr modela} razširimo na
+        celotno grupo:
         \begin{itemize}
-          \item Za matriko $P$ definiramo $\overline{P}$ kot
-            matriko, ki ima v vsaki vrstici $1$ na mestu
-            največjega elementa v vrstici matrike $P$ in $0$ drugje.
-          \item Definiramo $\rho \colon G \to \R^{n \times n}$
-            s predpisom $s \to \overline{P_s}$.
+          \item Za vsak $g \in G$ izberemo
+            takega predstavnika $v_g \in F_S$, ki je sestavljen le iz
+            generatorjev $s \in S$, ne pa iz njihovih
+            inverzov.
+            %\footnote{To lahko v končnih grupah vedno
+            %  naredimo. Za $s \in S$ velja $s^{-1} =
+            %s^{\operatorname{red}(s) -1}$.}
+            %.
+          \item Za $g$ s predstavnikom $v_g = s_1 s_2 \dotsm
+            s_m$ definiramo
+            $\hat \rho(g) :=  P_{s_1} P_{s_2} \dotsc P_{s_m}$.
         \end{itemize}
-        V tem razdelku dokažemo, da je za model $\hat \rho$ z
-        dovolj majhno funkcijo izgube nad relacijami
-        $\Loss{rel}(\hat \rho)$ inducirana preslikava $\rho$
-        homomorfizem med $G$ in $\Pi$.
-        %
-        Naj bo $r\in R$ in $s \in S$ poljuben generator.
-        Najprej pokažemo, da je za dovolj majhno
-        vrednost izgube nad relacijami matrika $P_r$ blizu
-        identitete, matrika $P_s$ pa obrnljiva.
-        \begin{lema}
-          \label{lema:Pr blizu I}
-          %$Za $\epsilon > 0$ obstaja $\delta>0$, da iz
-          %$\Loss{rel}(\hat\rho) < \delta$
-          Iz $\Loss{rel}(\hat\rho) \leq
-          \frac{1}{|R|}-\log(1-\frac{\epsilon}{n}) $
-          sledi $P_r = I +
-          E_r$ za $\|E_e\| < \epsilon$.
-        \end{lema}
-        \begin{dokaz}
-          Najprej računamo
-          \begin{align*}
-            - \frac{1}{|R|} \sum_{r \in
-            R} \operatorname{tr}(\log(P_r)) &\leq \delta \\
-            -\log(\prod_{i=1}^n(P_r)_{i,i}) &\leq \delta |R| \\
-            \log(P(r = \operatorname{id})) &\geq -\delta |R| \\
-            1 - P(r = \operatorname{id}) &\leq 1 - e^{-\delta
-            |R|} =: \gamma.
-          \end{align*}
-
-          Ocenimo
-          $$ 1 - (P_r)_{i,i} \leq  1 - (P_r)_{1,1}
-          (P_r)_{2,2} \dotsm (P_r)_{n,n}
-          = 1 - P(r=\operatorname{id})\leq \gamma.$$
-          %
-          $P_r$ je stohastična, torej velja
-          $\sum_{j=1}^n (P_r)_{i,j} = 1$. Iz tega sledi
-          $\sum_{j \neq i}
-          (P_r)_{i,j} \leq \gamma$. Sledi
-          $$
-          P_{i, j} \leq \sum_{j \neq i} P_{i,j} \leq \gamma,
-          $$
-          za $i \neq j$. Iz tega sledi $\|E_r\| \leq n
-          \gamma = n(1 - e^{-\delta |R|}) = \epsilon$.
-          %Za dovolj majhno
-          %izbiro $\delta > 0$ je $\|E_r\| \leq \epsilon$.
-        \end{dokaz}
-        \begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrlnjiva]
-          \label{lema : Ps je obrnljiva}
-          Če je
-          $\Loss{rel}(\hat\rho) \leq \frac{-1}{|R|}\log(1-\frac{1}{2n})$,
-          je
-          %Obstaja $\epsilon_0$, da za vsak $0 < \epsilon <
-          %\epsilon_0$ in $P_r = I + E_r$ z $\|E_r\| <
-          %\epsilon$ velja, da je
-          matrika $P_s$ obrnjiva za vsak
-          generator $s \in S$.
-        \end{lema}
-        \begin{dokaz}
-
-          Če je $\|E\| < 1$, je matrika $I + E$ obrnljiva.
-          Velja namreč $\lambda_i(E) \leq \|E\|_2 \leq \|E\|$.
-          $E$ izrazimo z Jordanovo formo
-          $E = Q J Q^{-1}$ in računamo
-          $$
-          \operatorname{det}(I + E) = \operatorname{det}(I + J)
-          = \prod_{i=1}^k (1 + \lambda_i(E))^{d_i}  > 0,
-          $$
-          kjer so $\lambda_i(E)$ lastne vrednosti $E$ in $d_i$
-          njihove algebraične večkratnosti.
-
-          Če je
-          $\Loss{rel}(\hat\rho) \leq \frac{-1}{|R|}\log(1-\frac{1}{2n})$,
-          po prejšnji lemi velja
-          $P_r = I + E_r$ za $\|E_r\| \leq \frac{1}{2}$. Torej je
-          matrika $P_r = I + E_r = P_{s_1}  P_{s_2} \dotsm  P_{s_n}$
-          obrnljiva, posledično pa so obrnljive vse matrike $ P_{s_i}$.
-        \end{dokaz}
-        Zdaj bomo dokazali, da je za dovolj majhen $\Loss{rel}$
-        in poljuben generator $s \in S$ matrika $P_s$ blizu
-        permutacijske matrike.
-        Za to potrebujemo spodnji izrek \ref{izrek:obrnljiva
-        stohasticna} in lemo
-        \ref{lema:inv~stohasticen->inv~permutacijska}.
-        \begin{izrek}
-          \label{izrek:obrnljiva stohasticna}
-          Obrnljiva stohastična matrika je permutacijska
-          natanko tedaj, ko je njen inverz stohastičen.
-        \end{izrek}
-        Elementaren dokaz izreka je v
-        \cite{Ding01032013stohasticmatrixinversestohasticcondition}.
-        \begin{lema}
-          \label{lema:inv~stohasticen->inv~permutacijska}
-          Naj bo $P$ obrnljiva vrstično stohastična matrika in
-          $R$ vrstično stohastična matrika, za katero velja
-          \[
-            \|P^{-1}-R\|_F \le \frac{\epsilon^{2}}{2n^{3/2}} .
-          \]
-          Potem velja $d(P,\Pi)\le \epsilon$.
-          Če je dodatno $\epsilon<\tfrac12$, je $\overline P\in\Pi$
-          in velja
-          $
-          \|P-\overline P\|_F\le \epsilon
-          $.
-        \end{lema}
-        \begin{dokaz}
-          Naj bo $X=[x_{i,j}]$ poljubna  stohastična matrika,
-          za katero velja
-          $d(X,\Pi)>\epsilon$. Najprej
-          bomo pokazali, da je tedaj
-          $\|XY-I\|_F>\frac{\epsilon^{2}}{2n}$ za vsako
-          stohastično matriko $Y$.
-
-          Ker je $d(X,\Pi)>\epsilon$, za vsako permutacijsko
-          matriko $Q=[q_{i,j}]$ velja
-          \[
-            \epsilon^{2} < \|X-Q\|_F^{2}
-            = \sum_{i=1}^{n}\sum_{j=1}^{n}(x_{i,j}-q_{i,j})^{2}.
-          \]
-          Zato obstaja vrstica $x_i$, za katero je
-          \[
-            \sum_{j=1}^{n}(x_{i,j}-q_{i,j})^{2} > \frac{\epsilon^{2}}{n}.
-          \]
-          Ker je v $Q$ poljubna in ima v vsaki vrstici natanko
-          en element enak $1$, ostali pa $0$, za vsak
-          standardni bazni vektor $e_k$ velja
-          $
-          \|x_i-e_k\|_{2}^{2} \ge \frac{\epsilon^{2}}{n}.
-          $
-          Ocenimo
-          $$
-          \frac{\epsilon^{2}}{n} <
-          \|x_i-e_k\|_{2}^{2}
-          =(1-x_{i,k})^{2}+\sum_{j\ne k}x_{i,j}^{2}
-          \le 2(1-x_{i,k}).
-          $$
-          Za vse $k$ sledi
-          $
-          x_{i,k} \le 1- \frac{\epsilon^{2}}{2n}
-          $.
-          Naj bo $Y$ poljubna stohastična matrika. Oglejmo si
-          $i$-to vrstico produkta $XY$.
-          \[
-            (XY)_{i,k}=\sum_{h=1}^{n} x_{i,h}y_{h,k} \le
-            1-\frac{\epsilon^{2}}{2n}
-          \]
-          Posledično velja
-          $
-          \|(XY-I)_i\|
-          \ge \frac{\epsilon^{2}}{2n},
-          $
-          od koder sledi
-          $$
-          \|XY-I\| \ge \frac{\epsilon^{2}}{2n}.
-          $$
-
-          Iz $\|P^{-1}-R\|_F \le \frac{\epsilon^{2}}{2n^{3/2}}$
-          sledi
-          $$
-          \|PR - I\| \le \|P\| \|P^{-1}-R\| \le \frac{\epsilon^{2}}{2n}.
-          $$.
-          Po zgornjem premisleku je
-          $$
-          \|P - Q\| \le \epsilon
-          $$
-          za neko permutacijsko matriko $Q$.
-
-          Če je $\epsilon < \frac{1}{2}$, je očitno
-          $\overline{P} = \overline{ Q + (P-Q)} = Q$.
-        \end{dokaz}
-        %\begin{lema}
-        %  \label{lema:inv~stohasticen->inv~permutacijska-compact}
-        %  Naj bo $Q$ obrnljiva stohastična matrika.
-        %  Za poljuben $\epsilon> 0$ obstaja $\delta$, da iz
-        %  $\|Q^{-1} - R\| <\delta$ za neko
-        %  stohastično matriko $R$ sledi
-        %  $Q = \overline{Q} + F$ za
-        %  $\|F\|<\epsilon$.
-        %\end{lema}
-        %\begin{dokaz}
-        %  Naj bo $\|Q^-1-R \| <\delta$. Potem je
-        %  $$
-        %  \|QR - I\| < \delta\sqrt{n}.
-        %  $$
-        %  Na parih stohastičnih matrik definiramo zvezno
-        %  preslikavo $g \colon (X,Y) \mapsto \|XY - I\|$.
-        %  Opazujmo kompaktno podmnožico domene
-        %  $$
-        %  Z = \{(X,Y) \mid  d(X, \Pi) \geq \epsilon \}.
-        %  $$
-        %  Na njej $g$ doseže minimum $c \geq 0$.
-        %
-        %  Če je za stohastični matriki $X$ in $Y$ $g(X,Y) = 0$,
-        %  je $Y = X^{-1}$ in sta po izreku
-        %  \ref{izrek:obrnljiva stohasticna} obe permutacijski.
-        %  Sledi $\min_{(X,Y)
-        %  \in Z}g(X,Y) = c > 0$.
-        %
-        %  Za $\delta < \frac{c}{\sqrt{n}}$ je $\|QR - I\| = g(Q, R) < c$
-        %  iz česar sledi, da je $d(Q, \Pi) < \epsilon$.
-        %  Naj bo $P \in \Pi$ taka, da velja $\|Q - P\| < \epsilon$.
-        %  Potem za $E=Q-P$ veljha $\|E\| < \epsilon$.
-        %
-        %  Če je $\epsilon < \frac{1}{2}$, je
-        %  $\overline{Q} = \overline{E + P} = P$, torej je $Q =
-        %  \overline{Q} + E$.
-        %  %
-        %  %
-        %\end{dokaz}
-        Zdaj lahko dokažemo glavni rezultat tega razdelka.
-        \begin{izrek}
-          Če je
-          $$
-          \Loss{rel}(\hat \rho) <  n^{1-L}(1 +
-          L^\frac{3}{2}(2^{L-1}-1))^{-2},
-          $$
-          kjer je
-          $L = \max_{r \in R} |r|$
-          , je inducirana preslikava
-          $\rho \colon G \to \Pi$ homomorfizem.
-          %Obstaja $\delta_0 > 0$, da iz $\Loss{rel}(\hat\rho) <
-          %\delta_0$ sledi, da je preslikava
-          %$\rho \colon G \to \Pi$ homomorfizem.
-        \end{izrek}
-        \begin{dokaz}
-          Naj bo $r=s_1 s_2 \dotsm s_m \in R$ in $s_1, s_2,
-          \dotsc, s_m \in S$. Dovolj je pokazati, da velja
-          $$
-          \overline{P_{s_1} }\overline{P_{s_2}} \dotsm
-          \overline{P_{s_m}} = I.
-          $$
-          Če je
-          $\Loss{rel}(\hat\rho) \leq
-          \frac{1}{|R|}-\log(1-\frac{\epsilon}{n}) $
-          po lemi \ref{lema:Pr blizu I}
-          sledi, da je
-          \begin{equation}
-            \label{eq : P_r ~ id}
-            P_r = P_{s_1} P_{s_2} \dotsm P_{s_m} = I + E_r
-          \end{equation}
-          %$$
-          %
-          %$$
-          za $\|E_r\| < \epsilon$.
-          Če je dodatno
-          $\epsilon < \frac{1}{2}$,
-          je po lemi   \ref{lema :
-          Ps je obrnljiva}
-          matrika $P_s$ obrnljiva za vsak generator $s \in S$.
-
-          Iz enačbe \eqref{eq : P_r ~ id} sledi
-          \begin{equation}
-            \label{eq:Ps1_inv}
-            P_{s_1}^{-1} = P_{s_2} P_{s_3} \dotsm P_{s_m} -
-            P_{s_1} ^{-1}E_r.
-          \end{equation}
-          Matrika $P_{s_2} P_{s_3} \dotsm P_{s_m}$ je
-          stohastična, saj je produkt stohastičnih matrik.
-          Poleg tega je $\|P_{s_2} P_{s_3} \dotsm P_{s_m} -
-          P_{s_1}^{-1}\| = \|P_{s_1}^{-1}\|\|E_r\| <
-          \|P_{s_1}^{-1}\|\epsilon$.
-          Če je $\epsilon_1 = \left( \|P_s^{-1}\|\epsilon 2
-          n^{\frac{3}{2}} \right) ^\frac{1}{2} < \frac{1}{2}$
-          , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
-          $$
-          P_{s_1} = \overline{P_{s_1}} + E_{s_1}
-          $$
-          za $\|E_{s_1}\| < \epsilon_1$.
-
-          Enačbo \eqref{eq:Ps1_inv} z desne pomnožimo z
-          $P_{s_1}$, z leve pa
-          z $P_{s_2}^{-1}$ in dobimo
-          $$
-          P_{s_2}^{-1} = P_{s_3} \dotsm P_{s_m}P_{s_1} -
-          P_{s_2}^{-1}P_{s_1}^{-1}E_r P_{s_1}.
-          $$
-          Če je
-          $\epsilon_2 =
-          \left(
-            2 n^{\frac{3}{2}} \|P_{s_2}^{-1}\|
-            \|P_{s_1}^{-1}\|
-            \|P_{s_1}\|\epsilon
-          \right)^\frac{1}{2}
-          <
-          \frac{1}{2}
-          $
-          , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
-          $P_{s_2} = \overline{P_{s_2}} + E_{s_2}$.
-          Induktivno nadaljujemo. Izberemo tak $\epsilon$
-          ,da je za vsak $j \in [m]$
-          $\epsilon_j
-          =
-          \left(
-            2 n^{\frac{3}{2}}
-            \|P_{s_j}^{-1}\|
-            \prod_{i=1}^{j-1}
-            \|P_{s_i}^{-1}\|
-            \prod_{i=1}^{j-1}
-            \|P_{s_i}\|
-            \epsilon
-          \right)^{\frac{1}{2}}
-          < \frac{1}{2}$. Potem je
-          $$
-          P_{s_j} = \overline{P_{s_j}} + E_{s_j}.
-          $$
-          in $\|E_{s_j}\| < \epsilon_j$.
-          %Vzamemo $\epsilon_0 = \max_{j \in [m]} \epsilon_j$ in
-          Računamo
-          %
-          \begin{align*}
-            P_r &= P_{s_1} P_{s_2} \dotsm P_{s_m}
-            \\
-            &=
-            (\overline{P_{s_1}} + E_{s_1})
-            (\overline{P_{s_2}} + E_{s_2}) \dotsm
-            (\overline{P_{s_m}} + E_{s_m})
-            \\
-            &=
-            \overline{P_{s_1}} \overline{P_{s_2}} \dotsm
-            \overline{P_{s_m}} +
-            \sum_{Z \subsetneqq [m]} \prod_{i \in Z} \overline{P_{s_i}}
-            \prod_{j \notin Z} E_{s_j}
-            \\
-            &= I + E_r.
-          \end{align*}
-          %
-          Ocenimo
-          \begin{align*}
-            \|\prod_{i=1}^m \overline{P_{s_i}} - I \|
-            &= \|E_r - \sum_{Z \subsetneqq [n]} \prod_{i \in Z}
-            \overline{P_{s_i}}
-            \prod_{j \notin Z} E_{s_j} \| \\
-            &\leq
-            \|E_r\| +
-            \sum_{Z \subsetneqq [m]} \prod_{i \in Z}
-            \|\overline{P_{s_i}}\| \prod_{j \notin Z} \|E_{s_j} \| \\
-            &\leq \epsilon_m  +
-            \sum_{Z \subsetneqq [m]} \prod_{i \in Z}
-            \sqrt{m} \prod_{j \notin Z} \epsilon_m
-            \\
-            &=
-            \epsilon_m(1 + m^\frac{3}{2}(2^{m-1}-1))
-            \xrightarrow{\epsilon_m \to 0} 0.
-          \end{align*}
-          Velja  $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi$.
-          Razdalje med različnimi permutacijskimi matrikami
-          ne morejo biti manjše od $1$.
-          Za dovolj majhen $\epsilon_m$ je
-          $\prod_{i=1}^m \overline{P_{s_i}} = 1$.
-
-          Norma stohastične matrike je
-          manjša ali enaka $\sqrt{n}$. S to oceno lahko ocenimo
-          $
-          \epsilon_j
-          \leq
-          \left(
-            n^{j-1} \epsilon
-          \right)^{\frac{1}{2}}
-          $.  Naj bo $L = \max_{r \in R} |r|$ največja
-          dolžina relacije v $R$.
-          Če je
-          $$
-          \Loss{rel}(\hat \rho) \leq \epsilon < n^{1-L}(1 +
-          L^\frac{3}{2}(2^{L-1}-1))^{-2},
-          $$
-          je $ \prod_{s \in r} \overline{P_s} = I$
-          za vsako relacijo $r \in R$ in je
-          $\rho \colon G \to \Pi$ homomorfizem.
-        \end{dokaz}
-        %
-        % \begin{lema}[Če je permanent (stohastične) matrike
-        %   blizu $1$, je matrika skoraj permutacijska]
-        %   Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
-        %   $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
-        %   majhen $\delta >0$, potem je $S = \overline{S} + E$
-        %   in $\|E\| < \epsilon$.
-        % \end{lema}
-        %
-        \subsection{Delovanje ciklične grupe}
-        Študiramo model za delovanje ciklične grupe $C_n = <z |
-        z^n=1>$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
-        Minimaliziramo
-        $$
-        \loss(\phi) = - \operatorname{tr}(\log
-        \left (\operatorname{softmax}(Z^n) \right ) ),
-        $$
-        kjer je $Z \in \R^{m \times m}$.
-        \paragraph{Rezultati}
-        Na sliki \ref{fig:actions-cn} so predstavljene začetne
-        in končne vredosti matrike $P(Z)$ pri iskanju delovanj
-        ciklične grupe $C_n$.
-        Podatki so bili priodobljeni s \texttt{torch}
-        implementacijo algoritma \emph{Adam}
-        \cite{paszke2019pytorch} z velikostjo koraka $10^{-2}$.
-        Parametri so
-        bili inicializirani z vzorčenjem iz normalne porazdelitve z
-        srednjo vrednostjo $0$ in standardnim odklonom $1$.
-        Eksperiment smo prekinili po
-        $2000$ korakih gradientnega spusta ali pa ko je
-        vrednost funkcije izgube padla pod
-        $10^{-3}$.
-        Več rezultatov je v dodatku \ref{appendix: actions-cyclic}.
-        \begin{figure}[ht]
-          \centering
-          \includegraphics[
-            width=0.9\textwidth
-          ]{images/actions/plot_C8_n=8_m=5.png}
-          \caption{Stohastična matrika
-            $P_s$ na začetku in po $2000$ korakih gradientnega
-            spusta
-            med iskanjem delovanja ciklične grupe $C_8$ na
-            množici $[5]$.
-            Permutacijska matrika $\overline{P_s}$ pripada
-            permutaciji $(1342)(2)$ reda $4$ in je ničla funkcije
-            izgube.
-          }
-          \label{fig:actions-cn}
-        \end{figure}
-        \subsection{Delovanje diedrske grupe}
-        Študiramo model za delovanje  grupe $D_n = <r,s |
-        r^n=s^2=(rs)^2=1>$ na končni množici $[m] =
-        \{1,2,\dotsc, m\}$. Minimaliziramo
-        $$
-        \loss(R, S) = - \operatorname{tr}(\log (P_r^n))
-        - \operatorname{tr}(\log (P_s^n))
-      - \operatorname{tr}(\log (P_rP_s)^2))
-      ,
+      \end{definicija}
+      %
+      V delu bomo za $g\in G$ s predstavnikom
+      $v_g = s_1 s_2 \dotsm s_m  $ pisali kar
+      $g = s_1 s_2 \dotsm s_m$.
+      Lahko je preveriti, da za  $g = s_1 s_2 \dotsm s_m\in G$ velja $$
+      P_{s_1} P_{s_2} \dotsc P_{s_m} =
+      \begin{bmatrix}
+        P(g(1) = 1) & P(g(1) = 2) & \dotsm & P(g(1) = n) \\
+        P(g(2) = 1) & P(g(2) = 2) & \dotsm & P(g(2) = n) \\
+        \vdots & \vdots & & \vdots \\
+        P(g(n) = 1) & P(g(n) = 2) & \dotsm & P(g(n) = n) \\
+      \end{bmatrix}.
       $$
-      kjer je $P_r = \operatorname{softmax(R)},$
-      $P_s=\operatorname{softmax}(S)$ in    $R, S \in \R^{m \times m}$.
+
+      Naš model elemente grupe slika v stohastične matrike,
+      ki definirajo verjetnostne porazdelitve slučajnih
+      funkcij nad $n$. Parametre modela bomo optimizirali
+      tako, da bo homomorfizem najbolj verjeten.
+      \subsection{Parametrizacija stohastičnih matrik}
+      \label{section:parametrizacija stohastičnih matrik}
+      Definicija modela $\hat  \rho$ zahteva, da so matrike
+      $P_s$ stohastične\footnote{$P$ je stohastična, če je
+        vsota elementov v vsaki vrstici enaka $1$, vsi elementi
+      matrike pa so med $0$ in $1$.}. Iteracije gradientnega
+      spusta stohastičnosti ne ohranjajo. Če hočemo za
+      optimizacijo modela $\hat \rho$ uporabiti gradientni
+      spust, moramo metodo prilagoditi tako, da novi
+      parametri ostanejo v družini stohastičnih matrik.
+
+      Družino stohastičnih matrik lahko parametriziramo s
+      poljubno parametrizacijo $p \colon \R^{n \times n} \to
+      \{P \in \R^{n \times n} \mid P \text{ je stohastična}\}$,
+      stohastične matrike $P_s$ pa definiramo kot
+      $p(\phi_s)$, kjer je $\phi = \{\phi_s | s\in S \}
+      \subset \R^{n \times n}$ množica poljubnih matrik.
+      \emph{Za parametre modela} vzamemo elemente matrik
+      $\phi_s$. Na ta način bodo matrike $P_s = P_s(\phi_s)$
+      vedno stohastične, ne glede na spremembo parametrov
+      $-\eta \nabla_\phi \loss(P)$.
+
+      Za parametrizacijo $p$ lahko vzamemo preslikavo
+      $\operatorname{softmax}$, ki vsako vrstico spremeni v
+      stohastični vektor.
+      \begin{definicija}
+        \label{def:softmax}
+        Preslikava $\operatorname{softmax} \colon \R^n \to
+        \R^n$ slika vektor $v = [v_1, v_2, \dotsc, v_n]^T$ v
+        vektor z elementi $\operatorname{softmax}(v)_i =
+        \frac{e^{v_i}}{\sum_{j = 1}^n e^{v_j}}$.
+
+        Za matriko $A =
+        \begin{bmatrix}
+          a_1^T \\
+          a_2^T \\
+          \vdots \\
+          a_n^T
+        \end{bmatrix}$ definiramo \emph{softmax po vrsticah} kot
+        $$\operatorname{softmax}(A) =
+        \begin{bmatrix}
+          \operatorname{softmax}(a_1)^T \\
+          \operatorname{softmax}(a_2)^T \\
+          \vdots \\
+          \operatorname{softmax}(a_n)^T
+        \end{bmatrix}.$$
+      \end{definicija}
+      Preslikava $\operatorname{softmax}$ očitno poljubne
+      matrike preslika v stohastične. Z njo lahko za
+      generator $s \in S$ matriko $P_s$ definiramo kot
+      $$
+      P_s = \operatorname{softmax}(\phi_s).
+      $$
+      Model za delovanja $\hat \rho = \hat \rho_\phi$
+      definiramo v odvisnosti od parametrov $\phi = \{\phi_s
+      \in \R^{n \times n } \mid s \in S\}$ kot
+      $$
+      \phi \mapsto ( s \mapsto \operatorname{softmax}(\phi_s))
+      $$
+      in spreminjamo elemente matrik $ \phi_s$, da model
+      $\hat \rho_\phi$ skoraj zagotovo predstavlja delovanje.
+
+      \subsection{Funkcija izgube nad relacijami}
+      \index{funkcija izgube nad relacijami!(delovanje)}
+      Naj bo $<S|R>$ prezentacija grupe $G$. Za vsako
+      relacijo $r \in R$ bi radi $P(r = \operatorname{id})
+      =1$ oziroma $0 = \log(P(r=\operatorname{id})) =
+      \log(\prod_{i=1}^n P(r(i)=i)) =
+      \operatorname{tr}(\log(P_r))$, kjer $\log(P_r)$
+      računamo po elementih.
+      \begin{definicija}
+        \emph{Funkcijo izgube nad relacijami} za delovanja
+        definiramo kot
+        \begin{equation}
+          \label{eq:relation loss actions}
+          \Loss{rel} (\hat\rho) = - \frac{1}{|R|} \sum_{r \in
+          R} \operatorname{tr}(\log(P_r)).
+        \end{equation}
+      \end{definicija}
+      \subsection{Pretvorba modela v delovanje}
+      \label{section:pretvorba modela v delovanje}
+      Rezultati na sliki \ref{fig:actions-cn} namigujejo, da
+      ob konvergenci $\Loss{rel} \to 0$ matrika
+      $P_z$ konvergira do permutacijske matrike
+      $\overline{P_z}$. To inducira delovanje
+      $z \mapsto P_z$.
+
+      Za splošno grupo $G=\left<S|R\right>$ lahko definiramo sledeč
+      postopek pretvorbe modela
+      $\hat \rho \colon s \to P_s$ v preslikavo $\rho \colon G
+      \to  \Pi$ med grupo $G$ in grupo permutacijskih matrik
+      $\Pi$\footnote{To je ekvivalentno preslikavi $G \to
+      S_n$, saj je $S_n\cong \Pi$.}.
+      \begin{itemize}
+        \item Za matriko $P$ definiramo $\overline{P}$ kot
+          matriko, ki ima v vsaki vrstici $1$ na mestu
+          največjega elementa v vrstici matrike $P$ in $0$ drugje.
+        \item Definiramo $\rho \colon G \to \R^{n \times n}$
+          s predpisom $s \to \overline{P_s}$.
+      \end{itemize}
+      V tem razdelku dokažemo, da je za model $\hat \rho$ z
+      dovolj majhno funkcijo izgube nad relacijami
+      $\Loss{rel}(\hat \rho)$ inducirana preslikava $\rho$
+      homomorfizem med $G$ in $\Pi$.
+      %
+      Naj bo $r\in R$ in $s \in S$ poljuben generator.
+      Najprej pokažemo, da je za dovolj majhno
+      vrednost izgube nad relacijami matrika $P_r$ blizu
+      identitete, matrika $P_s$ pa obrnljiva.
+      \begin{lema}
+        \label{lema:Pr blizu I}
+        %$Za $\epsilon > 0$ obstaja $\delta>0$, da iz
+        %$\Loss{rel}(\hat\rho) < \delta$
+        Iz $\Loss{rel}(\hat\rho) \leq
+        \frac{1}{|R|}-\log(1-\frac{\epsilon}{n}) $
+        sledi $P_r = I +
+        E_r$ za $\|E_e\| < \epsilon$.
+      \end{lema}
+      \begin{dokaz}
+        Najprej računamo
+        \begin{align*}
+          - \frac{1}{|R|} \sum_{r \in
+          R} \operatorname{tr}(\log(P_r)) &\leq \delta \\
+          -\log(\prod_{i=1}^n(P_r)_{i,i}) &\leq \delta |R| \\
+          \log(P(r = \operatorname{id})) &\geq -\delta |R| \\
+          1 - P(r = \operatorname{id}) &\leq 1 - e^{-\delta
+          |R|} =: \gamma.
+        \end{align*}
+
+        Ocenimo
+        $$ 1 - (P_r)_{i,i} \leq  1 - (P_r)_{1,1}
+        (P_r)_{2,2} \dotsm (P_r)_{n,n}
+        = 1 - P(r=\operatorname{id})\leq \gamma.$$
+        %
+        $P_r$ je stohastična, torej velja
+        $\sum_{j=1}^n (P_r)_{i,j} = 1$. Iz tega sledi
+        $\sum_{j \neq i}
+        (P_r)_{i,j} \leq \gamma$. Sledi
+        $$
+        P_{i, j} \leq \sum_{j \neq i} P_{i,j} \leq \gamma,
+        $$
+        za $i \neq j$. Iz tega sledi $\|E_r\| \leq n
+        \gamma = n(1 - e^{-\delta |R|}) = \epsilon$.
+        %Za dovolj majhno
+        %izbiro $\delta > 0$ je $\|E_r\| \leq \epsilon$.
+      \end{dokaz}
+      \begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrlnjiva]
+        \label{lema : Ps je obrnljiva}
+        Če je
+        $\Loss{rel}(\hat\rho) \leq \frac{-1}{|R|}\log(1-\frac{1}{2n})$,
+        je
+        %Obstaja $\epsilon_0$, da za vsak $0 < \epsilon <
+        %\epsilon_0$ in $P_r = I + E_r$ z $\|E_r\| <
+        %\epsilon$ velja, da je
+        matrika $P_s$ obrnljiva za vsak
+        generator $s \in S$.
+      \end{lema}
+      \begin{dokaz}
+
+        Če je $\|E\| < 1$, je matrika $I + E$ obrnljiva.
+        Velja namreč $\lambda_i(E) \leq \|E\|_2 \leq \|E\|$.
+        $E$ izrazimo z Jordanovo formo
+        $E = Q J Q^{-1}$ in računamo
+        $$
+        \operatorname{det}(I + E) = \operatorname{det}(I + J)
+        = \prod_{i=1}^k (1 + \lambda_i(E))^{d_i}  > 0,
+        $$
+        kjer so $\lambda_i(E)$ lastne vrednosti $E$ in $d_i$
+        njihove algebraične večkratnosti.
+
+        Če je
+        $\Loss{rel}(\hat\rho) \leq \frac{-1}{|R|}\log(1-\frac{1}{2n})$,
+        po prejšnji lemi velja
+        $P_r = I + E_r$ za $\|E_r\| \leq \frac{1}{2}$. Torej je
+        matrika $P_r = I + E_r = P_{s_1}  P_{s_2} \dotsm  P_{s_n}$
+        obrnljiva, posledično pa so obrnljive vse matrike $ P_{s_i}$.
+      \end{dokaz}
+      Zdaj bomo dokazali, da je za dovolj majhen $\Loss{rel}$
+      in poljuben generator $s \in S$ matrika $P_s$ blizu
+      permutacijske matrike.
+      Za to potrebujemo spodnji izrek \ref{izrek:obrnljiva
+      stohasticna} in lemo
+      \ref{lema:inv~stohasticen->inv~permutacijska}.
+      \begin{izrek}
+        \label{izrek:obrnljiva stohasticna}
+        Obrnljiva stohastična matrika je permutacijska
+        natanko tedaj, ko je njen inverz stohastičen.
+      \end{izrek}
+      Elementaren dokaz izreka je v
+      \cite{Ding01032013stohasticmatrixinversestohasticcondition}.
+      \begin{lema}
+        \label{lema:inv~stohasticen->inv~permutacijska}
+        Naj bo $P$ obrnljiva vrstično stohastična matrika in
+        $R$ vrstično stohastična matrika, za katero velja
+        \[
+          \|P^{-1}-R\|_F \le \frac{\epsilon^{2}}{2n^{3/2}} .
+        \]
+        Potem velja $d(P,\Pi)\le \epsilon$.
+        Če je dodatno $\epsilon<\tfrac12$, je $\overline P\in\Pi$
+        in velja
+        $
+        \|P-\overline P\|_F\le \epsilon
+        $.
+      \end{lema}
+      \begin{dokaz}
+        Naj bo $X=[x_{i,j}]$ poljubna  stohastična matrika,
+        za katero velja
+        $d(X,\Pi)>\epsilon$. Najprej
+        bomo pokazali, da je tedaj
+        $\|XY-I\|_F>\frac{\epsilon^{2}}{2n}$ za vsako
+        stohastično matriko $Y$.
+
+        Ker je $d(X,\Pi)>\epsilon$, za vsako permutacijsko
+        matriko $Q=[q_{i,j}]$ velja
+        \[
+          \epsilon^{2} < \|X-Q\|_F^{2}
+          = \sum_{i=1}^{n}\sum_{j=1}^{n}(x_{i,j}-q_{i,j})^{2}.
+        \]
+        Zato obstaja vrstica $x_i$, za katero je
+        \[
+          \sum_{j=1}^{n}(x_{i,j}-q_{i,j})^{2} > \frac{\epsilon^{2}}{n}.
+        \]
+        Ker je v $Q$ poljubna in ima v vsaki vrstici natanko
+        en element enak $1$, ostali pa $0$, za vsak
+        standardni bazni vektor $e_k$ velja
+        $
+        \|x_i-e_k\|_{2}^{2} \ge \frac{\epsilon^{2}}{n}.
+        $
+        Ocenimo
+        $$
+        \frac{\epsilon^{2}}{n} <
+        \|x_i-e_k\|_{2}^{2}
+        =(1-x_{i,k})^{2}+\sum_{j\ne k}x_{i,j}^{2}
+        \le 2(1-x_{i,k}).
+        $$
+        Za vse $k$ sledi
+        $
+        x_{i,k} \le 1- \frac{\epsilon^{2}}{2n}
+        $.
+        Naj bo $Y$ poljubna stohastična matrika. Oglejmo si
+        $i$-to vrstico produkta $XY$.
+        \[
+          (XY)_{i,k}=\sum_{h=1}^{n} x_{i,h}y_{h,k} \le
+          1-\frac{\epsilon^{2}}{2n}
+        \]
+        Posledično velja
+        $
+        \|(XY-I)_i\|
+        \ge \frac{\epsilon^{2}}{2n},
+        $
+        od koder sledi
+        $$
+        \|XY-I\| \ge \frac{\epsilon^{2}}{2n}.
+        $$
+
+        Iz $\|P^{-1}-R\|_F \le \frac{\epsilon^{2}}{2n^{3/2}}$
+        sledi
+        $$
+        \|PR - I\| \le \|P\| \|P^{-1}-R\| \le \frac{\epsilon^{2}}{2n}.
+        $$.
+        Po zgornjem premisleku je
+        $$
+        \|P - Q\| \le \epsilon
+        $$
+        za neko permutacijsko matriko $Q$.
+
+        Če je $\epsilon < \frac{1}{2}$, je očitno
+        $\overline{P} = \overline{ Q + (P-Q)} = Q$.
+      \end{dokaz}
+      %\begin{lema}
+      %  \label{lema:inv~stohasticen->inv~permutacijska-compact}
+      %  Naj bo $Q$ obrnljiva stohastična matrika.
+      %  Za poljuben $\epsilon> 0$ obstaja $\delta$, da iz
+      %  $\|Q^{-1} - R\| <\delta$ za neko
+      %  stohastično matriko $R$ sledi
+      %  $Q = \overline{Q} + F$ za
+      %  $\|F\|<\epsilon$.
+      %\end{lema}
+      %\begin{dokaz}
+      %  Naj bo $\|Q^-1-R \| <\delta$. Potem je
+      %  $$
+      %  \|QR - I\| < \delta\sqrt{n}.
+      %  $$
+      %  Na parih stohastičnih matrik definiramo zvezno
+      %  preslikavo $g \colon (X,Y) \mapsto \|XY - I\|$.
+      %  Opazujmo kompaktno podmnožico domene
+      %  $$
+      %  Z = \{(X,Y) \mid  d(X, \Pi) \geq \epsilon \}.
+      %  $$
+      %  Na njej $g$ doseže minimum $c \geq 0$.
+      %
+      %  Če je za stohastični matriki $X$ in $Y$ $g(X,Y) = 0$,
+      %  je $Y = X^{-1}$ in sta po izreku
+      %  \ref{izrek:obrnljiva stohasticna} obe permutacijski.
+      %  Sledi $\min_{(X,Y)
+      %  \in Z}g(X,Y) = c > 0$.
+      %
+      %  Za $\delta < \frac{c}{\sqrt{n}}$ je $\|QR - I\| = g(Q, R) < c$
+      %  iz česar sledi, da je $d(Q, \Pi) < \epsilon$.
+      %  Naj bo $P \in \Pi$ taka, da velja $\|Q - P\| < \epsilon$.
+      %  Potem za $E=Q-P$ veljha $\|E\| < \epsilon$.
+      %
+      %  Če je $\epsilon < \frac{1}{2}$, je
+      %  $\overline{Q} = \overline{E + P} = P$, torej je $Q =
+      %  \overline{Q} + E$.
+      %  %
+      %  %
+      %\end{dokaz}
+      Zdaj lahko dokažemo glavni rezultat tega razdelka.
+      \begin{izrek}
+        Če je
+        $$
+        \Loss{rel}(\hat \rho) <  n^{1-L}(1 +
+        L^\frac{3}{2}(2^{L-1}-1))^{-2},
+        $$
+        kjer je
+        $L = \max_{r \in R} |r|$
+        , je inducirana preslikava
+        $\rho \colon G \to \Pi$ homomorfizem.
+        %Obstaja $\delta_0 > 0$, da iz $\Loss{rel}(\hat\rho) <
+        %\delta_0$ sledi, da je preslikava
+        %$\rho \colon G \to \Pi$ homomorfizem.
+      \end{izrek}
+      \begin{dokaz}
+        Naj bo $r=s_1 s_2 \dotsm s_m \in R$ in $s_1, s_2,
+        \dotsc, s_m \in S$. Dovolj je pokazati, da velja
+        $$
+        \overline{P_{s_1} }\overline{P_{s_2}} \dotsm
+        \overline{P_{s_m}} = I.
+        $$
+        Če je
+        $\Loss{rel}(\hat\rho) \leq
+        \frac{1}{|R|}-\log(1-\frac{\epsilon}{n}) $
+        po lemi \ref{lema:Pr blizu I}
+        sledi, da je
+        \begin{equation}
+          \label{eq : P_r ~ id}
+          P_r = P_{s_1} P_{s_2} \dotsm P_{s_m} = I + E_r
+        \end{equation}
+        %$$
+        %
+        %$$
+        za $\|E_r\| < \epsilon$.
+        Če je dodatno
+        $\epsilon < \frac{1}{2}$,
+        je po lemi   \ref{lema :
+        Ps je obrnljiva}
+        matrika $P_s$ obrnljiva za vsak generator $s \in S$.
+
+        Iz enačbe \eqref{eq : P_r ~ id} sledi
+        \begin{equation}
+          \label{eq:Ps1_inv}
+          P_{s_1}^{-1} = P_{s_2} P_{s_3} \dotsm P_{s_m} -
+          P_{s_1} ^{-1}E_r.
+        \end{equation}
+        Matrika $P_{s_2} P_{s_3} \dotsm P_{s_m}$ je
+        stohastična, saj je produkt stohastičnih matrik.
+        Poleg tega je $\|P_{s_2} P_{s_3} \dotsm P_{s_m} -
+        P_{s_1}^{-1}\| = \|P_{s_1}^{-1}\|\|E_r\| <
+        \|P_{s_1}^{-1}\|\epsilon$.
+        Če je $\epsilon_1 = \left( \|P_s^{-1}\|\epsilon 2
+        n^{\frac{3}{2}} \right) ^\frac{1}{2} < \frac{1}{2}$
+        , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
+        $$
+        P_{s_1} = \overline{P_{s_1}} + E_{s_1}
+        $$
+        za $\|E_{s_1}\| < \epsilon_1$.
+
+        Enačbo \eqref{eq:Ps1_inv} z desne pomnožimo z
+        $P_{s_1}$, z leve pa
+        z $P_{s_2}^{-1}$ in dobimo
+        $$
+        P_{s_2}^{-1} = P_{s_3} \dotsm P_{s_m}P_{s_1} -
+        P_{s_2}^{-1}P_{s_1}^{-1}E_r P_{s_1}.
+        $$
+        Če je
+        $\epsilon_2 =
+        \left(
+          2 n^{\frac{3}{2}} \|P_{s_2}^{-1}\|
+          \|P_{s_1}^{-1}\|
+          \|P_{s_1}\|\epsilon
+        \right)^\frac{1}{2}
+        <
+        \frac{1}{2}
+        $
+        , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
+        $P_{s_2} = \overline{P_{s_2}} + E_{s_2}$.
+        Induktivno nadaljujemo. Izberemo tak $\epsilon$
+        ,da je za vsak $j \in [m]$
+        $\epsilon_j
+        =
+        \left(
+          2 n^{\frac{3}{2}}
+          \|P_{s_j}^{-1}\|
+          \prod_{i=1}^{j-1}
+          \|P_{s_i}^{-1}\|
+          \prod_{i=1}^{j-1}
+          \|P_{s_i}\|
+          \epsilon
+        \right)^{\frac{1}{2}}
+        < \frac{1}{2}$. Potem je
+        $$
+        P_{s_j} = \overline{P_{s_j}} + E_{s_j}.
+        $$
+        in $\|E_{s_j}\| < \epsilon_j$.
+        %Vzamemo $\epsilon_0 = \max_{j \in [m]} \epsilon_j$ in
+        Računamo
+        %
+        \begin{align*}
+          P_r &= P_{s_1} P_{s_2} \dotsm P_{s_m}
+          \\
+          &=
+          (\overline{P_{s_1}} + E_{s_1})
+          (\overline{P_{s_2}} + E_{s_2}) \dotsm
+          (\overline{P_{s_m}} + E_{s_m})
+          \\
+          &=
+          \overline{P_{s_1}} \overline{P_{s_2}} \dotsm
+          \overline{P_{s_m}} +
+          \sum_{Z \subsetneqq [m]} \prod_{i \in Z} \overline{P_{s_i}}
+          \prod_{j \notin Z} E_{s_j}
+          \\
+          &= I + E_r.
+        \end{align*}
+        %
+        Ocenimo
+        \begin{align*}
+          \|\prod_{i=1}^m \overline{P_{s_i}} - I \|
+          &= \|E_r - \sum_{Z \subsetneqq [n]} \prod_{i \in Z}
+          \overline{P_{s_i}}
+          \prod_{j \notin Z} E_{s_j} \| \\
+          &\leq
+          \|E_r\| +
+          \sum_{Z \subsetneqq [m]} \prod_{i \in Z}
+          \|\overline{P_{s_i}}\| \prod_{j \notin Z} \|E_{s_j} \| \\
+          &\leq \epsilon_m  +
+          \sum_{Z \subsetneqq [m]} \prod_{i \in Z}
+          \sqrt{m} \prod_{j \notin Z} \epsilon_m
+          \\
+          &=
+          \epsilon_m(1 + m^\frac{3}{2}(2^{m-1}-1))
+          \xrightarrow{\epsilon_m \to 0} 0.
+        \end{align*}
+        Velja  $\prod_{i=1}^m \overline{P_{s_i}} \in \Pi$.
+        Razdalje med različnimi permutacijskimi matrikami
+        ne morejo biti manjše od $1$.
+        Za dovolj majhen $\epsilon_m$ je
+        $\prod_{i=1}^m \overline{P_{s_i}} = 1$.
+
+        Norma stohastične matrike je
+        manjša ali enaka $\sqrt{n}$. S to oceno lahko ocenimo
+        $
+        \epsilon_j
+        \leq
+        \left(
+          n^{j-1} \epsilon
+        \right)^{\frac{1}{2}}
+        $.  Naj bo $L = \max_{r \in R} |r|$ največja
+        dolžina relacije v $R$.
+        Če je
+        $$
+        \Loss{rel}(\hat \rho) \leq \epsilon < n^{1-L}(1 +
+        L^\frac{3}{2}(2^{L-1}-1))^{-2},
+        $$
+        je $ \prod_{s \in r} \overline{P_s} = I$
+        za vsako relacijo $r \in R$ in je
+        $\rho \colon G \to \Pi$ homomorfizem.
+      \end{dokaz}
+      %
+      % \begin{lema}[Če je permanent (stohastične) matrike
+      %   blizu $1$, je matrika skoraj permutacijska]
+      %   Naj bo $S$ stohastična matrika in $\epsilon>0$. Če je
+      %   $\operatorname{Perm}(S) = 1 - \delta$ za dovolj
+      %   majhen $\delta >0$, potem je $S = \overline{S} + E$
+      %   in $\|E\| < \epsilon$.
+      % \end{lema}
+      %
+      \subsection{Delovanje ciklične grupe}
+      Študiramo model za delovanje ciklične grupe $C_n = <z |
+      z^n=1>$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
+      Minimaliziramo
+      $$
+      \loss(\phi) = - \operatorname{tr}(\log
+      \left (\operatorname{softmax}(Z^n) \right ) ),
+      $$
+      kjer je $Z \in \R^{m \times m}$.
       \paragraph{Rezultati}
-      Na sliki \ref{fig:actions-dn} so matrike
-      $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega spusta
-      med iskanjem delovanja diedrske grupe $D_9$ na množici $[9]$.
-      Več rezultatov je v dodatku \ref{appendix: actions-dihedral}.
+      Na sliki \ref{fig:actions-cn} so predstavljene začetne
+      in končne vrednosti matrike $P(Z)$ pri iskanju delovanj
+      ciklične grupe $C_n$.
+      Podatki so bili pridobljeni s \texttt{torch}
+      implementacijo algoritma \emph{Adam}
+      \cite{paszke2019pytorch} z velikostjo koraka $10^{-2}$.
+      Parametri so
+      bili inicializirani z vzorčenjem iz normalne porazdelitve z
+      srednjo vrednostjo $0$ in standardnim odklonom $1$.
+      Eksperiment smo prekinili po
+      $2000$ korakih gradientnega spusta ali pa ko je
+      vrednost funkcije izgube padla pod
+      $10^{-3}$.
+      Več rezultatov je v dodatku \ref{appendix: actions-cyclic}.
       \begin{figure}[ht]
         \centering
         \includegraphics[
           width=0.9\textwidth
-        ]{images/actions/plot_D9_n=9_m=9.png}
-        \caption{Stohastični matriki
-          $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega
+        ]{images/actions/plot_C8_n=8_m=5.png}
+        \caption{Stohastična matrika
+          $P_s$ na začetku in po $2000$ korakih gradientnega
           spusta
-          med iskanjem delovanja diedrske grupe $D_9$ na
-          množici $[9]$.
-          Permutacijski matriki $\overline{P_r}$ in
-          $\overline{P_s}$ pripadatata permutacijama
-          $\sigma_s = (123456789)$ in $\sigma_r = (19)(28)(37)(46)(5)$.
-          Velja $\sigma_s^2 = \sigma_r^9=(\sigma_r \sigma_s)^2 = 1$,
-          torej je $s \mapsto \sigma_s, r \mapsto \sigma_r$ homomorfizem.
+          med iskanjem delovanja ciklične grupe $C_8$ na
+          množici $[5]$.
+          Permutacijska matrika $\overline{P_s}$ pripada
+          permutaciji $(1342)(2)$ reda $4$ in je ničla funkcije
+          izgube.
         }
-        \label{fig:actions-dn}
+        \label{fig:actions-cn}
       \end{figure}
-      %
-      \clearpage
-      \section{Iskanje izomorfizmov grafov}
-      \label{section:Iskanje izomorfizmov grafov}
-      S podobnim pristopom kot v \ref{eq: repr model na S}
-      lahko iščemo izomorfizme grafov. Iščemo model za
-      bijektivno preslikavo $f \colon G_1 \to G_2$ med grafoma
-      $G_1$ in $G_2$, za katero velja $f(i) \sim_2 f(j) \iff i \sim_1 j$.
-
-      Za model lahko vzamemo slučajno preslikavo $f$, podano s
-      stohastično matriko
-      $$P_f =
-      \begin{bmatrix}
-        P(f(1) = 1) & P(f(1) = 2) & \dotsm & P(f(1) = n) \\
-        P(f(2) = 1) & P(f(2) = 2) & \dotsm & P(f(2) = n) \\
-        \vdots & \vdots & & \vdots \\
-        P(f(n) = 1) & P(f(n) = 2) & \dotsm & P(f(n) = n) \\
-      \end{bmatrix} $$
-      in spreminjamo elemente matrike tako, da je $f $ vse bolj
-      verjetno izomorfizem. Zato potrebujemo funkcijo izgube,
-      ki je ničelna natanko v izomorfizmih - torej bijektivnih
-      preslikavah, ki slikajo povezane vozlišča v povezane.
-      \subsection{Funkcija izgube za bijektivnost}
-      \index{funkcija izgube za bijektivnost (grafi)}
-      Naj bo $f$ slučajna preslikava iz $\funnn{n}$, definirana
-      kot zgoraj. Radi bi, da je $f$ skoraj zagotovo
-      bijektivna, torej da velja
-      \begin{align*}
-        1 &= P(f \in S_n) \\
-        &= \sum_{\sigma  \in S_n} P(f =  \sigma) \\
-        &= \sum_{\sigma  \in S_n} \prod_{i=1}^n (P_f)_{i, \sigma(i)} \\
-        &= \operatorname{Perm(P_f)},
-      \end{align*}
-      kjer $\operatorname{Perm}(P_f)$ označuje \emph{permanent}
-      \footnote{$\operatorname{Perm}(A) = \sum_{\sigma  \in
-      S_n} \prod_{i=1}^n A_{i, \sigma(i)}$} matrike $P_f$.
-
-      Za stohastične matrike velja spodnja lema.
-      \begin{lema}
-        \label{lema:permanent stohasticne matrike}
-        Za stohastično matriko $P$ velja
-        $\operatorname{Perm}(P)=1$ natanko tedaj, ko je $P$ permutacijska.
-      \end{lema}
-      \begin{dokaz}
-        Če je $P$ permutacijska, ima očitno enotski permanent.
-        Dokažimo lemo še v obratno smer.
-
-        Naj bo $P =
-        \begin{bmatrix}
-          p_{i,j}
-        \end{bmatrix}_{i,j=1,\dotsc, n}$ poljubna stohastična
-        matrika s $\operatorname{Perm}(P) = 1$. Po definicijo
-        so vsi elementi  $p_{i,j}$ matrike med $0$ in $1$,
-        vrstice se pa seštejejo v $1$.
-        Velja
-        $$
-        \operatorname{Perm}(P) = \sum_{\sigma  \in S_n}
-        \prod_{i=1}^n p_{i, \sigma(i)} \leq \sum_{\sigma  \in
-        \funnn{n}} \prod_{i=1}^n p_{i, \sigma(i)},
-        $$
-        saj so vsi elementi stohastične matrike nenegativni, in
-        smo vsoti zgolj prišteli nenegativne elemente.
-
-        Vsako funckijo $\sigma \in \funnn{n}$ lahko predstavimo
-        z vektorjem $(\sigma_1, \sigma_1, \dotsc, \sigma_n)$,
-        kjer je $\sigma_i = \sigma(i) \in \N$. Tako je
-        $$
-        \sum_{\sigma  \in \funnn{n}} \prod_{i=1}^n p_{i, \sigma(i)} =
-        \sum_{(\sigma_1, \sigma_1, \dotsc, \sigma_n) \in [n]^n}
-        \prod_{i=1}^n p_{i, \sigma_i} =
-        \prod_{i=1}^n (p_{i, 1} + p_{i, 2} + \dotsm + p_{i, n}).
-        $$
-        Ker so vsote vrstic enake $1$, velja
-        $$
-        1 = \operatorname{Perm}(P) \leq  \sum_{\sigma  \in
-        \funnn{n}} \prod_{i=1}^n p_{i, \sigma(i)} =
-        \prod_{i=1}^n (p_{i, 1} + p_{i, 2} + \dotsm + p_{i, n}) = 1.
-        $$
-        Sledi, da je  $\sum_{\sigma  \in S_n}  \prod_{i=1}^n
-        p_{i, \sigma(i)} =  \sum_{\sigma  \in \funnn{n}}
-        \prod_{i=1}^n p_{i, \sigma(i)} $ in posledično je vsota
-        \\
-        $
-        \sum_{\sigma  \in \funnn{n} \setminus S_n}
-        \prod_{i=1}^n p_{i, \sigma(i)}
-        $ enaka $0$.
-
-        Zdaj lahko dokažemo, da je  v poljubnem stolpcu matrike
-        $P$ lahko največ en ne-ničelni element. Naj bo $i$
-        indeks poljubnega stolpca in $r \neq s$ indeksa dveh
-        vrstic. Recimo, da sta elementa $p_{r, i}$ in $p_{s,i}$
-        oba neničelna.
-
-        Definiramo lahko tako preslikavo $f \in \funnn{n}$, da
-        je $f(r) = f(s) = i$, za $j \notin \{r, s\}$ pa $f(j)$
-        izberemo tako, da $p_{j, f(j)}$ ni ničelen (to lahko
-          vedno izberemo, saj je matrika stohastična, torej ima v
-        vsaki vrstici vsaj en neničelen element).
-
-        Očitno je $\prod_{i=1}^n p_{i, f(i)} \neq 0$, kar pa je
-        v protislovju z $ \displaystyle \sum_{\sigma  \in
-        \funnn{n} \setminus S_n} \prod_{i=1}^n p_{i,
-        \sigma(i)}$.   V vsakem stolpcu matrike je torej
-        natanko en neničelen element.
-
-        Velja še $1 = P(f \in S_n) = P(f \text{ je
-        surjektivna}) = \prod_{i=1}^n P(\exists j \in \N. f(j)= i) =
-        \prod_{i=1}^n (\sum_{j=1}^n p_{j, i})$, torej se vsote
-        stolpcev zmnožijo v $1$. Ker je v vsakem stolpcu
-        natanko en neničelen element sledi, da je ta element
-        enak $1$.  Posledično je tudi v vsaki vrstici natanko
-        en neničelen element (sicer se vrstica ne bi seštela v
-        $1$), kar pomeni, da je $P$ permutacijska.
-      \end{dokaz}
-      Slučajna preslikava $f$ je torej skoraj zagotovo
-      bijektivna natanko tedaj, ko je $P_f$ permutacijska.
-      Enostavno je preveriti, da so stohastične matrike
-      permutacijske natanko tedaj, ko so unitarne. Bolj, kot bo
-      $P_f$ unitarna, bolj verjetno bo $f$ bijektivna.
-
-      Če $P_f$ definiramo kot
-      $$P_f = \operatorname{softmax}(\phi)$$(glej poglavje
-      \ref{section:parametrizacija stohastičnih matrik}), lahko
-      za funkcijo izgube vzamemo $\phi \mapsto \Loss{unitary}(P_f)$.
-
-      \begin{definicija}
-        Za poljubno realno matriko $\phi \in \R^{n \times n}$
-        \emph{funkcijo izgube za bijektivnost} definiramo kot
-        $$
-        \Loss{bijective} = \Loss{unitary} \circ \operatorname{softmax}.
-        $$
-      \end{definicija}
-      Z minimiziranjem iste funkcije izgube lahko rešujemo dva
-      različna problema (problem iskanja unitarnih matrik in
-      problem iskanja bijekcij) preslikava
-      $\operatorname{softmax}$  pa pretvarja med problemoma.
-      \subsection{Funkcija izgube za povezanost}
-      Naj bosta $G_1 = ([n], E_1)$ in $G_2 = ([n], E_2)$ grafa
-      in $M_1, M_2$ njuni matriki sosednosti.
-      Za $i \sim_1 j$ bi radi, da je $P(f(i)  \sim_2 f(j)) = 1$.
-      Računamo
+      \subsection{Delovanje diedrske grupe}
+      Študiramo model za delovanje  grupe $D_n = <r,s |
+      r^n=s^2=(rs)^2=1>$ na končni množici $[m] =
+      \{1,2,\dotsc, m\}$. Minimaliziramo
       $$
-      P(f(i) \sim_2 f(j)) = \sum_{k= 1}^n \sum_{h = 1}^n p_{i,
-      k} p_{j, h} m_{k,h}^{(2)}
-      % = f_j^T M_1 f_i
-      = (P M_2 P^T)_{i, j}.
-      $$
-      \begin{definicija}
-        %
-        %
-        Želeli bi si, da je $P(f(i) \sim_2 f(j)) = (M_1)_{i,j}$.
-        Funkcijo izgube za povezanost lahko definiramo kot
-        $$
-        \loss_\sim = \|M_1 - P M_2 P^T\|.
-        $$
-        % \begin{opomba}
-        %   Alternativno lahko definiramo
-        % %
-        %   $$
-        %     \Loss{log} = -\sum_{i \sim_1 j} \log P(f(i) \sim_2 f(j))
-        %    =
-        %     -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T).
-        %   $$
-        % Za
-        %  \end{opomba}
-        %
-        %
-        Naš cilj je poiskati permutacijsko matriko $P$, ki minimalizira
-        $\loss_\sim(P)$. Rešujemo problem
-        \emph{ujemnaja grafov}.
-        \index{funkcija izgube za povezanost (grafi)}
-      \end{definicija}
-      \begin{definicija}
-        \label{def:graph_matching}
-        \index{ujemanje grafov}
-        Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
-        na $n$ vozljiščih. Problem ujemanja graphov
-        \emph{(graph matching)}
-        \cite{lyzinski2015graphmatchingrelaxrisk} je
-        definiran kot
-        iskanje minimuma
-        $$
-        \operatorname{argmin}_{P \in \Pi} \|M_1 - PM_2P^T \|,
-        $$
-        po  množici vseh $n \times n$ permutacijskih  matrik $\Pi$.
-
-        Če matriki $M_1$ in $M_2$ pripadata izomorfnima
-        grafoma, potem iščemo izomorfizem.
-      \end{definicija}
-      Problem \emph{ujemanja grafov} je NP-težek
-      \cite{sahni1976qapisnphard}. Klasični pristopi ga
-      rešujejo z relaksacijami funkcije izgube $\|M_1 - P M_2
-      P^T\|$ nad večje družine matrik $P$ in prevedbo
-      končne matrike nazaj na permutacijsko
-      \cite{lyzinski2015graphmatchingrelaxrisk},
-      \cite{aflalo2025convexrelaxation}.
-      Novejše metode se problema lotevajo z globokim učenjem.
-
-      V tem delu se s primerjavo različnih metod za ujemanje
-      grafov ne ukvarjamo.
-      Osredotočeni smo na posplošitev metod iz poglavij
-      \ref{subsection: Iskanje upodobitev z gradientnim spustom} in
-      \ref{section:iskanje delovanj}
-      %na problem ujemanja grafov
-      .
-      \subsection{Prehod na izomorfizem}
-      Kot v poglavju
-      \ref{section:pretvorba modela v delovanje} lahko tudi model
-      izomorfizma grafov pretvorimo v dejansko izomorfizem, če je le
-      vrednost funkcije izgube dovolj majhna.
-      \begin{definicija}
-        Za majhno vrednost $\Loss{unitary}(P) + \loss_\sim(P)$
-        model $P$ inducira izomorfizem med grafoma, podan s permutacijsko
-        matriko $\overline{P}$, ki ima v vrstici $i$ enico na mestu
-        $\operatorname{argmax}_j (P_{i,j})$.
-      \end{definicija}
-      Treba je preveriti, da je $\overline{P}$ res bijekcija in
-      da predstavlja izomorfizem.
-      %
-      \begin{lema}
-        \label{lema:loss unitary mali -> P blizu P streha}
-        Naj bo $P=QH, Q \in U_n, H= \sqrt{PP^*}$ polarni razcep
-        matrike $P$.
-        Če je  $\Loss{unitary}(P)
-        = \|P P^* - I\| < \epsilon$,
-        je $\|P-Q \| < \epsilon$. Če je $\epsilon < \frac{1}{2}$,
-        je $\overline{P} = Q$.
-      \end{lema}
-      \begin{dokaz}
-        Glej dokaz leme
-        \ref{lema:rho_s - Q_s < eps}.
-        %
-        % Opazujmo preslikavo
-        % $X \mapsto \|XX^*  - I\|$, definirano na
-        % stohastičnih matrikah. Naj bo $\delta > 0$.
-        % Kompaktna podmnožica
-        % $$
-        % \{X \text{ stohastična } \mid d(X, \Pi) \geq \delta   \}
-        % $$
-        % na njen doseže minimum $c_\delta$. Ker je stohastična matrika
-        % permutacijska natanko tedaj, ko je unitarna, je $c_\delta > 0$.
-        %
-        % Če je $\Loss{unitary}(P) < c_\delta$, je
-        % $ P=Q + E $ za permutacijsko matriko $Q$ in
-        % $\|E\| < \delta$.
-        % Za $\delta < \frac{1}{2}$ je
-        % $$
-        % \overline{P}  = \overline{Q + E} = Q.
-        % $$
-      \end{dokaz}
-      \begin{lema}
-        \label{lema:ocena za graph mathcing}
-        Za preslikavo
-        $$f \colon X \mapsto \| M_1 - X M_2 X^T \|$$
-        velja
-        $|f(X) - f(Y)| \leq
-        \|M_2\|(\|X\| + \|Y\|) \|X - Y\|$.
-        %
-      \end{lema}
-      \begin{dokaz}
-        Ocenimo
-        \begin{align*}
-          |f(X) - f(Y)|
-          &\leq \| (Y M_2 Y^T) - (X M_2 X^T) \| \\
-          &\leq \|(Y - X) M_2 Y^T\| + \|X M_2 (Y^T - X^T)\| \\
-          &= \|M_2\| (\|X\| + \|Y\|) \|X - Y\|.
-        \end{align*}
-      \end{dokaz}
-      \begin{lema}
-        Če je
-        $$\loss_\sim(P) \le \epsilon <
-        \min(  \frac{1}{2}
-          ,
-          \frac{\sqrt{2}}{1 + \|M_1\|\sqrt{n}}
-        ),
-        $$ je permutacija, podana z $\overline{P}$
-        izomorfizem med grafoma z matrikama sosednosti
-        $M_1$ in $M_2$.
-      \end{lema}
-      \begin{dokaz}
-        Po lemi \ref{lema:loss unitary mali -> P blizu P streha}
-        je $\|P - \overline{P}\| < \epsilon$.
-        Po lemi \ref{lema:ocena za graph mathcing}
-        pa velja
-        $$
-        |f(P)-f(\overline{P})| \leq  \|M_2\|(\|P\| +
-        \|\overline{P}\|)\epsilon
-        < \|M_2\|(1 + \sqrt{n})\epsilon
-        $$. Vrednost funkcije izgube v $\overline{P}$ je omejena:
-        $$
-        f(\overline{P}) < \epsilon(1 + \|M_2\|\sqrt{n})
-        $$
-
-        Opazujmo funkcijo izgube
-        $f \colon X \mapsto \| M_1 - X M_2 X^T \|$.
-        Če je $X$ permutacijska matrika, je
-        $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
-        vozljišča grafa $M_2$ preslikamo z permutacijo $X$.
-        Vrednosti funkcije izgube nad množico permutacijskih matrik so
-        torej diskretne.
-        $\| M_1 - X M_2 X^T \| = $ $0$ natanko tedaj,
-        ko $X$ predstavlja izomorfizem med grafoma $M_1$ in
-        $M_2$, sicer pa je
-        $\| M_1 - X M_2 X^T \| \geq \sqrt{2} > 1$.
-
-        Če je
-        $\epsilon <
-        \min(  \frac{1}{2}
-          ,
-          \frac{\sqrt{2}}{1 + \|M_1\|\sqrt{n}}
-        )$, je $f(\overline{P})=0$.
-      \end{dokaz}
-      %Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$,
-      %da iz $\|P - X\| < \delta$ sklepamo na
-      %$ |f(P) - f(X)| < \frac{1}{2}$.
-      %
-      %Za $f(P) < \frac{1}{2}$ in $\Loss{unitary}(P) < c_\delta$
-      %je $\overline{P}$ permutacijska matrika, ki predstavlja izomorfizem
-      %med grafoma $M_1$ in $M_2$.
-      %
-      \subsection{Rezultati}
-      \label{subsection : rezultati_grafi_vanilla}
-      \begin{primer}
-        Poglejmo si preprost graf \ref{fig:primer_grafa} na
-        petih točkah $\{0,1,2,3,4\}$, s povezavami $\{0 \sim 4,
-        4 \sim 3, 3 \sim 0, 3 \sim 1, 2 \sim 0\}$. Očitno je
-        grupa avtomorfizmov tega grafa izomorfna diedrski grupi
-        trikotnika $D_3$.
-        \begin{figure}[ht]
-          \centering
-          \includegraphics[width=0.5\linewidth]{images/random_samples_big_random_graph_1_on_5.png}
-          \caption{Graf na petih vozljiščih.}
-          \label{fig:primer_grafa}
-        \end{figure}
-        Gradientni spust poleg trivialne rešitve na določenih
-        začetnih parametrih uspe najti avtomorfizem $(03)(24)$,
-        na drugih pa konvergira do limite, ki ni blizu avtomorfizma.
-
-      \end{primer}
-      \paragraph{Avtomorfizmi cayleyevih grafov}
-      \label{aut-cayley-vanilla-setup}
-      Z metodo iščemo avtomorfizme Cayleyevih grafov simetrične grupe.
-      Oštevilčenje vozljišč (elemetov  $S_n$)
-      sledi metodi \\
-      \verb| list(itertools.permutations(range(1, n + 1)))|,\\
-      za množico generatorjev vzamemo transpozicijo
-      $(1 2)$ in cikel $(1 2 \dotsc, n)$, za $M_1 = M_2$ vzamemo
-      matriko sosednosti dobljenega grafa.
-
-      Funkcijo izgube optimiziramo z algoritmom Adam s hitrostjo učenja
-      $10^{-3}$, dokler norma gradienta ne pade pod
-      $ 10^{-12}$.
-      Na sliki \ref{fig:cayley-aut-demo} so prikazane matrike
-      $P$ na začetku in
-      na koncu optimizacije ta različne $n$. Več rezultatov je v dodatku
-      \ref{dodatek:cayley-vanilla}.
-      \begin{figure}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_demo_234.png}
-        \caption{Stohastična matrika $P$ na začetku in po
-          končani optimizaciji med iskanjem avtomorfizmov
-          Cayleyevih grafov simetrične grupe $S_n$ za
-          $n=2,3,4$.
-          Pri $n=2$ smo našli automorfizem $(0 1)$,
-          pri $n=3$ automorfizem $(0 5)(1 3)(2 4)$.
-        }
-        \label{fig:cayley-aut-demo}
-      \end{figure}
-      \subsection{Uporaba tabele inverzij}
-      \label{subsection:uporaba tabele inverzij}
-      V poglavju \ref{subsection : rezultati_grafi_vanilla}
-      izomorfizem iščemo v podprostoru
-      distribucij nad $\funnn{n}$, ki ga parametriziramo s
-      $(\R ^{n \times n})^{|S|}$. V tem poglavju predstavimo
-      alternativen pristop,
-      ki izomorfizem išče v podprostoru distribucij nad $S_n$. S tem
-      se ognemo potrebi po uporabi funkcije izgube za bijektivnost.
-      %
-      %
-
-      Množico permutacij predstavimo s tabelami inverzij. Nad
-      slednjimi lahko na
-      trivialen način definiramo gladko družino porazdelitev z
-      $O(n^2)$ parametri.
-      \subsubsection{Porazdelitve nad tabelo inverzij}
-      \begin{definicija}(Tabela inverzij)
-        \index{tabela inverzij}
-        Naj bo $\sigma \in S_n$ permutacija. Za vsak $k \in [n]$
-        definiramo $a_k = |\{ j > k
-          \mid \sigma(j) < \sigma(k)
-        \}|$. Vektor
-        $$\operatorname{TI}(\sigma) =
-        (a_1,
-          a_2, \dotsc,
-        a_n)$$
-        se
-        imenuje \emph{tabela inverzij} permutacije $\sigma$.
-      \end{definicija}
-      Tabela inverzij $TI \colon S_n \to [0, n-1] \times [0,
-      n-2 ] \times \dotsm \times [0]$
-      je bijekcija \cite[Trditev
-      1.~3.~12]{ernumerativecombinatorics2011volume1}.
-      Porazdelitev vektorjev iz
-      $\prod_{i=n-1}^0 [0, i]$ trivialno inducira porazdelitev nad $S_n$.
-
-      Tabelo inverzij lahko razumemo kot proces tvorbe
-      permutacij. Permutacijo $\sigma$ s tabelo inverzij
-      $\operatorname{TI}(\sigma) = (a_1, a_2, \dotsc, a_n) \in
-      \prod_{i=n-1}^0 [0, i]$ dobimo tako, da
-      $1$ postavimo na $(a_1 +1 )$-to mesto v v tabeli $[1,2,\dotsc, n]$,
-      nato $2$ postavimo na $(a_2 +1)$-to prosto mesto,
-      in tako naprej, dokler ne postavimo $n$ na $(a_n +1)$-to
-      prosto mesto.
-      \begin{primer}
-        \label{primer:tabela_inverzij}
-        Naj bo  $\operatorname{TI}(\sigma) = (2, 1, 0)$.
-        Začnemo s prazno tabelo
-        $$[ \_, \_, \_]$$
-        dolžine $3$. Postavimo $1$ na $3$-to mesto
-        $$[ \_, \_, 1]$$
-        nato $2$ na $3$-to prosto mesto
-        $$[ \_, 2, 1]$$
-        in na koncu $3$ na $2$-to prosto mesto
-        $$[ 3, 2, 1].$$
-        Velja $\sigma = (13)(2)$.
-      \end{primer}
-
-      Na podoben način lahko definiramo porazdelitev nad permutacijami.
-      Naj bo
-      $$P_d =
-      \begin{bmatrix}
-        p_{1,1} & p_{1,2} & \dotsm & p_{2, n-1} & p_{1,n} \\
-        p_{2,1} & p_{2,2} & \dotsm & p_{2, n-1} & 0 \\
-        p_{3,1} & p_{3,2} & \dotsm & 0 & 0 \\
-        \vdots & \vdots & \iddots & \vdots & \vdots    \\
-        p_{n-1,1} & p_{n-1,2}  & \dotsm & 0  & 0\\
-        p_{n,1} & 0  & \dotsm & 0  & 0\\
-      \end{bmatrix}$$
-      stohastična matrika. Potem lahko definiramo
-      $$P(a_k = i) = P(k\text{ postavimo na } i\text{-to prazno
-      mesto}) = p_{k, i}$$
-      in
-      $$P(TI(\sigma) = (x_1, x_2, \dotsc, x_n)) = \prod_{i=1}^n
-      P(a_k = x_k).$$
-      \begin{primer}
-        Naj bo
-        $$
-        P =
-        \begin{bmatrix}
-          a & b & c \\
-          d & e & 0 \\
-          f & 0 & 0 \\
-        \end{bmatrix}
-        $$
-        stohastična matrika, ki podaja porazdelitev nad $S_3$.
-        Verjetnost za permutacijo $\sigma = (13)(2)$ iz primera
-        \ref{primer:tabela_inverzij} je
-        $$P(TI(\sigma) = (2, 2, 1)) = P(a_1 = 2) P(a_2 = 2)
-        P(a_3 = 1) = cef$$.
-      \end{primer}
-      %
-      %
-      % Množica vseh možnih porazdelitev nad $\prod_{i=n-1}^0 [0,
-      % i]$ je ogromna.
-      % Podobno kot v \TODO{delovanja} se omejimo na manjšo
-      % parametrično družino porazdelitev
-      % \begin{equation}
-      %   \label{eq:porazdelitev nad tabelo inverzij}
-      %   P(a_k = i) = \phi_{k,i}
-      % \end{equation}
-      % in definiramo
-      % $$
-      % P(a_k = i) = P(k\text{ postavimo na }i\text{-to prosto mesto})
-      % $$
-      %
-      \subsubsection{Funkcija izgube}
-      Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
-      na $n$ vozljiščih. Za povezani vozljišči $i \sim_1 j$ bi radi, da je
-      $P(f(i) \sim_2 f(j)) = 1$, kjer je $f$ slučajna permutacija.
-
-      Za funkcijo izgube lahko vzamemo
-      $$
-      \loss = \sum_{i, j} ( (M_1)_{i,j} - P(f(i) \sim f(j)) )^2.
-      $$
-      Očitno velja
-      $$
-      P(f(i) \sim f(j)) = \sum_{k=1}^n \sum_{h=1}^n P(f(i) = k,
-      f(j) = h) (M_2)_{k,h}.
-      $$
-      \subsubsection{Hiter izračun funkcije izgube}
-      Zanima nas $P(f(i) = k, f(j) = h)$.
-      Najprej uvedemo pomožne funkcije:
-      \begin{align*}
-        S_m^<(i) &= \sum_{s=1}^{i} P(a_m = s) \\
-        S_m^\text{mid}(i,j) &= \sum_{s=i}^{j} P(a_m = s) \\
-        S_m^>(j) &= \sum_{s=j}^{n} P(a_m = s) \\
-      \end{align*}
-      Recimo, da smo že postavili $m-1$ elementov
-      in postavljamo $m$-ti element. S
-      $q(j,h,m)$ označimo verjetnost, da bomo med
-      tvorjenjem slučajen premutacije $h$ postavili na
-      $j$-to trenutno prosto mesto. Podobno s $p(i, k, j, h,
-      m)$ označimo verjetnost, da bomo
-      med tvorjenjem slučajne permutacije $k$ postavili na
-      $i$-to in $h$ na $j$-to trenutno prosto mesto.
-      Očitno je $P(f(i) = k, f(j) = h) = p(i, k, j, h,1)$.
-      %
-
-      Za $h \notin [m, n]$ ali $j \notin [1, n-m+1]$ je
-      $q(j,h,m) = 0$, sicer pa
-      %Za $m=h$ in $j \in [1, n-m+1]$ velja
-      %$$q(j,h,m) = P(a_m = j)$$ sicer pa velja
-      %$$q(j, h, m) =   q(j-1, h, m+1) S_m^<(j-1) +
-      %q(j, h, m+1) S_m^>(j+1)$$.
-      %
-      $$
-      q(j, h, m) =
-      \begin{cases}
-        P(a_m = j) & m = h \\
-        q(j-1, h, m+1) S_m^<(j-1) +
-        & \text{sicer} \\
-        q(j, h, m+1) S_m^>(j+1)&\\
-      \end{cases}
-      $$
-
-      Za $p$ velja $p(i, k, j, h, m) = 0$, če velja ena od $k=h$,
-      $k \notin [m, n]$, $h \notin [m, n]$, $i \notin [1,
-      n-m+1]$, $j \notin [1, n-m+1]$.
-      Sicer pa je
-      %Če je $m=k$ in $k,h \in [m,n]$ ter $i,j \in [1, n-m+1]$,
-      %je
-      %$$
-      %p(i, k, j, h, m) = P(a_k = i) q(j-1, h, k+1).
-      %$$
-      %Podobno je za $m=h$ in $k,h \in [m,n]$ ter $i,j \in [1,
-      %n-m+1]$
-      %$$
-      %p(i, k, j, h, m) =  P(a_h = j) q(i, k, h+1).
-      %$$
-      %Sicer pa velja rekurzivna zveza
-      %\begin{align*}
-      %  p(i, k, j, h, m) &= \\
-      %  p(i-1, k, j-1, h, m+1) &S_m^<(i-1) +\\
-      %  p(i, k, j-1, h, m+1) &S_m^{\text{mid}}(i+1, j-1) +\\
-      %  p(i, k, j, h, m+1) &S_m^>(j+1).
-      %\end{align*}
-      $$
-      p(i, k, j, h, m) =
-      \begin{cases}
-        P(a_k = i) q(j-1, h, k+1) & m = k \\
-        P(a_h = j) q(i, k, h+1) & m = h \\
-        p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
-        &  \text{sicer} \\
-        p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1) +
-        &\\
-        p(i, k, j, h, m+1) S_m^>(j+1)
-        & \\
-      \end{cases}
-      $$
-      %
-      Z uporabo zgornjih rekurzivnih
-      enačb lahko funkcijo izgube izračunamo v času
-      $O(n^5)$. S pametnim preoblikovanjem funkcije izgube lahko
-      časovno zahtevnost znižamo na $O(n^3)$.
-      %
-      \paragraph{Izračun v $O(n^3)$}
-      %
-      Računamo
-      $\loss = \sum_{i,j} \left ((M_1)_{i,j} - \sum_{k,h}p(i, k, j,
-      h, 1) (M_2)_{k,h} \right )^2$.
-      Definiramo pomožne funkcije
-      \begin{align*}
-        U_{j, m, k} &= \sum_h q(j, h, m)(M_2)_{k, h} \\
-        V_{i, m, h} &= \sum_k q(i, k, m)(M_2)_{k, h} \\
-        T_{i, j, m} &= \sum_{k,h} p(i, k, j, h, m) (M_2)_{k,h}
-      \end{align*}
-      Očitno je $\loss = \sum_{i,j} \left ((M_1)_{i,j} - T_{i,
-      j, 0} \right )^2$. Iz rekurzivnih zvez za $p$ in $q$
-      sledi
-      \begin{align*}
-        T_{i, j, m} &={} &
-        &+\sum_h  P(a_m = i) q(j-1, h, m+1) (M_2)_{m,h}  \\
-        &   &
-        &+\sum_h  P(a_m = j) q(i, k, m+1) (M_2)_{k,m} \\
-        &   &
-        &+ \sum_{k, h}
-        p(i-1, k, j-1, h, m+1) S_m^<(i-1) (M_2)_{k,h} \\
-        &   &
-        &+\sum_{k, h}
-        p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1)(M_2)_{k,h} \\
-        &   &
-        &+\sum_{k, h}
-        p(i, k, j, h, m+1) S_m^>(j+1) (M_2)_{k,h} \\
-        &={} &
-        &P(a_m=i)  U_{j-1, m+1, m} +
-        P(a_m=j) V_{i, m+1, m} \\
-        & & &+
-        T_{i-1, j-1, m+1}  S_m^<(i-1) +
-        T_{i, j-1, m+1}  S_m^{\text{mid}}(i+1, j-1) +
-        T_{i, j, m+1}  S_m^>(j+1)
-      \end{align*}
-      Z uporabo teh formul lahko funkcijo izgube izračunamo v
-      času $O(n^3)$. Če želimo še hitrejši izračun, lahko
-      naključno izberemo podmnožico indeksov $(i,j)$ in
-      izračunamo stohastični približek funkcije izgube na podmnožici.
-
-      Naj bo $S \subset [n] \times [n]$ naključno izbrana
-      podmnožica indeksov. Za približek funkcije izgube lahko
-      vzamemo
-      \begin{equation*}
-        \loss_\approx = \sum_{(i, j) \in S}
-        \left ((M_1)_{i,j} - T_{i, j, 1} \right )^2.
-      \end{equation*}
-      Časovna zahtevnost izračuna približka je
-      $O(|S| n^2)$.
-      %
-      \paragraph{Primerjava}
-      \label{paragraph:grafi_preparam_primerjava}
-      Na sliki \ref{fig:loss_computation_time_comparison} je
-      prikazana primerjava metode iz poglavja
-      \ref{subsection : rezultati_grafi_vanilla} in metode z
-      uporabo tabele inverzij. Z uporabo tabele inverzij
-      dosežemo bolšje rezultate.
-      \begin{figure}[ht]
-        \centering
-        \includegraphics[width=0.7\linewidth]{images/average_loss_on_size_vanilla_vs_it.pdf}
-        \caption{Primerjava napak glede na velikost grafa.
-          Za vsak $n$ sta metodi preizkušeni na istih $10$-tih
-          naključno izbranih grafih. Vsaka točka je povprečje
-          napak na teh grafih.
-        }
-        \label{fig:loss_computation_time_comparison}
-      \end{figure}
-      %
-      \subsubsection{Preparametrizacija z nevronskimi mrežami}
-      Verjetnost uspešne konvergence lahko poizkusimo
-      izboljšati s preparametrizacijo
-      (\emph{overparametrisation}) proglema.
-      Matriko $P$ definiramo kot izhod globoke nevronske mreže
-      (glej dodatek \ref{poglavje:nn}) in spreminjamo njene
-      parametre.
-
-      Preparametrizacija z nevronskimi mrežami deluje za
-      \emph{gradient dominante}
-      funkcije izgube
-      \cite{allenzhu2019convergencetheorydeeplearning}, glej
-      \ref{poglavje:konvergenca-globokih-mrez}. Za splošne
-      funkcije izgube obstajajo
-      empirični rezultati, ki kažejo, da z rahlo
-      overparametrizacijo in gradientnim spustom lahko dosežemo
-      uspešno konvergenco
-      \cite{safran2021effectsmildoverparameterizationoptimization,
-      simon2024bettermodernmachinelearning} do globalnega minimuma.
-      Poleg tega empirični rezultati
-      \cite{pascanu2014saddlepointproblemnonconvex} kažejo, da so
-      pri nekonveksni parametrizaciji funkcij izgube v velikih dimenzijah
-      selda bolj razširjena od lokalnih minimumov. Z večanjem
-      števila parametrov
-      se v reliefu funkcije izgube pojavlja več sedel, iz katerih
-      lahko pobegnemo s preturbiranim gradientnim spustom,
-      predstavljenim v poglavju \ref{subsection : PGD}.
-
-      Empirično testiramo dve izbiri preparametrizacije z
-      nevronskimi mrežami.
-      \begin{definicija}
-
-        \emph{Blaga preparametrizacija} modela izomorfizma
-        grafov iz poglavja \ref{subsection:uporaba tabele
-        inverzij} velikosti $n$ definiramo kot
-        nevronsko mrežo z vhodom velikosti $n$, skrito plastjo
-        velikosti $n$ in izhodom
-        veliksti $\frac{n^2 -n - 2}{2}$. Aktivacijska funkcija v
-        skriti plasti je $\operatorname{ReLu}$.
-        Na zadnji plasti oblike  $(x_{1,1}, \dotsc, x_{1, n},
-        x_{2, 1}, \dotsc x_{2, n -1}, \dotsc, x_{n-1, 1}, x_{n-1, 2} )^T$
-        uporabimo softmax po blokih
-        $$(p_{i, 1}, \dotsc, p_{i, n - i + 1}) =
-        \operatorname{softmax}(x_{i, 1}, \dotsc, x_{i, n - i + 1})$$,
-        kjer je $p_{i,j}$ verjetnost, da $i$ postavimo na $j$-to
-        prosto mesto, če smo prej
-        postavili $i-1$ elementov.
-        Velja
-        $$
-        M_{\text{blaga preparametrizacija}} =
-        \operatorname{Softmax}_\text{po blokih} \circ W_2 \circ
-        \operatorname{ReLU} \circ W_1,
-        $$
-        kjer sta $W_1 \colon \R^n \to \R^n$ in
-        $W_2 \colon \R^n \to \R^{\frac{n^2 - n - 2}{2}}$ afini preslikavi.
-        Distribucijo $P_d$ nad tabelami inverzij definiramo kot
-        $$
-        \operatorname{flatten}(P_d) = M_{\text{blaga
-        preparametrizacija}}(x_0).
-        $$
-        Vektor $x_0 \in \R^n$ in afini preslikavi $W_1, W_2$ so
-        parametri modela.
-      \end{definicija}
-      %
-      \begin{definicija}
-        \emph{Globoko preparametrizacijo} definiramo definiramo
-        kot $5$ plastno nevronsko mrežo
-        z vohdno in skritimi plastmi velikosti $n^2$ in izhodno
-        plastjo velikosti
-        $\frac{n^2 - n - 2}{2}$. Aktivacijske funkcije v skritih
-        plasteh so $\operatorname{ReLu}$, na zadnjih plasteh
-        uporabimo softmax po blokih, kot v blagi preparametrizaciji.
-        Distribucijo $P_d$ nad tabelami inverzij izračunamo kot
-        $$
-        \operatorname{flatten}(P_d) =
-        \operatorname{softmax}_\text{po blokih} \circ
-        W_4\circ
-        \operatorname{ReLu} \circ
-        w_3 \circ
-        \operatorname{ReLu} \circ
-        W_2 \circ
-        \operatorname{ReLu} \circ
-        W_1
-        (y_0).
-        $$
-        Parametri modela so  $y_0 \in \R^{n^2}$ in
-        afine preslikave
-        $W_i$.
-      \end{definicija}
-      \paragraph{Primerjava metod}
-      Zgornje metode primerjamo s preparametrizacijo z
-      grafovskimi konvolucijskimi mrežami (definicija
-      \ref{def:ujemanje-GNN-sinkhorn}), predstavljeno v
-      \cite{graphoptimaltransport2020crossdomainalignment}.
-      Gre za sodoben pristop k problemu ujemanja grafov z
-      uporabo optimalnega transporta in nevronskih mrež.
-      Ta pristop namesto klasičnih nevronskih mrež uporablja
-      modele, prilagojene za delo z grafi (definicija
-      \ref{def:GNN}), namesto
-      distribucije nad $S_n$ pa uporablja
-      \emph{Sinkhornov} algoritem (definicija \ref{def:sinkhorn}),
-      ki poljubne matrike zvezno preslika v
-      \emph{dvojno stohastične}\footnote{Stohastična matrika $P$ je
-        dvojno stohastična, če je $P^T$ stohastična.
-      }. Točna formulacija je v dodatku \ref{dodatek:GNN+sinkhorn}.
-      %
-
-      Slika \ref{fig:primerjava vanilla-nn-mild-nn} prikazuje primerjavo
-      uporabe tabele inverzij brez preparametrizacije z blago
-      in globoko preparametrizacijo.
-      Za vsak $n$
-      so metode preizkušene na istih $10$-tih
-      naključno izbranih grafih.
-      Po koncu optimizacije izračunamo
-      napako najbolj verjetne permutacije in jo povprečimo po
-      $10$-tih grafih.
-
-      Vsaka krivulja prikazuje rast povprečne napake
-      najbolj verjetne preslikave glede na velikost grafa.
-      Tabela
-      \ref{table:povprečne napake različnih metod grafi}
-      prikazuje povprečne napake metod na celotnem
-      naboru grafov.
-
-      Za
-      optimizacijo je bil uporabljen naključno preturbiran
-      Adam z
-      hitrostjo učenja $10^{-3}$ in z razporejevalnikom učne
-      hitrosti \verb|CosineAnnealingWarmRestarts|. Na
-      posameznem grafu se je optimizacija izvajala
-      $1000$ korakov in se prekinila, če je norma gradienta
-      padla pod $\epsilon_\nabla = 10^{-3}$.
-      %
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/average_curve_full.pdf.pdf}
-        \caption{
-          Primerjava napak različnih metod glede
-        na velikost grafa.}
-        \label{fig:primerjava vanilla-nn-mild-nn}
-      \end{figure}
-      \begin{table}
-        \centering
-        \begin{tabular}{l|l}
-          Metoda & Povprečna napaka \\
-          \hline
-          Tabela inverzij& $11.05$ \\
-          Blaga preparametrizacija& $11.27$ \\
-          Globoka preparametrizacija& \boldmath$10.94$ \\
-          GNN in sinkhorn& $11.67$
-        \end{tabular}
-        \caption{Povprečne napake metod.}
-        \label{table:povprečne napake različnih metod grafi}
-      \end{table}
-
-      \TODO{Kaj več o graph matchingu? Uničevanje simetrij z
-      naključnim šumom? Sinkhorn vs tabela inverzij?}
-      %
-      %
-      \appendix
-      \clearpage
-      \section{Nevronske mreže}
-      % \section*{Dodatek: Konvergenca globokih mrež}
-      %\addcontentsline{toc}{section}{Dodatek: Konvergenca globokih mrež}
-      \label{poglavje:konvergenca-globokih-mrez}
-      \label{section:overparametrisation}
-      %Metode, predstavljene v prejšnjih poglavjih, so zanimive iz
-      %teoretičnega stališča, a niso uporabne v praksi,
-      %saj je dinamika gradientnih tokov preveč kaotična in
-      %verjetnost za neuspešno konvergenco previsoka.
-      %
-      %           Aplikativnosti se lahko približamo z
-      %          \emph{overparametrzicaijo}. Stohastično matriko $P$ lahko
-      %          definiramo z večjim modelom $P(\phi)$, ki je odvisen od
-      %          velikega števila parametrov $\phi \in \R^d, d \gg n^2$.
-      %          V
-      %  \subsection{Nevronske mreže}
-      \label{poglavje:nn}
-      %Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
-      %mrežami}. Definicija nevronske mreže je povzeta po
-      %\cite{prince2023understandingdeeplearning}.
-      \begin{definicija}[Nevronska mreža]
-        Naj bo za vsak $i \in [l]$
-        $W_i \colon \R^{d_{i-1}} \to \R^{d_i}$
-        afina\footnote{$W_i(x) = A_i x + b_i$ za
-        $A_i \in \R^{d_{i-1} \times d_i}$ in $b_i \in \R^{d_i}$.}
-        preslikava. Za vsak $i \in
-        \{1, 2, \dotsc, l\}$ in $x \in R^{d_{i-1}}$ velja
-        $W_i(x) = \Omega_i x + b_i$ za $\Omega_i \in
-        \R^{d_{i-1} \times d_i}$ in $b_i \in \R^{d_{i}}$.
-
-        Naj bodo $\sigma_1, \dotsc, \sigma_l$ realne funkcije v
-        eni spremenljivki. Za poljuben $d \in \N$ definiramo
-        $\sigma_i \colon \R^d \to \R^d$ po elementih s
-        predpisom $\sigma(x)_i = \sigma(x_i)$. Preslikavam
-        $\sigma_i$ rečemo \emph{aktivatorske funkcije}.
-        Običajno aktivacijske funkcije izberemo izmed
-        $\operatorname{ReLU}\footnote{$\operatorname{ReLU}(x) =
-          \begin{cases}
-            0 & x \leq 0 \\
-            x & x > 0
-          \end{cases}
-        $}, \operatorname{softmax}, \arctan, \operatorname{GeLU}$.
-
-        \emph{Nevronska mreža} globine $l$ je model
-        $$
-        M_\phi = \sigma_l \circ W_l \circ \sigma_{l-1} \circ
-        W_{l-1} \circ \dotsm \circ \sigma_1 \circ W_1 \colon
-        \R^{d_0} \to \R^{d_l},
-        $$
-        odvisen od parametrov $\phi  = \Omega_0, b_0, \Omega_1,
-        b_1, \dotsc, \Omega_l, b_l$. Če je $l \geq$ rečemo, da
-        je mreža globoka.
-      \end{definicija}
-      \begin{definicija}[Regresija]
-        Eden od klasičnih problemov, pri katerem se uporabljajo
-        nevronske mreže, je \emph{regresija}.
-
-        Za slučajni spremenljivki $X \in \R^{d_1}$ in $Y \in
-        \R^{d_2}$ iščemo model $\hat Y (X)$, ki čim bolje opiše $E[Y|X]$.
-
-        Predpostavimo, da imamo množico vzorcev $S_\text{train}
-        = \{(x_i, y_i) \mid i \in [n]\}$ slučajne spremenljivke
-        $(X,Y)$ in nevronsko mrežo $M_{\phi_0} \colon \R^{d_0}
-        \to \R^{d_l}$ z naključno izbranimi začetnimi parametri
-        $\phi$ in z gradientnim spustom minimaliziramo
-        $$
-        \Loss{regresija} (\phi) = \frac{1}{|S_\text{train}
-        |}\sum _{(x, y) \in S_\text{train}} \|M_\phi (x) - y  \|^2.
-        $$
-        Uspešnost modela nato testiramo na množici vzorcev
-        $S_\text{test} \subset S_\text{train}^c$.
-      \end{definicija}
-      V splošnem lahko za par $(x,y)$ in nevronsko mrežo
-      $M_\phi$ definiramo poljubno funkcijo izgube
-      $f(z=M_\phi(x), y)$ in minimaliziramo
-      $$ \Loss{}(\phi) = \frac{1}{|S_\text{train}|} \sum_{(x,y)
-      \in S_\text{train}} f(M_\phi(x  ), y).$$
-      %
-      \subsection{Nevronske mreže dosežejo globalni minimum
-      funckije izgube}
-      Če za gladko funkcijo izgube
-      $f(z,y)$
-      velja
-      \emph{ Polyak-Lojasiewiczev pogoj}
-      $$
-      \|\nabla f(z,y)\|^2 \geq \mu (f(z,y) - f(\min_z(f(z,y))  , y)),
-      $$
-      dovolj globoke nevronske mreže
-      s gradientnim spustom vedno najdejo parametre, ki dosegajo
-      poljubno natančen približek globalnega minimuma funkcije izgube.
-      Spodnji izrek je povzet po
-      \cite[stran 6, izrek 1]{allenzhu2019convergencetheorydeeplearning}.
-      \begin{izrek}[Allen-Zhu, Li, Song]
-        \label{izrek:allen-zhu-global-minima}
-        Naj $f(z,y)$ izpolnjuje Polyak-Lojasiewiczev.
-        Naj bo $S_\text{train}$ taka množica vzorcev, da
-        obstaja $\delta > 0$, da za dva  vzorca $(x_i, y_i),
-        (x_j,y_j) \in S_\text{train}$ z različnima indeksoma $i
-        \neq j $ velja $\|x_i - x_j\| > \delta$.
-
-        Naj bo $M = \sigma \circ W_l \circ
-        \sigma \circ W_{l-1} \circ \dotsm \circ
-        \sigma \circ W_1$  taka $l$-plastna
-        nevronska mreža, da velja $d_1 = d_2 = \dotsm = d_{l-1}
-        = m \in \N > d_0 \cdot \operatorname{poly}(n, l,
-        \delta^{-1})\frac{d}{\mu}$.
-
-        Potem gradinetni spust s hitrostjo učenja $\eta =
-        \Theta (d_0 \frac{\delta}{m \cdot
-        \operatorname{poly}(n, l)})$ z verjetnostjo vsaj $1 -
-        e^{- \Omega(\log^2 m)}$  po
-        $O(\frac{n^6L^2}{\delta^2 \mu})\log\epsilon^{-1}$
-        korakih najde parametre $\phi$, za katere velja
-        $\Loss{regresija}(\phi) < \epsilon$.
-      \end{izrek}
-      \subsection{Preparametrizacija z grafovskimi
-      nevronskimi mrežami in algoritmom Sinkhorn}
-      \label{dodatek:GNN+sinkhorn}
-      Definicija grafovske konvolucijske mreže sledi
-      \cite{DBLP:journals/corr/KipfW16}.
-      Definicija Sinkhornovega algoritma je povzeta po
-      \cite{SinkhornKnopp}.
-      Implementacija
-      ujemanja grafov z grafovskimi nevronskimi mrežami
-      je povzeta po
-      \cite{graphoptimaltransport2020crossdomainalignment}.
-      \begin{definicija}
-        [Grafovska konvolucijska mreža]
-        \label{def:GNN}
-        Naj bo $M$ matrika sosednosti grafa $G$ in
-        $D$ diagonalna matrika s stopnjami vozlišč grafa $G$.
-        \emph{Konvolucijsko plast} grafovske nevronske mreže
-        definiramo kot
-        $$H^{(l+1)} = \sigma \left ( D^{-\frac{1}{2}}
-        (M + I) D^{-\frac{1}{2}} H^{(l)} W^{(l)} \right ),$$
-        kjer je $H^{(l)}$ matrika aktivacij v $l$-ti plasti,
-        $W^{(l)}$ je matrika uteži v $l$-ti plasti in
-        $\sigma$ je aktivacijska funkcija.
-      \end{definicija}
-      \begin{definicija}
-        [Sinkhornov algoritem]
-        \label{def:sinkhorn}
-        Naj bo $K \in \R^{n \times n}$ matrika z pozitivnimi
-        elementi. Sinkhornov algoritem je iterativni postopek za
-        izračun dvojno stohastične matrike $P \in \R^{n \times n}$
-        oblike $P = D_1 K D_2$, kjer sta $D_1$ in $D_2$ diagonalni
-        matriki s pozitivnimi elementi na diagonali.
-        Algoritem izračuna matriki $D_1$ in $D_2$ z naslednjimi
-        koraki:
-        \begin{align*}
-          D_1^{(t+1)} &= \operatorname{diag} \left (
-          \frac{1}{K D_2^{(t)} \mathbf{1}} \right ) \\
-          D_2^{(t+1)} &= \operatorname{diag} \left (
-          \frac{1}{K^T D_1^{(t+1)} \mathbf{1}} \right )
-        \end{align*}
-        kjer je $\mathbf{1} \in \R^n$ vektor enic.
-
-        Če nas zanima le $P$, je dovolj, da izmenično vse vrstice in vse
-        stolpce matrike $P$ normaliziramo na $1$. Z $S_m(K)$
-        označimo matriko, dobljeno z uporabo Sinkhornovega
-        algoritma na $K$
-        po $m$ iteracijah.
-      \end{definicija}
-      Za matriko $K$ s strogo pozitivnimi členi velja,
-      da Sinkhornov algoritem konvergira do dvojno stohastične
-      matrike $P$ \cite[izrek 2.1]{SinkhornKnopp}.
-      \begin{definicija}
-        [Stroškovna matrika]
-        Naj bosta $X \in \R^{n \times d}$ in
-        $Y \in \R^{n \times d}$ poljubni matriki in naj
-        $X_i$ označuje $i$-ti vrstico matrike $X$,
-        $Y_j$ pa $j$-to vrstico matrike $Y$.
-        \emph{Stroškovno matriko} $C(X,Y) \in \R^{n \times n}$
-        definiramo kot
-        $$C_{i,j} = \|X_i - Y_j\|^2.$$
-      \end{definicija}
-      Za graf velikosti $N$ definiramo model $M_\text{encoder}$
-      kot grafovsko nevronsko mrežo z dvema konvolucijskima plastema
-      in aktivacijsko funkcijo $\operatorname{ReLU}$ s slednjim predpisom:
-      $$
-      M_\text{encoder}(M) =\hat{M}
-      \operatorname{ReLU}(
-        \hat{M}W_1
-      )
-      W_2
-      \in \R^{n \times n^2}
-      ,
-      $$
-      kjer je $\hat{M} = D^{-\frac{1}{2}}
-      (M + I) D^{-\frac{1}{2}}
-      $ in sta $W_1 \in \R^{n \times n^2}, W_2 \in \R^{n^2 \times n^2}$
-      parametra modela.
-      .
-      \begin{definicija}
-        \label{def:ujemanje-GNN-sinkhorn}
-        V poglavju
-        \ref{paragraph:grafi_preparam_primerjava}
-        gravske nevronske mreže na sledeč
-        način uporabimo za
-        reševanje ujemanja grafov:
-        \begin{enumerate}
-          \item Za grafa z matrikama sosednosti $M_1, M_2$
-            računamo
-            $$P=S_{100}(C( M_\text{encoder}(M_1),
-            M_\text{encoder}(M_2) )).$$
-          \item Minimiziramo funkcijo izgube
-            $$\|M_1 - PM_2 P^T\|.$$
-        \end{enumerate}
-      \end{definicija}
-      %
-      %
-      %
-      \section{Rezultati simulacij}
-      \subsection{Upodobitve}
-      \subsubsection{Diedrska grupa}
-      \paragraph{Trajektorije}
-      Več trajektorij enodimenzionalnega modela iz slike
-      \ref{fig:Dn-trajektorije-demo-dim1}. Enačbo gradientnega
-      toka rešujemo z  metodo Dormand-Prince. Vsaka slika prikazuje
-      $500$ trajektorij z naključno izbranimi
-      začetnimi parametri $r, s ~ U[-1, 1]$.
-      %
-      \label{dodatek_1dim dn trajektorije}
-      \begin{figure}[!hp]
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n1.png}
-          %\caption*{$n=1$}
-        \end{minipage}
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n2.png}
-          %\caption*{$n=2$}
-        \end{minipage}
-        \vspace{0.5em}
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n7.png}
-          %\caption*{$n=7$}
-        \end{minipage}
-        \centering
-        \begin{minipage}{0.49\textwidth}
-          \centering
-          \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n8.png}
-          %\caption*{$n=8$}
-        \end{minipage}
-        \caption{Trajektorije enodimenzionalnega modela
-          realne upodobitve diedrske grupe za različne vrednosti
-          $n$. Za vsako vrednost $n$ je prikazanih $500$
-          naključno izbranih trajektorij z začetnimi
-          parametri iz $[-1,1]^2$.
-        }
-        \label{fig:Dn-trajektorije-demo}
-      \end{figure}
-      \paragraph{Dinamika enodimenzionalnega modela}
-      \label{section:dinamika_1dim_Dn}
-      %
-      Rešujemo diferencialno enačbo gradientnega toka
-      za enodimenzionalni model realne upodobitve nad
-      diedrsko grupo in opazujemo čas $t_{r_0,s_0}$, v katerem
-      model z začetnima parametroma
-      $\rho(r)_0 = r_0, \rho(s)_0 = s_0$ prvič skonvergira do
-      $\epsilon$-okolice limite trajektorije.
-      %Vse spodnje slike
-      Slike \ref{fig:dihedral_1d_grid_n3},
-      \ref{fig:dihedral_1d_grid_n3_zoomed} in
-      \ref{fig:dihedral_1d_grid_n4}
-      so bile
-      pridobljene z $\epsilon = 0.01$ in integracijskim
-      intervalov $t \in [0,1]$.
-      \begin{figure}[!ht]
-        \centering
-        \includegraphics[width=\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1_1_r1000.pdf.png}
-        %
-        \caption{Hitrosti konvergence enodimenzionalnega modela
-          $D_3 \to \R$ z različnimi začetnimi
-          parametri $(r_0, s_0)$. Na zgornji sliki so začetni
-          parametri izbrani iz kvadrata $[-1,1]^2$, na spodnji
-          pa iz kvadrata $[0.5, 1.5]^2$.
-        }
-        \label{fig:dihedral_1d_grid_n3}
-      \end{figure}
-      \begin{figure}[!hp]
-        \centering
-        \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1.5_-0.5_r2000.pdf.png}
-        \medskip
-        \includegraphics[width=0.77125\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_0.5_1.5_r3000.pdf.png}
-        \caption{Hitrosti konvergence enodimenzionalnega modela
-          $D_3 \to \R$ na
-          $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji
-          $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj).
-          Barvna shema je izbrana, da poudari kontraste med
-          regijami z različnimi
-          hitrostmi konvergenc.
-        }
-        \label{fig:dihedral_1d_grid_n3_zoomed}
-      \end{figure}
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.81\textwidth]{./images/dihedral/grid/cut_colored_grid_n4_-2_2_r2000.pdf.png}
-        \medskip
-        \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png}
-        \caption{Hitrosti konvergence enodimenzionalnega modela
-          $D_4 \to \R$ na
-          $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$.
-        }
-        \label{fig:dihedral_1d_grid_n4}
-        %
-      \end{figure}
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png}
-        \caption{Hitrosti konvergence enodimenzionalnega modela
-          $D_4 \to \R$ na
-          $[0.5, 1.5]^2$. Resolucija slik je $2000\times 2000$.
-        }
-        \label{fig:dihedral_1d_grid_n4_2}
-        %
-      \end{figure}
-      %
-      %
-      \clearpage
-      \paragraph{Dvodimenzionalen model}
-      \label{dodatek:dihedral-2d-trajektorije}
-      Opazujemo realen model $\rho \colon D_n \to \R^{2 \times 2}$
-      upodobitve diedrske grupe, podan z matrikama
-      $R := \rho (r)$ in
-      $S := \rho (s)$.
-
-      Za $500$ naključno izbranih začetnih parametrov
-      $(R_0, S_0) \sim U[(-1,1)^8]$ rešujemo diferencialno enačbo
-      $$
-      \frac{d(R,S)}{dt} = - \nabla \loss(R,S)
-      $$
-      z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$.
-
-      Na sklikah
-      \ref{fig:trajektorije_diedrska_grupa_2d-1} in
-      \ref{fig:trajektorije_diedrska_grupa_2d-2}
-      so
-      prikazane trajektorije
-      $\{ (\operatorname{tr}(R(t)), \operatorname{tr}(S)(t)) \mid
-        t \in [0,1]
-      \}$
-      za različne začetne parametre.
-
-      Enačbo rešujemo z metodo Dormand-Prince
-      \cite{solvingordinarydifferentialequations1993nonstiff} (Runge-Kutta
-      5. reda s 4. redom ocene napake). Gradient
-      $\nabla \loss$ je izračunan analitično.
-      \label{dodatek:dihedral repr}
-      \begin{figure}[!ht]
-        \centering
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_3.png}
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_4.png}
-
-        \medskip
-
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_5.png}
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_6.png}
-
-        \caption{Trajektorije učenja modelov $D_n \to \R^{2
-          \times 2}$ z različnimi začetnimi parametri.
-          Model $D_n \to \R^{2 \times 2}$ je definiran z
-          vrednostima $R := \rho (r)$ in
-          $S := \rho (s)$. Opazujemo trajektorije
-          $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$.
-          Črne pike predstavljajo začetne parametre. Modre
-          trajektorije konvergirajo do upodobitve.
-        }
-        \label{fig:trajektorije_diedrska_grupa_2d-1}
-      \end{figure}
-      \begin{figure}[!ht]
-        \centering
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_7.png}
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_8.png}
-        %
-        \medskip
-        %
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_9.png}
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_10.png}
-        %
-        \medskip
-        %
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_11.png}
-        \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_12.png}
-        \caption{Trajektorije učenja (nadaljevanje).}
-        %
-        \label{fig:trajektorije_diedrska_grupa_2d-2}
-      \end{figure}
-      \clearpage
-      \subsection{Delovanja}
-      \subsubsection{Ciklične grupe}
-      Opazujemo matrike $P_s$ pred in po optimizaciji
-      kompleksnih modelov $\rho \colon C_n \to \funnn{m}$.
-      Optimiziramo z algoritmom
-      \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
-      parametri iz \cite{paszke2019pytorch}.
-      Vsak model učimo največ
-      največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
-      učenje ustavimo prej.
-      \label{appendix: actions-cyclic}
-      %
-      %
-      \begin {figure*}[ht]
+      \loss(R, S) = - \operatorname{tr}(\log (P_r^n))
+      - \operatorname{tr}(\log (P_s^n))
+    - \operatorname{tr}(\log (P_rP_s)^2))
+    ,
+    $$
+    kjer je $P_r = \operatorname{softmax(R)},$
+    $P_s=\operatorname{softmax}(S)$ in    $R, S \in \R^{m \times m}$.
+    \paragraph{Rezultati}
+    Na sliki \ref{fig:actions-dn} so matrike
+    $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega spusta
+    med iskanjem delovanja diedrske grupe $D_9$ na množici $[9]$.
+    Več rezultatov je v dodatku \ref{appendix: actions-dihedral}.
+    \begin{figure}[ht]
       \centering
-      %
       \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C5_n=5_m=5.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C7_n=7_m=5.png}
-      \end {figure*}
-      %
-      \begin {figure*}[ht]
-      \centering
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C7_n=7_m=7.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C8_n=8_m=5.png}
-      \end {figure*}
-      %
-      \begin {figure*}[ht]
-      \centering
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C9_n=9_m=6.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C10_n=10_m=7.png}
-      \end {figure*}
-      %
-      \begin {figure*}[ht]
-      \centering
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C12_n=12_m=7.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C12_n=12_m=8.png}
-      \end {figure*}
-      %
-      \begin {figure*}[ht]
-      \centering
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C12_n=12_m=11.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C13_n=13_m=13.png}
-      \end {figure*}
-      %
-      \begin {figure*}[ht]
-      \centering
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C14_n=14_m=12.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C15_n=15_m=12.png}
-      \end {figure*}
-      %
-      \begin {figure*}[ht]
-      \centering
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C16_n=16_m=16.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C17_n=17_m=12.png}
-      \end {figure*}
-      %
-      \begin {figure}[ht]
-      \centering
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C18_n=18_m=15.png}
-      %
-      \includegraphics[
-        width=0.49\textwidth
-      ] {images/actions/plot_C19_n=19_m=17.png}
-      \caption{
-        Matrike $P_s$ pred in po optimizaciji
-        modelov $\rho \colon C_n \to \funnn{m}$ za različne
-        vrednosti $n$ in $m$.
+        width=0.9\textwidth
+      ]{images/actions/plot_D9_n=9_m=9.png}
+      \caption{Stohastični matriki
+        $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega
+        spusta
+        med iskanjem delovanja diedrske grupe $D_9$ na
+        množici $[9]$.
+        Permutacijski matriki $\overline{P_r}$ in
+        $\overline{P_s}$ pripadatata permutacijama
+        $\sigma_s = (123456789)$ in $\sigma_r = (19)(28)(37)(46)(5)$.
+        Velja $\sigma_s^2 = \sigma_r^9=(\sigma_r \sigma_s)^2 = 1$,
+        torej je $s \mapsto \sigma_s, r \mapsto \sigma_r$ homomorfizem.
       }
-      \end {figure}
-      \clearpage
-      \subsubsection{Diedrske grupe}
-      Opazujemo matrike $P_s$ in $P_r$ pred in po optimizaciji
-      modelov $\rho \colon D_n \to \funnn{m}$. Optimiziramo z algoritmom
-      \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
-      parametri iz \cite{paszke2019pytorch}.
-      Vsak model učimo največ
-      največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
-      učenje ustavimo prej.
-      \label{appendix: actions-dihedral}
+      \label{fig:actions-dn}
+    \end{figure}
+    %
+    \clearpage
+    \section{Iskanje izomorfizmov grafov}
+    \label{section:Iskanje izomorfizmov grafov}
+    S podobnim pristopom kot v \ref{eq: repr model na S}
+    lahko iščemo izomorfizme grafov. Iščemo model za
+    bijektivno preslikavo $f \colon G_1 \to G_2$ med grafoma
+    $G_1$ in $G_2$, za katero velja $f(i) \sim_2 f(j) \iff i \sim_1 j$.
+
+    Za model lahko vzamemo slučajno preslikavo $f$, podano s
+    stohastično matriko
+    $$P_f =
+    \begin{bmatrix}
+      P(f(1) = 1) & P(f(1) = 2) & \dotsm & P(f(1) = n) \\
+      P(f(2) = 1) & P(f(2) = 2) & \dotsm & P(f(2) = n) \\
+      \vdots & \vdots & & \vdots \\
+      P(f(n) = 1) & P(f(n) = 2) & \dotsm & P(f(n) = n) \\
+    \end{bmatrix} $$
+    in spreminjamo elemente matrike tako, da je $f $ vse bolj
+    verjetno izomorfizem. Zato potrebujemo funkcijo izgube,
+    ki je ničelna natanko v izomorfizmih - torej bijektivnih
+    preslikavah, ki slikajo povezane vozlišča v povezane.
+    \subsection{Funkcija izgube za bijektivnost}
+    \index{funkcija izgube za bijektivnost (grafi)}
+    Naj bo $f$ slučajna preslikava iz $\funnn{n}$, definirana
+    kot zgoraj. Radi bi, da je $f$ skoraj zagotovo
+    bijektivna, torej da velja
+    \begin{align*}
+      1 &= P(f \in S_n) \\
+      &= \sum_{\sigma  \in S_n} P(f =  \sigma) \\
+      &= \sum_{\sigma  \in S_n} \prod_{i=1}^n (P_f)_{i, \sigma(i)} \\
+      &= \operatorname{Perm(P_f)},
+    \end{align*}
+    kjer $\operatorname{Perm}(P_f)$ označuje \emph{permanent}
+    \footnote{$\operatorname{Perm}(A) = \sum_{\sigma  \in
+    S_n} \prod_{i=1}^n A_{i, \sigma(i)}$} matrike $P_f$.
+
+    Za stohastične matrike velja spodnja lema.
+    \begin{lema}
+      \label{lema:permanent stohasticne matrike}
+      Za stohastično matriko $P$ velja
+      $\operatorname{Perm}(P)=1$ natanko tedaj, ko je $P$ permutacijska.
+    \end{lema}
+    \begin{dokaz}
+      Če je $P$ permutacijska, ima očitno enotski permanent.
+      Dokažimo lemo še v obratno smer.
+
+      Naj bo $P =
+      \begin{bmatrix}
+        p_{i,j}
+      \end{bmatrix}_{i,j=1,\dotsc, n}$ poljubna stohastična
+      matrika s $\operatorname{Perm}(P) = 1$. Po definicijo
+      so vsi elementi  $p_{i,j}$ matrike med $0$ in $1$,
+      vrstice se pa seštejejo v $1$.
+      Velja
+      $$
+      \operatorname{Perm}(P) = \sum_{\sigma  \in S_n}
+      \prod_{i=1}^n p_{i, \sigma(i)} \leq \sum_{\sigma  \in
+      \funnn{n}} \prod_{i=1}^n p_{i, \sigma(i)},
+      $$
+      saj so vsi elementi stohastične matrike nenegativni, in
+      smo vsoti zgolj prišteli nenegativne elemente.
+
+      Vsako funkcijo $\sigma \in \funnn{n}$ lahko predstavimo
+      z vektorjem $(\sigma_1, \sigma_1, \dotsc, \sigma_n)$,
+      kjer je $\sigma_i = \sigma(i) \in \N$. Tako je
+      $$
+      \sum_{\sigma  \in \funnn{n}} \prod_{i=1}^n p_{i, \sigma(i)} =
+      \sum_{(\sigma_1, \sigma_1, \dotsc, \sigma_n) \in [n]^n}
+      \prod_{i=1}^n p_{i, \sigma_i} =
+      \prod_{i=1}^n (p_{i, 1} + p_{i, 2} + \dotsm + p_{i, n}).
+      $$
+      Ker so vsote vrstic enake $1$, velja
+      $$
+      1 = \operatorname{Perm}(P) \leq  \sum_{\sigma  \in
+      \funnn{n}} \prod_{i=1}^n p_{i, \sigma(i)} =
+      \prod_{i=1}^n (p_{i, 1} + p_{i, 2} + \dotsm + p_{i, n}) = 1.
+      $$
+      Sledi, da je  $\sum_{\sigma  \in S_n}  \prod_{i=1}^n
+      p_{i, \sigma(i)} =  \sum_{\sigma  \in \funnn{n}}
+      \prod_{i=1}^n p_{i, \sigma(i)} $ in posledično je vsota
+      \\
+      $
+      \sum_{\sigma  \in \funnn{n} \setminus S_n}
+      \prod_{i=1}^n p_{i, \sigma(i)}
+      $ enaka $0$.
+
+      Zdaj lahko dokažemo, da je  v poljubnem stolpcu matrike
+      $P$ lahko največ en ne-ničelni element. Naj bo $i$
+      indeks poljubnega stolpca in $r \neq s$ indeksa dveh
+      vrstic. Recimo, da sta elementa $p_{r, i}$ in $p_{s,i}$
+      oba neničelna.
+
+      Definiramo lahko tako preslikavo $f \in \funnn{n}$, da
+      je $f(r) = f(s) = i$, za $j \notin \{r, s\}$ pa $f(j)$
+      izberemo tako, da $p_{j, f(j)}$ ni ničelen (to lahko
+        vedno izberemo, saj je matrika stohastična, torej ima v
+      vsaki vrstici vsaj en neničelen element).
+
+      Očitno je $\prod_{i=1}^n p_{i, f(i)} \neq 0$, kar pa je
+      v protislovju z $ \displaystyle \sum_{\sigma  \in
+      \funnn{n} \setminus S_n} \prod_{i=1}^n p_{i,
+      \sigma(i)}$.   V vsakem stolpcu matrike je torej
+      natanko en neničelen element.
+
+      Velja še $1 = P(f \in S_n) = P(f \text{ je
+      surjektivna}) = \prod_{i=1}^n P(\exists j \in \N. f(j)= i) =
+      \prod_{i=1}^n (\sum_{j=1}^n p_{j, i})$, torej se vsote
+      stolpcev zmnožijo v $1$. Ker je v vsakem stolpcu
+      natanko en neničelen element sledi, da je ta element
+      enak $1$.  Posledično je tudi v vsaki vrstici natanko
+      en neničelen element (sicer se vrstica ne bi seštela v
+      $1$), kar pomeni, da je $P$ permutacijska.
+    \end{dokaz}
+    Slučajna preslikava $f$ je torej skoraj zagotovo
+    bijektivna natanko tedaj, ko je $P_f$ permutacijska.
+    Enostavno je preveriti, da so stohastične matrike
+    permutacijske natanko tedaj, ko so unitarne. Bolj, kot bo
+    $P_f$ unitarna, bolj verjetno bo $f$ bijektivna.
+
+    Če $P_f$ definiramo kot
+    $$P_f = \operatorname{softmax}(\phi)$$(glej poglavje
+    \ref{section:parametrizacija stohastičnih matrik}), lahko
+    za funkcijo izgube vzamemo $\phi \mapsto \Loss{unitary}(P_f)$.
+
+    \begin{definicija}
+      Za poljubno realno matriko $\phi \in \R^{n \times n}$
+      \emph{funkcijo izgube za bijektivnost} definiramo kot
+      $$
+      \Loss{bijective} = \Loss{unitary} \circ \operatorname{softmax}.
+      $$
+    \end{definicija}
+    Z minimiranjem iste funkcije izgube lahko rešujemo dva
+    različna problema (problem iskanja unitarnih matrik in
+    problem iskanja bijekcij) preslikava
+    $\operatorname{softmax}$  pa pretvarja med problemoma.
+    \subsection{Funkcija izgube za povezanost}
+    Naj bosta $G_1 = ([n], E_1)$ in $G_2 = ([n], E_2)$ grafa
+    in $M_1, M_2$ njuni matriki sosednosti.
+    Za $i \sim_1 j$ bi radi, da je $P(f(i)  \sim_2 f(j)) = 1$.
+    Računamo
+    $$
+    P(f(i) \sim_2 f(j)) = \sum_{k= 1}^n \sum_{h = 1}^n p_{i,
+    k} p_{j, h} m_{k,h}^{(2)}
+    % = f_j^T M_1 f_i
+    = (P M_2 P^T)_{i, j}.
+    $$
+    \begin{definicija}
       %
+      %
+      Želeli bi si, da je $P(f(i) \sim_2 f(j)) = (M_1)_{i,j}$.
+      Funkcijo izgube za povezanost lahko definiramo kot
+      $$
+      \loss_\sim = \|M_1 - P M_2 P^T\|.
+      $$
+      % \begin{opomba}
+      %   Alternativno lahko definiramo
+      % %
+      %   $$
+      %     \Loss{log} = -\sum_{i \sim_1 j} \log P(f(i) \sim_2 f(j))
+      %    =
+      %     -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T).
+      %   $$
+      % Za
+      %  \end{opomba}
+      %
+      %
+      Naš cilj je poiskati permutacijsko matriko $P$, ki minimalizira
+      $\loss_\sim(P)$. Rešujemo problem
+      \emph{ujemanja grafov}.
+      \index{funkcija izgube za povezanost (grafi)}
+    \end{definicija}
+    \begin{definicija}
+      \label{def:graph_matching}
+      \index{ujemanje grafov}
+      Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
+      na $n$ vozliščih. Problem ujemanja graphov
+      \emph{(graph matching)}
+      \cite{lyzinski2015graphmatchingrelaxrisk} je
+      definiran kot
+      iskanje minimuma
+      $$
+      \operatorname{argmin}_{P \in \Pi} \|M_1 - PM_2P^T \|,
+      $$
+      po  množici vseh $n \times n$ permutacijskih  matrik $\Pi$.
+
+      Če matriki $M_1$ in $M_2$ pripadata izomorfnima
+      grafoma, potem iščemo izomorfizem.
+    \end{definicija}
+    Problem \emph{ujemanja grafov} je NP-težek
+    \cite{sahni1976qapisnphard}. Klasični pristopi ga
+    rešujejo z relaksacijami funkcije izgube $\|M_1 - P M_2
+    P^T\|$ nad večje družine matrik $P$ in prevedbo
+    končne matrike nazaj na permutacijsko
+    \cite{lyzinski2015graphmatchingrelaxrisk},
+    \cite{aflalo2025convexrelaxation}.
+    Novejše metode se problema lotevajo z globokim učenjem.
+
+    V tem delu se s primerjavo različnih metod za ujemanje
+    grafov ne ukvarjamo.
+    Osredotočeni smo na posplošitev metod iz poglavij
+    \ref{subsection: Iskanje upodobitev z gradientnim spustom} in
+    \ref{section:iskanje delovanj}
+    %na problem ujemanja grafov
+    .
+    \subsection{Prehod na izomorfizem}
+    Kot v poglavju
+    \ref{section:pretvorba modela v delovanje} lahko tudi model
+    izomorfizma grafov pretvorimo v dejansko izomorfizem, če je le
+    vrednost funkcije izgube dovolj majhna.
+    \begin{definicija}
+      Za majhno vrednost $\Loss{unitary}(P) + \loss_\sim(P)$
+      model $P$ inducira izomorfizem med grafoma, podan s permutacijsko
+      matriko $\overline{P}$, ki ima v vrstici $i$ enico na mestu
+      $\operatorname{argmax}_j (P_{i,j})$.
+    \end{definicija}
+    Treba je preveriti, da je $\overline{P}$ res bijekcija in
+    da predstavlja izomorfizem.
+    %
+    \begin{lema}
+      \label{lema:loss unitary mali -> P blizu P streha}
+      Naj bo $P=QH, Q \in U_n, H= \sqrt{PP^*}$ polarni razcep
+      matrike $P$.
+      Če je  $\Loss{unitary}(P)
+      = \|P P^* - I\| < \epsilon$,
+      je $\|P-Q \| < \epsilon$. Če je $\epsilon < \frac{1}{2}$,
+      je $\overline{P} = Q$.
+    \end{lema}
+    \begin{dokaz}
+      Glej dokaz leme
+      \ref{lema:rho_s - Q_s < eps}.
+      %
+      % Opazujmo preslikavo
+      % $X \mapsto \|XX^*  - I\|$, definirano na
+      % stohastičnih matrikah. Naj bo $\delta > 0$.
+      % Kompaktna podmnožica
+      % $$
+      % \{X \text{ stohastična } \mid d(X, \Pi) \geq \delta   \}
+      % $$
+      % na njen doseže minimum $c_\delta$. Ker je stohastična matrika
+      % permutacijska natanko tedaj, ko je unitarna, je $c_\delta > 0$.
+      %
+      % Če je $\Loss{unitary}(P) < c_\delta$, je
+      % $ P=Q + E $ za permutacijsko matriko $Q$ in
+      % $\|E\| < \delta$.
+      % Za $\delta < \frac{1}{2}$ je
+      % $$
+      % \overline{P}  = \overline{Q + E} = Q.
+      % $$
+    \end{dokaz}
+    \begin{lema}
+      \label{lema:ocena za graph mathcing}
+      Za preslikavo
+      $$f \colon X \mapsto \| M_1 - X M_2 X^T \|$$
+      velja
+      $|f(X) - f(Y)| \leq
+      \|M_2\|(\|X\| + \|Y\|) \|X - Y\|$.
+      %
+    \end{lema}
+    \begin{dokaz}
+      Ocenimo
+      \begin{align*}
+        |f(X) - f(Y)|
+        &\leq \| (Y M_2 Y^T) - (X M_2 X^T) \| \\
+        &\leq \|(Y - X) M_2 Y^T\| + \|X M_2 (Y^T - X^T)\| \\
+        &= \|M_2\| (\|X\| + \|Y\|) \|X - Y\|.
+      \end{align*}
+    \end{dokaz}
+    \begin{lema}
+      Če je
+      $$\loss_\sim(P) \le \epsilon <
+      \min(  \frac{1}{2}
+        ,
+        \frac{\sqrt{2}}{1 + \|M_1\|\sqrt{n}}
+      ),
+      $$ je permutacija, podana z $\overline{P}$
+      izomorfizem med grafoma z matrikama sosednosti
+      $M_1$ in $M_2$.
+    \end{lema}
+    \begin{dokaz}
+      Po lemi \ref{lema:loss unitary mali -> P blizu P streha}
+      je $\|P - \overline{P}\| < \epsilon$.
+      Po lemi \ref{lema:ocena za graph mathcing}
+      pa velja
+      $$
+      |f(P)-f(\overline{P})| \leq  \|M_2\|(\|P\| +
+      \|\overline{P}\|)\epsilon
+      < \|M_2\|(1 + \sqrt{n})\epsilon
+      $$. Vrednost funkcije izgube v $\overline{P}$ je omejena:
+      $$
+      f(\overline{P}) < \epsilon(1 + \|M_2\|\sqrt{n})
+      $$
+
+      Opazujmo funkcijo izgube
+      $f \colon X \mapsto \| M_1 - X M_2 X^T \|$.
+      Če je $X$ permutacijska matrika, je
+      $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
+      vozlišča grafa $M_2$ preslikamo z permutacijo $X$.
+      Vrednosti funkcije izgube nad množico permutacijskih matrik so
+      torej diskretne.
+      $\| M_1 - X M_2 X^T \| = $ $0$ natanko tedaj,
+      ko $X$ predstavlja izomorfizem med grafoma $M_1$ in
+      $M_2$, sicer pa je
+      $\| M_1 - X M_2 X^T \| \geq \sqrt{2} > 1$.
+
+      Če je
+      $\epsilon <
+      \min(  \frac{1}{2}
+        ,
+        \frac{\sqrt{2}}{1 + \|M_1\|\sqrt{n}}
+      )$, je $f(\overline{P})=0$.
+    \end{dokaz}
+    %Poleg tega iz zveznosti $f$ sledi obstoj $\delta >0$,
+    %da iz $\|P - X\| < \delta$ sklepamo na
+    %$ |f(P) - f(X)| < \frac{1}{2}$.
+    %
+    %Za $f(P) < \frac{1}{2}$ in $\Loss{unitary}(P) < c_\delta$
+    %je $\overline{P}$ permutacijska matrika, ki predstavlja izomorfizem
+    %med grafoma $M_1$ in $M_2$.
+    %
+    \subsection{Rezultati}
+    \label{subsection : rezultati_grafi_vanilla}
+    \begin{primer}
+      Poglejmo si preprost graf \ref{fig:primer_grafa} na
+      petih točkah $\{0,1,2,3,4\}$, s povezavami $\{0 \sim 4,
+      4 \sim 3, 3 \sim 0, 3 \sim 1, 2 \sim 0\}$. Očitno je
+      grupa avtomorfizmov tega grafa izomorfna diedrski grupi
+      trikotnika $D_3$.
       \begin{figure}[ht]
         \centering
-        \includegraphics[
-          width=0.75\textwidth
-        ]{images/actions/plot_D6_n=6_m=5.png}
+        \includegraphics[width=0.5\linewidth]{images/random_samples_big_random_graph_1_on_5.png}
+        \caption{Graf na petih vozliščih.}
+        \label{fig:primer_grafa}
       \end{figure}
-      %%
-      \begin{figure}[ht]
+      Gradientni spust poleg trivialne rešitve na določenih
+      začetnih parametrih uspe najti avtomorfizem $(03)(24)$,
+      na drugih pa konvergira do limite, ki ni blizu avtomorfizma.
+
+    \end{primer}
+    \paragraph{Avtomorfizmi cayleyevih grafov}
+    \label{aut-cayley-vanilla-setup}
+    Z metodo iščemo avtomorfizme Cayleyevih grafov simetrične grupe.
+    Oštevilčenje vozlišč (elemetov  $S_n$)
+    sledi metodi \\
+    \verb| list(itertools.permutations(range(1, n + 1)))|,\\
+    za množico generatorjev vzamemo transpozicijo
+    $(1 2)$ in cikel $(1 2 \dotsc, n)$, za $M_1 = M_2$ vzamemo
+    matriko sosednosti dobljenega grafa.
+
+    Funkcijo izgube optimiziramo z algoritmom Adam s hitrostjo učenja
+    $10^{-3}$, dokler norma gradienta ne pade pod
+    $ 10^{-12}$.
+    Na sliki \ref{fig:cayley-aut-demo} so prikazane matrike
+    $P$ na začetku in
+    na koncu optimizacije ta različne $n$. Več rezultatov je v dodatku
+    \ref{dodatek:cayley-vanilla}.
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_demo_234.png}
+      \caption{Stohastična matrika $P$ na začetku in po
+        končani optimizaciji med iskanjem avtomorfizmov
+        Cayleyevih grafov simetrične grupe $S_n$ za
+        $n=2,3,4$.
+        Pri $n=2$ smo našli avtomorfizem $(0 1)$,
+        pri $n=3$ avtomorfizem $(0 5)(1 3)(2 4)$.
+      }
+      \label{fig:cayley-aut-demo}
+    \end{figure}
+    \subsection{Uporaba tabele inverzij}
+    \label{subsection:uporaba tabele inverzij}
+    V poglavju \ref{subsection : rezultati_grafi_vanilla}
+    izomorfizem iščemo v podprostoru
+    distribucij nad $\funnn{n}$, ki ga parametriziramo s
+    $(\R ^{n \times n})^{|S|}$. V tem poglavju predstavimo
+    alternativen pristop,
+    ki izomorfizem išče v podprostoru distribucij nad $S_n$. S tem
+    se izognemo potrebi po uporabi funkcije izgube za bijektivnost.
+    %
+    %
+
+    Množico permutacij predstavimo s tabelami inverzij. Nad
+    slednjimi lahko na
+    trivialen način definiramo gladko družino porazdelitev z
+    $O(n^2)$ parametri.
+    \subsubsection{Porazdelitve nad tabelo inverzij}
+    \begin{definicija}(Tabela inverzij)
+      \index{tabela inverzij}
+      Naj bo $\sigma \in S_n$ permutacija. Za vsak $k \in [n]$
+      definiramo $a_k = |\{ j > k
+        \mid \sigma(j) < \sigma(k)
+      \}|$. Vektor
+      $$\operatorname{TI}(\sigma) =
+      (a_1,
+        a_2, \dotsc,
+      a_n)$$
+      se
+      imenuje \emph{tabela inverzij} permutacije $\sigma$.
+    \end{definicija}
+    Tabela inverzij $TI \colon S_n \to [0, n-1] \times [0,
+    n-2 ] \times \dotsm \times [0]$
+    je bijekcija \cite[Trditev
+    1.~3.~12]{ernumerativecombinatorics2011volume1}.
+    Porazdelitev vektorjev iz
+    $\prod_{i=n-1}^0 [0, i]$ trivialno inducira porazdelitev nad $S_n$.
+
+    Tabelo inverzij lahko razumemo kot proces tvorbe
+    permutacij. Permutacijo $\sigma$ s tabelo inverzij
+    $\operatorname{TI}(\sigma) = (a_1, a_2, \dotsc, a_n) \in
+    \prod_{i=n-1}^0 [0, i]$ dobimo tako, da
+    $1$ postavimo na $(a_1 +1 )$-to mesto v v tabeli $[1,2,\dotsc, n]$,
+    nato $2$ postavimo na $(a_2 +1)$-to prosto mesto,
+    in tako naprej, dokler ne postavimo $n$ na $(a_n +1)$-to
+    prosto mesto.
+    \begin{primer}
+      \label{primer:tabela_inverzij}
+      Naj bo  $\operatorname{TI}(\sigma) = (2, 1, 0)$.
+      Začnemo s prazno tabelo
+      $$[ \_, \_, \_]$$
+      dolžine $3$. Postavimo $1$ na $3$-to mesto
+      $$[ \_, \_, 1]$$
+      nato $2$ na $3$-to prosto mesto
+      $$[ \_, 2, 1]$$
+      in na koncu $3$ na $2$-to prosto mesto
+      $$[ 3, 2, 1].$$
+      Velja $\sigma = (13)(2)$.
+    \end{primer}
+
+    Na podoben način lahko definiramo porazdelitev nad permutacijami.
+    Naj bo
+    $$P_d =
+    \begin{bmatrix}
+      p_{1,1} & p_{1,2} & \dotsm & p_{2, n-1} & p_{1,n} \\
+      p_{2,1} & p_{2,2} & \dotsm & p_{2, n-1} & 0 \\
+      p_{3,1} & p_{3,2} & \dotsm & 0 & 0 \\
+      \vdots & \vdots & \iddots & \vdots & \vdots    \\
+      p_{n-1,1} & p_{n-1,2}  & \dotsm & 0  & 0\\
+      p_{n,1} & 0  & \dotsm & 0  & 0\\
+    \end{bmatrix}$$
+    stohastična matrika. Potem lahko definiramo
+    $$P(a_k = i) = P(k\text{ postavimo na } i\text{-to prazno
+    mesto}) = p_{k, i}$$
+    in
+    $$P(TI(\sigma) = (x_1, x_2, \dotsc, x_n)) = \prod_{i=1}^n
+    P(a_k = x_k).$$
+    \begin{primer}
+      Naj bo
+      $$
+      P =
+      \begin{bmatrix}
+        a & b & c \\
+        d & e & 0 \\
+        f & 0 & 0 \\
+      \end{bmatrix}
+      $$
+      stohastična matrika, ki podaja porazdelitev nad $S_3$.
+      Verjetnost za permutacijo $\sigma = (13)(2)$ iz primera
+      \ref{primer:tabela_inverzij} je
+      $$P(TI(\sigma) = (2, 2, 1)) = P(a_1 = 2) P(a_2 = 2)
+      P(a_3 = 1) = cef$$.
+    \end{primer}
+    %
+    %
+    % Množica vseh možnih porazdelitev nad $\prod_{i=n-1}^0 [0,
+    % i]$ je ogromna.
+    % Podobno kot v \TODO{delovanja} se omejimo na manjšo
+    % parametrično družino porazdelitev
+    % \begin{equation}
+    %   \label{eq:porazdelitev nad tabelo inverzij}
+    %   P(a_k = i) = \phi_{k,i}
+    % \end{equation}
+    % in definiramo
+    % $$
+    % P(a_k = i) = P(k\text{ postavimo na }i\text{-to prosto mesto})
+    % $$
+    %
+    \subsubsection{Funkcija izgube}
+    Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
+    na $n$ vozliščih. Za povezani vozlišči $i \sim_1 j$ bi radi, da je
+    $P(f(i) \sim_2 f(j)) = 1$, kjer je $f$ slučajna permutacija.
+
+    Za funkcijo izgube lahko vzamemo
+    $$
+    \loss = \sum_{i, j} ( (M_1)_{i,j} - P(f(i) \sim f(j)) )^2.
+    $$
+    Očitno velja
+    $$
+    P(f(i) \sim f(j)) = \sum_{k=1}^n \sum_{h=1}^n P(f(i) = k,
+    f(j) = h) (M_2)_{k,h}.
+    $$
+    \subsubsection{Hiter izračun funkcije izgube}
+    Zanima nas $P(f(i) = k, f(j) = h)$.
+    Najprej uvedemo pomožne funkcije:
+    \begin{align*}
+      S_m^<(i) &= \sum_{s=1}^{i} P(a_m = s) \\
+      S_m^\text{mid}(i,j) &= \sum_{s=i}^{j} P(a_m = s) \\
+      S_m^>(j) &= \sum_{s=j}^{n} P(a_m = s) \\
+    \end{align*}
+    Recimo, da smo že postavili $m-1$ elementov
+    in postavljamo $m$-ti element. S
+    $q(j,h,m)$ označimo verjetnost, da bomo med
+    tvorjenjem slučajne permutacije $h$ postavili na
+    $j$-to trenutno prosto mesto. Podobno s $p(i, k, j, h,
+    m)$ označimo verjetnost, da bomo
+    med tvorjenjem slučajne permutacije $k$ postavili na
+    $i$-to in $h$ na $j$-to trenutno prosto mesto.
+    Očitno je $P(f(i) = k, f(j) = h) = p(i, k, j, h,1)$.
+    %
+
+    Za $h \notin [m, n]$ ali $j \notin [1, n-m+1]$ je
+    $q(j,h,m) = 0$, sicer pa
+    %Za $m=h$ in $j \in [1, n-m+1]$ velja
+    %$$q(j,h,m) = P(a_m = j)$$ sicer pa velja
+    %$$q(j, h, m) =   q(j-1, h, m+1) S_m^<(j-1) +
+    %q(j, h, m+1) S_m^>(j+1)$$.
+    %
+    $$
+    q(j, h, m) =
+    \begin{cases}
+      P(a_m = j) & m = h \\
+      q(j-1, h, m+1) S_m^<(j-1) +
+      & \text{sicer} \\
+      q(j, h, m+1) S_m^>(j+1)&\\
+    \end{cases}
+    $$
+
+    Za $p$ velja $p(i, k, j, h, m) = 0$, če velja ena od $k=h$,
+    $k \notin [m, n]$, $h \notin [m, n]$, $i \notin [1,
+    n-m+1]$, $j \notin [1, n-m+1]$.
+    Sicer pa je
+    %Če je $m=k$ in $k,h \in [m,n]$ ter $i,j \in [1, n-m+1]$,
+    %je
+    %$$
+    %p(i, k, j, h, m) = P(a_k = i) q(j-1, h, k+1).
+    %$$
+    %Podobno je za $m=h$ in $k,h \in [m,n]$ ter $i,j \in [1,
+    %n-m+1]$
+    %$$
+    %p(i, k, j, h, m) =  P(a_h = j) q(i, k, h+1).
+    %$$
+    %Sicer pa velja rekurzivna zveza
+    %\begin{align*}
+    %  p(i, k, j, h, m) &= \\
+    %  p(i-1, k, j-1, h, m+1) &S_m^<(i-1) +\\
+    %  p(i, k, j-1, h, m+1) &S_m^{\text{mid}}(i+1, j-1) +\\
+    %  p(i, k, j, h, m+1) &S_m^>(j+1).
+    %\end{align*}
+    $$
+    p(i, k, j, h, m) =
+    \begin{cases}
+      P(a_k = i) q(j-1, h, k+1) & m = k \\
+      P(a_h = j) q(i, k, h+1) & m = h \\
+      p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
+      &  \text{sicer} \\
+      p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1) +
+      &\\
+      p(i, k, j, h, m+1) S_m^>(j+1)
+      & \\
+    \end{cases}
+    $$
+    %
+    Z uporabo zgornjih rekurzivnih
+    enačb lahko funkcijo izgube izračunamo v času
+    $O(n^5)$. S pametnim preoblikovanjem funkcije izgube lahko
+    časovno zahtevnost znižamo na $O(n^3)$.
+    %
+    \paragraph{Izračun v $O(n^3)$}
+    %
+    Računamo
+    $\loss = \sum_{i,j} \left ((M_1)_{i,j} - \sum_{k,h}p(i, k, j,
+    h, 1) (M_2)_{k,h} \right )^2$.
+    Definiramo pomožne funkcije
+    \begin{align*}
+      U_{j, m, k} &= \sum_h q(j, h, m)(M_2)_{k, h} \\
+      V_{i, m, h} &= \sum_k q(i, k, m)(M_2)_{k, h} \\
+      T_{i, j, m} &= \sum_{k,h} p(i, k, j, h, m) (M_2)_{k,h}
+    \end{align*}
+    Očitno je $\loss = \sum_{i,j} \left ((M_1)_{i,j} - T_{i,
+    j, 0} \right )^2$. Iz rekurzivnih zvez za $p$ in $q$
+    sledi
+    \begin{align*}
+      T_{i, j, m} &={} &
+      &+\sum_h  P(a_m = i) q(j-1, h, m+1) (M_2)_{m,h}  \\
+      &   &
+      &+\sum_h  P(a_m = j) q(i, k, m+1) (M_2)_{k,m} \\
+      &   &
+      &+ \sum_{k, h}
+      p(i-1, k, j-1, h, m+1) S_m^<(i-1) (M_2)_{k,h} \\
+      &   &
+      &+\sum_{k, h}
+      p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1)(M_2)_{k,h} \\
+      &   &
+      &+\sum_{k, h}
+      p(i, k, j, h, m+1) S_m^>(j+1) (M_2)_{k,h} \\
+      &={} &
+      &P(a_m=i)  U_{j-1, m+1, m} +
+      P(a_m=j) V_{i, m+1, m} \\
+      & & &+
+      T_{i-1, j-1, m+1}  S_m^<(i-1) +
+      T_{i, j-1, m+1}  S_m^{\text{mid}}(i+1, j-1) +
+      T_{i, j, m+1}  S_m^>(j+1)
+    \end{align*}
+    Z uporabo teh formul lahko funkcijo izgube izračunamo v
+    času $O(n^3)$. Če želimo še hitrejši izračun, lahko
+    naključno izberemo podmnožico indeksov $(i,j)$ in
+    izračunamo stohastični približek funkcije izgube na podmnožici.
+
+    Naj bo $S \subset [n] \times [n]$ naključno izbrana
+    podmnožica indeksov. Za približek funkcije izgube lahko
+    vzamemo
+    \begin{equation*}
+      \loss_\approx = \sum_{(i, j) \in S}
+      \left ((M_1)_{i,j} - T_{i, j, 1} \right )^2.
+    \end{equation*}
+    Časovna zahtevnost izračuna približka je
+    $O(|S| n^2)$.
+    %
+    \paragraph{Primerjava}
+    \label{paragraph:grafi_preparam_primerjava}
+    Na sliki \ref{fig:loss_computation_time_comparison} je
+    prikazana primerjava metode iz poglavja
+    \ref{subsection : rezultati_grafi_vanilla} in metode z
+    uporabo tabele inverzij. Z uporabo tabele inverzij
+    dosežemo boljše rezultate.
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=0.7\linewidth]{images/average_loss_on_size_vanilla_vs_it.pdf}
+      \caption{Primerjava napak glede na velikost grafa.
+        Za vsak $n$ sta metodi preizkušeni na istih $10$-tih
+        naključno izbranih grafih. Vsaka točka je povprečje
+        napak na teh grafih.
+      }
+      \label{fig:loss_computation_time_comparison}
+    \end{figure}
+    %
+    \subsubsection{Preparametrizacija z nevronskimi mrežami}
+    Verjetnost uspešne konvergence lahko poskusimo
+    izboljšati s preparametrizacijo
+    (\emph{overparametrisation}) problema.
+    Matriko $P$ definiramo kot izhod globoke nevronske mreže
+    (glej dodatek \ref{poglavje:nn}) in spreminjamo njene
+    parametre.
+
+    Preparametrizacija z nevronskimi mrežami deluje za
+    \emph{gradient dominante}
+    funkcije izgube
+    \cite{allenzhu2019convergencetheorydeeplearning}, glej
+    \ref{poglavje:konvergenca-globokih-mrez}. Za splošne
+    funkcije izgube obstajajo
+    empirični rezultati, ki kažejo, da z rahlo
+    preparametrizacijo in gradientnim spustom lahko dosežemo
+    uspešno konvergenco
+    \cite{safran2021effectsmildoverparameterizationoptimization,
+    simon2024bettermodernmachinelearning} do globalnega minimuma.
+    Poleg tega empirični rezultati
+    \cite{pascanu2014saddlepointproblemnonconvex} kažejo, da so
+    pri nekonveksni parametrizaciji funkcij izgube v velikih dimenzijah
+    selda bolj razširjena od lokalnih minimumov. Z večanjem
+    števila parametrov
+    se v reliefu funkcije izgube pojavlja več sedel, iz katerih
+    lahko pobegnemo s preturbiranim gradientnim spustom,
+    predstavljen v poglavju \ref{subsection : PGD}.
+
+    Empirično testiramo dve izbiri preparametrizacije z
+    nevronskimi mrežami.
+    \begin{definicija}
+
+      \emph{Blaga preparametrizacija} modela izomorfizma
+      grafov iz poglavja \ref{subsection:uporaba tabele
+      inverzij} velikosti $n$ definiramo kot
+      nevronsko mrežo z vhodom velikosti $n$, skrito plastjo
+      velikosti $n$ in izhodom
+      velikosti $\frac{n^2 -n - 2}{2}$. Aktivacijska funkcija v
+      skriti plasti je $\operatorname{ReLu}$.
+      Na zadnji plasti oblike  $(x_{1,1}, \dotsc, x_{1, n},
+      x_{2, 1}, \dotsc x_{2, n -1}, \dotsc, x_{n-1, 1}, x_{n-1, 2} )^T$
+      uporabimo softmax po blokih
+      $$(p_{i, 1}, \dotsc, p_{i, n - i + 1}) =
+      \operatorname{softmax}(x_{i, 1}, \dotsc, x_{i, n - i + 1})$$,
+      kjer je $p_{i,j}$ verjetnost, da $i$ postavimo na $j$-to
+      prosto mesto, če smo prej
+      postavili $i-1$ elementov.
+      Velja
+      $$
+      M_{\text{blaga preparametrizacija}} =
+      \operatorname{Softmax}_\text{po blokih} \circ W_2 \circ
+      \operatorname{ReLU} \circ W_1,
+      $$
+      kjer sta $W_1 \colon \R^n \to \R^n$ in
+      $W_2 \colon \R^n \to \R^{\frac{n^2 - n - 2}{2}}$ afini preslikavi.
+      Distribucijo $P_d$ nad tabelami inverzij definiramo kot
+      $$
+      \operatorname{flatten}(P_d) = M_{\text{blaga
+      preparametrizacija}}(x_0).
+      $$
+      Vektor $x_0 \in \R^n$ in afini preslikavi $W_1, W_2$ so
+      parametri modela.
+    \end{definicija}
+    %
+    \begin{definicija}
+      \emph{Globoko preparametrizacijo} definiramo definiramo
+      kot $5$ plastno nevronsko mrežo
+      z vhodno in skritimi plastmi velikosti $n^2$ in izhodno
+      plastjo velikosti
+      $\frac{n^2 - n - 2}{2}$. Aktivacijske funkcije v skritih
+      plasteh so $\operatorname{ReLu}$, na zadnjih plasteh
+      uporabimo softmax po blokih, kot v blagi preparametrizaciji.
+      Distribucijo $P_d$ nad tabelami inverzij izračunamo kot
+      $$
+      \operatorname{flatten}(P_d) =
+      \operatorname{softmax}_\text{po blokih} \circ
+      W_4\circ
+      \operatorname{ReLu} \circ
+      w_3 \circ
+      \operatorname{ReLu} \circ
+      W_2 \circ
+      \operatorname{ReLu} \circ
+      W_1
+      (y_0).
+      $$
+      Parametri modela so  $y_0 \in \R^{n^2}$ in
+      afine preslikave
+      $W_i$.
+    \end{definicija}
+    \paragraph{Primerjava metod}
+    Zgornje metode primerjamo s preparametrizacijo z
+    grafovskimi konvolucijskimi mrežami (definicija
+    \ref{def:ujemanje-GNN-sinkhorn}), predstavljeno v
+    \cite{graphoptimaltransport2020crossdomainalignment}.
+    Gre za sodoben pristop k problemu ujemanja grafov z
+    uporabo optimalnega transporta in nevronskih mrež.
+    Ta pristop namesto klasičnih nevronskih mrež uporablja
+    modele, prilagojene za delo z grafi (definicija
+    \ref{def:GNN}), namesto
+    distribucije nad $S_n$ pa uporablja
+    \emph{Sinkhornov} algoritem (definicija \ref{def:sinkhorn}),
+    ki poljubne matrike zvezno preslika v
+    \emph{dvojno stohastične}\footnote{Stohastična matrika $P$ je
+      dvojno stohastična, če je $P^T$ stohastična.
+    }. Točna formulacija je v dodatku \ref{dodatek:GNN+sinkhorn}.
+    %
+
+    Slika \ref{fig:primerjava vanilla-nn-mild-nn} prikazuje primerjavo
+    uporabe tabele inverzij brez preparametrizacije z blago
+    in globoko preparametrizacijo.
+    Za vsak $n$
+    so metode preizkušene na istih $10$-tih
+    naključno izbranih grafih.
+    Po koncu optimizacije izračunamo
+    napako najbolj verjetne permutacije in jo povprečimo po
+    $10$-tih grafih.
+
+    Vsaka krivulja prikazuje rast povprečne napake
+    najbolj verjetne preslikave glede na velikost grafa.
+    Tabela
+    \ref{table:povprečne napake različnih metod grafi}
+    prikazuje povprečne napake metod na celotnem
+    naboru grafov.
+
+    Za
+    optimizacijo je bil uporabljen naključno perturbiran
+    Adam z
+    hitrostjo učenja $10^{-3}$ in z razporejevalnikom učne
+    hitrosti \verb|CosineAnnealingWarmRestarts|. Na
+    posameznem grafu se je optimizacija izvajala
+    $1000$ korakov in se prekinila, če je norma gradienta
+    padla pod $\epsilon_\nabla = 10^{-3}$.
+    %
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/average_curve_full.pdf.pdf}
+      \caption{
+        Primerjava napak različnih metod glede
+      na velikost grafa.}
+      \label{fig:primerjava vanilla-nn-mild-nn}
+    \end{figure}
+    \begin{table}
+      \centering
+      \begin{tabular}{l|l}
+        Metoda & Povprečna napaka \\
+        \hline
+        Tabela inverzij& $11.05$ \\
+        Blaga preparametrizacija& $11.27$ \\
+        Globoka preparametrizacija& \boldmath$10.94$ \\
+        GNN in sinkhorn& $11.67$
+      \end{tabular}
+      \caption{Povprečne napake metod.}
+      \label{table:povprečne napake različnih metod grafi}
+    \end{table}
+
+    \TODO{Kaj več o graph matchingu? Uničevanje simetrij z
+    naključnim šumom? Sinkhorn vs tabela inverzij?}
+    %
+    %
+    \appendix
+    \clearpage
+    \section{Nevronske mreže}
+    % \section*{Dodatek: Konvergenca globokih mrež}
+    %\addcontentsline{toc}{section}{Dodatek: Konvergenca globokih mrež}
+    \label{poglavje:konvergenca-globokih-mrez}
+    \label{section:overparametrisation}
+    %Metode, predstavljene v prejšnjih poglavjih, so zanimive iz
+    %teoretičnega stališča, a niso uporabne v praksi,
+    %saj je dinamika gradientnih tokov preveč kaotična in
+    %verjetnost za neuspešno konvergenco previsoka.
+    %
+    %           Aplikativnosti se lahko približamo z
+    %          \emph{overparametrzicaijo}. Stohastično matriko $P$ lahko
+    %          definiramo z večjim modelom $P(\phi)$, ki je odvisen od
+    %          velikega števila parametrov $\phi \in \R^d, d \gg n^2$.
+    %          V
+    %  \subsection{Nevronske mreže}
+    \label{poglavje:nn}
+    %Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
+    %mrežami}. Definicija nevronske mreže je povzeta po
+    %\cite{prince2023understandingdeeplearning}.
+    \begin{definicija}[Nevronska mreža]
+      Naj bo za vsak $i \in [l]$
+      $W_i \colon \R^{d_{i-1}} \to \R^{d_i}$
+      afina\footnote{$W_i(x) = A_i x + b_i$ za
+      $A_i \in \R^{d_{i-1} \times d_i}$ in $b_i \in \R^{d_i}$.}
+      preslikava. Za vsak $i \in
+      \{1, 2, \dotsc, l\}$ in $x \in R^{d_{i-1}}$ velja
+      $W_i(x) = \Omega_i x + b_i$ za $\Omega_i \in
+      \R^{d_{i-1} \times d_i}$ in $b_i \in \R^{d_{i}}$.
+
+      Naj bodo $\sigma_1, \dotsc, \sigma_l$ realne funkcije v
+      eni spremenljivki. Za poljuben $d \in \N$ definiramo
+      $\sigma_i \colon \R^d \to \R^d$ po elementih s
+      predpisom $\sigma(x)_i = \sigma(x_i)$. Preslikavam
+      $\sigma_i$ rečemo \emph{aktivatorske funkcije}.
+      Običajno aktivacijske funkcije izberemo izmed
+      $\operatorname{ReLU}\footnote{$\operatorname{ReLU}(x) =
+        \begin{cases}
+          0 & x \leq 0 \\
+          x & x > 0
+        \end{cases}
+      $}, \operatorname{softmax}, \arctan, \operatorname{GeLU}$.
+
+      \emph{Nevronska mreža} globine $l$ je model
+      $$
+      M_\phi = \sigma_l \circ W_l \circ \sigma_{l-1} \circ
+      W_{l-1} \circ \dotsm \circ \sigma_1 \circ W_1 \colon
+      \R^{d_0} \to \R^{d_l},
+      $$
+      odvisen od parametrov $\phi  = \Omega_0, b_0, \Omega_1,
+      b_1, \dotsc, \Omega_l, b_l$. Če je $l \geq$ rečemo, da
+      je mreža globoka.
+    \end{definicija}
+    \begin{definicija}[Regresija]
+      Eden od klasičnih problemov, pri katerem se uporabljajo
+      nevronske mreže, je \emph{regresija}.
+
+      Za slučajni spremenljivki $X \in \R^{d_1}$ in $Y \in
+      \R^{d_2}$ iščemo model $\hat Y (X)$, ki čim bolje opiše $E[Y|X]$.
+
+      Predpostavimo, da imamo množico vzorcev $S_\text{train}
+      = \{(x_i, y_i) \mid i \in [n]\}$ slučajne spremenljivke
+      $(X,Y)$ in nevronsko mrežo $M_{\phi_0} \colon \R^{d_0}
+      \to \R^{d_l}$ z naključno izbranimi začetnimi parametri
+      $\phi$ in z gradientnim spustom minimaliziramo
+      $$
+      \Loss{regresija} (\phi) = \frac{1}{|S_\text{train}
+      |}\sum _{(x, y) \in S_\text{train}} \|M_\phi (x) - y  \|^2.
+      $$
+      Uspešnost modela nato testiramo na množici vzorcev
+      $S_\text{test} \subset S_\text{train}^c$.
+    \end{definicija}
+    V splošnem lahko za par $(x,y)$ in nevronsko mrežo
+    $M_\phi$ definiramo poljubno funkcijo izgube
+    $f(z=M_\phi(x), y)$ in minimaliziramo
+    $$ \Loss{}(\phi) = \frac{1}{|S_\text{train}|} \sum_{(x,y)
+    \in S_\text{train}} f(M_\phi(x  ), y).$$
+    %
+    \subsection{Nevronske mreže dosežejo globalni minimum
+    funkcije izgube}
+    Če za gladko funkcijo izgube
+    $f(z,y)$
+    velja
+    \emph{ Polyak-Lojasiewiczev pogoj}
+    $$
+    \|\nabla f(z,y)\|^2 \geq \mu (f(z,y) - f(\min_z(f(z,y))  , y)),
+    $$
+    dovolj globoke nevronske mreže
+    s gradientnim spustom vedno najdejo parametre, ki dosegajo
+    poljubno natančen približek globalnega minimuma funkcije izgube.
+    Spodnji izrek je povzet po
+    \cite[stran 6, izrek 1]{allenzhu2019convergencetheorydeeplearning}.
+    \begin{izrek}[Allen-Zhu, Li, Song]
+      \label{izrek:allen-zhu-global-minima}
+      Naj $f(z,y)$ izpolnjuje Polyak-Lojasiewiczev.
+      Naj bo $S_\text{train}$ taka množica vzorcev, da
+      obstaja $\delta > 0$, da za dva  vzorca $(x_i, y_i),
+      (x_j,y_j) \in S_\text{train}$ z različnima indeksoma $i
+      \neq j $ velja $\|x_i - x_j\| > \delta$.
+
+      Naj bo $M = \sigma \circ W_l \circ
+      \sigma \circ W_{l-1} \circ \dotsm \circ
+      \sigma \circ W_1$  taka $l$-plastna
+      nevronska mreža, da velja $d_1 = d_2 = \dotsm = d_{l-1}
+      = m \in \N > d_0 \cdot \operatorname{poly}(n, l,
+      \delta^{-1})\frac{d}{\mu}$.
+
+      Potem gradinetni spust s hitrostjo učenja $\eta =
+      \Theta (d_0 \frac{\delta}{m \cdot
+      \operatorname{poly}(n, l)})$ z verjetnostjo vsaj $1 -
+      e^{- \Omega(\log^2 m)}$  po
+      $O(\frac{n^6L^2}{\delta^2 \mu})\log\epsilon^{-1}$
+      korakih najde parametre $\phi$, za katere velja
+      $\Loss{regresija}(\phi) < \epsilon$.
+    \end{izrek}
+    \subsection{Preparametrizacija z grafovskimi
+    nevronskimi mrežami in algoritmom Sinkhorn}
+    \label{dodatek:GNN+sinkhorn}
+    Definicija grafovske konvolucijske mreže sledi
+    \cite{DBLP:journals/corr/KipfW16}.
+    Definicija Sinkhornovega algoritma je povzeta po
+    \cite{SinkhornKnopp}.
+    Implementacija
+    ujemanja grafov z grafovskimi nevronskimi mrežami
+    je povzeta po
+    \cite{graphoptimaltransport2020crossdomainalignment}.
+    \begin{definicija}
+      [Grafovska konvolucijska mreža]
+      \label{def:GNN}
+      Naj bo $M$ matrika sosednosti grafa $G$ in
+      $D$ diagonalna matrika s stopnjami vozlišč grafa $G$.
+      \emph{Konvolucijsko plast} grafovske nevronske mreže
+      definiramo kot
+      $$H^{(l+1)} = \sigma \left ( D^{-\frac{1}{2}}
+      (M + I) D^{-\frac{1}{2}} H^{(l)} W^{(l)} \right ),$$
+      kjer je $H^{(l)}$ matrika aktivacij v $l$-ti plasti,
+      $W^{(l)}$ je matrika uteži v $l$-ti plasti in
+      $\sigma$ je aktivacijska funkcija.
+    \end{definicija}
+    \begin{definicija}
+      [Sinkhornov algoritem]
+      \label{def:sinkhorn}
+      Naj bo $K \in \R^{n \times n}$ matrika z pozitivnimi
+      elementi. Sinkhornov algoritem je iterativni postopek za
+      izračun dvojno stohastične matrike $P \in \R^{n \times n}$
+      oblike $P = D_1 K D_2$, kjer sta $D_1$ in $D_2$ diagonalni
+      matriki s pozitivnimi elementi na diagonali.
+      Algoritem izračuna matriki $D_1$ in $D_2$ z naslednjimi
+      koraki:
+      \begin{align*}
+        D_1^{(t+1)} &= \operatorname{diag} \left (
+        \frac{1}{K D_2^{(t)} \mathbf{1}} \right ) \\
+        D_2^{(t+1)} &= \operatorname{diag} \left (
+        \frac{1}{K^T D_1^{(t+1)} \mathbf{1}} \right )
+      \end{align*}
+      kjer je $\mathbf{1} \in \R^n$ vektor enic.
+
+      Če nas zanima le $P$, je dovolj, da izmenično vse vrstice in vse
+      stolpce matrike $P$ normaliziramo na $1$. Z $S_m(K)$
+      označimo matriko, dobljeno z uporabo Sinkhornovega
+      algoritma na $K$
+      po $m$ iteracijah.
+    \end{definicija}
+    Za matriko $K$ s strogo pozitivnimi členi velja,
+    da Sinkhornov algoritem konvergira do dvojno stohastične
+    matrike $P$ \cite[izrek 2.1]{SinkhornKnopp}.
+    \begin{definicija}
+      [Stroškovna matrika]
+      Naj bosta $X \in \R^{n \times d}$ in
+      $Y \in \R^{n \times d}$ poljubni matriki in naj
+      $X_i$ označuje $i$-ti vrstico matrike $X$,
+      $Y_j$ pa $j$-to vrstico matrike $Y$.
+      \emph{Stroškovno matriko} $C(X,Y) \in \R^{n \times n}$
+      definiramo kot
+      $$C_{i,j} = \|X_i - Y_j\|^2.$$
+    \end{definicija}
+    Za graf velikosti $N$ definiramo model $M_\text{encoder}$
+    kot grafovsko nevronsko mrežo z dvema konvolucijskima plastema
+    in aktivacijsko funkcijo $\operatorname{ReLU}$ s slednjim predpisom:
+    $$
+    M_\text{encoder}(M) =\hat{M}
+    \operatorname{ReLU}(
+      \hat{M}W_1
+    )
+    W_2
+    \in \R^{n \times n^2}
+    ,
+    $$
+    kjer je $\hat{M} = D^{-\frac{1}{2}}
+    (M + I) D^{-\frac{1}{2}}
+    $ in sta $W_1 \in \R^{n \times n^2}, W_2 \in \R^{n^2 \times n^2}$
+    parametra modela.
+    .
+    \begin{definicija}
+      \label{def:ujemanje-GNN-sinkhorn}
+      V poglavju
+      \ref{paragraph:grafi_preparam_primerjava}
+      gravske nevronske mreže na sledeč
+      način uporabimo za
+      reševanje ujemanja grafov:
+      \begin{enumerate}
+        \item Za grafa z matrikama sosednosti $M_1, M_2$
+          računamo
+          $$P=S_{100}(C( M_\text{encoder}(M_1),
+          M_\text{encoder}(M_2) )).$$
+        \item Minimiziramo funkcijo izgube
+          $$\|M_1 - PM_2 P^T\|.$$
+      \end{enumerate}
+    \end{definicija}
+    %
+    %
+    %
+    \section{Rezultati simulacij}
+    \subsection{Upodobitve}
+    \subsubsection{Diedrska grupa}
+    \paragraph{Trajektorije}
+    Več trajektorij enodimenzionalnega modela iz slike
+    \ref{fig:Dn-trajektorije-demo-dim1}. Enačbo gradientnega
+    toka rešujemo z  metodo Dormand-Prince. Vsaka slika prikazuje
+    $500$ trajektorij z naključno izbranimi
+    začetnimi parametri $r, s ~ U[-1, 1]$.
+    %
+    \label{dodatek_1dim dn trajektorije}
+    \begin{figure}[!hp]
+      \centering
+      \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[
-          width=0.75\textwidth
-        ]{images/actions/plot_D8_n=8_m=8.png}
-      \end{figure}
-      %%
-      \begin{figure}[ht]
+        \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n1.png}
+        %\caption*{$n=1$}
+      \end{minipage}
+      \centering
+      \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[
-          width=0.75\textwidth
-        ]{images/actions/plot_D9_n=9_m=9.png}
-      \end{figure}
-      %%
-      \begin{figure}[ht]
+        \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n2.png}
+        %\caption*{$n=2$}
+      \end{minipage}
+      \vspace{0.5em}
+      \centering
+      \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[
-          width=0.75\textwidth
-        ]{images/actions/plot_D10_n=10_m=8.png}
-      \end{figure}
-      %%
-      \begin{figure}[ht]
+        \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n7.png}
+        %\caption*{$n=7$}
+      \end{minipage}
+      \centering
+      \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[
-          width=0.75\textwidth
-        ]{images/actions/plot_D19_n=19_m=19.png}
-      \end{figure}
-      \subsection{Grafi}
-      \subsubsection{Avtomorfizmi cayleyevih grafov}
-      \label{dodatek:cayley-vanilla}
-      Rezultati iskanja avtomorfizmov Cayleyevih grafov brez
-      uporabe tabele inverzij.
-      Parametri optimizacije
-      so opisani v poglavju \ref{aut-cayley-vanilla-setup}.
-      \begin{figure*}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_3.png}
-      \end{figure*}
-      \begin{figure*}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_4.png}
-      \end{figure*}
-      \begin{figure*}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_5.png}
-      \end{figure*}
+        \includegraphics[width=\linewidth]{images/dihedral/originals/cropped/Dn_1dim_n8.png}
+        %\caption*{$n=8$}
+      \end{minipage}
+      \caption{Trajektorije enodimenzionalnega modela
+        realne upodobitve diedrske grupe za različne vrednosti
+        $n$. Za vsako vrednost $n$ je prikazanih $500$
+        naključno izbranih trajektorij z začetnimi
+        parametri iz $[-1,1]^2$.
+      }
+      \label{fig:Dn-trajektorije-demo}
+    \end{figure}
+    \paragraph{Dinamika enodimenzionalnega modela}
+    \label{section:dinamika_1dim_Dn}
+    %
+    Rešujemo diferencialno enačbo gradientnega toka
+    za enodimenzionalni model realne upodobitve nad
+    diedrsko grupo in opazujemo čas $t_{r_0,s_0}$, v katerem
+    model z začetnima parametroma
+    $\rho(r)_0 = r_0, \rho(s)_0 = s_0$ prvič skonvergira do
+    $\epsilon$-okolice limite trajektorije.
+    %Vse spodnje slike
+    Slike \ref{fig:dihedral_1d_grid_n3},
+    \ref{fig:dihedral_1d_grid_n3_zoomed} in
+    \ref{fig:dihedral_1d_grid_n4}
+    so bile
+    pridobljene z $\epsilon = 0.01$ in integracijskim
+    intervalov $t \in [0,1]$.
+    \begin{figure}[!ht]
+      \centering
+      \includegraphics[width=\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1_1_r1000.pdf.png}
       %
+      \caption{Hitrosti konvergence enodimenzionalnega modela
+        $D_3 \to \R$ z različnimi začetnimi
+        parametri $(r_0, s_0)$. Na zgornji sliki so začetni
+        parametri izbrani iz kvadrata $[-1,1]^2$, na spodnji
+        pa iz kvadrata $[0.5, 1.5]^2$.
+      }
+      \label{fig:dihedral_1d_grid_n3}
+    \end{figure}
+    \begin{figure}[!hp]
+      \centering
+      \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1.5_-0.5_r2000.pdf.png}
+      \medskip
+      \includegraphics[width=0.77125\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_0.5_1.5_r3000.pdf.png}
+      \caption{Hitrosti konvergence enodimenzionalnega modela
+        $D_3 \to \R$ na
+        $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji
+        $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj).
+        Barvna shema je izbrana, da poudari kontraste med
+        regijami z različnimi
+        hitrostmi konvergenc.
+      }
+      \label{fig:dihedral_1d_grid_n3_zoomed}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.81\textwidth]{./images/dihedral/grid/cut_colored_grid_n4_-2_2_r2000.pdf.png}
+      \medskip
+      \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n4_-1_1_r2000.pdf.png}
+      \caption{Hitrosti konvergence enodimenzionalnega modela
+        $D_4 \to \R$ na
+        $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$.
+      }
+      \label{fig:dihedral_1d_grid_n4}
       %
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/plot_grid_n4_0.5_1.5_r2000.pdf.png}
+      \caption{Hitrosti konvergence enodimenzionalnega modela
+        $D_4 \to \R$ na
+        $[0.5, 1.5]^2$. Resolucija slik je $2000\times 2000$.
+      }
+      \label{fig:dihedral_1d_grid_n4_2}
       %
+    \end{figure}
+    %
+    %
+    \clearpage
+    \paragraph{Dvodimenzionalen model}
+    \label{dodatek:dihedral-2d-trajektorije}
+    Opazujemo realen model $\rho \colon D_n \to \R^{2 \times 2}$
+    upodobitve diedrske grupe, podan z matrikama
+    $R := \rho (r)$ in
+    $S := \rho (s)$.
+
+    Za $500$ naključno izbranih začetnih parametrov
+    $(R_0, S_0) \sim U[(-1,1)^8]$ rešujemo diferencialno enačbo
+    $$
+    \frac{d(R,S)}{dt} = - \nabla \loss(R,S)
+    $$
+    z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$.
+
+    Na sklikah
+    \ref{fig:trajektorije_diedrska_grupa_2d-1} in
+    \ref{fig:trajektorije_diedrska_grupa_2d-2}
+    so
+    prikazane trajektorije
+    $\{ (\operatorname{tr}(R(t)), \operatorname{tr}(S)(t)) \mid
+      t \in [0,1]
+    \}$
+    za različne začetne parametre.
+
+    Enačbo rešujemo z metodo Dormand-Prince
+    \cite{solvingordinarydifferentialequations1993nonstiff} (Runge-Kutta
+    5. reda s 4. redom ocene napake). Gradient
+    $\nabla \loss$ je izračunan analitično.
+    \label{dodatek:dihedral repr}
+    \begin{figure}[!ht]
+      \centering
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_3.png}
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_4.png}
+
+      \medskip
+
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_5.png}
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_6.png}
+
+      \caption{Trajektorije učenja modelov $D_n \to \R^{2
+        \times 2}$ z različnimi začetnimi parametri.
+        Model $D_n \to \R^{2 \times 2}$ je definiran z
+        vrednostima $R := \rho (r)$ in
+        $S := \rho (s)$. Opazujemo trajektorije
+        $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$.
+        Črne pike predstavljajo začetne parametre. Modre
+        trajektorije konvergirajo do upodobitve.
+      }
+      \label{fig:trajektorije_diedrska_grupa_2d-1}
+    \end{figure}
+    \begin{figure}[!ht]
+      \centering
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_7.png}
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_8.png}
       %
-      % \TODO{Rezultati}
-      % \section{Dodatek}
-      % \subsection{Izomorfizmi Cayleyevih grafov}
-      % \label{dodatek:cayley}
-      % \TODO{}
-      % % \includepdf[pages=-]{pdfs/aut_calyey.pdf}
+      \medskip
       %
-      % \subsection{Izomorfizmi naključnih grafov}
-      % \label{dodatek:naključni grafi}
-      % \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
-      %            \subsection{Dovolj so upodobitve nad
-      % končnimi množicami}
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_9.png}
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_10.png}
       %
-      % \section{Integrali po \texorpdfstring{$\omega$}{ω}-kompleksih}
-      % \subsection{Definicija}
-      % \begin{definicija}
-      %   Neskončno zaporedje kompleksnih števil, označeno z
-      % $\omega = (\omega_1, \omega_2, \ldots)$,
-      %   se imenuje \emph{$\omega$-kompleks}.\footnote{To ime
-      % je izmišljeno.}
+      \medskip
+      %
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_11.png}
+      \includegraphics[width=0.48\textwidth]{./images/dihedral/2d/cropped/prob_of_convergence_D_12.png}
+      \caption{Trajektorije učenja (nadaljevanje).}
+      %
+      \label{fig:trajektorije_diedrska_grupa_2d-2}
+    \end{figure}
+    \clearpage
+    \subsection{Delovanja}
+    \subsubsection{Ciklične grupe}
+    Opazujemo matrike $P_s$ pred in po optimizaciji
+    kompleksnih modelov $\rho \colon C_n \to \funnn{m}$.
+    Optimiziramo z algoritmom
+    \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
+    parametri iz \cite{paszke2019pytorch}.
+    Vsak model učimo največ
+    največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
+    učenje ustavimo prej.
+    \label{appendix: actions-cyclic}
+    %
+    %
+    \begin {figure*}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C5_n=5_m=5.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C7_n=7_m=5.png}
+    \end {figure*}
+    %
+    \begin {figure*}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C7_n=7_m=7.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C8_n=8_m=5.png}
+    \end {figure*}
+    %
+    \begin {figure*}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C9_n=9_m=6.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C10_n=10_m=7.png}
+    \end {figure*}
+    %
+    \begin {figure*}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C12_n=12_m=7.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C12_n=12_m=8.png}
+    \end {figure*}
+    %
+    \begin {figure*}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C12_n=12_m=11.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C13_n=13_m=13.png}
+    \end {figure*}
+    %
+    \begin {figure*}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C14_n=14_m=12.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C15_n=15_m=12.png}
+    \end {figure*}
+    %
+    \begin {figure*}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C16_n=16_m=16.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C17_n=17_m=12.png}
+    \end {figure*}
+    %
+    \begin {figure}[ht]
+    \centering
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C18_n=18_m=15.png}
+    %
+    \includegraphics[
+      width=0.49\textwidth
+    ] {images/actions/plot_C19_n=19_m=17.png}
+    \caption{
+      Matrike $P_s$ pred in po optimizaciji
+      modelov $\rho \colon C_n \to \funnn{m}$ za različne
+      vrednosti $n$ in $m$.
+    }
+    \end {figure}
+    \clearpage
+    \subsubsection{Diedrske grupe}
+    Opazujemo matrike $P_s$ in $P_r$ pred in po optimizaciji
+    modelov $\rho \colon D_n \to \funnn{m}$. Optimiziramo z algoritmom
+    \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
+    parametri iz \cite{paszke2019pytorch}.
+    Vsak model učimo največ
+    največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
+    učenje ustavimo prej.
+    \label{appendix: actions-dihedral}
+    %
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[
+        width=0.75\textwidth
+      ]{images/actions/plot_D6_n=6_m=5.png}
+    \end{figure}
+    %%
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[
+        width=0.75\textwidth
+      ]{images/actions/plot_D8_n=8_m=8.png}
+    \end{figure}
+    %%
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[
+        width=0.75\textwidth
+      ]{images/actions/plot_D9_n=9_m=9.png}
+    \end{figure}
+    %%
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[
+        width=0.75\textwidth
+      ]{images/actions/plot_D10_n=10_m=8.png}
+    \end{figure}
+    %%
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[
+        width=0.75\textwidth
+      ]{images/actions/plot_D19_n=19_m=19.png}
+    \end{figure}
+    \subsection{Grafi}
+    \subsubsection{Avtomorfizmi cayleyevih grafov}
+    \label{dodatek:cayley-vanilla}
+    Rezultati iskanja avtomorfizmov Cayleyevih grafov brez
+    uporabe tabele inverzij.
+    Parametri optimizacije
+    so opisani v poglavju \ref{aut-cayley-vanilla-setup}.
+    \begin{figure*}[ht]
+      \centering
+      \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_3.png}
+    \end{figure*}
+    \begin{figure*}[ht]
+      \centering
+      \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_4.png}
+    \end{figure*}
+    \begin{figure*}[ht]
+      \centering
+      \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_5.png}
+    \end{figure*}
+    %
+    %
+    %
+    %
+    % \TODO{Rezultati}
+    % \section{Dodatek}
+    % \subsection{Izomorfizmi Cayleyevih grafov}
+    % \label{dodatek:cayley}
+    % \TODO{}
+    % % \includepdf[pages=-]{pdfs/aut_calyey.pdf}
+    %
+    % \subsection{Izomorfizmi naključnih grafov}
+    % \label{dodatek:naključni grafi}
+    % \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
+    %            \subsection{Dovolj so upodobitve nad
+    % končnimi množicami}
+    %
+    % \section{Integrali po \texorpdfstring{$\omega$}{ω}-kompleksih}
+    % \subsection{Definicija}
+    % \begin{definicija}
+    %   Neskončno zaporedje kompleksnih števil, označeno z
+    % $\omega = (\omega_1, \omega_2, \ldots)$,
+    %   se imenuje \emph{$\omega$-kompleks}.\footnote{To ime
+    % je izmišljeno.}
 
-      %   Črni blok zgoraj je tam namenoma. Označuje, da
-      % \LaTeX{} ni znal vrstice prelomiti pravilno
-      %   in vas na to opozarja. Preoblikujte stavek ali mu
-      % pomagajte deliti problematično besedo z
-      %   ukazom \verb|\hyphenation{an-ti-ko-mu-ta-ti-ven}| v preambuli.
-      % \end{definicija}
-      % \begin{trditev}[Znano ime ali avtor]
-      %   \label{trd:obstoj-omega}
-      %   Obstaja vsaj en $\omega$-kompleks.
-      % \end{trditev}
-      % \begin{proof}
-      %   Naštejmo nekaj primerov:
-      %   \begin{align}
-      %     \omega &= (0, 0, 0, \dots), \label{eq:zero-kompleks} \\
-      %     \omega &= (1, i, -1, -i, 1, \ldots), \nonumber \\
-      %     \omega &= (0, 1, 2, 3, \ldots). \nonumber \qedhere
-      % % postavi QED na zadnjo vrstico enačbe
-      %   \end{align}
-      % \end{proof}
+    %   Črni blok zgoraj je tam namenoma. Označuje, da
+    % \LaTeX{} ni znal vrstice prelomiti pravilno
+    %   in vas na to opozarja. Preoblikujte stavek ali mu
+    % pomagajte deliti problematično besedo z
+    %   ukazom \verb|\hyphenation{an-ti-ko-mu-ta-ti-ven}| v preambuli.
+    % \end{definicija}
+    % \begin{trditev}[Znano ime ali avtor]
+    %   \label{trd:obstoj-omega}
+    %   Obstaja vsaj en $\omega$-kompleks.
+    % \end{trditev}
+    % \begin{proof}
+    %   Naštejmo nekaj primerov:
+    %   \begin{align}
+    %     \omega &= (0, 0, 0, \dots), \label{eq:zero-kompleks} \\
+    %     \omega &= (1, i, -1, -i, 1, \ldots), \nonumber \\
+    %     \omega &= (0, 1, 2, 3, \ldots). \nonumber \qedhere
+    % % postavi QED na zadnjo vrstico enačbe
+    %   \end{align}
+    % \end{proof}
 
-      % \section{Tehnični napotki za pisanje}
+    % \section{Tehnični napotki za pisanje}
 
-      % \subsection{Sklicevanje in citiranje}
-      % Za sklice uporabljamo \verb|\ref|, za sklice na enačbe
-      % \verb|\eqref|, za citate \verb|\cite|. Pri
-      % sklicevanju in citiranju sklicano številko povežemo s
-      % prejšnjo besedo z nedeljivim presledkom
-      % $\sim$, kot
-      % npr.\ \verb|iz trditve~\ref{trd:obstoj-omega} vidimo|.
+    % \subsection{Sklicevanje in citiranje}
+    % Za sklice uporabljamo \verb|\ref|, za sklice na enačbe
+    % \verb|\eqref|, za citate \verb|\cite|. Pri
+    % sklicevanju in citiranju sklicano številko povežemo s
+    % prejšnjo besedo z nedeljivim presledkom
+    % $\sim$, kot
+    % npr.\ \verb|iz trditve~\ref{trd:obstoj-omega} vidimo|.
 
-      % \begin{primer}
-      %   Zaporedje~\eqref{eq:zero-kompleks} iz dokaza
-      % trditve~\ref{trd:obstoj-omega} na
-      %   strani~\pageref{trd:obstoj-omega} lahko najdemo tudi
-      % v Spletni enciklopediji zaporedij~\cite{oeis}.
-      %   Citiramo lahko tudi bolj natančno~\cite[trditev 2.1,
-      % str.\ 23]{lebedev2009introduction}.
-      % \end{primer}
+    % \begin{primer}
+    %   Zaporedje~\eqref{eq:zero-kompleks} iz dokaza
+    % trditve~\ref{trd:obstoj-omega} na
+    %   strani~\pageref{trd:obstoj-omega} lahko najdemo tudi
+    % v Spletni enciklopediji zaporedij~\cite{oeis}.
+    %   Citiramo lahko tudi bolj natančno~\cite[trditev 2.1,
+    % str.\ 23]{lebedev2009introduction}.
+    % \end{primer}
 
-      % \subsection{Okrajšave}
-      % Pri uporabi okrajšav \LaTeX{} za piko vstavi predolg
-      % presledek, kot npr. tukaj. Zato se za vsako
-      % piko, ki ni konec stavka doda presledek običajne širine
-      % z ukazom \verb*|\ |, kot npr.\ tukaj.
-      % Primerjaj z okrajšavo zgoraj za razliko.
+    % \subsection{Okrajšave}
+    % Pri uporabi okrajšav \LaTeX{} za piko vstavi predolg
+    % presledek, kot npr. tukaj. Zato se za vsako
+    % piko, ki ni konec stavka doda presledek običajne širine
+    % z ukazom \verb*|\ |, kot npr.\ tukaj.
+    % Primerjaj z okrajšavo zgoraj za razliko.
 
-      % \subsection{Vstavljanje slik}
-      % Sliko vstavimo v plavajočem okolju \texttt{figure}.
-      % Plavajoča okolja \emph{plavajo} po tekstu, in
-      % jih lahko postavimo na vrh strani z opcijskim
-      % parametrom `\texttt{t}', na lokacijo, kjer je v kodi s
-      % `\texttt{h}', in če to ne deluje, potem pa lahko rečete
-      % \LaTeX u, da ga \emph{res} želite tukaj,
-      % kjer ste napisali, s `\texttt{h!}'. Lepo je da so
-      % vstavljene slike vektorske (recimo \texttt{.pdf}
-      % ali \texttt{.eps} ali \texttt{.svg}) ali pa
-      % \texttt{.png} visoke resolucije (več kot
-      % \unit[300]{dpi}).  Pod vsako sliko je napis in na vsako
-      % sliko se skličemo v besedilu. Primer
-      % vektorske slike je na sliki~\ref{fig:sample}. Vektorsko
-      % sliko prepoznate tako, da močno
-      % zoomate v sliko, in še vedno ostane gladka. Več
-      % informacij je na voljo na
-      % \url{https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions}.
-      % Če so slike bitne, kot na
-      % primer slika~\ref{fig:image}, poskrbite, da so v dovolj
-      % visoki resoluciji.
+    % \subsection{Vstavljanje slik}
+    % Sliko vstavimo v plavajočem okolju \texttt{figure}.
+    % Plavajoča okolja \emph{plavajo} po tekstu, in
+    % jih lahko postavimo na vrh strani z opcijskim
+    % parametrom `\texttt{t}', na lokacijo, kjer je v kodi s
+    % `\texttt{h}', in če to ne deluje, potem pa lahko rečete
+    % \LaTeX u, da ga \emph{res} želite tukaj,
+    % kjer ste napisali, s `\texttt{h!}'. Lepo je da so
+    % vstavljene slike vektorske (recimo \texttt{.pdf}
+    % ali \texttt{.eps} ali \texttt{.svg}) ali pa
+    % \texttt{.png} visoke resolucije (več kot
+    % \unit[300]{dpi}).  Pod vsako sliko je napis in na vsako
+    % sliko se skličemo v besedilu. Primer
+    % vektorske slike je na sliki~\ref{fig:sample}. Vektorsko
+    % sliko prepoznate tako, da močno
+    % zoomate v sliko, in še vedno ostane gladka. Več
+    % informacij je na voljo na
+    % \url{https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions}.
+    % Če so slike bitne, kot na
+    % primer slika~\ref{fig:image}, poskrbite, da so v dovolj
+    % visoki resoluciji.
 
-      % \begin{figure}[h]
-      %   \centering
-      %   \includegraphics[width=0.6\textwidth]{images/sample.pdf}
-      % % \caption[caption za v kazalo]{Dolg caption pod sliko}
-      %   \caption[Primer vektorske slike.]{Primer vektorske
-      % slike z oznakami v enaki pisavi, kot jo
-      %      uporablja \LaTeX{}.  Narejena je s programom
-      % Inkscape, \LaTeX{} oznake so importane v
-      %      Inkscape iz pomožnega PDF.}
-      %   \label{fig:sample}
-      % \end{figure}
+    % \begin{figure}[h]
+    %   \centering
+    %   \includegraphics[width=0.6\textwidth]{images/sample.pdf}
+    % % \caption[caption za v kazalo]{Dolg caption pod sliko}
+    %   \caption[Primer vektorske slike.]{Primer vektorske
+    % slike z oznakami v enaki pisavi, kot jo
+    %      uporablja \LaTeX{}.  Narejena je s programom
+    % Inkscape, \LaTeX{} oznake so importane v
+    %      Inkscape iz pomožnega PDF.}
+    %   \label{fig:sample}
+    % \end{figure}
 
-      % \begin{figure}[h]
-      %   \centering
-      %   \includegraphics[width=0.8\textwidth]{images/image.png}
-      %   \caption[Primer bitne slike.]{Primer bitne slike,
-      % izvožene iz Matlaba. Poskrbite, da so slike v
-      %   dovolj visoki resoluciji in da ne vsebujejo prosojnih
-      % elementov (to zahteva PDF/A-1b format).}
-      %   \label{fig:image}
-      % \end{figure}
+    % \begin{figure}[h]
+    %   \centering
+    %   \includegraphics[width=0.8\textwidth]{images/image.png}
+    %   \caption[Primer bitne slike.]{Primer bitne slike,
+    % izvožene iz Matlaba. Poskrbite, da so slike v
+    %   dovolj visoki resoluciji in da ne vsebujejo prosojnih
+    % elementov (to zahteva PDF/A-1b format).}
+    %   \label{fig:image}
+    % \end{figure}
 
-      % \subsection{Kako narediti stvarno kazalo}
-      % Dodate ukaze \verb|\index{polje}| na besede, kjer je
-      % pojavijo, kot tukaj\index{tukaj}.
-      % Več o stvarnih kazalih je na voljo na
-      % \url{https://en.wikibooks.org/wiki/LaTeX/Indexing}.
+    % \subsection{Kako narediti stvarno kazalo}
+    % Dodate ukaze \verb|\index{polje}| na besede, kjer je
+    % pojavijo, kot tukaj\index{tukaj}.
+    % Več o stvarnih kazalih je na voljo na
+    % \url{https://en.wikibooks.org/wiki/LaTeX/Indexing}.
 
-      % \subsection{Navajanje literature}
-      % Članke citiramo z uporabo \verb|\cite{label}|,
-      % \verb|\cite[text]{label}| ali pa več naenkrat s
-      % \verb|\cite\{label1, label2}|. Tudi tukaj predhodno
-      % besedo in citat povežemo z nedeljivim presledkom
-      % $\sim$. Na primer~\cite{chen2006meshless,liu2001point},
-      % ali pa \cite{kibriya2007empirical}, ali pa
-      % \cite[str.\ 12]{trobec2015parallel}, \cite[enačba
-      % (2.3)]{pereira2016convergence}.
-      % Vnosi iz \verb|.bib| datoteke, ki niso citirani, se ne
-      % prikažejo v seznamu literature, zato jih
-      % tukaj citiram.~\cite{vene2000categorical},
-      % \cite{gregoric2017stopniceni}, \cite{slak2015induktivni},
-      % \cite{nsphere}, \cite{kearsley1975linearly},
-      % \cite{STtemplate}, \cite{NunbergerTand},
-      % \cite{vanoosten2008realizability}.
-
-      \end{document}
+    % \subsection{Navajanje literature}
+    % Članke citiramo z uporabo \verb|\cite{label}|,
+    % \verb|\cite[text]{label}| ali pa več naenkrat s
+    % \verb|\cite\{label1, label2}|. Tudi tukaj predhodno
+    % besedo in citat povežemo z nedeljivim presledkom
+    % $\sim$. Na primer~\cite{chen2006meshless,liu2001point},
+    % ali pa \cite{kibriya2007empirical}, ali pa
+    % \cite[str.\ 12]{trobec2015parallel}, \cite[enačba
+    % (2.3)]{pereira2016convergence}.
+    % Vnosi iz \verb|.bib| datoteke, ki niso citirani, se ne
+    % prikažejo v seznamu literature, zato jih
+    % tukaj citiram.~\cite{vene2000categorical},
+    % \cite{gregoric2017stopniceni}, \cite{slak2015induktivni},
+    % \cite{nsphere}, \cite{kearsley1975linearly},
+    % \cite{STtemplate}, \cite{NunbergerTand},
+    % \cite{vanoosten2008realizability}.
+    \end{document}
