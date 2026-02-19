@@ -3,6 +3,7 @@ import torch.nn as nn
 from gofi.autograd.torch_settings import device
 import numpy as np
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class GeneratorGroup:
     """

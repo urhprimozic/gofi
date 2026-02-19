@@ -2,16 +2,18 @@ import torch
 from torch.linalg import matrix_norm
 from gofi.autograd.models import GeneratorModel
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 def relation_loss_generator(model: GeneratorModel):
     """
     Izračuna  mean frobenius(LHS(relacija) - I) za vse relacije LHS = I.
     (npr. matrika(generator0)^2 = I)
     """
-    loss = torch.tensor(0.0)
+    loss = torch.tensor(0.0).to(device)
     n = len(model.group.relations)
     for relation in model.group.relations:
         loss += matrix_norm(
-            model.get_matrix_of_product(relation) - torch.eye(model.dim)
+            model.get_matrix_of_product(relation) - torch.eye(model.dim).to(device)
         )
     return loss / n
 
@@ -23,7 +25,7 @@ def irr_loss_generator(model: GeneratorModel):
     Izračuna (1 - ||character(model)||)**2 i.e.,
     (1 - mean_g tr**2(M_g))**2 za vse matrike M_g, ki pripadajo elementom grupe.
     """
-    loss = torch.tensor(0.0)
+    loss = torch.tensor(0.0).to(device)
     s = model.group.size
     for element in model.group.table:
         loss += torch.square(torch.trace(model.get_matrix_of_product(element)))
@@ -34,7 +36,7 @@ def unitary_loss_generator(model: GeneratorModel):
     """
     Izračuna mean frobenius(g^T g - I) za vse generatorje grupe
     """
-    loss = torch.tensor(0.0)  # eye is unitary, all the products are unitary
+    loss = torch.tensor(0.0).to(device)  # eye is unitary, all the products are unitary
     s = model.group.size
     n = len(model.group.generators)
     for i in range(n):

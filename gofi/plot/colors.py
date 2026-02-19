@@ -14,6 +14,8 @@ darkorange = (200 / 255, 91 / 255, 9 / 255)
 green =(0, 1, 159 / 255)
 yellow = (1.0, 1.0, 0.5)
 white  = (1.0, 1.0, 1.0)
+pink = (158 / 255, 14 / 255, 75 / 255)
+bluegreen = (14 /255, 153 / 255, 158 / 255)
 
 cmap_blue = LinearSegmentedColormap.from_list(
     "blue",
@@ -35,6 +37,22 @@ blueorange = LinearSegmentedColormap.from_list(
 cmap_blue_orange_blackless = LinearSegmentedColormap.from_list(
     "blueorange_blackless",
 [blue, orange, lightorange, white],
+    N=600  # More steps = smoother gradient
+)
+
+cmap_pink_orange_blackless = LinearSegmentedColormap.from_list(
+    "blueorange_blackless",
+[pink, orange, lightorange, white],
+    N=600  # More steps = smoother gradient
+)
+cmap_bluegreen_orange_blackless = LinearSegmentedColormap.from_list(
+    "blueorange_blackless",
+[bluegreen, orange, lightorange, white],
+    N=600  # More steps = smoother gradient
+)
+cmap_darkorange_orange_blackless = LinearSegmentedColormap.from_list(
+    "blueorange_blackless",
+[darkorange, orange, lightorange, white],
     N=600  # More steps = smoother gradient
 )
 

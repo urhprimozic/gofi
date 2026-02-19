@@ -3,6 +3,8 @@ from typing import Callable, Any
 import torch
 from tqdm import tqdm
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 def training_loop(
     model: GeneratorModel,
     optimizer,
