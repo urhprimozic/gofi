@@ -649,8 +649,9 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
     % \caption[caption za v kazalo]{Dolg caption pod sliko}
     \caption[Trajektorije učenja modela $S_3 \to \R$.]{Različne
       trajektorije učenja modela $\hat\rho \colon S_3 \to \R$.
-      Začetni parametri vplivajo na uspeh optimizacije in končno
+      Vrednosti začetnih parametrov vplivajo na uspeh optimizacije in končno
     upodobitev. }
+    % KODA: /gofi/analysis.ipynb
     \label{fig:trajektorije S3 to R}
   \end{figure}
 \end{primer}
@@ -1131,10 +1132,13 @@ gradientnega spusta. Opazimo, da vse rešitve konvergirajo do
 nerazcepnih upodobitev. Ta rezultat teoretično podpremo v v
 izreku \ref{izrek:kritične točke ciklične}.
 \begin{figure}[ht]
+  % VIR: /gofi/ode/equation_generation/cyclic_groups.ipynb
   \centering
   \includegraphics[width=0.7\linewidth]{images/C3 trajektorije.pdf}
   \caption{Rešitve $\frac{d(x,y)}{dt} = -\nabla \loss$ pri
-  različnih začetnih parametrih $(x_0, y_0)$ za $n=3$.}
+    različnih vrednostih začetnih parametrov $(x_0, y_0)$ za $n=3$.
+    Bolj, kot je trajektorija
+  oranžna, počasneje konvergira.}
   \label{fig:ciklicna-trajektorije}
 \end{figure}
 \subsection{Redukcija funkcij izgube}
@@ -1402,6 +1406,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     %%%%%%%%%%%%%%%%%%%%%%%%%
     \clearpage
     \subsection{Splošna dinamika}
+    \label{subsection: realn z 2 generatorjema}
     Za model $\rho$ s parametri iz $\R^N$ in funkcijo izgube
     $\loss \colon \R^N \to \R$ rešujemo enačbo gradientnega toka
     $$\frac{d\phi(t)}{dt} = -\nabla \loss(\phi(t)), \quad
@@ -1454,15 +1459,45 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     simetrično za $z_0 = 0$, kar ustreza rezultatu za diedrske grupe.
 
     Preučimo še dogajanje znotraj kvadratnov. Recimo, da je
-    $s>0, z>0$.
+    $s>0, z>0$. Prevedemo $\Loss{rel}$ na nove koordinate $x = \log s,
+    y = \log z$ in definiramo
+    $$
+    F(x,y) =  \sum_{i=1}^l (e^{a_ix + b_iy} -1)^2.
+    $$
+    Očitno je $\frac{1}{|R|}\nabla_{x,y} F(x,y) = \nabla_{s,t}
+    \Loss{rel}(s,t)
+    \begin{bmatrix}
+      \frac{1}{s} & 0 \\
+      0 & \frac{1}{z}
+    \end{bmatrix}$. Kritične točke funkcij $L$ in $F$ se ujemajo.
 
-    \TODO{Uvedemo lahko $s=e^x, z=e^y, F(x,y)=\sum_i (e^{a_ix +
-      b_iy} -1)^2$. Kritične točke so iste kot v $L$.
-      Ali obstajajo kritične točke izven $\{\pm 1\}^2$?
+    Očitna stacionarna točka funkcije $F$ na $s, z > 0$ je $s=z=1$, kar ustreza
+    točki $x=y=0$. Dokazali bomo, da je $x=y=0$ edina stacionarna
+    točka funkcije na območju $s, z >0$.
+
+    Uvedemo $F_i(x,y) = (e^{a_ix + b_iy} -1)^2$. Za poljuben vektor
+    $v \in \R^2$ uvedemo
+    $f_i(t) = F_i(x + t v_1, y + t v_2)$. Velja
+    $$
+    f_i'(t) = 2e^{t \lambda_i} (e^{t \lambda_i} -1) \lambda_i,
+    $$
+    kjer je $\lambda_i = a_iv_1 + b_iv_2$. Očitno je $f_i'(t) = 0$
+    natanko za $t=0$ ali $\lambda_i=0$.
+
+    Za $t>0$ velja $\nabla F(tv) = \sum_{i=1}^l f_i'(t) = 0$ le, če
+    je $f_i'(t) = 0$ za vsak $i$. To se zgodi le, če je $t=0$ ali
+    $\lambda_i = 0$ za vsak $i$. Druga možnost pa ni mogoča, saj bi
+    pomenila, da so vsi vektorji $(a_i, b_i)$ pravokotni na isti
+    vektor $v$, kar se ne zgodi, saj $R$ vsebuje člena 
+    oblike $s^{a_i}$ in $z^{b_j}$.
+
+    Edina stacionarna točka $F$ je torej $x=y=0$, kar ustreza $s=z=1$.
+  
+    \TODO{Je to prav?!
     }
-
-    \label{subsection: realn z 2 generatorjema}
-
+%
+ %   
+%
     \clearpage%newpage pusti floatom, da so prej!
     \section{Iskanje delovanj}
     \label{section:iskanje delovanj}
@@ -3152,8 +3187,8 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       \caption{Trajektorije enodimenzionalnega modela
         realne upodobitve diedrske grupe za različne vrednosti
         $n$. Za vsako vrednost $n$ je prikazanih $500$
-        naključno izbranih trajektorij z začetnimi
-        parametri iz $[-1,1]^2$.
+        naključno izbranih trajektorij z vrednostmi začetnih
+        parametrov iz $[-1,1]^2$.
       }
       \label{fig:Dn-trajektorije-demo}
     \end{figure}
@@ -3178,9 +3213,9 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       \includegraphics[width=\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1_1_r1000.pdf.png}
       %
       \caption{Hitrosti konvergence enodimenzionalnega modela
-        $D_3 \to \R$ z različnimi začetnimi
-        parametri $(r_0, s_0)$. Na zgornji sliki so začetni
-        parametri izbrani iz kvadrata $[-1,1]^2$, na spodnji
+        $D_3 \to \R$ z različnimi vrednostmi začetnih
+        parametrov $(r_0, s_0)$. Na zgornji sliki so vrednosti
+        izbrane iz kvadrata $[-1,1]^2$, na spodnji
         pa iz kvadrata $[0.5, 1.5]^2$.
       }
       \label{fig:dihedral_1d_grid_n3}
@@ -3270,7 +3305,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
         vrednostima $R := \rho (r)$ in
         $S := \rho (s)$. Opazujemo trajektorije
         $(\operatorname{tr}(R(t)), \operatorname{tr}(S)(t))$.
-        Črne pike predstavljajo začetne parametre. Modre
+        Črne pike predstavljajo vrednosti začetnih parametrov. Modre
         trajektorije konvergirajo do upodobitve.
       }
       \label{fig:trajektorije_diedrska_grupa_2d-1}
