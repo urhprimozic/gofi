@@ -1406,7 +1406,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     %%%%%%%%%%%%%%%%%%%%%%%%%
     \clearpage
     \subsection{Splošna dinamika}
-    \label{subsection: realn z 2 generatorjema}
+    %
     Za model $\rho$ s parametri iz $\R^N$ in funkcijo izgube
     $\loss \colon \R^N \to \R$ rešujemo enačbo gradientnega toka
     $$\frac{d\phi(t)}{dt} = -\nabla \loss(\phi(t)), \quad
@@ -1422,6 +1422,9 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     Limite so natanko kritične točke funkcije izgube $\loss$
     \cite[Trditev na strani 203]{Hirsch2012dynamical-systems}.
     % \subsubsection{Skalaren model grupe z dvema generatorjema}
+
+    \subsubsection{Realen model na dveh generatorjih}
+    \label{subsection: realn z 2 generatorjema}
     Oglejmo si posplošitev modela diedrske grupe. Opazujemo model
     $\rho \colon G \to \R$ grupe $G=\left<s_G, z_G \mid R\right>$ z dvema
     generatorjema.
@@ -1429,7 +1432,11 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     Brez škode za splošnost predpostavimo, da ima vsaka
     relacija v $R$ najmanj dve pojavitvi generatorja $s_G$, ali pa je
     oblike $z_G^{\operatorname{red}(z_G)}$. Simetrično za
-    $z_G$. Označimo
+    $z_G$. Dodatno bomo predpostavili, da sta  v $R$
+    besedi oblike $s_G ^a$ in $z_G^b$, kjer sta
+    $a, b\in \N$.
+
+    Označimo
     $R= \{ r_1, r_2, \dotsc, r_l\}$ in za model s parametroma
     $\rho(s_G) = s \in \R$ in $\rho(z_G) = z \in \R$ označimo
     $$
@@ -1475,7 +1482,8 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     točki $x=y=0$. Dokazali bomo, da je $x=y=0$ edina stacionarna
     točka funkcije na območju $s, z >0$.
 
-    Uvedemo $F_i(x,y) = (e^{a_ix + b_iy} -1)^2$. Za poljuben vektor
+    Uvedemo $F_i(x,y) = (e^{a_ix + b_iy} -1)^2$.
+    Za poljuben vektor
     $v \in \R^2$ uvedemo
     $f_i(t) = F_i(x + t v_1, y + t v_2)$. Velja
     $$
@@ -1484,20 +1492,47 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     kjer je $\lambda_i = a_iv_1 + b_iv_2$. Očitno je $f_i'(t) = 0$
     natanko za $t=0$ ali $\lambda_i=0$.
 
-    Za $t>0$ velja $\nabla F(tv) = \sum_{i=1}^l f_i'(t) = 0$ le, če
-    je $f_i'(t) = 0$ za vsak $i$. To se zgodi le, če je $t=0$ ali
-    $\lambda_i = 0$ za vsak $i$. Druga možnost pa ni mogoča, saj bi
-    pomenila, da so vsi vektorji $(a_i, b_i)$ pravokotni na isti
-    vektor $v$, kar se ne zgodi, saj $R$ vsebuje člena 
-    oblike $s^{a_i}$ in $z^{b_j}$.
+    Za $t\geq 0$ velja $f_i'(t) \geq 0$, saj imata
+    $e^{t \lambda_i}$ in $e^{t \lambda_i} -1$ enak predznak.
+    Zato je
+    $
+    \frac{d}{dt}F(x + tv_1, y + t v_2) = \sum_{i=1}^l f_i'(t) = 0
+    $
+    če in samo če je $f_i'(t) = 0$ za vsak $i$.
 
-    Edina stacionarna točka $F$ je torej $x=y=0$, kar ustreza $s=z=1$.
-  
-    \TODO{Je to prav?!
-    }
-%
- %   
-%
+    Par $(x,y)$ je stacionarna točka funkcije $F$ le,
+    če je $e^{t \lambda_i} = 1$ za vsak $i$.
+
+    Vse $\lambda_i$ ne morejo biti nič, saj bi to pomenilo, da so vsi
+    vektorji $(a_i, b_i)$ pravokotni na isti
+    vektor $v$, kar se ne zgodi, saj $R$ vsebuje besedi
+    $s_G^{a}$ in $z_G^{b}$, torej sta vsaj dva vektorja
+    $(a_i, b_i)$ pravokotna.
+
+    Edina stacionarna točka $F$ je $x=y=0$, kar ustreza $s=z=1$.
+    \subsubsection{Splošen realen model}
+    Zgornji premislek se da posplošiti na enodimenzionalen realen model.
+    Predpostavimo, da je naša
+    prezentacija grupe $G = \langle {s_G}_1, {s_G}_2, \dotsc, {s_G}_k
+    \mid R \rangle$
+    taka, da $R$ vsebuje besedi oblike ${s_G}_i^{a_i}$ za vsak $i$.
+    Generatorje ${s_G}_i$ preslikamo v skalarje
+    $s_i \in \R$,
+    vsako relacijo ${r_G}_i$ pa  v $r_i={s}_1^{a_1^{(i)}} {s}_2^{a_2^{(i)}}
+    \dotsm {s_G}_k^{a_k}$.
+
+    Na območju $(0,\infty)^k$ definiramo 
+    koordinate $x_i = \log s_i$ in enako kot zgoraj dokažemo, da so edine kritične točke funkcije
+    $$
+    F(x_1, x_2, \dotsc, x_k) 
+    = \sum_{i=1}^l (e^{a_1^{(i)}x_1 + a_2^{(i)}x_2 + \dotsc + a_k^{(i)}x_k} -1)^2.
+    $$
+     v 
+    točkah ${s}_1^{a_1^{(i)}} {s}_2^{a_2^{(i)}}
+    \dotsm {s}_k^{a_k} = 1$. 
+    %
+    %
+    %
     \clearpage%newpage pusti floatom, da so prej!
     \section{Iskanje delovanj}
     \label{section:iskanje delovanj}
@@ -2928,11 +2963,22 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       \caption{Povprečne napake metod.}
       \label{table:povprečne napake različnih metod grafi}
     \end{table}
-
-    \TODO{Kaj več o graph matchingu? Uničevanje simetrij z
-    naključnim šumom? Sinkhorn vs tabela inverzij?}
     %
     %
+    \section{Razprava}
+    \TODO{
+      zakluček, vse opombe
+    }
+    \begin{itemize}
+      \item povezava med grupami in NDE 
+      \item uničevanje simetrij - preturbacije, preferiranje bijekcij 
+      \item meta učenje - sprememba modela v kritični točki 
+      \item umestitev v evklidski prostor glede na napako (transformer, embedding)
+      \item alternativne loss funkcije 
+      \item NN kot direkten model za bijekcijo - brez verjetnosti 
+      \item sinkhorn vs TI 
+      \item GNN -> a je kaka boljša arhitektura?
+    \end{itemize}
     \appendix
     \clearpage
     \section{Nevronske mreže}
