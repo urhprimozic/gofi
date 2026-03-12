@@ -34,6 +34,11 @@ blueorange = LinearSegmentedColormap.from_list(
     [black, blue, lightorange, white],
     N=512  # More steps = smoother gradient
 )
+bluedarkorange = LinearSegmentedColormap.from_list(
+    "bluedarkorange",
+    [black, blue, darkorange, white],
+    N=512  # More steps = smoother gradient
+)
 cmap_blue_orange_blackless = LinearSegmentedColormap.from_list(
     "blueorange_blackless",
 [blue, orange, lightorange, white],

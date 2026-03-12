@@ -190,21 +190,82 @@ descent}
 
 \section*{Uvod}
 \addcontentsline{toc}{section}{Uvod}
-Nerazcepne upodobitve, delovanja in izomorfizme grafov
-lahko
-enačimo z množico ničel gladke funkcije
+Poljubna preslikava $f$ iz končne grupe $G$ v prostor
+matrik $\C^{n\times n}$ je \emph{upodobitev} grupe $G$ natanko tedaj,
+ko velja $f(g h) = f(g) f(h)$ za vsak $g, h \in G$.
+Definiramo lahko gladko funkcijo izgube
+$\Loss{homo} (f) = \sum\limits_{g, h \in G} \|f(g h) - f(g)
+f(h)\|^2$, ki je nič
+natanko tedaj, ko $f$ predstavlja upodobitev grupe $G$.
+
+Iskanje upodobitev končnih grup lahko s tem prevedemo na optimizacijo
+funkcije $\Loss{homo}$. Za vsak element grupe $g$ izberemo svojo
+matriko $f(g)$. Če najdemo vektor $[f(g)]_{g \in G}$, v katerem je
+vrednost funkcije
+izgube $0$, smo našli upodobitev.
+\begin{primer}
+  {
+    Poljubno preslikavo iz grupe $\Z_2 = \{0, 1\}$ v $\C$ lahko
+    predstavimo s parom kompleksnih
+    števil $(z_0= f(0),z_1=f(1)) \in \C^2$. Funkcija izgube je v tem
+    primeru enaka
+    $$
+    \Loss{homo} (z_0, z_1) = |z_1 - z_0 z_1|^2 +
+    |z_0 - z_0^2|^2 + |z_0 - z_1 z_1|^2,
+    $$
+    edini dve upodobitvi grupe $\Z_2$ pa ustrezata paroma števil
+    $(1,1)$ in $(-1,-1)$.
+  }
+\end{primer}
+Podobno lahko na optimizacijski problem prevedemo iskanje
+\emph{delovanj} in iskanje
+\emph{izomorfizmov}
+grafov. Iskane morfizme enačimo
+z množico ničel gladke funckije
 $\loss \colon \R^n \to [0, \infty)$
-nad
 evklidskim prostorom. S tem iskanje diskretnih struktur
-prevedemo na optimizacijo gladkih funkcij.
+prevedemo na iskanje ničel gladke funkcije.
 
 Optimizacije se  lotimo z gradientnim spustom, temeljno
-optimizacijsko metodo v strojnem učenju, ki je
-ekvivalentna numeričnemu reševanju diferencialne enačbe
-$\frac{d\phi}{dt} = - \nabla \loss(\phi)$. Študiramo
-dinamiko rešitev in odvisnost konvergence od izbire
-začetnih parametrov.
+optimizacijsko metodo v strojnem učenju. Izberemo
+\emph{začetne parametre} $\phi_0$ in stopnjo učenja
+$\eta > 0$, nato pa posodabljamo vrednosti parametrov z iterativno metodo
+$\phi_{i+1} = \phi_i - \eta \nabla \mathcal{L}(\phi_i)$. Gradientni
+spust ob ugodni izbiri
+začetnih parametrov uspe najti ničlo $\loss(\lim_{i \to \infty} \phi_i) =0$
+funkcije $\loss$, v splošnem pa konvergira le do lokalnih ekstremov.
 
+Študiramo lahko, kako izbira začetnih parametrov vpliva na konvergenco metode.
+V tem primeru lahko gradientni spust tretiramo kot numerično metodo za reševanje
+diferencialne enačbe
+$\frac{d\phi}{dt} = - \nabla \loss(\phi)$ in študiramo dinamiko
+rešitev te enačbe.
+V delu se poglobimo v enačbi, ki pripadata iskanju nerazcepnih
+upodobitev cikličnih in diedrskih grup.
+
+Iskanje izomorfizmov grafov je poseben primer
+\emph{ujemanja} grafov. Za poljubni matriki sosednosti $M_1$ in $M_2$
+iščemo permutacijsko matriko
+$$
+\operatorname{argmin}_{P \in \Pi} \|M_1 - P M_2 P^T\|^2.
+$$
+Če sta grafa, podana z matrikama $M_1$ in $M_2$, izomorfna, potem
+matrika $P$, ki minimizira zgornjo funkcijo, predstavlja izomorfizem grafov.
+
+Problem ujemanja grafov je pomemben v industriji in se med drugim pojavlja v
+strojnem vidu, biomehaniki in robotiki\cite{graphmathcingsurvey}. V
+splošnem se ga rešuje
+z aproksimacijskimi algoritmi, ki najdejo dvojno stohastično matriko,
+ki minimalizira $ \|M_1 - P M_2 P^T\|^2$, nato pa to matriko
+prevedejo v permutacijsko.
+
+Alternativno lahko nad množico permutacij $S_n$ definiramo
+gladko družino porazdelitev in za slučajno permutacijo $f \in S_n$
+maksimiziramo verjetnost, da je $f$ homomorfizem. S tem
+pristopom se ognemo prevedbe dvojno stohastične matrike v permutacijsko,
+ki je lahko problematična\cite{lyzinski2015graphmatchingrelaxrisk}.
+
+% struktura
 V poglavju \ref{section:Optimizacija z gradientnim spustom}
 predstavimo gradientne
 optimizacijske metode in povezavo med gradientnim spustom in
@@ -576,7 +637,7 @@ ki vsak generator grupe preslika v poljubno matriko.
   s^{\operatorname{red}(s) -1}$.}, lahko za
   vsak element grupe $G$ izberemo predstavnika
   $w_g \in S^*$, da velja
-  $w_g \equiv g \mod G$.
+  $w_g \equiv g \mod R$.
   S tem lahko za vsak element $g \in G$
   definiramo preslikavo $\hat \rho(g)$ kot
   $\hat \rho(w_g)$
@@ -629,10 +690,12 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
 \begin{primer}
   Poglejmo si model $\hat \rho \colon S_3 \to \R$ eno
   dimenzijske realne upodobitve permutacijske grupe na treh
-  točkah za prezentacijo $S_3 = <(12), (13)\mid
-  (12)^2=(13)^2=(13)^{(12)}(12)^{(13)}=1>$. Model je definiran
+  točkah za prezentacijo $S_3 = \langle a, b \mid a^2 = b^2 = (ab)^3 = 1 \rangle
+   $.
+   Predstavljamo si lahko, da $a$ predstavlja tranzpozicijo $(12)$, $b$ pa tranzpozicijo $(13)$.
+   Model je definiran
   z vrednostima
-  $\hat\rho((12)) = x$ in $\hat\rho((13)) = y$.
+  $\hat\rho(a) = x$ in $\hat\rho(b) = y$.
 
   Edini enodimenzionalni upodobitvi $S_3$ sta identiteta
   $\operatorname{id}$ in predznak permutacije
@@ -651,9 +714,20 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
       trajektorije učenja modela $\hat\rho \colon S_3 \to \R$.
       Vrednosti začetnih parametrov vplivajo na uspeh optimizacije in končno
     upodobitev. }
-    % KODA: /gofi/analysis.ipynb
+    % KODA: /gofi/analysis.ipynb  
     \label{fig:trajektorije S3 to R}
   \end{figure}
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.6\textwidth]{images/3d_loss_s3_to_R.png}
+      % \caption[caption za v kazalo]{Dolg caption pod sliko}
+      \caption[Graf funkcije izgube $\Loss{rel}$ za model $S_3
+      \to \R$.]{Graf funkcije izgube $\Loss{rel}$ za model $S_3
+      \to \R$.}
+      % KODA: /gofi/analysis.ipynb
+      
+    \end{figure}
+  
 \end{primer}
 \begin{opomba}
   Model bi lahko definirali na celi grupi kot $\hat\rho(g)=
@@ -866,9 +940,9 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   % $$
 \end{lema}
 \begin{dokaz}
-  Vse besede $w$, za katere velja $w \equiv 1 \mod G$,
+  Vse besede $w$, za katere velja $w \equiv 1 \mod R$,
   so generirane z besedami oblike
-  $v r u$, kjer je $r \in R$ in $vu \equiv 1 \mod G$.
+  $v r u$, kjer je $r \in R$ in $vu \equiv 1 \mod R$.
   Najprej za te generatorje pokažemo, da velja
   $\|\hat \rho(v r u) - I\| < (\sqrt{n} + \epsilon)^{|v u|}
   |v r u| \epsilon.$
@@ -883,7 +957,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   % (\sqrt{n}+ \epsilon)^{|r|}
 
   Naj bo $|v| + |u| > 0$. Ker je $|r| \geq 1$ in
-  $vu \equiv 1 \mod G$, po indukcijski predpostavki velja
+  $vu \equiv 1 \mod R$, po indukcijski predpostavki velja
   $
   \hat \rho(vu) = I + E_{vu}
   $ za $ \|E_{uv}\| < (\sqrt{n}+ \epsilon)^{|vu|} |vu| \epsilon$.
@@ -899,7 +973,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   \end{align*}
   za $\| E_{vru}\| = %\|E_{vu} + \hat \rho(v) E_r \hat \rho(u)\|
   \leq (\sqrt{n}+ \epsilon)^{|vu|}|vru|\epsilon$.
-  Splošna beseda $w \equiv 1 \mod G$ je oblike
+  Splošna beseda $w \equiv 1 \mod R$ je oblike
   $w = v_1 r_1  u_1 v_2 r_2 u_2 \dotsm v_L r_L u_L$.
   Računamo
   \begin{align*}
@@ -932,7 +1006,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   $\Loss{rel}(\hat \rho) < |R| \epsilon$ in $
   \Loss{unitary}(\hat \rho)  < |S| \epsilon$.
   Potem za taki besedi $w, v \in S ^*$, da velja
-  $w \equiv v^{-1}\mod G$ velja
+  $w \equiv v^{-1}\mod R$ velja
   $$
   \|\hat \rho(w) - \hat \rho(v)^{-1}\|
   \leq \frac{\left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon
@@ -967,10 +1041,10 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
 \end{lema}
 \begin{dokaz}
   Za kanonične predstavnike $w_g, w_h, w_{gh} \in S^*$
-  velja $w_g w_h  \equiv w_{gh}^{-1} \mod G$.
+  velja $w_g w_h  \equiv w_{gh}^{-1} \mod R$.
   %Označimo z
   %$v$ besedo, za katero velja
-  %$v \equiv (gh) ^{-1}  \mod G$.
+  %$v \equiv (gh) ^{-1}  \mod R$.
 
   Ocenimo
   \begin{align*}
@@ -1521,15 +1595,17 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     vsako relacijo ${r_G}_i$ pa  v $r_i={s}_1^{a_1^{(i)}} {s}_2^{a_2^{(i)}}
     \dotsm {s_G}_k^{a_k}$.
 
-    Na območju $(0,\infty)^k$ definiramo 
-    koordinate $x_i = \log s_i$ in enako kot zgoraj dokažemo, da so edine kritične točke funkcije
+    Na območju $(0,\infty)^k$ definiramo
+    koordinate $x_i = \log s_i$ in enako kot zgoraj dokažemo, da so
+    edine kritične točke funkcije
     $$
-    F(x_1, x_2, \dotsc, x_k) 
-    = \sum_{i=1}^l (e^{a_1^{(i)}x_1 + a_2^{(i)}x_2 + \dotsc + a_k^{(i)}x_k} -1)^2.
+    F(x_1, x_2, \dotsc, x_k)
+    = \sum_{i=1}^l (e^{a_1^{(i)}x_1 + a_2^{(i)}x_2 + \dotsc +
+    a_k^{(i)}x_k} -1)^2.
     $$
-     v 
+    v
     točkah ${s}_1^{a_1^{(i)}} {s}_2^{a_2^{(i)}}
-    \dotsm {s}_k^{a_k} = 1$. 
+    \dotsm {s}_k^{a_k} = 1$.
     %
     %
     %
@@ -2970,13 +3046,14 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       zakluček, vse opombe
     }
     \begin{itemize}
-      \item povezava med grupami in NDE 
-      \item uničevanje simetrij - preturbacije, preferiranje bijekcij 
-      \item meta učenje - sprememba modela v kritični točki 
-      \item umestitev v evklidski prostor glede na napako (transformer, embedding)
-      \item alternativne loss funkcije 
-      \item NN kot direkten model za bijekcijo - brez verjetnosti 
-      \item sinkhorn vs TI 
+      \item povezava med grupami in NDE
+      \item uničevanje simetrij - preturbacije, preferiranje bijekcij
+      \item meta učenje - sprememba modela v kritični točki
+      \item umestitev v evklidski prostor glede na napako
+        (transformer, embedding)
+      \item alternativne loss funkcije
+      \item NN kot direkten model za bijekcijo - brez verjetnosti
+      \item sinkhorn vs TI
       \item GNN -> a je kaka boljša arhitektura?
     \end{itemize}
     \appendix

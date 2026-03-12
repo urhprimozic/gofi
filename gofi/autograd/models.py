@@ -162,7 +162,7 @@ class GeneratorModel(nn.Module):
 
     # return self.weights[:, element * self.dim : (element + 1) * self.dim]
 
-    def get_matrix_of_generator(self, index: int):
+    def get_matrix_of_generator(self, index: int, ignore_waring=False):
         """
         Returns matrix, which represents generator at index.
 
@@ -179,10 +179,11 @@ class GeneratorModel(nn.Module):
         param = self.weights[index]
         # mat param to matrix
         matrix = self.param_to_matrix(param)
-        if not (matrix.shape == torch.Size([self.dim, self.dim])):
-            raise ValueError(
-                f"Shape of param_to_matrix(weights[{index}]) is {matrix.size}, but should be {torch.Size([self.dim, self.dim])}."
-            )
+        if not ignore_waring:
+            if not (matrix.shape == torch.Size([self.dim, self.dim])):
+                raise ValueError(
+                    f"Shape of param_to_matrix(weights[{index}]) is {matrix.shape}, but should be {torch.Size([self.dim, self.dim])}."
+                )
         return matrix
 
     def get_matrix_of_product(self, product: list[int]):
