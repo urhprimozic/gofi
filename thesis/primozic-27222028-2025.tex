@@ -649,6 +649,9 @@ ki vsak generator grupe preslika v poljubno matriko.
   \begin{itemize}
     \item Za vsak $g \in G\setminus \{1\}$ izberemo
       \emph{kanoničnega predstavnika} $w_g \in S^*$.
+      %, ki je
+      %izmed besed $w \in S^*$, ki ustrezajo $g$,
+      %najkrajša.
     \item Za $1 \in G$ definiramo $w_1$ kot prazno besedo.
   \end{itemize}
   Za $g \in G$ s kanoničnim predstavnikom $w_g \in S^*$ definiramo
@@ -656,18 +659,30 @@ ki vsak generator grupe preslika v poljubno matriko.
   \hat \rho(g) = \hat \rho(w_g).
   $$
 \end{definicija}
-
 %
-
+%
+%
 %  Razširitev preslikave $\hat \rho$ na celo grupo $G$
 %je opisana v poglavju \ref{subsection : razširitev repr modela}.
-
+%
 Preslikava $\hat \rho$ ni nujno upodobitev, služi pa nam lahko
 kot model upodobitve, odvisen od parametrov $\phi = \{s_{i,j}
 \mid s \in S, 1 \leq i, j \leq n\}$.
 Parametre matrik $\hat\rho(s)$ bomo postopoma spreminjali s
 gradientnim spustom, da bo model vse bližje upodobitvi.
+\begin{definicija}
+  Poljubna beseda $w \in S^*$, ki ustreza enoti, je oblike
+  $$w  = \prod_{i=1}^{L(w)} {v_i r_{l_i}} u_i,$$
+  kjer so $v_i, u_i \in S^*$, $r_{l_i} \in R$ in $L(w) \in \N$.
+  Za $w \equiv 1 \mod R$ z $L(w)$ označimo \emph{število pojavitev}
+  besed iz $R$ v
+  $w$.
 
+  Dodatno definiramo $L=\max_{g \in G} L(w_{g^{-1}} w_g)$, ki vpliva na 
+  vrednost funkcije izgube, pri kateri lahko sklepamo na obstoj 
+  rešitve (glej poglavje \ref{subsection : obstoj resitve}).
+\end{definicija}
+%
 \subsubsection{Funkcija izgube nad relacijami}
 \label{funkcija izgube nad relacijami}
 \index{funkcija izgube nad relacijami}
@@ -691,9 +706,10 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
   Poglejmo si model $\hat \rho \colon S_3 \to \R$ eno
   dimenzijske realne upodobitve permutacijske grupe na treh
   točkah za prezentacijo $S_3 = \langle a, b \mid a^2 = b^2 = (ab)^3 = 1 \rangle
-   $.
-   Predstavljamo si lahko, da $a$ predstavlja tranzpozicijo $(12)$, $b$ pa tranzpozicijo $(13)$.
-   Model je definiran
+  $.
+  Predstavljamo si lahko, da $a$ predstavlja tranzpozicijo $(12)$,
+  $b$ pa tranzpozicijo $(13)$.
+  Model je definiran
   z vrednostima
   $\hat\rho(a) = x$ in $\hat\rho(b) = y$.
 
@@ -714,20 +730,20 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
       trajektorije učenja modela $\hat\rho \colon S_3 \to \R$.
       Vrednosti začetnih parametrov vplivajo na uspeh optimizacije in končno
     upodobitev. }
-    % KODA: /gofi/analysis.ipynb  
+    % KODA: /gofi/analysis.ipynb
     \label{fig:trajektorije S3 to R}
   \end{figure}
-    \begin{figure}[h]
-      \centering
-      \includegraphics[width=0.6\textwidth]{images/3d_loss_s3_to_R.png}
-      % \caption[caption za v kazalo]{Dolg caption pod sliko}
-      \caption[Graf funkcije izgube $\Loss{rel}$ za model $S_3
-      \to \R$.]{Graf funkcije izgube $\Loss{rel}$ za model $S_3
-      \to \R$.}
-      % KODA: /gofi/analysis.ipynb
-      
-    \end{figure}
-  
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/3d_loss_s3_to_R.png}
+    % \caption[caption za v kazalo]{Dolg caption pod sliko}
+    \caption[Graf funkcije izgube $\Loss{rel}$ za model $S_3
+    \to \R$.]{Graf funkcije izgube $\Loss{rel}$ za model $S_3
+    \to \R$.}
+    % KODA: /gofi/analysis.ipynb
+
+  \end{figure}
+
 \end{primer}
 \begin{opomba}
   Model bi lahko definirali na celi grupi kot $\hat\rho(g)=
@@ -925,6 +941,9 @@ $$
 Z njo dokažemo, da model z majhno napako
 različne zapise iz $S^*$ istega elementa grupe preslika
 blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
+
+Brez škode za splošnost lahko
+kanonične predstavnike $w_g$ izb%GOTO
 \begin{lema}
   \label{lema : zveznost na besedah}
   Naj bo $\hat \rho$ tak, da velja
@@ -933,7 +952,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   Potem za besedo $w \in S^*$, ki predstavlja $1 \in G$, velja
   $$
   \|\hat \rho(w) - I\| <\left( 1 + (\sqrt{n} +
-  \epsilon)^{|w|} |w| \epsilon \right)^L - 1
+  \epsilon)^{|w|} |w| \epsilon \right)^{L(w)} - 1
   $$
   % $$
   % \|\hat \rho(w) - I\| < (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon.
@@ -974,30 +993,30 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   za $\| E_{vru}\| = %\|E_{vu} + \hat \rho(v) E_r \hat \rho(u)\|
   \leq (\sqrt{n}+ \epsilon)^{|vu|}|vru|\epsilon$.
   Splošna beseda $w \equiv 1 \mod R$ je oblike
-  $w = v_1 r_1  u_1 v_2 r_2 u_2 \dotsm v_L r_L u_L$.
+  $w = v_1 r_1  u_1 v_2 r_2 u_2 \dotsm v_L(w) r_L(w) u_L(w)$.
   Računamo
   \begin{align*}
     \hat \rho (w) &=
     \hat \rho (v_1 r _1 u_1) \hat \rho (v_2 r _2 u_2) \dotsm
-    \hat \rho (v_L r _L u_L) \\
+    \hat \rho (v_L(w) r _L(w) u_L(w)) \\
     &= (I + E_{v_1 r_1 u_1}) (I + E_{v_2 r_2 u_2}) \dotsm
-    (I + E_{v_L r_L u_L}) \\
-    &= I + \sum_{\emptyset \neq T \subseteq [L] }
+    (I + E_{v_L(w) r_L(w) u_L(w)}) \\
+    &= I + \sum_{\emptyset \neq T \subseteq [L(w)] }
     \prod_{t \in T} E_{v_t r_t u_t}
   \end{align*}
   in ocenimo
   \begin{align*}
-    \left\| \sum_{\emptyset \neq T \subseteq [L] }
+    \left\| \sum_{\emptyset \neq T \subseteq [L(w)] }
     \prod_{t \in T} E_{v_t r_t u_t} \right\| _F
     &\leq
-    \sum_{\emptyset \neq T \subseteq [L] }
+    \sum_{\emptyset \neq T \subseteq [L(w)] }
     \prod_{t \in T} (\sqrt{n} + \epsilon)^{|v_t u_t|} |v_t r_t
     u_t| \epsilon \\
     &\leq
-    \sum_{\emptyset \neq T \subseteq [L] }
+    \sum_{\emptyset \neq T \subseteq [L(w)] }
     \prod_{t \in T} (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon \\
     &\leq
-    \left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon \right)^L - 1.
+    \left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon \right)^{L(w)} - 1.
   \end{align*}
   %  \TODO{Groba ocena - lahko tudi bolje ocenim..}
 \end{dokaz}
@@ -1008,11 +1027,11 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   Potem za taki besedi $w, v \in S ^*$, da velja
   $w \equiv v^{-1}\mod R$ velja
   $$
-  \|\hat \rho(w) - \hat \rho(v)^{-1}\|
-  \leq \frac{\left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon
-  \right)^L - 1}{\|\hat \rho(v)^{-1} \|}
-  =: o_{w,v}(\epsilon)
-  .
+  \|\hat \rho(w) - \hat \rho(v)^{-1}\| = O(\epsilon).
+  %\leq \frac{\left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon
+  %\right)^L - 1}{\|\hat \rho(v)^{-1} \|}
+  %=: o_{w,v}(\epsilon)
+  %.
   $$
 \end{lema}
 \begin{dokaz}
@@ -1021,8 +1040,13 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   $\| B - A^{-1}\| < \frac{\delta}{\|A^{-1}\|}$.
   Za dovolj majhen $\epsilon$ so matrike $\hat \rho(v)$ obrnljive.
   %
-  Dokaz sledi iz prejšnje leme \ref{lema : zveznost na besedah}
-  in zgornje opazke.
+  Iz leme \ref{lema : zveznost na besedah} in zgornje opazke sledi
+  $$
+  \|\hat \rho(w) - \hat \rho(v)^{-1}\|
+  \leq \frac{\left( 1 + (\sqrt{n} + \epsilon)^{|w|} |w| \epsilon
+  \right)^{L(wv)} - 1}{\|\hat \rho(v)^{-1} \|}
+  .
+  $$
 \end{dokaz}
 %
 \begin{lema}
@@ -1032,15 +1056,19 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   $\Loss{unitary}(\hat \rho) < |S|\epsilon$.
   Potem za vsak $g, h \in G$ velja
   $$
-  \|\hat \rho(gh) - \hat \rho(g) \hat \rho(h)\| <
-  2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
-  \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}
-  ,
+  \|\hat \rho(gh) - \hat \rho(g) \hat \rho(h)\| = O(\epsilon).
   $$
-  kjer je $l_{g,h} = \max(|w_{g,h}|, |w_g w_h|)$.
+  %$$
+  %\|\hat \rho(gh) - \hat \rho(g) \hat \rho(h)\| <
+  %2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
+  %\right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}
+  %,
+  %$$
+  %kjer je $l_{g,h} = \max(|w_{g,h}|, |w_g w_h|)$.
 \end{lema}
 \begin{dokaz}
-  Za kanonične predstavnike $w_g, w_h, w_{gh} \in S^*$
+  Naj bo $l_{g,h} = \max(|w_{g,h}|, |w_g w_h|)$. Za kanonične
+  predstavnike $w_g, w_h, w_{gh} \in S^*$
   velja $w_g w_h  \equiv w_{gh}^{-1} \mod R$.
   %Označimo z
   %$v$ besedo, za katero velja
@@ -1054,9 +1082,6 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
     \\
     & + \|\hat \rho(w_{(gh)^{-1}}) - \hat \rho(w_{gh})\| \\
     & \leq
-    o_{w_g, w_{(gh)^{-1}}}(\epsilon) + o_{w_{gh}, w_{(gh)^{-1}}}(\epsilon)
-    \\
-    &=
     2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
     \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|},
     %\\
@@ -1105,18 +1130,21 @@ na $S^*$ in na $G$ enako kot $\hat \rho$.
   in $\Loss{rel}(\hat \rho) < |R| \epsilon$,
   velja
   $$
-  \|\mu(gh) - \mu(g)\mu(h)\| <  k_{g,h}(\epsilon)
+  \|\mu(gh) - \mu(g)\mu(h)\| <  O(\epsilon).
   $$
-  za
-  $$
-  k_{g,h}(\epsilon) =
-  2|w_{gh}| (\sqrt{n} - \epsilon)^{|w_{gh}| -1}  \epsilon
-  %
-  +
-  2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
-  \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}
-  =
-  $$
+  %$$
+  %\|\mu(gh) - \mu(g)\mu(h)\| <  k_{g,h}(\epsilon).
+  %$$
+  %za
+  %$$
+  %k_{g,h}(\epsilon) =
+  %2|w_{gh}| (\sqrt{n} - \epsilon)^{|w_{gh}| -1}  \epsilon
+  %%
+  %+
+  %2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
+  %\right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}
+  %=
+  %$$
 \end{lema}
 \begin{dokaz}
   Iz leme \ref{lema:rho_s - Q_s < eps} sledi, da je za
@@ -1136,8 +1164,6 @@ na $S^*$ in na $G$ enako kot $\hat \rho$.
     +
     2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
     \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}
-    \\
-    &:= k_{g,h}(\epsilon)
   \end{align*}
 \end{dokaz}
 %
@@ -1156,11 +1182,11 @@ v spodnji lemi.
   definirano kot zgoraj,
   velja
   $$
-  \|\hat \rho(s) - \rho(s)\| < o(\epsilon)
+  \|\hat \rho(s) - \rho(s)\| < O(\epsilon)
   $$
   in
   $$
-  \|\hat \rho(s) -\mu(s)\| < o(\epsilon).
+  \|\hat \rho(s) -\mu(s)\| < O(\epsilon).
   $$
 \end{lema}
 \begin{dokaz}
@@ -1168,7 +1194,7 @@ v spodnji lemi.
   zgornje leme
   sledi
   $$
-  |\chi_\rho| = |\chi_{\hat \rho}| + o(\epsilon).
+  |\chi_\rho| = |\chi_{\hat \rho}| + O(\epsilon).
   $$
   Za dovolj majhno $\epsilon$ je
   $|\chi_{\hat \rho}| < 2$, iz česar po izreku
