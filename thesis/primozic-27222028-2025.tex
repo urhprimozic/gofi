@@ -678,8 +678,8 @@ gradientnim spustom, da bo model vse bližje upodobitvi.
   besed iz $R$ v
   $w$.
 
-  Dodatno definiramo $L=\max_{g \in G} L(w_{g^{-1}} w_g)$, ki vpliva na 
-  vrednost funkcije izgube, pri kateri lahko sklepamo na obstoj 
+  Dodatno definiramo $L=\max_{g \in G} L(w_{g^{-1}} w_g)$, ki vpliva na
+  vrednost funkcije izgube, pri kateri lahko sklepamo na obstoj
   rešitve (glej poglavje \ref{subsection : obstoj resitve}).
 \end{definicija}
 %
@@ -800,8 +800,10 @@ konvergiramo.
   \end{equation}
 \end{definicija}
 Če ne piše drugače, od tu naprej vedno privzamemo, da
-minimiziramo funkcijo izgube $\loss = \Loss{rel} + \Loss{irr} +
-\Loss{unitary}$. Globalni minimumi te funkcije so natanko
+minimiziramo funkcijo izgube
+$$\loss = \Loss{rel} + \Loss{irr} +
+\Loss{unitary}.$$
+Globalni minimumi te funkcije so natanko
 unitarne nerazcepne upodobitve.
 \subsubsection{Gradientni tok}
 V delu opazujemo dinamiko sistema $\frac{d\phi}{dt} = - \nabla
@@ -1203,6 +1205,35 @@ v spodnji lemi.
   \ref{izrek : obstoj rešitve upodobitve} dokazan.
 \end{dokaz}
 %%%%%%%%%%%%
+\begin{opomba}
+  \TODO{Po mojem to drži.}
+  Če nas ne zanima eksplicitna meja $\epsilon$, da iz
+  $\Loss{rel}(\hat \rho) < \epsilon$, ampak samo njen obstoj,
+  je dokaz veliko lažji.
+  %Opazujmo preslikavo
+  %$\Loss{2} (\hat \rho) = \sum_{r \in R} \left\|
+  %\hat \rho(r) - I
+  %\right\|^2$. (TO JE POLINOM)
+  $\Loss{rel}$ je zvezna funkcija na končnem prostoru
+  $GL_n(\C)^S \equiv \R^{2|S|n^2}$. Preprosto je dokazati, da je
+  $ \Loss{rel}^{-1}(0)$ odprta v $(D\Loss{rel})^{-1} (0)$, iz česar sledi, da je
+  $(D\Loss{rel})^{-1} (0) \setminus \Loss{rel}^{-1}(0)$ kompakt,
+  torej $f$ na njem doseže
+  neničelni minimum $c > 0$. Če je $\Loss{rel} \hat \rho < c$,
+  $\hat \rho$ konvergira do upodobitve.
+
+  \TODO{Skica dokaza:}
+  Naj bo $f = \Loss{rel}$ in $f(a) = 0$. Iščemo odprto okolico $a$ v
+  $(Df)^{-1}(0)$, da je $f$ v njej enaka 0.
+
+  Odprte množice v $(Df)^{-1}(0)$ so oblike $W = U \cap (Df)^{-1}(0)$,
+  kjer je $U$ odprta v $\R^n$. Če nadjemo $W = \{a\}$, smo konec. 
+
+  Če take $W$ ni, potem je za poljubno smer $w$ za dovolj majhne $t$ 
+  $a + tw  \in W$. Torej je $Df(a + tw) = 0$ za dovolj majhne $t$.
+  Iz tega pa sledi, da je $t \mapsto f(a + tw)$ konstantna funkcija, torej je 
+  $f(W) = f(a) = 0$ in $a \in W \subset f^{-1}(0)$.  
+\end{opomba}
 \subsection{Ciklične grupe}
 \label{subsection : ciklicčne grupe}
 Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
@@ -1241,7 +1272,7 @@ izreku \ref{izrek:kritične točke ciklične}.
   oranžna, počasneje konvergira.}
   \label{fig:ciklicna-trajektorije}
 \end{figure}
-\section{Redukcija funkcij izgube}
+\subsubsection{Redukcija funkcij izgube}
 Nerazcepne upodobitve $\rho_k$ so edine enodimenzionalne
 upodobitve cikličnih grup. Za poljubno upodobitev $\rho \colon
 C_n \to \C^*$ mora namreč veljati $1 = \rho(z^n) = \rho(z)^n$,
@@ -1643,11 +1674,11 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     množica. Iščemo homomorfizem $\rho \colon G \to S_n$.
 
     Vsako preslikavo $f \in \funnn{n}$ se da predstaviti z vektorjem $
-    \begin{bmatrix}
-      f(1)\\
-      \vdots \\
+    [
+      f(1),
+      \dotsc ,
       f(n)
-    \end{bmatrix} \in \R^n$. Lahko bi začeli s poljubno
+    ]^T \in \R^n$. Lahko bi začeli s poljubno
     preslikavo $\hat \rho \colon S \to \R^n$ in sistematično
     spreminjali elemente vektorjem $\hat\rho(s)$, dokler ne
     pridemo do homomorfizma. To se da, a za optimizacijo
@@ -2466,8 +2497,8 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       Če matriki $M_1$ in $M_2$ pripadata izomorfnima
       grafoma, potem iščemo izomorfizem.
     \end{definicija}
-    Problem \emph{ujemanja grafov} je NP-težek
-    \cite{sahni1976qapisnphard}. Klasični pristopi ga
+    Problem \emph{ujemanja grafov} je NP-težek\cite{sahni1976qapisnphard}.
+    Klasični pristopi ga
     rešujejo z relaksacijami funkcije izgube $\|M_1 - P M_2
     P^T\|$ nad večje družine matrik $P$ in prevedbo
     končne matrike nazaj na permutacijsko
@@ -2475,13 +2506,19 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     \cite{aflalo2025convexrelaxation}.
     Novejše metode se problema lotevajo z globokim učenjem.
 
+    Problem iskanja izomorfizmov je poseben primer
+    ujemanja grafov, ki je rešljiv v kvazi-polinomskem času
+    \cite{babai2016graphisomorphismquasipolynomialtime}.
+    V praksi se
+    ga rešuje z algoritmi za splošno ujemanje grafov.
+
     V tem delu se s primerjavo različnih metod za ujemanje
     grafov ne ukvarjamo.
     Osredotočeni smo na posplošitev metod iz poglavij
     \ref{subsection: Iskanje upodobitev z gradientnim spustom} in
-    \ref{section:iskanje delovanj}
+    \ref{section:iskanje delovanj}.
     %na problem ujemanja grafov
-    .
+    %
     \subsection{Prehod na izomorfizem}
     Kot v poglavju
     \ref{section:pretvorba modela v delovanje} lahko tudi model
