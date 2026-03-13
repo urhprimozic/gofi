@@ -1,19 +1,19 @@
 # Fdb version 4
-["biber primozic-27222028-2025"] 1773334456.69181 "primozic-27222028-2025.bcf" "primozic-27222028-2025.bbl" "primozic-27222028-2025" 1773393338.24146 0
+["biber primozic-27222028-2025"] 1773334456.69181 "primozic-27222028-2025.bcf" "primozic-27222028-2025.bbl" "primozic-27222028-2025" 1773394762.62848 0
   "literatura.bib" 1773242898.38932 18184 5675a8e65d4ec686f04ee6865b0eee8c ""
-  "primozic-27222028-2025.bcf" 1773393337.77891 113060 3c949c6dabfdc125f51073d4ad9646d5 "pdflatex"
+  "primozic-27222028-2025.bcf" 1773394762.16773 113060 3c949c6dabfdc125f51073d4ad9646d5 "pdflatex"
   (generated)
   "primozic-27222028-2025.bbl"
   "primozic-27222028-2025.blg"
   (rewritten before read)
-["makeindex primozic-27222028-2025.idx"] 1773391528.94732 "primozic-27222028-2025.idx" "primozic-27222028-2025.ind" "primozic-27222028-2025" 1773393338.24133 0
-  "primozic-27222028-2025.idx" 1773393337.78155 800 822033cdecddd36213b8707753da5742 "pdflatex"
+["makeindex primozic-27222028-2025.idx"] 1773391528.94732 "primozic-27222028-2025.idx" "primozic-27222028-2025.ind" "primozic-27222028-2025" 1773394762.62835 0
+  "primozic-27222028-2025.idx" 1773394762.16973 800 822033cdecddd36213b8707753da5742 "pdflatex"
   (generated)
   "primozic-27222028-2025.ilg"
   "primozic-27222028-2025.ind"
   (rewritten before read)
-["pdflatex"] 1773393321.49922 "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" "primozic-27222028-2025.pdf" "primozic-27222028-2025" 1773393338.24172 0
-  "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" 1773393321.22007 141388 a0093204a8bd9e4919acb5a7a8748e8b ""
+["pdflatex"] 1773394746.71751 "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" "primozic-27222028-2025.pdf" "primozic-27222028-2025" 1773394762.6288 0
+  "/home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex" 1773394729.45766 141391 1fddf7239c1b6fb8e16e2a157e32e8bd ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -347,15 +347,15 @@
   "images/im:gradient_descent_example.pdf" 1757596918 21461 43ade6179bef649721e75c9821eecd75 ""
   "images/random_samples_big_random_graph_1_on_5.png" 1757596918 67894 0ee50cce9b60b4a466e908d70266aa5e ""
   "images/trajektorije_S3_to_R.pdf" 1771324468.31258 152068 ac09b39cd27ea54a0a1787cffa8ba065 ""
-  "pdfa.xmpi" 1773393323.04005 5617 a4c495b818a17b4aaf97f11ace696b19 "pdflatex"
-  "primozic-27222028-2025.aux" 1773393337.76991 33497 167db221a166a297d59184eb81643d1c "pdflatex"
+  "pdfa.xmpi" 1773394747.89688 5617 2c9d518cad8215be0248512c32305c5c "pdflatex"
+  "primozic-27222028-2025.aux" 1773394762.15673 33485 b8afb7acee1d9df800605c4641ebe2f1 "pdflatex"
   "primozic-27222028-2025.bbl" 1773334463.25771 58751 2a06c75492f3079780d2c329a6245564 "biber primozic-27222028-2025"
   "primozic-27222028-2025.ind" 1773391529.15372 856 bf554d5a37175abfde5bfe9018f40c2f "makeindex primozic-27222028-2025.idx"
-  "primozic-27222028-2025.out" 1773393337.77791 4875 81b280745929d01034e154ea32dd0b5b "pdflatex"
-  "primozic-27222028-2025.run.xml" 1773393337.78155 2431 1358ce42e48da3d979489b27bae1ae86 "pdflatex"
-  "primozic-27222028-2025.tex" 1773393321.22007 141388 a0093204a8bd9e4919acb5a7a8748e8b ""
-  "primozic-27222028-2025.toc" 1773393337.78155 5556 c1ce9f6ad176986dd66d067fd87cb993 "pdflatex"
-  "primozic-27222028-2025.xmpdata" 1773393322.69812 240 b583de2487cd500fbf2e27fd01cd13ef "pdflatex"
+  "primozic-27222028-2025.out" 1773394762.16573 4861 452d66181677b9c8a5252fd1c4ccdf39 "pdflatex"
+  "primozic-27222028-2025.run.xml" 1773394762.16967 2431 1358ce42e48da3d979489b27bae1ae86 "pdflatex"
+  "primozic-27222028-2025.tex" 1773394729.45766 141391 1fddf7239c1b6fb8e16e2a157e32e8bd ""
+  "primozic-27222028-2025.toc" 1773394762.16973 5546 3c22e1b5526f0a262d951383343ccf6c "pdflatex"
+  "primozic-27222028-2025.xmpdata" 1773394747.58188 240 b583de2487cd500fbf2e27fd01cd13ef "pdflatex"
   (generated)
   "pdfa.xmpi"
   "primozic-27222028-2025.aux"
