@@ -2280,7 +2280,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       $$
       \loss(R, S) = - \operatorname{tr}(\log (P_r^n))
       - \operatorname{tr}(\log (P_s^n))
-    - \operatorname{tr}(\log (P_rP_s)^2))
+    - \operatorname{tr}(\log ((P_rP_s)^2))
     ,
     $$
     kjer je $P_r = \operatorname{softmax}(R),$
@@ -3301,13 +3301,10 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     kot grafovsko nevronsko mrežo z dvema konvolucijskima plastema
     in aktivacijsko funkcijo $\operatorname{ReLU}$ s slednjim predpisom:
     $$
-    M_\text{encoder}(M) =\hat{M}
-    \operatorname{ReLU}(
-      \hat{M}W_1
-    )
+    M_\text{encoder}(M) = \hat{M}
+    \operatorname{ReLU}(\hat{M}W_1)
     W_2
-    \in \R^{n \times n^2}
-    ,
+    \in \R^{n \times n^2},
     $$
     kjer je $\hat{M} = D^{-\frac{1}{2}}
     (M + I) D^{-\frac{1}{2}}
