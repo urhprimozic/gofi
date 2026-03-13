@@ -221,7 +221,7 @@ Podobno lahko na optimizacijski problem prevedemo iskanje
 \emph{delovanj} in iskanje
 \emph{izomorfizmov}
 grafov. Iskane morfizme enačimo
-z množico ničel gladke funckije
+z množico ničel gladke funkcije
 $\loss \colon \R^n \to [0, \infty)$
 evklidskim prostorom. S tem iskanje diskretnih struktur
 prevedemo na iskanje ničel gladke funkcije.
@@ -260,7 +260,7 @@ ki minimalizira $ \|M_1 - P M_2 P^T\|^2$, nato pa to matriko
 prevedejo v permutacijsko.
 
 Alternativno lahko nad množico permutacij $S_n$ definiramo
-gladko družino porazdelitev in za slučajno permutacijo $f \in S_n$
+gladko družino porazdelitev in za naključno permutacijo $f \in S_n$
 maksimiziramo verjetnost, da je $f$ homomorfizem. S tem
 pristopom se ognemo prevedbe dvojno stohastične matrike v permutacijsko,
 ki je lahko problematična\cite{lyzinski2015graphmatchingrelaxrisk}.
@@ -283,7 +283,7 @@ definiramo metodo za iskanje delovanj,
 v poglavju \ref{section:Iskanje izomorfizmov grafov}
 pa metodo za iskanje
 izomorfizmov grafov. Iskanje izomorfizmov grafov
-povežemo s problemov ujemanja grafov.
+povežemo s problemom ujemanja grafov.
 V poglavju \ref{subsection:uporaba tabele inverzij}
 metodo razširimo z uporabo tabele inverzij, preko katere
 kandidate za izomorfizem iščemo med porazdelitvami nad
@@ -291,7 +291,7 @@ množico permutacij $S_n$
 in podamo empirične rezultate metode v kombinaciji
 s preparametrizacijo z nevronskimi mrežami.
 
-Vse definirame metode teoretično obravnavamo in dokažemo, da
+Vse definirane metode teoretično obravnavamo in dokažemo, da
 ob dovolj majhni vrednosti $\loss( \phi)$ metoda
 najde iskano strukturo.
 
@@ -403,7 +403,7 @@ Definicije sledijo \cite{prince2023understandingdeeplearning}.
 \end{definicija}
 
 Gradientni spust ustreza eksplicitni Eulerjevi diskretizaciji
-diferencialne enačbe gradientnega toka \emph{gradientnega toka}  (glej
+diferencialne enačbe gradientnega toka (glej
 \cite{dherin2025learningsolvingdifferentialequations}).
 
 \begin{opomba}
@@ -441,8 +441,8 @@ je odvisna od izbire začetnih parametrov $\phi_0$.
 % parametrov prevelika, posledično pa se vrednost funkcionala lahko poveča.
 % V \cite{prince2023understandingdeeplearning} avtor to lastnost izkorišča
 \subsection{Moment}
-Kljub gladkosti funckije $\loss$ so lahko spremembe parametrov pri
-uporabi gradientnega spusta kaotične. lahko jih delno omejimo z
+Kljub gladkosti funkcije $\loss$ so lahko spremembe parametrov pri
+uporabi gradientnega spusta kaotične. Lahko jih delno omejimo z
 uporabo \emph{momenta} (\cite[stran 86]{prince2023understandingdeeplearning})
 \begin{align*}
   m_{i+1} &= \beta \cdot m_t + (1-\beta) \nabla \loss (\phi_i) \\
@@ -467,7 +467,7 @@ iteracijski optimizacijski algoritem, podan s pravili
 kjer so $\eta > 0, \beta \in [0,1), \delta \in [0,1 ), \gamma \in
 [0,1)$ parametri modela.
 
-Zaradi dobrih empiričnih rezultatov se v praksi v strojen učenju
+Zaradi dobrih empiričnih rezultatov se v praksi v strojnem učenju
 namesto surovega gradientnega spusta za optimizacijo uporablja
 algoritem Adam.
 \subsection{Perturbiran gradientni spust}
@@ -548,13 +548,13 @@ $\rho(g) = (v \mapsto v^g)$.
   \index{nerazcepna upodobitev}
   Če sta edini podupodobitvi upodobitve $\rho \colon G \to
   \operatorname{GL}(V)$ $g \mapsto \operatorname{id}$ in $\rho$,
-  je $\rho$ \emph{nerazcpena upodobitev}.
+  je $\rho$ \emph{nerazcepna upodobitev}.
   Množico nerazcepnih upodobitev grupe $G$ označimo z
   $\operatorname{Irr}(G)$.
 \end{definicija}
 \begin{definicija}
   Upodobitev $\rho \colon G \to \operatorname{GL}(V)$ je
-  \emph{polenostavna}, če jo lahko izrazimo kot vsoto nerazcpenih
+  \emph{polenostavna}, če jo lahko izrazimo kot vsoto nerazcepnih
   upodobitev $\rho = \bigoplus _{i \in I} \rho_i$.
 \end{definicija}
 Če se omejimo le na končne grupe in dovolj lepa polja, so vse
@@ -718,8 +718,8 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
   $\operatorname{sign}$. Na sliki  \ref{fig:trajektorije S3
   to R} so trajektorije gradientnega spusta pri optimizaciji
   $\Loss{rel}$ za različne začetne parametre $(x_0, y_0)$.
-  Opazimo, nekatere trajektorije konvergirajo  do
-  $\operatorname{id}$ nekatere do $\operatorname{sign}$,
+  Opazimo, da nekatere trajektorije konvergirajo do
+  $\operatorname{id}$, nekatere do $\operatorname{sign}$,
   nekatere do modela, ki ni upodobitev. V tem primeru je
   gradientni spust našel lokalni ekstrem funkcije izgube, ki ni globalni.
   \begin{figure}[h]
@@ -1227,7 +1227,7 @@ v spodnji lemi.
   $(Df)^{-1}(0)$, da je $f$ v njej enaka 0.
 
   Odprte množice v $(Df)^{-1}(0)$ so oblike $W = U \cap (Df)^{-1}(0)$,
-  kjer je $U$ odprta v $\R^n$. Če nadjemo $W = \{a\}$, smo konec. 
+  kjer je $U$ odprta v $\R^n$. Če najdemo $W = \{a\}$, smo konec. 
 
   Če take $W$ ni, potem je za poljubno smer $w$ za dovolj majhne $t$ 
   $a + tw  \in W$. Torej je $Df(a + tw) = 0$ za dovolj majhne $t$.
@@ -1260,7 +1260,7 @@ Na grafu \ref{fig:ciklicna-trajektorije} so trajektorije
 rešitev diferencialne enačbe $\frac{d(x,y)}{dt} = -\nabla
 \loss$ za različne začetne parametre, izračunane s pomočjo
 gradientnega spusta. Opazimo, da vse rešitve konvergirajo do
-nerazcepnih upodobitev. Ta rezultat teoretično podpremo v v
+nerazcepnih upodobitev. Ta rezultat teoretično podpremo v
 izreku \ref{izrek:kritične točke ciklične}.
 \begin{figure}[ht]
   % VIR: /gofi/ode/equation_generation/cyclic_groups.ipynb
@@ -1377,8 +1377,8 @@ knjižnici \texttt{SciPy} \cite{2020SciPy-NMeth}.
 
 Na sliki \ref{fig:Dn-trajektorije-demo} so različne rešitve
 enačb gradientnega toka za $n\in \{1,2,7,8\}$. Modre v limiti
-dosežejo ničelno funkcijo izgube. Za sod $n$ vse narisane
-trajektorije konvergirajo do nerazcepne upodobitve, za lih $n$
+dosežejo ničelno funkcijo izgube. Za sodi $n$ vse narisane
+trajektorije konvergirajo do nerazcepne upodobitve, za lihi $n$
 pa gradientni spust iz $[-1,0]\times[-1,1]$ nikoli ne doseže
 ničelne napake. Enake lastnosti opazimo na širši množici
 diedrskih grup - glej dodatek
@@ -1508,7 +1508,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     parametrov, ki konvergirajo do ničel funkcije izgube.
     Verjetnosti v tabeli
     \ref{tab:verjetnost-konvergence-diedrska-2dim} so
-    izračunane iz iz vzorcev v dodatku
+    izračunane iz vzorcev v dodatku
     \ref{dodatek:dihedral-2d-trajektorije}.
     \begin{table}[ht]
       \centering
@@ -1709,14 +1709,14 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       \end{bmatrix}.
     \end{equation}
     Matrika $P_s =
-    \hat\rho(s)$ definira slučajno preslikavo\footnote{Izraba
-      notacije. S $s$ označimo tako generator  kot
-      slučajno funkcijo nad $[n]$, ki je porazdeljena s
-      porazdelitvijo $P(s = f) = \prod _{i=1}^n P(s(i) = f(i)$.
-        Prav tako za poljuben element $g=s_1s_2\dotsm s_m \in G$
-      z $g$ označimo tudi slučajno spremenljivko $s_1 s_2 \dotsm s_n$.}
+    \hat\rho(s)$ definira slučajno preslikavo\footnote{Zloraba
+      notacije. Z $s$ označimo tako generator kot
+      slučajno funkcijo na $[n]$, porazdeljeno s
+      porazdelitvijo $P(s = f) = \prod_{i=1}^n P(s(i) = f(i))$.
+      Prav tako za poljuben element $g=s_1s_2\dotsm s_m \in G$
+      z $g$ označimo tudi slučajno spremenljivko $s_1 s_2 \dotsm s_m$.}
       $s \in \funnn{n}$ s porazdelitvijo
-      $$P(s = f) = \prod _{i=1}^n P(s(i)) = f(i)$$
+      $$P(s = f) = \prod_{i=1}^n P(s(i) = f(i))$$
       za $f \in \funnn{n}$.
       %
       \begin{definicija}
@@ -2234,8 +2234,8 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       % \end{lema}
       %
       \subsection{Delovanje ciklične grupe}
-      Študiramo model za delovanje ciklične grupe $C_n = <z |
-      z^n=1>$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
+      Študiramo model za delovanje ciklične grupe $C_n = \langle z \mid
+      z^n=1 \rangle$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
       Minimaliziramo
       $$
       \loss(\phi) = - \operatorname{tr}(\log
@@ -2359,7 +2359,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       \begin{bmatrix}
         p_{i,j}
       \end{bmatrix}_{i,j=1,\dotsc, n}$ poljubna stohastična
-      matrika s $\operatorname{Perm}(P) = 1$. Po definicijo
+      matrika s $\operatorname{Perm}(P) = 1$. Po definiciji
       so vsi elementi  $p_{i,j}$ matrike med $0$ in $1$,
       vrstice se pa seštejejo v $1$.
       Velja
@@ -2723,9 +2723,9 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     permutacij. Permutacijo $\sigma$ s tabelo inverzij
     $\operatorname{TI}(\sigma) = (a_1, a_2, \dotsc, a_n) \in
     \prod_{i=n-1}^0 [0, i]$ dobimo tako, da
-    $1$ postavimo na $(a_1 +1 )$-to mesto v v tabeli $[1,2,\dotsc, n]$,
-    nato $2$ postavimo na $(a_2 +1)$-to prosto mesto,
-    in tako naprej, dokler ne postavimo $n$ na $(a_n +1)$-to
+    $1$ postavimo na $(a_1 + 1)$-to mesto v tabeli $[1,2,\dotsc, n]$,
+    nato $2$ postavimo na $(a_2 + 1)$-to prosto mesto,
+    in tako naprej, dokler ne postavimo $n$ na $(a_n + 1)$-to
     prosto mesto.
     \begin{primer}
       \label{primer:tabela_inverzij}
@@ -3013,8 +3013,8 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     \end{definicija}
     %
     \begin{definicija}
-      \emph{Globoko preparametrizacijo} definiramo definiramo
-      kot $5$ plastno nevronsko mrežo
+      \emph{Globoko preparametrizacijo} definiramo
+      kot $5$-plastno nevronsko mrežo
       z vhodno in skritimi plastmi velikosti $n^2$ in izhodno
       plastjo velikosti
       $\frac{n^2 - n - 2}{2}$. Aktivacijske funkcije v skritih
@@ -3182,7 +3182,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       \R^{d_2}$ iščemo model $\hat Y (X)$, ki čim bolje opiše $E[Y|X]$.
 
       Predpostavimo, da imamo množico vzorcev $S_\text{train}
-      = \{(x_i, y_i) \mid i \in [n]\}$ slučajne spremenljivke
+      = \{(x_i, y_i) \mid i \in [n]\}$ slučajnih spremenljivk
       $(X,Y)$ in nevronsko mrežo $M_{\phi_0} \colon \R^{d_0}
       \to \R^{d_l}$ z naključno izbranimi začetnimi parametri
       $\phi$ in z gradientnim spustom minimaliziramo
@@ -3228,7 +3228,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       = m \in \N > d_0 \cdot \operatorname{poly}(n, l,
       \delta^{-1})\frac{d}{\mu}$.
 
-      Potem gradinetni spust s hitrostjo učenja $\eta =
+      Potem gradientni spust s hitrostjo učenja $\eta =
       \Theta (d_0 \frac{\delta}{m \cdot
       \operatorname{poly}(n, l)})$ z verjetnostjo vsaj $1 -
       e^{- \Omega(\log^2 m)}$  po
@@ -3315,7 +3315,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       \label{def:ujemanje-GNN-sinkhorn}
       V poglavju
       \ref{paragraph:grafi_preparam_primerjava}
-      gravske nevronske mreže na sledeč
+      grafske nevronske mreže na naslednji
       način uporabimo za
       reševanje ujemanja grafov:
       \begin{enumerate}
@@ -3457,7 +3457,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     $$
     z začetnim pogojem $(R(0), S(0)) = (R_0, S_0)$.
 
-    Na sklikah
+    Na slikah
     \ref{fig:trajektorije_diedrska_grupa_2d-1} in
     \ref{fig:trajektorije_diedrska_grupa_2d-2}
     so
