@@ -57,10 +57,10 @@ descent}
 
   Metodo razširimo na iskanje delovanj in
   izomorfizmov grafov.
-  Definiramo gladko družino distribucij nad preslikavami končnih množic
+  Definiramo gladko družino porazdelitev nad preslikavami končnih množic
   in maksimiziramo verjetnost, da je slučajna preslikava morfizem.
   Definiramo
-  gladko družino distribucij nad
+  gladko družino porazdelitev nad
   tabelo inverzij, ki ponuja alternativo
   Sinkhornovemu algoritmu.
 }
@@ -286,7 +286,7 @@ izomorfizmov grafov. Iskanje izomorfizmov grafov
 povežemo s problemov ujemanja grafov.
 V poglavju \ref{subsection:uporaba tabele inverzij}
 metodo razširimo z uporabo tabele inverzij, preko katere
-kandidate za izomorfizem iščemo med distribucijami nad
+kandidate za izomorfizem iščemo med porazdelitvami nad
 množico permutacij $S_n$
 in podamo empirične rezultate metode v kombinaciji
 s preparametrizacijo z nevronskimi mrežami.
@@ -300,7 +300,7 @@ avtorja, mentorja in somentorja. Podoben pristop, kot
 ga uporabimo za iskanje nerazcepnih upodobitev končnih grup, v članku
 \cite{chughtai2023neural} izkoriščajo
 za učenje nevronske mreže, ki predstavlja grupo.
-Gladko distribucijo nad tabelo inverzij v strojnem
+Gladko porazdelitev nad tabelo inverzij v strojnem
 učenju študirajo v
 \cite{tabela-inverzij-severo2025learningdistributionspermutationsrankings}
 in v \cite{tabela-inverzij-2020permutationlearningvialehmercodes}.
@@ -517,7 +517,7 @@ Jezik teorije upodobitev je povzet po \cite{jezernik2025upodobitve}.
   \index{upodobitev}
   Naj bo $G$ grupa in $V$ vektorski prostor nad poljem
   $\mathbb{F}$. \emph{Upodobitev grupe $G$} je homomorfizem $
-  \rho \colon G \to \operatorname{GL(V)}$ med grupo $G$ in
+  \rho \colon G \to \operatorname{GL}(V)$ med grupo $G$ in
   endomorfizmi prostora $V$.
 \end{definicija}
 Vsaka upodobitev $\rho \colon G \to \operatorname{GL}(V)$ naravno
@@ -540,7 +540,7 @@ $\rho(g) = (v \mapsto v^g)$.
   podprostor prostora $V$, invarianten za inducirano delovanje.
   Potem je upodobitev
   $
-  \rho_W \colon G \to \operatorname{GL(W)}
+  \rho_W \colon G \to \operatorname{GL}(W)
   $, dana s predpisom
   $\rho_W(g) = \rho(g)|_{W}$ \emph{podupodobitev} upodobitve $\rho$.
 \end{definicija}
@@ -605,7 +605,7 @@ upodobitev $\operatorname{Irr}(G) = \{ \rho \colon G \to
 \operatorname{GL}(V) \mid |\chi_\rho| = 1\}$.
 \subsection{Iskanje upodobitev z gradientnim spustom}
 \label{subsection: Iskanje upodobitev z gradientnim spustom}
-Naj bo $G=\left<S|R\right>$ končna grupa nad množico generatorjev $S$,
+Naj bo $G=\langle S \mid R \rangle$ končna grupa nad množico generatorjev $S$,
 definirana z relacijami $R$. Na $S$ definiramo poljubno preslikavo
 \begin{align}
   \label{eq: repr model na S}
@@ -1237,7 +1237,7 @@ v spodnji lemi.
 \subsection{Ciklične grupe}
 \label{subsection : ciklicčne grupe}
 Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
-cikličnih grupah $C_n = <z | z^n=1>$. Edine nerazcepne
+cikličnih grupah $C_n = \langle z \mid z^n=1 \rangle$. Edine nerazcepne
 upodobitve ciklične grupe so
 $$
 \rho_k(z) = e^\frac{2 \pi k}{n},
@@ -1325,7 +1325,7 @@ unitarne nerazcepne upodobitve.
 
 \subsection{Diedrske grupe}
 \label{subsection: diedrske grupe}
-Opazujmo diedrsko grupo $D_n = <r, s|r^n=s^2 = (rs)^2 = 1>$.
+Opazujmo diedrsko grupo $D_n = \langle r, s \mid r^n=s^2 = (rs)^2 = 1 \rangle$.
 Enorazsežne upodobitve diedrske grupe so
 \begin{align*}
   \chi_{\varepsilon, \delta} \colon \quad
@@ -1472,7 +1472,7 @@ Model dvorazsežne upodobitve $D_n$ je določen z matrikama $\hat
 Slika \ref{fig:diedrska-2dim-trajektorije} prikazuje
 numerične rešitve za različne začetne parametre. Trajektorije
 rešitev $(R(t), S(t))$ vizualiziramo v $\R^2$ kot
-$(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
+$(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     \begin{figure}[ht]
       \centering
       \begin{minipage}{0.49\textwidth}
@@ -1557,7 +1557,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     \subsubsection{Realen model na dveh generatorjih}
     \label{subsection: realn z 2 generatorjema}
     Oglejmo si posplošitev modela diedrske grupe. Opazujemo model
-    $\rho \colon G \to \R$ grupe $G=\left<s_G, z_G \mid R\right>$ z dvema
+    $\rho \colon G \to \R$ grupe $G=\langle s_G, z_G \mid R \rangle$ z dvema
     generatorjema.
 
     Brez škode za splošnost predpostavimo, da ima vsaka
@@ -1820,7 +1820,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
 
       \subsection{Funkcija izgube nad relacijami}
       \index{funkcija izgube nad relacijami!(delovanje)}
-      Naj bo $<S|R>$ prezentacija grupe $G$. Za vsako
+      Naj bo $\langle S \mid R \rangle$ prezentacija grupe $G$. Za vsako
       relacijo $r \in R$ bi radi $P(r = \operatorname{id})
       =1$ oziroma $0 = \log(P(r=\operatorname{id})) =
       \log(\prod_{i=1}^n P(r(i)=i)) =
@@ -1843,7 +1843,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       $\overline{P_z}$. To inducira delovanje
       $z \mapsto P_z$.
 
-      Za splošno grupo $G=\left<S|R\right>$ lahko definiramo sledeč
+      Za splošno grupo $G=\langle S \mid R \rangle$ lahko definiramo sledeč
       postopek pretvorbe modela
       $\hat \rho \colon s \to P_s$ v preslikavo $\rho \colon G
       \to  \Pi$ med grupo $G$ in grupo permutacijskih matrik
@@ -2274,8 +2274,8 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
         \label{fig:actions-cn}
       \end{figure}
       \subsection{Delovanje diedrske grupe}
-      Študiramo model za delovanje  grupe $D_n = <r,s |
-      r^n=s^2=(rs)^2=1>$ na končni množici $[m] =
+      Študiramo model za delovanje  grupe $D_n = \langle r,s \mid
+      r^n=s^2=(rs)^2=1 \rangle$ na končni množici $[m] =
       \{1,2,\dotsc, m\}$. Minimaliziramo
       $$
       \loss(R, S) = - \operatorname{tr}(\log (P_r^n))
@@ -2283,7 +2283,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     - \operatorname{tr}(\log (P_rP_s)^2))
     ,
     $$
-    kjer je $P_r = \operatorname{softmax(R)},$
+    kjer je $P_r = \operatorname{softmax}(R),$
     $P_s=\operatorname{softmax}(S)$ in    $R, S \in \R^{m \times m}$.
     \paragraph{Rezultati}
     Na sliki \ref{fig:actions-dn} so matrike
@@ -2339,7 +2339,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       1 &= P(f \in S_n) \\
       &= \sum_{\sigma  \in S_n} P(f =  \sigma) \\
       &= \sum_{\sigma  \in S_n} \prod_{i=1}^n (P_f)_{i, \sigma(i)} \\
-      &= \operatorname{Perm(P_f)},
+      &= \operatorname{Perm}(P_f),
     \end{align*}
     kjer $\operatorname{Perm}(P_f)$ označuje \emph{permanent}
     \footnote{$\operatorname{Perm}(A) = \sum_{\sigma  \in
@@ -2686,10 +2686,10 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     \label{subsection:uporaba tabele inverzij}
     V poglavju \ref{subsection : rezultati_grafi_vanilla}
     izomorfizem iščemo v podprostoru
-    distribucij nad $\funnn{n}$, ki ga parametriziramo s
+    porazdelitev nad $\funnn{n}$, ki ga parametriziramo s
     $(\R ^{n \times n})^{|S|}$. V tem poglavju predstavimo
     alternativen pristop,
-    ki izomorfizem išče v podprostoru distribucij nad $S_n$. S tem
+    ki izomorfizem išče v podprostoru porazdelitev nad $S_n$. S tem
     se izognemo potrebi po uporabi funkcije izgube za bijektivnost.
     %
     %
@@ -3003,7 +3003,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       $$
       kjer sta $W_1 \colon \R^n \to \R^n$ in
       $W_2 \colon \R^n \to \R^{\frac{n^2 - n - 2}{2}}$ afini preslikavi.
-      Distribucijo $P_d$ nad tabelami inverzij definiramo kot
+      Porazdelitev $P_d$ nad tabelami inverzij definiramo kot
       $$
       \operatorname{flatten}(P_d) = M_{\text{blaga
       preparametrizacija}}(x_0).
@@ -3020,7 +3020,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
       $\frac{n^2 - n - 2}{2}$. Aktivacijske funkcije v skritih
       plasteh so $\operatorname{ReLu}$, na zadnjih plasteh
       uporabimo softmax po blokih, kot v blagi preparametrizaciji.
-      Distribucijo $P_d$ nad tabelami inverzij izračunamo kot
+      Porazdelitev $P_d$ nad tabelami inverzij izračunamo kot
       $$
       \operatorname{flatten}(P_d) =
       \operatorname{softmax}_\text{po blokih} \circ
@@ -3047,7 +3047,7 @@ $(\operatorname{tr}(R(t), \operatorname{tr(S(t)})$.
     Ta pristop namesto klasičnih nevronskih mrež uporablja
     modele, prilagojene za delo z grafi (definicija
     \ref{def:GNN}), namesto
-    distribucije nad $S_n$ pa uporablja
+    porazdelitve nad $S_n$ pa uporablja
     \emph{Sinkhornov} algoritem (definicija \ref{def:sinkhorn}),
     ki poljubne matrike zvezno preslika v
     \emph{dvojno stohastične}\footnote{Stohastična matrika $P$ je
