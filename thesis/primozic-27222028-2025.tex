@@ -943,9 +943,7 @@ $$
 Z njo dokažemo, da model z majhno napako
 različne zapise iz $S^*$ istega elementa grupe preslika
 blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
-
-Brez škode za splošnost lahko
-kanonične predstavnike $w_g$ izb%GOTO
+%
 \begin{lema}
   \label{lema : zveznost na besedah}
   Naj bo $\hat \rho$ tak, da velja
@@ -1208,14 +1206,22 @@ v spodnji lemi.
 \begin{opomba}
   \TODO{Po mojem to drži.}
   Če nas ne zanima eksplicitna meja $\epsilon$, da iz
-  $\Loss{rel}(\hat \rho) < \epsilon$, ampak samo njen obstoj,
+  $\Loss(\hat \rho) < \epsilon$, ampak samo njen obstoj,
   je dokaz veliko lažji.
   %Opazujmo preslikavo
   %$\Loss{2} (\hat \rho) = \sum_{r \in R} \left\|
   %\hat \rho(r) - I
   %\right\|^2$. (TO JE POLINOM)
-  $\Loss{rel}$ je zvezna funkcija na končnem prostoru
-  $GL_n(\C)^S \equiv \R^{2|S|n^2}$. Preprosto je dokazati, da je
+  Ker je prostor unitarnih matrik kompakten, izven neke kompaktne okolice 
+  $\Loss{unitary}$ ni poljubno majhna. Če nas zanima, ali so lahko 
+  vrednosti izgube poljubno majhne (a neničelne), se lahko omejimo na 
+  nek kompakt.
+
+  $\Loss{rel}$ je zvezna funkcija na tem kompaktu. 
+  
+  Za vrednosti $\rho$ $I$ 
+  
+  Preprosto je dokazati, da je
   $ \Loss{rel}^{-1}(0)$ odprta v $(D\Loss{rel})^{-1} (0)$, iz česar sledi, da je
   $(D\Loss{rel})^{-1} (0) \setminus \Loss{rel}^{-1}(0)$ kompakt,
   torej $f$ na njem doseže
@@ -1271,6 +1277,13 @@ izreku \ref{izrek:kritične točke ciklične}.
     Bolj, kot je trajektorija
   oranžna, počasneje konvergira.}
   \label{fig:ciklicna-trajektorije}
+\end{figure}
+\begin{figure}[hb]
+  % VIR: /gofi/ode/equation_generation/cyclic_groups.ipynb
+  \centering
+  \includegraphics[width=0.7\linewidth]{images/C3 landscape.pdf}
+  \caption{Graf funkcije izgube $\loss (x + i y)$ za $n=3$.}
+  \label{fig:ciklicna-landscape}
 \end{figure}
 \subsubsection{Redukcija funkcij izgube}
 Nerazcepne upodobitve $\rho_k$ so edine enodimenzionalne
@@ -1673,12 +1686,14 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     končna grupa in $[n] =    \{1,2,\dotsc, n\}$ končna
     množica. Iščemo homomorfizem $\rho \colon G \to S_n$.
 
-    Vsako preslikavo $f \in \funnn{n}$ se da predstaviti z vektorjem $
+    Vsako preslikavo $f \in \funnn{n}$ se da predstaviti z vektorjem 
+    $$
     [
       f(1),
       \dotsc ,
       f(n)
-    ]^T \in \R^n$. Lahko bi začeli s poljubno
+    ]^T \in \R^n.
+    $$ Lahko bi začeli s poljubno
     preslikavo $\hat \rho \colon S \to \R^n$ in sistematično
     spreminjali elemente vektorjem $\hat\rho(s)$, dokler ne
     pridemo do homomorfizma. To se da, a za optimizacijo
@@ -2273,6 +2288,24 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
         }
         \label{fig:actions-cn}
       \end{figure}
+      \begin{opomba}
+        Vrednosti začetnih parametrov na slikah 
+        \ref{fig:actions-cn} in \ref{fig:actions-dn} niso porazdeljene 
+        enakomerno na intervalu $[0,1]$. Matrike $P_s$ so definirane z 
+        $P_s = \operatorname{softmax}(\phi_s)$, kjer so 
+        elementi matrike $\phi_s$ vzorčeni enakomerno na intervalu $[0,1]$. Pričakovana vrednost
+        elementa v matriki $P_s$ je $1/n$, kjer je $n$ velikost matrike.
+
+        Velja še več. Recimo, da so elementi vektorja $x = (x_1, x_2, \dotsc, x_n)$ 
+        neodvisne slučajne spremenljivke z enako porazdelitvijo, 
+        $f \colon R^n \to R$ pa zvezna funkcija, za katero velja 
+        $\sum_{i=1}^n f(x)_i = 1$. Potem je 
+        $$
+        1 = E\left(\sum_{i=1}^n f(x)_i\right) 
+        = \sum_{i=1}^n E(f(x)_i) = n E(f(x)_1)
+        $$
+        in je $E(f(x)_i) = 1/n$ za vsak $i \in [n]$.
+      \end{opomba}
       \subsection{Delovanje diedrske grupe}
       Študiramo model za delovanje  grupe $D_n = \langle r,s \mid
       r^n=s^2=(rs)^2=1 \rangle$ na končni množici $[m] =
@@ -2803,6 +2836,43 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     P(f(i) \sim f(j)) = \sum_{k=1}^n \sum_{h=1}^n P(f(i) = k,
     f(j) = h) (M_2)_{k,h}.
     $$
+   % \begin{opomba}
+      Očitno je $$1-P(i \sim j \iff f(i) \sim f(j)) = (M_1)_{i,j} - P(f(i) \sim f(j)).$$
+      Intuitivno lahko na izgubo  gledamo kot na vsoto 
+      odstopanj našega modela od homomorfizma po vseh parih vozlišč.
+      Radi bi, da je za vsak par vozljišč $i,j$ verjetnost 
+      $P(i \sim j \iff f(i) \sim f(j))$ čim večja. 
+
+      Za lažjo interpretacijo lahko uporabljamo povprečeno funkcijo 
+      izgube 
+      $$
+\overline{\loss} = \frac{1}{n^2}\loss,
+      $$
+      ki intuitivno predstavlja pričakovano izgubo na eni povezavi. 
+
+      Za par vozljišč $i,j$ in permutacijo $f\in S_n$ namreč lahko 
+      definiramo \emph{izgubo na povezavi} $i \sim j$ kot  
+      $$
+      L_{i,j}(f) = |(M_1)_{i,j} - (M_2)_{f(i),f(j)}|.
+      $$
+
+      Potem je pričakovana izguba na povezavi $i \sim j$ enaka
+      $$
+      E[L_{i,j}(f)] = \sum{f} P(f) L_{i,j}(f) 
+      = 1-P(i \sim j \iff f(i) \sim f(j)).
+      $$
+      $\loss$ meri pričakovano število povezav, 
+      ki jih slučajna preslikava $f$ ne ohrani, 
+$\overline{\loss}$ pa povprečno izgubo na povezavi.
+      \begin{primer}
+        Za izgube metod na sliki \ref{fig:primerjava vanilla-nn-mild-nn}
+        velja $\loss = O(n)$, kjer je $n$ velikost grafa. 
+        
+        Za slučajno permutacijo $f$ iz porazdelitve teh modelov pričakujemo,
+        da ne ohrani $O(n)$ izmed $O(n^2)$ povezav. Povprečna 
+        izguba na povezavi je $O(1/n)$. 
+      \end{primer}
+    %\end{opomba}
     \subsubsection{Hiter izračun funkcije izgube}
     Zanima nas $P(f(i) = k, f(j) = h)$.
     Najprej uvedemo pomožne funkcije:
@@ -3085,7 +3155,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
       \centering
       \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/average_curve_full.pdf.pdf}
       \caption{
-        Primerjava napak različnih metod glede
+        Primerjava izgub različnih metod glede
       na velikost grafa.}
       \label{fig:primerjava vanilla-nn-mild-nn}
     \end{figure}
@@ -3104,6 +3174,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     \end{table}
     %
     %
+    \clearpage
     \section{Razprava}
     \TODO{
       zakluček, vse opombe
