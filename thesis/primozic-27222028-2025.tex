@@ -2494,6 +2494,7 @@ k} p_{j, h} m_{k,h}^{(2)}
 = (P M_2 P^T)_{i, j}.
 $$
 \begin{definicija}
+  \label{def:graph_matching_loss}
   %
   %
   Želeli bi si, da je $P(f(i) \sim_2 f(j)) = (M_1)_{i,j}$.
@@ -2558,6 +2559,7 @@ Osredotočeni smo na posplošitev metod iz poglavij
 %na problem ujemanja grafov
 %
 \subsection{Prehod na izomorfizem}
+\label{section:prehod na izomorfizen vanilla}
 Kot v poglavju
 \ref{section:pretvorba modela v delovanje} lahko tudi model
 izomorfizma grafov pretvorimo v dejansko izomorfizem, če je le
@@ -2827,14 +2829,27 @@ P(a_k = x_k).$$
 % P(a_k = i) = P(k\text{ postavimo na }i\text{-to prosto mesto})
 % $$
 %
+%
+\begin{opomba}
+  Opisana porazdelitev nad $S_n$ ni poseben primer porazdelitve
+  nad $\funnn{n}$, podane s stohastično matriko $P$. Stohastično matriko lahko
+  interpretiramo kot porazdelitev nad $S_n$ le, če je za
+  slučajno funkcijo $f$ iz te porazdelitve
+  $P(f \in S_n) = 1$, kar velja le takrat, ko je $P$ permutacijska. V tem
+  primeru je $P(f) = \delta_{f, \sigma}$ za nek $\sigma \in S_n$.
+  Take so vse porazdelitve
+  nad $\funnn{n}$, ki jih lahko predstavimo s stohastično matriko $P$ in hkrati
+  s porazdelitvijo nad tabelo inverzij.
+\end{opomba}
 \subsubsection{Funkcija izgube}
+\label{funkcija izgube TI}
 Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
 na $n$ vozliščih. Za povezani vozlišči $i \sim_1 j$ bi radi, da je
 $P(f(i) \sim_2 f(j)) = 1$, kjer je $f$ slučajna permutacija.
 
 Za funkcijo izgube lahko vzamemo
 $$
-\loss = \sum_{i, j} ( (M_1)_{i,j} - P(f(i) \sim f(j)) )^2.
+\Loss{TI} = \sum_{i, j} ( (M_1)_{i,j} - P(f(i) \sim f(j)) )^2.
 $$
 Očitno velja
 $$
@@ -2852,7 +2867,7 @@ $P(i \sim j \iff f(i) \sim f(j))$ čim večja.
 Za lažjo interpretacijo lahko uporabljamo povprečeno funkcijo
 izgube
 $$
-\overline{\loss} = \frac{1}{n^2}\loss,
+\overline{\Loss{TI}} = \frac{1}{n^2}\Loss{TI},
 $$
 ki intuitivno predstavlja pričakovano izgubo na eni povezavi.
 
@@ -2867,18 +2882,74 @@ $$
 E[L_{i,j}(f)] = \sum{f} P(f) L_{i,j}(f)
 = 1-P(i \sim j \iff f(i) \sim f(j)).
 $$
-$\loss$ meri pričakovano število povezav,
+$\Loss{TI}$ meri pričakovano število povezav,
 ki jih slučajna preslikava $f$ ne ohrani,
-$\overline{\loss}$ pa povprečno izgubo na povezavi.
+$\overline{\Loss{TI}}$ pa povprečno izgubo na povezavi.
+\begin{opomba}
+  Če je porazdelitev nad
+  $\funnn{n}$ podana s
+  stohastično matriko $P$, je
+  $$
+  \loss_\sim (P)^2 = \sum_{i,j} ((M_1)_{i,j} - P(f(i) \sim f(j)))^2.
+  $$
+\end{opomba}
 \begin{primer}
   Za izgube metod na sliki \ref{fig:primerjava vanilla-nn-mild-nn}
-  velja $\loss = O(n)$, kjer je $n$ velikost grafa.
+  velja $\Loss{TI} = O(n)$, kjer je $n$ velikost grafa.
 
   Za slučajno permutacijo $f$ iz porazdelitve teh modelov pričakujemo,
   da ne ohrani $O(n)$ izmed $O(n^2)$ povezav. Povprečna
   izguba na povezavi je $O(1/n)$.
 \end{primer}
 %\end{opomba}
+\subsubsection{Prehod na izomorfizem}
+Podobno kot zgoraj za model $\hat \rho$ s tabelo inverzij definiramo
+$\overline{P} = \overline{P}(\hat \rho)$ kot permutacijsko matriko,
+ki predstavlja najbolj
+verjetno permutacijo. To permutacijo dobimo tako,
+da vsak $i$ postavimo na prosto mesto z največjo
+verjetnostjo $P(a_i = j)$.
+
+Izkaže se, da za dovolj majhno vrednost $Loss{TI}(\hat \rho)$
+matrika $\overline{P}(\hat \rho)$ predstavlja izomorfizem.
+\begin{lema}
+  Če je $\Loss{TI}(\hat \rho) < \frac{1}{(n! + 1)^2}$, je
+  $\overline{P}(\hat \rho)$ izomorfizem med grafoma z matrikama
+  sosednosti $M_1$ in $M_2$.
+\end{lema}
+\begin{dokaz}
+  Označimo $\epsilon = \sqrt{\Loss{TI}(\hat \rho)}$ in
+  za par $i, j \in  [n]$ označimo
+  $U_{i,j} = \{f \in S_n \mid f(i) \sim f(j)\} $. Naj bo
+  $g = \operatorname{argmax}_{f \in S_n} P(f)$ permutacija, ki
+  ustreza matriki $\overline{P}$.
+
+  Recimo, da v prvem grafu velja $i \sim j$. Dokažimo, da
+  sta $g(i)$ in $g(j)$ povezana v drugem grafu.
+  Očitno je
+  $$
+  \sum_{f \in U_{i,j}}P(f) =  P(f(i) \sim f(j)) =(M_1)_{i,j} -
+  \epsilon  =1 - \epsilon.
+  $$
+  Velja še
+  $$
+  \sum_{f \in U_{i,j}} P(f) + \sum_{f \in S_n \setminus U_{i,j}} P(f) = 1,
+  $$
+  iz česar za vsak $f \in S_n\setminus U_{i,j}$ sledi
+  $$
+  P(h) \leq \sum_{f \in S_n\setminus U_{i,j}} P(f) = \epsilon.
+  $$
+  Ker je $1 - \epsilon < \sum_{f \in U_{i,j}} P(f)$, zagotovo obstaja
+  vsaj en $f \in U_{i,j}$, za katerega velja
+  $$
+  \frac{1-\epsilon}{n! +1 } \leq \frac{1-\epsilon}{|U_{ij}| +1} <
+  P(f) \leq P(g).
+  $$
+  Iz pogoja $\epsilon < \frac{1}{(n! + 1)^2}$ sledi,
+  da je $P(g) >
+  \epsilon$, kar pomeni, da $g \in U_{i,j}$ in torej $g(i) \sim g(j)$.
+  Simetrično dokažemo, da če $i \not\sim j$, potem $g(i) \not\sim g(j)$.
+\end{dokaz}
 \subsubsection{Hiter izračun funkcije izgube}
 Zanima nas $P(f(i) = k, f(j) = h)$.
 Najprej uvedemo pomožne funkcije:
@@ -3006,20 +3077,44 @@ vzamemo
 Časovna zahtevnost izračuna približka je
 $O(|S| n^2)$.
 %
-\paragraph{Primerjava}
+\subsubsection{Primerjava}
 \label{paragraph:grafi_preparam_primerjava}
 Na sliki \ref{fig:loss_computation_time_comparison} je
 prikazana primerjava metode iz poglavja
 \ref{subsection : rezultati_grafi_vanilla} in metode z
-uporabo tabele inverzij. Z uporabo tabele inverzij
+uporabo tabele inverzij. Za vsak $n \in [20]$ sta
+obe metodi preizkušeni na istih $10$-tih naključno izbranih
+grafih. Vsaka točka na sliki je povprečje izgub.
+
+Obe metodi smo iterirali, dokler ni
+norma gradienta padla pod $10^{-3}$, oziroma do
+maksimalnega števila iteracij $1000$. Pri metodi brez tabele
+inverzij smo minimizirali
+funkcijo izgube $\Loss{unitary} + \loss_\sim$,
+pri metodi z tabelo inverzij pa funkcijo izgube
+za parametrizacijo tabele inverzij iz poglavja \ref{funkcija izgube TI}.
+
+Izgube na grafu \ref{fig:loss_computation_time_comparison}
+so izgube najbolj verjetne permutacije $\overline{P}$
+posamezne metode, izračunane z uporabo funkcije izgube za ujemanje grafov iz
+definicije
+\ref{def:graph_matching_loss}, torej
+$$
+\loss_{i,j} = \loss_\sim = \|M_1 - \overline{P} M_2 \overline{P}^T\|.
+$$
+
+Z uporabo tabele inverzij
 dosežemo boljše rezultate.
-\begin{figure}[ht]
+\begin{figure}[hp]
   \centering
   \includegraphics[width=0.7\linewidth]{images/average_loss_on_size_vanilla_vs_it.pdf}
-  \caption{Primerjava napak glede na velikost grafa.
+  \caption{Primerjava izgube $\loss_\sim(\overline{P})$
+    glede na velikost grafa.
     Za vsak $n$ sta metodi preizkušeni na istih $10$-tih
     naključno izbranih grafih. Vsaka točka je povprečje
-    napak na teh grafih.
+    napak na teh grafih. Permutacijska matrika $\overline{P}$
+    ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij)
+    oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega elementa (pri parametrizaciji brez tabele inverzij).
   }
   \label{fig:loss_computation_time_comparison}
 \end{figure}
@@ -3027,7 +3122,7 @@ dosežemo boljše rezultate.
 \subsubsection{Preparametrizacija z nevronskimi mrežami}
 Verjetnost uspešne konvergence lahko poskusimo
 izboljšati s preparametrizacijo
-(\emph{overparametrisation}) problema.
+problema (\emph{overparametrisation}).
 Matriko $P$ definiramo kot izhod globoke nevronske mreže
 (glej dodatek \ref{poglavje:nn}) in spreminjamo njene
 parametre.
@@ -3161,8 +3256,9 @@ padla pod $\epsilon_\nabla = 10^{-3}$.
   \centering
   \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/average_curve_full.pdf.pdf}
   \caption{
-    Primerjava izgub različnih metod glede
-  na velikost grafa.}
+    Primerjava izgub $\loss_\sim (\overline{P})$ različnih metod glede
+  na velikost grafa. Permutacijska matrika $\overline{P}$ ustreza najbolj verjetni 
+  permutaciji vsake metode. }
   \label{fig:primerjava vanilla-nn-mild-nn}
 \end{figure}
 \begin{table}
@@ -3767,30 +3863,6 @@ so opisani v poglavju \ref{aut-cayley-vanilla-setup}.
   \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_5.png}
 \end{figure*}
 %
-%
-%
-%
-% \TODO{Rezultati}
-% \section{Dodatek}
-% \subsection{Izomorfizmi Cayleyevih grafov}
-% \label{dodatek:cayley}
-% \TODO{}
-% % \includepdf[pages=-]{pdfs/aut_calyey.pdf}
-%
-% \subsection{Izomorfizmi naključnih grafov}
-% \label{dodatek:naključni grafi}
-% \TODO{Sem gredo dodatki, dodatni doakzi, itd..}
-%            \subsection{Dovolj so upodobitve nad
-% končnimi množicami}
-%
-% \section{Integrali po \texorpdfstring{$\omega$}{ω}-kompleksih}
-% \subsection{Definicija}
-% \begin{definicija}
-%   Neskončno zaporedje kompleksnih števil, označeno z
-% $\omega = (\omega_1, \omega_2, \ldots)$,
-%   se imenuje \emph{$\omega$-kompleks}.\footnote{To ime
-% je izmišljeno.}
-
 %   Črni blok zgoraj je tam namenoma. Označuje, da
 % \LaTeX{} ni znal vrstice prelomiti pravilno
 %   in vas na to opozarja. Preoblikujte stavek ali mu

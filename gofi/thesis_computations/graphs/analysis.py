@@ -313,19 +313,21 @@ def loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "
       
     plt.legend()
     plt.xlabel("Število vozlišč")
-    plt.ylabel("Napaka")
-    plt.title("Napake različnih metod glede na velikosti grafov")
+    plt.ylabel("Izguba")
+    plt.title("Izgube različnih metod glede na velikosti grafov")
     plt.savefig(f"{filename}.pdf")
     plt.close()
 
 
-def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it"], markers = ['.', '.', '+', 'x', '.', "o"], curve=False):
+def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it, gnn"], markers = ['.', '.', '+', 'x', '.', "o"], curve=False, normalize_on_edges=False):
     '''
     Points in 2d space of n_vertices * loss. Each method has its own color.
 
     For every method (vanilla, vanilla_it, nn_it) and for every graph size n, there is a point (n, E[loss(method)]), colored by method's color.
 
     If curve=True, a curve is drawn instead of points.
+
+    If normalize_on_edges=True, loss is divided by n**2. 
     '''
     all_methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it", "gnn"]
 
@@ -363,6 +365,9 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
         for n in loss[method]:
            # print(method, " - ", n, " - ", loss[method][n])
             loss[method][n] = sum(loss[method][n]) / len(loss[method][n])
+            # normalize on edges
+            if normalize_on_edges:
+                loss[method][n] = loss[method][n] / (n**2)
 
     fig, ax = plt.subplots(ncols=1)
 
@@ -392,8 +397,11 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
       
     plt.legend()
     plt.xlabel("Število vozlišč")
-    plt.ylabel("Napaka")
-    plt.title("Napake različnih metod glede na velikosti grafov")
+    if normalize_on_edges:
+        plt.ylabel("Izguba / n^2")
+    else:
+        plt.ylabel("Izguba")
+    plt.title("Izgube različnih metod glede na velikosti grafov")
     plt.savefig(f"average_{filename}.pdf")
     plt.close()
 
