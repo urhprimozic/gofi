@@ -2258,7 +2258,7 @@ z^n=1 \rangle$ na končni množici $[m] = \{1,2,\dotsc, m\}$.
 Minimaliziramo
 $$
 \loss(\phi) = - \operatorname{tr}(\log
-\left (\operatorname{softmax}(Z^n) \right ) ),
+(\operatorname{softmax}(Z^n))),
 $$
 kjer je $Z \in \R^{m \times m}$.
 \paragraph{Rezultati}
@@ -2322,7 +2322,7 @@ $$
 ,
 $$
 kjer je $P_r = \operatorname{softmax}(R),$
-$P_s=\operatorname{softmax}(S)$ in    $R, S \in \R^{m \times m}$.
+$P_s = \operatorname{softmax}(S)$ in $R, S \in \R^{m \times m}$.
 \paragraph{Rezultati}
 Na sliki \ref{fig:actions-dn} so matrike
 $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega spusta
@@ -2364,7 +2364,7 @@ $$P_f =
   \vdots & \vdots & & \vdots \\
   P(f(n) = 1) & P(f(n) = 2) & \dotsm & P(f(n) = n) \\
 \end{bmatrix} $$
-in spreminjamo elemente matrike tako, da je $f $ vse bolj
+in spreminjamo elemente matrike tako, da je $f$ vse bolj
 verjetno izomorfizem. Zato potrebujemo funkcijo izgube,
 ki je ničelna natanko v izomorfizmih - torej bijektivnih
 preslikavah, ki slikajo povezane vozlišča v povezane.
@@ -2467,7 +2467,8 @@ permutacijske natanko tedaj, ko so unitarne. Bolj, kot bo
 $P_f$ unitarna, bolj verjetno bo $f$ bijektivna.
 
 Če $P_f$ definiramo kot
-$$P_f = \operatorname{softmax}(\phi)$$(glej poglavje
+$$P_f = \operatorname{softmax}(\phi)$$
+(glej poglavje
 \ref{section:parametrizacija stohastičnih matrik}), lahko
 za funkcijo izgube vzamemo $\phi \mapsto \Loss{unitary}(P_f)$.
 
@@ -2752,7 +2753,7 @@ $O(n^2)$ parametri.
   se
   imenuje \emph{tabela inverzij} permutacije $\sigma$.
 \end{definicija}
-Tabela inverzij $TI \colon S_n \to [0, n-1] \times [0,
+Tabela inverzij $\operatorname{TI} \colon S_n \to [0, n-1] \times [0,
 n-2 ] \times \dotsm \times [0]$
 je bijekcija \cite[Trditev
 1.~3.~12]{ernumerativecombinatorics2011volume1}.
@@ -2793,10 +2794,10 @@ $$P_d =
   p_{n,1} & 0  & \dotsm & 0  & 0\\
 \end{bmatrix}$$
 stohastična matrika. Potem lahko definiramo
-$$P(a_k = i) = P(k\text{ postavimo na } i\text{-to prazno
+$$P(a_k = i) = P(k \text{ postavimo na } i\text{-to prazno
 mesto}) = p_{k, i}$$
 in
-$$P(TI(\sigma) = (x_1, x_2, \dotsc, x_n)) = \prod_{i=1}^n
+$$P(\operatorname{TI}(\sigma) = (x_1, x_2, \dotsc, x_n)) = \prod_{i=1}^n
 P(a_k = x_k).$$
 \begin{primer}
   Naj bo
@@ -2811,7 +2812,7 @@ P(a_k = x_k).$$
   stohastična matrika, ki podaja porazdelitev nad $S_3$.
   Verjetnost za permutacijo $\sigma = (13)(2)$ iz primera
   \ref{primer:tabela_inverzij} je
-  $$P(TI(\sigma) = (2, 2, 1)) = P(a_1 = 2) P(a_2 = 2)
+  $$P(\operatorname{TI}(\sigma) = (2, 2, 1)) = P(a_1 = 2) P(a_2 = 2)
   P(a_3 = 1) = cef$$.
 \end{primer}
 %
@@ -2910,7 +2911,7 @@ verjetno permutacijo. To permutacijo dobimo tako,
 da vsak $i$ postavimo na prosto mesto z največjo
 verjetnostjo $P(a_i = j)$.
 
-Izkaže se, da za dovolj majhno vrednost $Loss{TI}(\hat \rho)$
+Izkaže se, da za dovolj majhno vrednost $\Loss{TI}(\hat \rho)$
 matrika $\overline{P}(\hat \rho)$ predstavlja izomorfizem.
 \begin{lema}
   Če je $\Loss{TI}(\hat \rho) < \frac{1}{(n! + 1)^2}$, je
@@ -3157,7 +3158,7 @@ nevronskimi mrežami.
   nevronsko mrežo z vhodom velikosti $n$, skrito plastjo
   velikosti $n$ in izhodom
   velikosti $\frac{n^2 -n - 2}{2}$. Aktivacijska funkcija v
-  skriti plasti je $\operatorname{ReLu}$.
+  skriti plasti je $\operatorname{ReLU}$.
   Na zadnji plasti oblike  $(x_{1,1}, \dotsc, x_{1, n},
   x_{2, 1}, \dotsc x_{2, n -1}, \dotsc, x_{n-1, 1}, x_{n-1, 2} )^T$
   uporabimo softmax po blokih
@@ -3169,7 +3170,7 @@ nevronskimi mrežami.
   Velja
   $$
   M_{\text{blaga preparametrizacija}} =
-  \operatorname{Softmax}_\text{po blokih} \circ W_2 \circ
+  \operatorname{softmax}_\text{po blokih} \circ W_2 \circ
   \operatorname{ReLU} \circ W_1,
   $$
   kjer sta $W_1 \colon \R^n \to \R^n$ in
@@ -3189,18 +3190,18 @@ nevronskimi mrežami.
   z vhodno in skritimi plastmi velikosti $n^2$ in izhodno
   plastjo velikosti
   $\frac{n^2 - n - 2}{2}$. Aktivacijske funkcije v skritih
-  plasteh so $\operatorname{ReLu}$, na zadnjih plasteh
+  plasteh so $\operatorname{ReLU}$, na zadnjih plasteh
   uporabimo softmax po blokih, kot v blagi preparametrizaciji.
   Porazdelitev $P_d$ nad tabelami inverzij izračunamo kot
   $$
   \operatorname{flatten}(P_d) =
   \operatorname{softmax}_\text{po blokih} \circ
   W_4\circ
-  \operatorname{ReLu} \circ
+  \operatorname{ReLU} \circ
   w_3 \circ
-  \operatorname{ReLu} \circ
+  \operatorname{ReLU} \circ
   W_2 \circ
-  \operatorname{ReLu} \circ
+  \operatorname{ReLU} \circ
   W_1
   (y_0).
   $$
