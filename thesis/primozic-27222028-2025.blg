@@ -1,14 +1,16 @@
 [0] Config.pm:328> INFO - This is Biber 2.21
 [0] Config.pm:331> INFO - Logfile is 'primozic-27222028-2025.blg'
-[56] biber:342> INFO - === Mon Mar 16, 2026, 16:04:58
-[72] Biber.pm:421> INFO - Reading 'primozic-27222028-2025.bcf'
-[139] Biber.pm:1002> INFO - Found 29 citekeys in bib section 0
-[151] Biber.pm:4487> INFO - Processing section 0
-[158] Biber.pm:4678> INFO - Looking for bibtex file 'literatura.bib' for section 0
-[160] bibtex.pm:1713> INFO - LaTeX decoding ...
-[201] bibtex.pm:1519> INFO - Found BibTeX data source 'literatura.bib'
-[704] UCollate.pm:68> INFO - Overriding locale 'sl-SI' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[705] UCollate.pm:68> INFO - Overriding locale 'sl-SI' defaults 'variable = shifted' with 'variable = non-ignorable'
-[705] Biber.pm:4307> INFO - Sorting list 'nty/global//global/global/global' of type 'entry' with template 'nty' and locale 'sl-SI'
-[742] bbl.pm:676> INFO - Writing 'primozic-27222028-2025.bbl' with encoding 'UTF-8'
-[761] bbl.pm:779> INFO - Output to primozic-27222028-2025.bbl
+[61] biber:342> INFO - === Wed Mar 18, 2026, 10:48:06
+[74] Biber.pm:421> INFO - Reading 'primozic-27222028-2025.bcf'
+[137] Biber.pm:1002> INFO - Found 33 citekeys in bib section 0
+[149] Biber.pm:4487> INFO - Processing section 0
+[156] Biber.pm:4678> INFO - Looking for bibtex file 'literatura.bib' for section 0
+[157] bibtex.pm:1713> INFO - LaTeX decoding ...
+[196] bibtex.pm:1519> INFO - Found BibTeX data source 'literatura.bib'
+[683] UCollate.pm:68> INFO - Overriding locale 'sl-SI' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[683] UCollate.pm:68> INFO - Overriding locale 'sl-SI' defaults 'variable = shifted' with 'variable = non-ignorable'
+[683] Biber.pm:4307> INFO - Sorting list 'nty/global//global/global/global' of type 'entry' with template 'nty' and locale 'sl-SI'
+[713] bbl.pm:676> INFO - Writing 'primozic-27222028-2025.bbl' with encoding 'UTF-8'
+[730] bbl.pm:779> INFO - Output to primozic-27222028-2025.bbl
+[730] Biber.pm:132> WARN - I didn't find a database entry for 'kazhdan1967connection' (section 0)
+[730] Biber.pm:134> INFO - WARNINGS: 1

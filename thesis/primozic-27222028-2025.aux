@@ -96,6 +96,7 @@
 \newlabel{lema:rho_s - Q_s < eps}{{2.21}{11}{}{definicija.2.21}{}}
 \newlabel{lema : zveznost na besedah}{{2.22}{12}{}{definicija.2.22}{}}
 \newlabel{lema : model ~ homomorfizem}{{2.24}{13}{}{definicija.2.24}{}}
+\newlabel{dokaz_kazhdan_enostaven}{{2.28}{14}{}{definicija.2.28}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Ciklične grupe}{14}{subsection.2.4}\protected@file@percent }
 \newlabel{subsection : ciklicčne grupe}{{2.4}{14}{Ciklične grupe}{subsection.2.4}{}}
 \newlabel{eq:loss function Cn}{{2.8}{14}{Ciklične grupe}{equation.2.8}{}}
@@ -187,10 +188,10 @@
 \@writefile{toc}{\contentsline {paragraph}{Avtomorfizmi cayleyevih grafov}{35}{section*.23}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Stohastična matrika $P$ na začetku in po končani optimizaciji med iskanjem avtomorfizmov Cayleyevih grafov simetrične grupe $S_n$ za $n=2,3,4$. Pri $n=2$ smo našli avtomorfizem $(0 1)$, pri $n=3$ avtomorfizem $(0 5)(1 3)(2 4)$. }}{35}{figure.caption.24}\protected@file@percent }
 \newlabel{fig:cayley-aut-demo}{{12}{35}{Stohastična matrika $P$ na začetku in po končani optimizaciji med iskanjem avtomorfizmov Cayleyevih grafov simetrične grupe $S_n$ za $n=2,3,4$. Pri $n=2$ smo našli avtomorfizem $(0 1)$, pri $n=3$ avtomorfizem $(0 5)(1 3)(2 4)$}{figure.caption.24}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Uporaba tabele inverzij}{35}{subsection.4.5}\protected@file@percent }
-\newlabel{subsection:uporaba tabele inverzij}{{4.5}{35}{Uporaba tabele inverzij}{subsection.4.5}{}}
 \abx@aux@cite{0}{ernumerativecombinatorics2011volume1}
 \abx@aux@segm{0}{0}{ernumerativecombinatorics2011volume1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Uporaba tabele inverzij}{36}{subsection.4.5}\protected@file@percent }
+\newlabel{subsection:uporaba tabele inverzij}{{4.5}{36}{Uporaba tabele inverzij}{subsection.4.5}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1}Porazdelitve nad tabelo inverzij}{36}{subsubsection.4.5.1}\protected@file@percent }
 \newlabel{primer:tabela_inverzij}{{4.11}{36}{}{definicija.4.11}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2}Funkcija izgube}{37}{subsubsection.4.5.2}\protected@file@percent }
@@ -216,16 +217,34 @@
 \newlabel{table:povprečne napake različnih metod grafi}{{2}{42}{Povprečne napake metod}{table.caption.29}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Primerjava izgube $\mathcal  L_\sim (\overline  {P})$ glede na velikost grafa. Za vsak $n$ sta metodi preizkušeni na istih $10$-tih naključno izbranih grafih. Vsaka točka je povprečje napak na teh grafih. Permutacijska matrika $\overline  {P}$ ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij) oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega elementa (pri parametrizaciji brez tabele inverzij). }}{43}{figure.caption.26}\protected@file@percent }
 \newlabel{fig:loss_computation_time_comparison}{{13}{43}{Primerjava izgube $\loss _\sim (\overline {P})$ glede na velikost grafa. Za vsak $n$ sta metodi preizkušeni na istih $10$-tih naključno izbranih grafih. Vsaka točka je povprečje napak na teh grafih. Permutacijska matrika $\overline {P}$ ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij) oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega elementa (pri parametrizaciji brez tabele inverzij)}{figure.caption.26}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces  Primerjava izgub $\mathcal  L_\sim (\overline  {P})$ različnih metod glede na velikost grafa. Permutacijska matrika $\overline  {P}$ ustreza najbolj verjetni permutaciji vsake metode. }}{43}{figure.caption.28}\protected@file@percent }
-\newlabel{fig:primerjava vanilla-nn-mild-nn}{{14}{43}{Primerjava izgub $\loss _\sim (\overline {P})$ različnih metod glede na velikost grafa. Permutacijska matrika $\overline {P}$ ustreza najbolj verjetni permutaciji vsake metode}{figure.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces  Primerjava izgub $\mathcal  L_\sim (\overline  {P})$ različnih metod glede na velikost grafa. Permutacijska matrika $\overline  {P}$ ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij) oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega elementa (pri parametrizaciji brez tabele inverzij).}}{43}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:primerjava vanilla-nn-mild-nn}{{14}{43}{Primerjava izgub $\loss _\sim (\overline {P})$ različnih metod glede na velikost grafa. Permutacijska matrika $\overline {P}$ ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij) oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega elementa (pri parametrizaciji brez tabele inverzij)}{figure.caption.28}{}}
+\abx@aux@cite{0}{ulam1960collection}
+\abx@aux@segm{0}{0}{ulam1960collection}
+\abx@aux@cite{0}{ulam1960collection}
+\abx@aux@segm{0}{0}{ulam1960collection}
+\abx@aux@cite{0}{kazhdan1967connection}
+\abx@aux@segm{0}{0}{kazhdan1967connection}
+\abx@aux@cite{0}{chapman2023efficientlystablepresentationserrorcorrecting}
+\abx@aux@segm{0}{0}{chapman2023efficientlystablepresentationserrorcorrecting}
+\abx@aux@cite{0}{willett2024conditionalrepresentationstabilityclassification}
+\abx@aux@segm{0}{0}{willett2024conditionalrepresentationstabilityclassification}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Razprava}{44}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Približne in kvaziupodobitve}{44}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Pripombe k ujemanju grafov}{45}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}Parametrizacija stohastičnih matrik}{45}{subsubsection.5.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.2}Funkcije izgube}{45}{subsubsection.5.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.3}Simetrije}{45}{subsubsection.5.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.4}Meta učenje}{45}{subsubsection.5.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.5}Vložitev v evklidski prostor}{45}{subsubsection.5.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.6}Alternativne arhitekture}{45}{subsubsection.5.2.6}\protected@file@percent }
 \abx@aux@cite{0}{allenzhu2019convergencetheorydeeplearning}
 \abx@aux@segm{0}{0}{allenzhu2019convergencetheorydeeplearning}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Nevronske mreže}{45}{appendix.A}\protected@file@percent }
-\newlabel{poglavje:konvergenca-globokih-mrez}{{A}{45}{Nevronske mreže}{appendix.A}{}}
-\newlabel{section:overparametrisation}{{A}{45}{Nevronske mreže}{appendix.A}{}}
-\newlabel{poglavje:nn}{{A}{45}{Nevronske mreže}{appendix.A}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Nevronske mreže dosežejo globalni minimum funkcije izgube}{45}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Nevronske mreže}{46}{appendix.A}\protected@file@percent }
+\newlabel{poglavje:konvergenca-globokih-mrez}{{A}{46}{Nevronske mreže}{appendix.A}{}}
+\newlabel{section:overparametrisation}{{A}{46}{Nevronske mreže}{appendix.A}{}}
+\newlabel{poglavje:nn}{{A}{46}{Nevronske mreže}{appendix.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Nevronske mreže dosežejo globalni minimum funkcije izgube}{46}{subsection.A.1}\protected@file@percent }
 \abx@aux@cite{0}{DBLP:journals/corr/KipfW16}
 \abx@aux@segm{0}{0}{DBLP:journals/corr/KipfW16}
 \abx@aux@cite{0}{SinkhornKnopp}
@@ -234,56 +253,55 @@
 \abx@aux@segm{0}{0}{graphoptimaltransport2020crossdomainalignment}
 \abx@aux@cite{0}{SinkhornKnopp}
 \abx@aux@segm{0}{0}{SinkhornKnopp}
-\newlabel{izrek:allen-zhu-global-minima}{{A.3}{46}{Allen-Zhu, Li, Song}{definicija.A.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Preparametrizacija z grafovskimi nevronskimi mrežami in algoritmom Sinkhorn}{46}{subsection.A.2}\protected@file@percent }
-\newlabel{dodatek:GNN+sinkhorn}{{A.2}{46}{Preparametrizacija z grafovskimi nevronskimi mrežami in algoritmom Sinkhorn}{subsection.A.2}{}}
-\newlabel{def:GNN}{{A.4}{46}{Grafovska konvolucijska mreža}{definicija.A.4}{}}
-\newlabel{def:sinkhorn}{{A.5}{46}{Sinkhornov algoritem}{definicija.A.5}{}}
-\newlabel{def:ujemanje-GNN-sinkhorn}{{A.7}{47}{}{definicija.A.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Rezultati simulacij}{47}{appendix.B}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Upodobitve}{47}{subsection.B.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.1}Diedrska grupa}{47}{subsubsection.B.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Trajektorije}{47}{section*.30}\protected@file@percent }
-\newlabel{dodatek_1dim dn trajektorije}{{B.1.1}{47}{Trajektorije}{section*.30}{}}
-\newlabel{section:dinamika_1dim_Dn}{{B.1.1}{47}{Dinamika enodimenzionalnega modela}{section*.32}{}}
-\@writefile{toc}{\contentsline {paragraph}{Dinamika enodimenzionalnega modela}{47}{section*.32}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Trajektorije enodimenzionalnega modela realne upodobitve diedrske grupe za različne vrednosti $n$. Za vsako vrednost $n$ je prikazanih $500$ naključno izbranih trajektorij z vrednostmi začetnih parametrov iz $[-1,1]^2$. }}{48}{figure.caption.31}\protected@file@percent }
-\newlabel{fig:Dn-trajektorije-demo}{{15}{48}{Trajektorije enodimenzionalnega modela realne upodobitve diedrske grupe za različne vrednosti $n$. Za vsako vrednost $n$ je prikazanih $500$ naključno izbranih trajektorij z vrednostmi začetnih parametrov iz $[-1,1]^2$}{figure.caption.31}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_3 \to \mathbb  R$ z različnimi vrednostmi začetnih parametrov $(r_0, s_0)$. Na zgornji sliki so vrednosti izbrane iz kvadrata $[-1,1]^2$, na spodnji pa iz kvadrata $[0.5, 1.5]^2$. }}{49}{figure.caption.33}\protected@file@percent }
-\newlabel{fig:dihedral_1d_grid_n3}{{16}{49}{Hitrosti konvergence enodimenzionalnega modela $D_3 \to \R $ z različnimi vrednostmi začetnih parametrov $(r_0, s_0)$. Na zgornji sliki so vrednosti izbrane iz kvadrata $[-1,1]^2$, na spodnji pa iz kvadrata $[0.5, 1.5]^2$}{figure.caption.33}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_3 \to \mathbb  R$ na $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj). Barvna shema je izbrana, da poudari kontraste med regijami z različnimi hitrostmi konvergenc. }}{50}{figure.caption.34}\protected@file@percent }
-\newlabel{fig:dihedral_1d_grid_n3_zoomed}{{17}{50}{Hitrosti konvergence enodimenzionalnega modela $D_3 \to \R $ na $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj). Barvna shema je izbrana, da poudari kontraste med regijami z različnimi hitrostmi konvergenc}{figure.caption.34}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_4 \to \mathbb  R$ na $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$. }}{51}{figure.caption.35}\protected@file@percent }
-\newlabel{fig:dihedral_1d_grid_n4}{{18}{51}{Hitrosti konvergence enodimenzionalnega modela $D_4 \to \R $ na $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$}{figure.caption.35}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_4 \to \mathbb  R$ na $[0.5, 1.5]^2$. Resolucija slik je $2000\times 2000$. }}{52}{figure.caption.36}\protected@file@percent }
-\newlabel{fig:dihedral_1d_grid_n4_2}{{19}{52}{Hitrosti konvergence enodimenzionalnega modela $D_4 \to \R $ na $[0.5, 1.5]^2$. Resolucija slik je $2000\times 2000$}{figure.caption.36}{}}
+\newlabel{izrek:allen-zhu-global-minima}{{A.3}{47}{Allen-Zhu, Li, Song}{definicija.A.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Preparametrizacija z grafovskimi nevronskimi mrežami in algoritmom Sinkhorn}{47}{subsection.A.2}\protected@file@percent }
+\newlabel{dodatek:GNN+sinkhorn}{{A.2}{47}{Preparametrizacija z grafovskimi nevronskimi mrežami in algoritmom Sinkhorn}{subsection.A.2}{}}
+\newlabel{def:GNN}{{A.4}{47}{Grafovska konvolucijska mreža}{definicija.A.4}{}}
+\newlabel{def:sinkhorn}{{A.5}{47}{Sinkhornov algoritem}{definicija.A.5}{}}
+\newlabel{def:ujemanje-GNN-sinkhorn}{{A.7}{48}{}{definicija.A.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Rezultati simulacij}{48}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Upodobitve}{48}{subsection.B.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.1}Diedrska grupa}{48}{subsubsection.B.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Trajektorije}{48}{section*.30}\protected@file@percent }
+\newlabel{dodatek_1dim dn trajektorije}{{B.1.1}{48}{Trajektorije}{section*.30}{}}
+\newlabel{section:dinamika_1dim_Dn}{{B.1.1}{48}{Dinamika enodimenzionalnega modela}{section*.32}{}}
+\@writefile{toc}{\contentsline {paragraph}{Dinamika enodimenzionalnega modela}{48}{section*.32}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Trajektorije enodimenzionalnega modela realne upodobitve diedrske grupe za različne vrednosti $n$. Za vsako vrednost $n$ je prikazanih $500$ naključno izbranih trajektorij z vrednostmi začetnih parametrov iz $[-1,1]^2$. }}{49}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:Dn-trajektorije-demo}{{15}{49}{Trajektorije enodimenzionalnega modela realne upodobitve diedrske grupe za različne vrednosti $n$. Za vsako vrednost $n$ je prikazanih $500$ naključno izbranih trajektorij z vrednostmi začetnih parametrov iz $[-1,1]^2$}{figure.caption.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_3 \to \mathbb  R$ z različnimi vrednostmi začetnih parametrov $(r_0, s_0)$. Na zgornji sliki so vrednosti izbrane iz kvadrata $[-1,1]^2$, na spodnji pa iz kvadrata $[0.5, 1.5]^2$. }}{50}{figure.caption.33}\protected@file@percent }
+\newlabel{fig:dihedral_1d_grid_n3}{{16}{50}{Hitrosti konvergence enodimenzionalnega modela $D_3 \to \R $ z različnimi vrednostmi začetnih parametrov $(r_0, s_0)$. Na zgornji sliki so vrednosti izbrane iz kvadrata $[-1,1]^2$, na spodnji pa iz kvadrata $[0.5, 1.5]^2$}{figure.caption.33}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_3 \to \mathbb  R$ na $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj). Barvna shema je izbrana, da poudari kontraste med regijami z različnimi hitrostmi konvergenc. }}{51}{figure.caption.34}\protected@file@percent }
+\newlabel{fig:dihedral_1d_grid_n3_zoomed}{{17}{51}{Hitrosti konvergence enodimenzionalnega modela $D_3 \to \R $ na $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj). Barvna shema je izbrana, da poudari kontraste med regijami z različnimi hitrostmi konvergenc}{figure.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_4 \to \mathbb  R$ na $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$. }}{52}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:dihedral_1d_grid_n4}{{18}{52}{Hitrosti konvergence enodimenzionalnega modela $D_4 \to \R $ na $[-2,2]^2$ in $[-1, 1]^2$. Resolucija slik je $2000\times 2000$}{figure.caption.35}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Hitrosti konvergence enodimenzionalnega modela $D_4 \to \mathbb  R$ na $[0.5, 1.5]^2$. Resolucija slik je $2000\times 2000$. }}{53}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:dihedral_1d_grid_n4_2}{{19}{53}{Hitrosti konvergence enodimenzionalnega modela $D_4 \to \R $ na $[0.5, 1.5]^2$. Resolucija slik je $2000\times 2000$}{figure.caption.36}{}}
 \abx@aux@cite{0}{solvingordinarydifferentialequations1993nonstiff}
 \abx@aux@segm{0}{0}{solvingordinarydifferentialequations1993nonstiff}
-\newlabel{dodatek:dihedral-2d-trajektorije}{{B.1.1}{53}{Dvodimenzionalen model}{section*.37}{}}
-\@writefile{toc}{\contentsline {paragraph}{Dvodimenzionalen model}{53}{section*.37}\protected@file@percent }
-\newlabel{dodatek:dihedral repr}{{B.1.1}{53}{Dvodimenzionalen model}{section*.37}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Trajektorije učenja modelov $D_n \to \mathbb  R^{2 \times 2}$ z različnimi začetnimi parametri. Model $D_n \to \mathbb  R^{2 \times 2}$ je definiran z vrednostima $R := \rho (r)$ in $S := \rho (s)$. Opazujemo trajektorije $(\operatorname  {tr}(R(t)), \operatorname  {tr}(S(t)))$. Črne pike predstavljajo vrednosti začetnih parametrov. Modre trajektorije konvergirajo do upodobitve. }}{53}{figure.caption.38}\protected@file@percent }
-\newlabel{fig:trajektorije_diedrska_grupa_2d-1}{{20}{53}{Trajektorije učenja modelov $D_n \to \R ^{2 \times 2}$ z različnimi začetnimi parametri. Model $D_n \to \R ^{2 \times 2}$ je definiran z vrednostima $R := \rho (r)$ in $S := \rho (s)$. Opazujemo trajektorije $(\operatorname {tr}(R(t)), \operatorname {tr}(S(t)))$. Črne pike predstavljajo vrednosti začetnih parametrov. Modre trajektorije konvergirajo do upodobitve}{figure.caption.38}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces Trajektorije učenja (nadaljevanje).}}{54}{figure.caption.39}\protected@file@percent }
-\newlabel{fig:trajektorije_diedrska_grupa_2d-2}{{21}{54}{Trajektorije učenja (nadaljevanje)}{figure.caption.39}{}}
+\newlabel{dodatek:dihedral-2d-trajektorije}{{B.1.1}{54}{Dvodimenzionalen model}{section*.37}{}}
+\@writefile{toc}{\contentsline {paragraph}{Dvodimenzionalen model}{54}{section*.37}\protected@file@percent }
+\newlabel{dodatek:dihedral repr}{{B.1.1}{54}{Dvodimenzionalen model}{section*.37}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Trajektorije učenja modelov $D_n \to \mathbb  R^{2 \times 2}$ z različnimi začetnimi parametri. Model $D_n \to \mathbb  R^{2 \times 2}$ je definiran z vrednostima $R := \rho (r)$ in $S := \rho (s)$. Opazujemo trajektorije $(\operatorname  {tr}(R(t)), \operatorname  {tr}(S(t)))$. Črne pike predstavljajo vrednosti začetnih parametrov. Modre trajektorije konvergirajo do upodobitve. }}{54}{figure.caption.38}\protected@file@percent }
+\newlabel{fig:trajektorije_diedrska_grupa_2d-1}{{20}{54}{Trajektorije učenja modelov $D_n \to \R ^{2 \times 2}$ z različnimi začetnimi parametri. Model $D_n \to \R ^{2 \times 2}$ je definiran z vrednostima $R := \rho (r)$ in $S := \rho (s)$. Opazujemo trajektorije $(\operatorname {tr}(R(t)), \operatorname {tr}(S(t)))$. Črne pike predstavljajo vrednosti začetnih parametrov. Modre trajektorije konvergirajo do upodobitve}{figure.caption.38}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces Trajektorije učenja (nadaljevanje).}}{55}{figure.caption.39}\protected@file@percent }
+\newlabel{fig:trajektorije_diedrska_grupa_2d-2}{{21}{55}{Trajektorije učenja (nadaljevanje)}{figure.caption.39}{}}
 \abx@aux@cite{0}{paszke2019pytorch}
 \abx@aux@segm{0}{0}{paszke2019pytorch}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Delovanja}{55}{subsection.B.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.1}Ciklične grupe}{55}{subsubsection.B.2.1}\protected@file@percent }
-\newlabel{appendix: actions-cyclic}{{B.2.1}{55}{Ciklične grupe}{subsubsection.B.2.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {22}{\ignorespaces  Matrike $P_s$ pred in po optimizaciji modelov $\rho \colon  C_n \to \operatorname  {fun}([m], [m])$ za različne vrednosti $n$ in $m$. }}{56}{figure.caption.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Delovanja}{56}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.1}Ciklične grupe}{56}{subsubsection.B.2.1}\protected@file@percent }
+\newlabel{appendix: actions-cyclic}{{B.2.1}{56}{Ciklične grupe}{subsubsection.B.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {22}{\ignorespaces  Matrike $P_s$ pred in po optimizaciji modelov $\rho \colon  C_n \to \operatorname  {fun}([m], [m])$ za različne vrednosti $n$ in $m$. }}{57}{figure.caption.47}\protected@file@percent }
 \abx@aux@cite{0}{paszke2019pytorch}
 \abx@aux@segm{0}{0}{paszke2019pytorch}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.2}Diedrske grupe}{57}{subsubsection.B.2.2}\protected@file@percent }
-\newlabel{appendix: actions-dihedral}{{B.2.2}{57}{Diedrske grupe}{subsubsection.B.2.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Grafi}{57}{subsection.B.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.3.1}Avtomorfizmi cayleyevih grafov}{57}{subsubsection.B.3.1}\protected@file@percent }
-\newlabel{dodatek:cayley-vanilla}{{B.3.1}{57}{Avtomorfizmi cayleyevih grafov}{subsubsection.B.3.1}{}}
-\@writefile{toc}{\contentsline {section}{Literatura}{63}{section*.56}\protected@file@percent }
-\abx@aux@read@bbl@mdfivesum{F4DF6B51F704FCE67309E258063D73D0}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.2}Diedrske grupe}{58}{subsubsection.B.2.2}\protected@file@percent }
+\newlabel{appendix: actions-dihedral}{{B.2.2}{58}{Diedrske grupe}{subsubsection.B.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Grafi}{58}{subsection.B.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{Literatura}{61}{section*.53}\protected@file@percent }
+\abx@aux@read@bbl@mdfivesum{A29EE968DB0288F5FE9B9844F64EED16}
 \abx@aux@defaultrefcontext{0}{aflalo2025convexrelaxation}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{allenzhu2019convergencetheorydeeplearning}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{babai2016graphisomorphismquasipolynomialtime}{nty/global//global/global/global}
+\abx@aux@defaultrefcontext{0}{chapman2023efficientlystablepresentationserrorcorrecting}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{graphoptimaltransport2020crossdomainalignment}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{chughtai2023neural}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{graphmathcingsurvey}{nty/global//global/global/global}
@@ -309,5 +327,7 @@
 \abx@aux@defaultrefcontext{0}{tabela-inverzij-severo2025learningdistributionspermutationsrankings}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{simon2024bettermodernmachinelearning}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{ernumerativecombinatorics2011volume1}{nty/global//global/global/global}
+\abx@aux@defaultrefcontext{0}{ulam1960collection}{nty/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{2020SciPy-NMeth}{nty/global//global/global/global}
+\abx@aux@defaultrefcontext{0}{willett2024conditionalrepresentationstabilityclassification}{nty/global//global/global/global}
 \gdef \@abspage@last{73}

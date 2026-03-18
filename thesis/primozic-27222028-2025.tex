@@ -1217,6 +1217,7 @@ Zdaj lahko dokažemo glavni izrek razdelka.
 \end{dokaz}
 %%%%%%%%%%%%
 \begin{opomba}
+  \label{dokaz_kazhdan_enostaven}
   Če nas ne zanima ekspliciten predpis za  $\delta(\epsilon)$,
   je dokaz veliko lažji.
 
@@ -2709,8 +2710,7 @@ $10^{-3}$, dokler norma gradienta ne pade pod
 $ 10^{-12}$.
 Na sliki \ref{fig:cayley-aut-demo} so prikazane matrike
 $P$ na začetku in
-na koncu optimizacije ta različne $n$. Več rezultatov je v dodatku
-\ref{dodatek:cayley-vanilla}.
+na koncu optimizacije za različne $n$. 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_demo_234.png}
@@ -3108,14 +3108,15 @@ Z uporabo tabele inverzij
 dosežemo boljše rezultate.
 \begin{figure}[hp]
   \centering
-  \includegraphics[width=0.7\linewidth]{images/average_loss_on_size_vanilla_vs_it.pdf}
+  \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/vanilla_vs_TI_loss.pdf}
   \caption{Primerjava izgube $\loss_\sim(\overline{P})$
     glede na velikost grafa.
     Za vsak $n$ sta metodi preizkušeni na istih $10$-tih
     naključno izbranih grafih. Vsaka točka je povprečje
     napak na teh grafih. Permutacijska matrika $\overline{P}$
     ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij)
-    oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega elementa (pri parametrizaciji brez tabele inverzij).
+    oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega
+    elementa (pri parametrizaciji brez tabele inverzij).
   }
   \label{fig:loss_computation_time_comparison}
 \end{figure}
@@ -3258,8 +3259,10 @@ padla pod $\epsilon_\nabla = 10^{-3}$.
   \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/average_curve_full.pdf.pdf}
   \caption{
     Primerjava izgub $\loss_\sim (\overline{P})$ različnih metod glede
-  na velikost grafa. Permutacijska matrika $\overline{P}$ ustreza najbolj verjetni 
-  permutaciji vsake metode. }
+    na velikost grafa. Permutacijska matrika $\overline{P}$
+    ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij)
+    oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega
+  elementa (pri parametrizaciji brez tabele inverzij).}
   \label{fig:primerjava vanilla-nn-mild-nn}
 \end{figure}
 \begin{table}
@@ -3293,6 +3296,115 @@ padla pod $\epsilon_\nabla = 10^{-3}$.
   \item sinkhorn vs TI
   \item GNN -> a je kaka boljša arhitektura?
 \end{itemize}
+%
+%V delu morfizme na diskretnih množicah povežemo
+%z diferencialnimi enačbami in strojnim učenjem.
+%\subsection{Teoretični aspekti}
+V delu morfizme diskretnih struktur povežemo z diferencialnimi
+enačbami. Preko tega lahko probleme iz teorije upodobitev
+rešujemo z metodami iz analize in optimizacije.
+\subsection{Približne in kvaziupodobitve}
+Ulam v delu \cite{ulam1960collection} uvede koncept
+$\epsilon$-upodobitev. Preslikava $\pi$ med poljubno grupo $G$ in
+prostorom unitarnih operatorjev na Hilbertovem prostoru  je
+$\epsilon$-upodobitev, če za vsak par elementov $g, h \in G$ velja
+$$
+\| \pi(gh) -\pi(g)\pi(h)  \| < \epsilon.
+$$
+Avtor v \cite[stran 63]{ulam1960collection}
+zastavi splošno vprašanje, ali morata biti rešitvi
+podobnih enačb podobni?
+
+Za $\epsilon$-upodobitve amebialnih grup je odgovor pritrdilen.
+Kazhdanov izrek \cite{kazhdan1967connection} pravi,
+da je za dovolj majhen $\epsilon$ vsaka
+$\epsilon$-upodobitev amebialne grupe blizu pravi upodobitvi.
+
+\TODO{Prosim za revizijo: }
+V delu se ukvarjamo s sorodnim problemom \emph{stablinosti prezentacij},
+omenjenim v
+\cite{chapman2023efficientlystablepresentationserrorcorrecting}
+in v \cite{willett2024conditionalrepresentationstabilityclassification}.
+Za grupo $G = \langle S \mid R \rangle$ študiramo
+\emph{kvaziupodobitve} kot preslikave iz grupe, za katere velja
+$$
+\left\| \phi(r) - I  \right\| < \epsilon
+$$ za
+vse relacije $r \in R$.
+V lemi \ref{lema : model ~ homomorfizem} dokažemo, da je v
+končnih grupah vsaka kvaziupodobitev tudi $\epsilon$-upodobitev.
+Vprašanje je, če se dokaz da razširiti na nekatere neskončne
+grupe in kakšne pogoje morajo izpolnjevati.
+\TODO{Še kaj več o tem? Ne najdem dobrih rezulatov o tem na spetu.}
+
+Dokaz Kazhdanovega izreka za splošne amebialne grupe je daleč od trivialnega.
+Preko teorije v tem delu pa lahko izrek za končne grupe dokažemo zelo
+enostavno (glej opombo
+\ref{dokaz_kazhdan_enostaven}).
+%
+%
+%
+\subsection{Pripombe k ujemanju grafov}
+V tem razdelku bomo komentirali izbire pri zasnovi predstavljenih
+metod za ujemanje grafov, kot so
+izbire aktivacijske funkcije, arhitekture modela in
+porazdelitve.
+Poleg tega bodo predstavljeni problemi opisanih metod in možne rešitve.
+\subsubsection{Parametrizacija stohastičnih matrik}
+Porazdelitev nad $\funnn{n}$ predstavimo s stohastično matriko. Zanima nas
+gladka parametrizacija stohastičnih matrik. V delu
+poljubne matrike pretvorimo v stohastične z uporabo funkcije softmax.
+
+Alternativa, ki je popularna v litaraturi pri ujemanju grafov je
+uporaba Sinkhornovega algoritma (definicija \ref{def:sinkhorn}), ki
+poljubne matrike zvezno preslika
+v dvojno stohastične.
+%
+%\subsubsection{Funkcije izgube}
+%V literaturi
+\subsubsection{Simetrije}
+Funkcije izgube v našem delu imajo veliko simetrij,
+zato lahko pričakujemo veliko
+število sedel in lokalnih minimumov
+\cite{schneider2025ubiquitoussymmetrycriticalpoints}. Verjetnost
+konvergence metode lahko večamo
+z dodajanjem asimetrij.
+
+Namesto uporabe klasičnega gradientnega spusta lahko uporabimo
+preturbiran gradientni spust, s čimer se izognemo sedlom
+\cite{schneider2025ubiquitoussymmetrycriticalpoints}.
+
+Dodatno bi namesto deterministične funkcije izgube
+lahko uporabili stohastično. Vsako iteracijo izberemo podmnožico
+parov $S \subsetneq [n]^2$ in računamo
+$$
+\sum_{(i,j) \in S} \left ((M_1)_{i,j} - P(f(i) \sim f(j))\right )^2.
+$$
+Empirični rezultati kažejo, da lahko s stohastičnim pristopom
+dosežemo boljše rezultate \cite{Andersen_2016}.
+
+Dodatno lahko izberemo ureditev bijekcij (funkcij) in ene rešitve
+preferiramo pred
+drugimi. To vi lahko dosegli z dodajanjem asimetričnega člena
+funkciji izgube, ki meri razdaljo do preferirane rešitve.
+\subsubsection{Izbira parametrizacije porazdelitve z meta učenjem}
+Predstavljeni družini porazdelitev funkcij preko stohastične matrike in
+permutacij preko tabel inverzij morda nista najboljša izbira.
+
+Izbire prave parametrizacije bi se lahko lotili z adaptivnim metaučenjem,
+ki bi med iteracijami prilagajal primarno parametrizacijo nad
+funkcijami (permutacijami) tako, da bi se ognili lokalnih mimimumov.
+\subsubsection{Alternativne arhitekture}
+Morda obstaja boljša arhitektura modela, ki bi pri preparametrizaciji
+dajala boljše rezultate. Če je za model $M=M(M_1, M_2)$ preslikava
+$M \circ \loss$ gradient dominantna, potem nima lokalnih minimumov. Eden izmed
+možnih pristopv k reševanju ujemanja grafov bi bil, da poiščemo
+arhitekturo modela, pri kateri je $M \circ \loss$ gradient dominantna.
+
+V literaturi zasledimo uporabo transformerjev \cite{LIU2023109059} in
+grafovskih mrež \cite{graphoptimaltransport2020crossdomainalignment}
+za ujemanje grafov. Kljub sofisticiranosti arhitekture 
+se v obeh primerih pojavljajo lokalni mimimumi. 
 \appendix
 \clearpage
 \section{Nevronske mreže}
@@ -3844,25 +3956,24 @@ učenje ustavimo prej.
     width=0.75\textwidth
   ]{images/actions/plot_D19_n=19_m=19.png}
 \end{figure}
-\subsection{Grafi}
-\subsubsection{Avtomorfizmi cayleyevih grafov}
-\label{dodatek:cayley-vanilla}
-Rezultati iskanja avtomorfizmov Cayleyevih grafov brez
-uporabe tabele inverzij.
-Parametri optimizacije
-so opisani v poglavju \ref{aut-cayley-vanilla-setup}.
-\begin{figure*}[ht]
-  \centering
-  \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_3.png}
-\end{figure*}
-\begin{figure*}[ht]
-  \centering
-  \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_4.png}
-\end{figure*}
-\begin{figure*}[ht]
-  \centering
-  \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_5.png}
-\end{figure*}
+%\subsubsection{Avtomorfizmi cayleyevih grafov}
+%\label{dodatek:cayley-vanilla}
+%Rezultati iskanja avtomorfizmov Cayleyevih grafov brez
+%uporabe tabele inverzij.
+%Parametri optimizacije
+%so opisani v poglavju \ref{aut-cayley-vanilla-setup}.
+%\begin{figure*}[ht]
+%  \centering
+%  \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_3.png}
+%\end{figure*}
+%\begin{figure*}[ht]
+%  \centering
+%  \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_4.png}
+%\end{figure*}
+%\begin{figure*}[ht]
+%  \centering
+%  \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_5.png}
+%\end{figure*}
 %
 %   Črni blok zgoraj je tam namenoma. Označuje, da
 % \LaTeX{} ni znal vrstice prelomiti pravilno

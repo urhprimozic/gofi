@@ -5,7 +5,7 @@ import tqdm
 import torch
 import io
 import gofi.plot.colors as gc
-from comparison import run_nn, run_gnn_conv
+from comparison import run_nn, run_gnn_conv, run_vanilla
 import os
 import re
 import hyperparams
@@ -319,7 +319,7 @@ def loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "
     plt.close()
 
 
-def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it, gnn"], markers = ['.', '.', '+', 'x', '.', "o"], curve=False, normalize_on_edges=False):
+def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "vanilla", "nn_it", "nn", "mild_nn_it", "gnn"], markers = ['.', '.', '+', 'x', '.', "o"], curve=False, normalize_on_edges=False):
     '''
     Points in 2d space of n_vertices * loss. Each method has its own color.
 
@@ -397,10 +397,11 @@ def average_loss_on_size(list_of_results,filename, methods = ["vanilla_it", "van
       
     plt.legend()
     plt.xlabel("Število vozlišč")
+
     if normalize_on_edges:
-        plt.ylabel("Izguba / n^2")
+        plt.ylabel("Izguba na povezavi $\\frac{{1}}{{n^2}}\\mathcal{{L}}_\\sim$")
     else:
-        plt.ylabel("Izguba")
+        plt.ylabel(r"Izguba $\mathcal{L}_{\sim}$")
     plt.title("Izgube različnih metod glede na velikosti grafov")
     plt.savefig(f"average_{filename}.pdf")
     plt.close()
@@ -491,3 +492,31 @@ def add_gnn_thesis(filename=None):
     lor = collect_results(("dec5", "mild1", "mild_new_hp_big", "extension"))
     return add_gnn(lor, filename=filename)
 
+def add_vanilla(lor, filename=None):
+    '''
+    Adds vanilla results into list of results.
+    '''
+    print("Adding vanilla results into list of results of lenght:", len(lor))
+    for index, results in enumerate(tqdm.tqdm(lor, total=len(lor))):
+        M1, Q, M2 = results["graph_tuple"]
+        try:
+            results_vanilla = run_vanilla(M1.to(device), Q.to(device), M2.to(device), verbose=0)
+            results["vanilla"] = results_vanilla
+        except Exception as e:
+            print(f"Error at index: {index}. Skipping..")
+            print(e)
+            continue
+    if filename is not None:
+        save_lor(lor, filename)
+    return lor
+
+def add_vanilla_thesis(filename=None):
+    '''
+    collects results with prefixes in ("dec5", "mild1", "mild_new_hp_big", "extension")
+    and adds vanilla results into them.
+
+    If filename is given, saves the new lor into that filename.
+    '''
+
+    lor = collect_results(("dec5", "mild1", "mild_new_hp_big", "extension"))
+    return add_vanilla(lor, filename=filename)
