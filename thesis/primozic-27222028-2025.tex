@@ -260,7 +260,7 @@ ki minimalizira $ \|M_1 - P M_2 P^T\|^2$, nato pa to matriko
 prevedejo v permutacijsko.
 
 Alternativno lahko nad množico permutacij $S_n$ definiramo
-gladko družino porazdelitev in za naključno permutacijo $f \in S_n$
+gladko družino porazdelitev in za slučajno permutacijo $f \in S_n$
 maksimiziramo verjetnost, da je $f$ homomorfizem. S tem
 pristopom se ognemo prevedbi dvojno stohastične matrike v permutacijsko,
 ki je lahko problematična\cite{lyzinski2015graphmatchingrelaxrisk}.
@@ -473,7 +473,7 @@ algoritem Adam.
 \subsection{Perturbiran gradientni spust}
 \label{subsection : PGD}
 Gradientni spust lahko obtiči v sedlih.
-Iz sedla lahko pridemo z dodajanjem naključne perturbacije
+Iz sedla lahko pridemo z dodajanjem slučajne perturbacije
 parametrov, ko je gradient ciljne funkcije majhen
 \cite{jin2017escapesaddlepointsefficiently}.
 
@@ -645,7 +645,7 @@ ki vsak generator grupe preslika v poljubno matriko.
 %
 \begin{definicija}
   \label{def : razširitev repr modela}
-  Preslikavo $\hat \rho$ definiramo na grupi $G$ na slednji način:
+  Preslikavo $\hat \rho$ definiramo na grupi $G$ na naslednji način:
   \begin{itemize}
     \item Za vsak $g \in G\setminus \{1\}$ izberemo
       \emph{kanoničnega predstavnika} $w_g \in S^*$.
@@ -1762,7 +1762,7 @@ za $f \in \funnn{n}$.
 V delu bomo za $g\in G$ s predstavnikom
 $v_g = s_1 s_2 \dotsm s_m  $ pisali kar
 $g = s_1 s_2 \dotsm s_m$.
-Lahko je preveriti, da za  $g = s_1 s_2 \dotsm s_m\in G$ velja $$
+Lahko preverimo, da za $g = s_1 s_2 \dotsm s_m \in G$ velja $$
 P_{s_1} P_{s_2} \dotsc P_{s_m} =
 \begin{bmatrix}
   P(g(1) = 1) & P(g(1) = 2) & \dotsm & P(g(1) = n) \\
@@ -2653,7 +2653,7 @@ da predstavlja izomorfizem.
   $f \colon X \mapsto \| M_1 - X M_2 X^T \|$.
   Če je $X$ permutacijska matrika, je
   $X M_2 X^T$ matrika sosednosti grafa, ki ga dobimo, če
-  vozlišča grafa $M_2$ preslikamo z permutacijo $X$.
+  vozlišča grafa $M_2$ preslikamo s permutacijo $X$.
   Vrednosti funkcije izgube nad množico permutacijskih matrik so
   torej diskretne.
   $\| M_1 - X M_2 X^T \| = $ $0$ natanko tedaj,
@@ -3092,7 +3092,7 @@ norma gradienta padla pod $10^{-3}$, oziroma do
 maksimalnega števila iteracij $1000$. Pri metodi brez tabele
 inverzij smo minimizirali
 funkcijo izgube $\Loss{unitary} + \loss_\sim$,
-pri metodi z tabelo inverzij pa funkcijo izgube
+pri metodi s tabelo inverzij pa funkcijo izgube
 za parametrizacijo tabele inverzij iz poglavja \ref{funkcija izgube TI}.
 
 Izgube na grafu \ref{fig:loss_computation_time_comparison}
@@ -3282,21 +3282,6 @@ padla pod $\epsilon_\nabla = 10^{-3}$.
 %
 \clearpage
 \section{Razprava}
-\TODO{
-  zakluček, vse opombe
-}
-\begin{itemize}
-  \item povezava med grupami in NDE
-  \item uničevanje simetrij - preturbacije, preferiranje bijekcij
-  \item meta učenje - sprememba modela v kritični točki
-  \item umestitev v evklidski prostor glede na napako
-    (transformer, embedding)
-  \item alternativne loss funkcije
-  \item NN kot direkten model za bijekcijo - brez verjetnosti
-  \item sinkhorn vs TI
-  \item GNN -> a je kaka boljša arhitektura?
-\end{itemize}
-%
 %V delu morfizme na diskretnih množicah povežemo
 %z diferencialnimi enačbami in strojnim učenjem.
 %\subsection{Teoretični aspekti}
@@ -3316,7 +3301,7 @@ zastavi splošno vprašanje, ali morata biti rešitvi
 podobnih enačb podobni?
 
 Za $\epsilon$-upodobitve amebialnih grup je odgovor pritrdilen.
-Kazhdanov izrek \cite{kazhdan1967connection} pravi,
+Kazhdanov izrek \ref{kazhdan1967connection} pravi,
 da je za dovolj majhen $\epsilon$ vsaka
 $\epsilon$-upodobitev amebialne grupe blizu pravi upodobitvi.
 
@@ -3457,7 +3442,7 @@ se v obeh primerih pojavljajo lokalni mimimumi.
   \R^{d_0} \to \R^{d_l},
   $$
   odvisen od parametrov $\phi  = \Omega_0, b_0, \Omega_1,
-  b_1, \dotsc, \Omega_l, b_l$. Če je $l \geq$ rečemo, da
+  b_1, \dotsc, \Omega_l, b_l$. Če je $l \geq 2$, rečemo, da
   je mreža globoka.
 \end{definicija}
 \begin{definicija}[Regresija]
@@ -3495,7 +3480,7 @@ $$
 \|\nabla f(z,y)\|^2 \geq \mu (f(z,y) - f(\min_z(f(z,y))  , y)),
 $$
 dovolj globoke nevronske mreže
-s gradientnim spustom vedno najdejo parametre, ki dosegajo
+z gradientnim spustom vedno najdejo parametre, ki dosegajo
 poljubno natančen približek globalnega minimuma funkcije izgube.
 Spodnji izrek je povzet po
 \cite[stran 6, izrek 1]{allenzhu2019convergencetheorydeeplearning}.
@@ -3549,7 +3534,7 @@ je povzeta po
 \begin{definicija}
   [Sinkhornov algoritem]
   \label{def:sinkhorn}
-  Naj bo $K \in \R^{n \times n}$ matrika z pozitivnimi
+  Naj bo $K \in \R^{n \times n}$ matrika s pozitivnimi
   elementi. Sinkhornov algoritem je iterativni postopek za
   izračun dvojno stohastične matrike $P \in \R^{n \times n}$
   oblike $P = D_1 K D_2$, kjer sta $D_1$ in $D_2$ diagonalni
@@ -3585,7 +3570,7 @@ matrike $P$ \cite[izrek 2.1]{SinkhornKnopp}.
 \end{definicija}
 Za graf velikosti $N$ definiramo model $M_\text{encoder}$
 kot grafovsko nevronsko mrežo z dvema konvolucijskima plastema
-in aktivacijsko funkcijo $\operatorname{ReLU}$ s slednjim predpisom:
+in aktivacijsko funkcijo $\operatorname{ReLU}$ z naslednjim predpisom:
 $$
 M_\text{encoder}(M) = \hat{M}
 \operatorname{ReLU}(\hat{M}W_1)
@@ -3596,7 +3581,6 @@ kjer je $\hat{M} = D^{-\frac{1}{2}}
 (M + I) D^{-\frac{1}{2}}
 $ in sta $W_1 \in \R^{n \times n^2}, W_2 \in \R^{n^2 \times n^2}$
 parametra modela.
-.
 \begin{definicija}
   \label{def:ujemanje-GNN-sinkhorn}
   V poglavju
