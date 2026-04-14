@@ -255,7 +255,7 @@ $$
 matrika $P$, ki minimizira zgornjo funkcijo, predstavlja izomorfizem grafov.
 
 Problem ujemanja grafov je pomemben v industriji in se med drugim pojavlja v
-strojnem vidu, biomehaniki in robotiki\cite{graphmathcingsurvey}. V
+strojnem vidu, biomehaniki in robotiki~\cite{graphmathcingsurvey}. V
 splošnem ga rešujemo
 z aproksimacijskimi algoritmi, ki najdejo dvojno stohastično matriko,
 ki minimalizira $ \|M_1 - P M_2 P^T\|^2$, nato pa to matriko
@@ -265,7 +265,7 @@ Alternativno lahko nad množico permutacij $S_n$ definiramo
 gladko družino porazdelitev in za slučajno permutacijo $f \in S_n$
 maksimiziramo verjetnost, da je $f$ homomorfizem. S tem
 pristopom se ognemo prevedbi dvojno stohastične matrike v permutacijsko,
-ki je lahko problematična\cite{lyzinski2015graphmatchingrelaxrisk}.
+ki je lahko problematična~\cite{lyzinski2015graphmatchingrelaxrisk}.
 
 % struktura
 V poglavju \ref{section:Optimizacija z gradientnim spustom}
@@ -300,15 +300,15 @@ najde iskano strukturo.
 Metode v delu so originalni rezultati
 avtorja, mentorja in somentorja. Podoben pristop, kot
 ga uporabimo za iskanje nerazcepnih upodobitev končnih grup, v članku
-\cite{chughtai2023neural} izkoriščajo
+~\cite{chughtai2023neural} izkoriščajo
 za učenje nevronske mreže, ki predstavlja grupo.
 Gladko porazdelitev nad tabelo inverzij v strojnem
 učenju študirajo v
-\cite{tabela-inverzij-severo2025learningdistributionspermutationsrankings}
-in v \cite{tabela-inverzij-2020permutationlearningvialehmercodes}.
+~\cite{tabela-inverzij-severo2025learningdistributionspermutationsrankings}
+in v~\cite{tabela-inverzij-2020permutationlearningvialehmercodes}.
 Preparametrizacijo z nevronskimi mrežami za iskanje
 izomorfizmov grafov predstavijo
-v \cite{li2019graphmatchingnetworkslearning}.
+v~\cite{li2019graphmatchingnetworkslearning}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Oznake}
 \addcontentsline{toc}{section}{Oznake}
@@ -358,7 +358,7 @@ prostor, $\mathcal{L}\colon \R^n \to \R$ pa gladka, lahko minimum
 iščemo z gradientnimi metodami optimizacije.
 
 V tem poglavju definiramo numerične gradientne optimizacijske metode.
-Definicije sledijo \cite{prince2023understandingdeeplearning}.
+Definicije sledijo~\cite{prince2023understandingdeeplearning}.
 \subsection{Gradientni spust}
 % Definicije gradientnih metod v tem delu sledijo
 \begin{definicija}
@@ -409,19 +409,17 @@ diferencialne enačbe gradientnega toka (glej
 \cite{dherin2025learningsolvingdifferentialequations}).
 
 \begin{opomba}
-  V globokem učenju \cite{optimizationmethods2021survey} se za
+  V globokem učenju~\cite{optimizationmethods2021survey} se za
   optimizacijo uporabljajo
   metode, ki sicer temeljijo na gradientnem spustu, ampak
   niso numerični ekvivalent reševanja gradientnega toka.
   Med drugim lahko z uporabo šuma v izračunu gradienta
-  dobimo metodo, ki z visoko verjetnostjo pobegne iz sedel
-  \cite{jin2017escapesaddlepointsefficiently}. Te lastnosti
+  dobimo metodo, ki z visoko verjetnostjo pobegne iz sedel~\cite{jin2017escapesaddlepointsefficiently}. Te lastnosti
   nima nobena rešitev enačb gradientnega toka.
 
   Alternativno bi se lahko optimizacije lotili z boljšimi numeričnimi
   metodami za reševanje diferencialnih enačb
-  (glej
-    \cite{dherin2025learningsolvingdifferentialequations}
+  (glej~\cite{dherin2025learningsolvingdifferentialequations}
   za učenje z metodo Runge-Kutta).
 \end{opomba}
 
@@ -433,7 +431,7 @@ vrednosti parametrov $\phi_0$.
 
 Rešitev $\phi(t)$ gradientnega toka $  \frac{d\phi}{d t} = - \nabla
 \mathcal{L}(\phi), \quad \phi(0)=\phi_0$ vedno konvergira do
-kritične točke $\loss$ \cite[stran 203]{Hirsch2012dynamical-systems}.
+kritične točke $\loss$~\cite[stran 203]{Hirsch2012dynamical-systems}.
 Limita $\lim \limits_{t \to \infty} \phi(t)$
 je odvisna od izbire začetnih parametrov $\phi_0$.
 % Z uporabo nevronskih mrež in večanjem števila parametrov lahko
@@ -441,11 +439,11 @@ je odvisna od izbire začetnih parametrov $\phi_0$.
 % To ne velja v splošnem, kjer je konvergenca metode odvisna od
 % hitrosti učenja $\eta$. Če je $\eta$ prevelik, je lahko sprememba
 % parametrov prevelika, posledično pa se vrednost funkcionala lahko poveča.
-% V \cite{prince2023understandingdeeplearning} avtor to lastnost izkorišča
+% V~\cite{prince2023understandingdeeplearning} avtor to lastnost izkorišča
 \subsection{Moment}
 Kljub gladkosti funkcije $\loss$ so lahko spremembe parametrov pri
 uporabi gradientnega spusta kaotične. Lahko jih delno omejimo z
-uporabo \emph{momenta} (\cite[stran 86]{prince2023understandingdeeplearning})
+uporabo \emph{momenta} (~\cite[stran 86]{prince2023understandingdeeplearning})
 \begin{align*}
   m_{i+1} &= \beta \cdot m_t + (1-\beta) \nabla \loss (\phi_i) \\
   \phi_{i+1} &= \phi_i -  \eta m_{i+1},
@@ -455,7 +453,7 @@ parametra $\phi_{i+1} - \phi_i$ je s tem manj kaotična in bolj gladka.
 % \TODO{To sem mislil dodati kot motivacijo za Adama. A jo sploh potrebujemo?}
 \subsection{Adam}
 \label{adam}
-\emph{Adam} \index{adam}(\cite[stran
+\emph{Adam} \index{adam}(~\cite[stran
 88]{prince2023understandingdeeplearning}) je
 iteracijski optimizacijski algoritem, podan s pravili
 \begin{align*}
@@ -514,7 +512,7 @@ grupe} študiramo dinamiko diferencialnih enačb gradientnega toka
 za ciklične in diedrske grupe.
 \subsection{Upodobitve končnih grup}
 \label{subsection:upodobitve končnih grup}
-Jezik teorije upodobitev je povzet po \cite{jezernik2025upodobitve}.
+Jezik teorije upodobitev je povzet po~\cite{jezernik2025upodobitve}.
 \begin{definicija}
   \index{upodobitev}
   Naj bo $G$ grupa in $V$ vektorski prostor nad poljem
@@ -600,7 +598,7 @@ $\rho$ pa definiramo \emph{normo karakterja}
   \end{equation}
 \end{izrek}
 Za študij upodobitev končnih grup nad ugodnimi polji je torej
-dovolj poznati le končno\footnote{Glej \cite[poglavje
+dovolj poznati le končno\footnote{Glej~\cite[poglavje
     \emph{Dekompozicija regularne
 upodobitve}]{jezernik2025upodobitve}.} množico nerazcepnih
 upodobitev $\operatorname{Irr}(G) = \{ \rho \colon G \to
@@ -788,7 +786,7 @@ iščemo \emph{nerazcepne} upodobitve.
 \subsubsection{Funkcija izgube za unitarnost}
 \index{funkcija izgube za unitarnost}
 Dodatno lahko zahtevamo, da naš model slika v unitarne matrike.
-Velja namreč\footnote{Glej \cite[trditev
+Velja namreč\footnote{Glej~\cite[trditev
 3.34]{jezernik2025upodobitve}.}, da je vsaka upodobitev
 ekvivalentna upodobitvi v unitarne matrike.
 S tem zmanjšamo število različnih upodobitev, h katerimi lahko
@@ -816,11 +814,10 @@ Diferencialne enačbe gradientnih tokov imajo nekatere lepe
 lastnosti. Limite različnih trajektorij
 % (\emph{kritične točke sistema})
 so natanko ničle $\nabla\loss(\phi) = 0$ gradienta
-(\cite[poglavje 9.3]{Hirsch2012dynamical-systems}).
+(~\cite[poglavje 9.3]{Hirsch2012dynamical-systems}).
 \begin{opomba}
   Enačbe gradientnih tokov nimajo vedno enostavnih  rešitev v
-  zaprti obliki
-  \cite{park2024absenceclosedformdescriptionsgradient}. Običajno se jih
+  zaprti obliki~\cite{park2024absenceclosedformdescriptionsgradient}. Običajno se jih
   računa numerično.
 
   V delu enostavne\footnote{Za uporabo Runge-Kutte moramo
@@ -865,7 +862,7 @@ To nam zagotavlja spodnji izrek.
   \sup_{s \in S} \|\hat \rho(s) - \rho(s) \| \leq \epsilon.
   $$
 \end{izrek}
-Izrek dokažemo s pomočjo rezultata iz \cite[Theorem II.5 na
+Izrek dokažemo s pomočjo rezultata iz~\cite[Theorem II.5 na
 strani 7]{gamm2011epsilonrepresentations}.
 \begin{izrek}[Kazhdan]
   \label{izrek : kazhdan}
@@ -1391,7 +1388,7 @@ $$\frac{d(r,s)}{dt} = -\nabla(\Loss{rel} + \Loss{unit} +
 \Loss{irr}).$$
 Enačbo rešujemo z metodo Dormand-Prince
 \cite{solvingordinarydifferentialequations1993nonstiff}, implementirano v
-knjižnici \texttt{SciPy} \cite{2020SciPy-NMeth}.
+knjižnici \texttt{SciPy}~\cite{2020SciPy-NMeth}.
 
 % Implementacija simulacije je v \TODO{dodatek?}.
 
@@ -2528,8 +2525,7 @@ $$
   \index{ujemanje grafov}
   Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
   na $n$ vozliščih. Problem ujemanja graphov
-  \emph{(graph matching)}
-  \cite{lyzinski2015graphmatchingrelaxrisk} je
+  \emph{(graph matching)}~\cite{lyzinski2015graphmatchingrelaxrisk} je
   definiran kot
   iskanje minimuma
   $$
@@ -2540,7 +2536,7 @@ $$
   Če matriki $M_1$ in $M_2$ pripadata izomorfnima
   grafoma, potem iščemo izomorfizem.
 \end{definicija}
-Problem \emph{ujemanja grafov} je NP-težek\cite{sahni1976qapisnphard}.
+Problem \emph{ujemanja grafov} je NP-težek~\cite{sahni1976qapisnphard}.
 Klasični pristopi ga
 rešujejo z relaksacijami funkcije izgube $\|M_1 - P M_2
 P^T\|$ nad večje družine matrik $P$ in prevedbo
@@ -2757,7 +2753,7 @@ $O(n^2)$ parametri.
 \end{definicija}
 Tabela inverzij $\operatorname{TI} \colon S_n \to [0, n-1] \times [0,
 n-2 ] \times \dotsm \times [0]$
-je bijekcija \cite[Trditev
+je bijekcija~\cite[Trditev
 1.~3.~12]{ernumerativecombinatorics2011volume1}.
 Porazdelitev vektorjev iz
 $\prod_{i=n-1}^0 [0, i]$ trivialno inducira porazdelitev nad $S_n$.
@@ -3291,14 +3287,14 @@ V delu morfizme diskretnih struktur povežemo z diferencialnimi
 enačbami. Preko tega lahko probleme iz teorije upodobitev
 rešujemo z metodami iz analize in optimizacije.
 \subsection{Približne in kvaziupodobitve}
-Ulam v delu \cite{ulam1960collection} uvede koncept
+Ulam v delu~\cite{ulam1960collection} uvede koncept
 $\epsilon$-upodobitev. Preslikava $\pi$ med poljubno grupo $G$ in
 prostorom unitarnih operatorjev na Hilbertovem prostoru  je
 $\epsilon$-upodobitev, če za vsak par elementov $g, h \in G$ velja
 $$
 \| \pi(gh) -\pi(g)\pi(h)  \| < \epsilon.
 $$
-Avtor v \cite[stran 63]{ulam1960collection}
+Avtor v~\cite[stran 63]{ulam1960collection}
 zastavi splošno vprašanje, ali morata biti rešitvi
 podobnih enačb podobni?
 
@@ -3310,7 +3306,7 @@ $\epsilon$-upodobitev amenabilne grupe blizu pravi upodobitvi.
 V delu se ukvarjamo s sorodnim problemom \emph{stabilnosti prezentacij},
 omenjenim v
 \cite{chapman2023efficientlystablepresentationserrorcorrecting}
-in v \cite{willett2024conditionalrepresentationstabilityclassification}.
+in v~\cite{willett2024conditionalrepresentationstabilityclassification}.
 Za grupo $G = \langle S \mid R \rangle$ študiramo
 \emph{kvaziupodobitve} kot preslikave iz grupe, za katere velja
 $$
@@ -3368,7 +3364,7 @@ $$
 \sum_{(i,j) \in S} \left ((M_1)_{i,j} - P(f(i) \sim f(j))\right )^2.
 $$
 Empirični rezultati kažejo, da lahko s stohastičnim pristopom
-dosežemo boljše rezultate \cite{Andersen_2016}.
+dosežemo boljše rezultate~\cite{Andersen_2016}.
 
 Dodatno lahko izberemo ureditev bijekcij (funkcij) in ene rešitve
 preferiramo pred
@@ -3388,8 +3384,8 @@ $M \circ \loss$ gradient dominantna, potem nima lokalnih minimumov. Eden izmed
 možnih pristopov k reševanju ujemanja grafov bi bil, da poiščemo
 arhitekturo modela, pri kateri je $M \circ \loss$ gradient dominantna.
 
-V literaturi zasledimo uporabo transformerjev \cite{LIU2023109059} in
-grafovskih mrež \cite{graphoptimaltransport2020crossdomainalignment}
+V literaturi zasledimo uporabo transformerjev~\cite{LIU2023109059} in
+grafovskih mrež~\cite{graphoptimaltransport2020crossdomainalignment}
 za ujemanje grafov. Kljub sofisticiranosti arhitekture
 se v obeh primerih pojavljajo lokalni minimumi.
 \appendix
@@ -3413,7 +3409,7 @@ se v obeh primerih pojavljajo lokalni minimumi.
 \label{poglavje:nn}
 %Matriko $P(\phi)$ bomo modelirali z \emph{nevronskimi
 %mrežami}. Definicija nevronske mreže je povzeta po
-%\cite{prince2023understandingdeeplearning}.
+%~\cite{prince2023understandingdeeplearning}.
 \begin{definicija}[Nevronska mreža]
   Naj bo za vsak $i \in [l]$
   $W_i \colon \R^{d_{i-1}} \to \R^{d_i}$
@@ -3559,7 +3555,7 @@ je povzeta po
 \end{definicija}
 Za matriko $K$ s strogo pozitivnimi členi velja,
 da Sinkhornov algoritem konvergira do dvojno stohastične
-matrike $P$ \cite[izrek 2.1]{SinkhornKnopp}.
+matrike $P$~\cite[izrek 2.1]{SinkhornKnopp}.
 \begin{definicija}
   [Stroškovna matrika]
   Naj bosta $X \in \R^{n \times d}$ in
@@ -3790,7 +3786,7 @@ Opazujemo matrike $P_s$ pred in po optimizaciji
 kompleksnih modelov $\rho \colon C_n \to \funnn{m}$.
 Optimiziramo z algoritmom
 \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
-parametri iz \cite{paszke2019pytorch}.
+parametri iz~\cite{paszke2019pytorch}.
 Vsak model učimo največ
 največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
 učenje ustavimo prej.
@@ -3902,7 +3898,7 @@ učenje ustavimo prej.
 Opazujemo matrike $P_s$ in $P_r$ pred in po optimizaciji
 modelov $\rho \colon D_n \to \funnn{m}$. Optimiziramo z algoritmom
 \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
-parametri iz \cite{paszke2019pytorch}.
+parametri iz~\cite{paszke2019pytorch}.
 Vsak model učimo največ
 največ $2000$ korakov. Če model doseže napako pod $10^{-3}$,
 učenje ustavimo prej.
@@ -3985,7 +3981,7 @@ učenje ustavimo prej.
 
 % \subsection{Sklicevanje in citiranje}
 % Za sklice uporabljamo \verb|\ref|, za sklice na enačbe
-% \verb|\eqref|, za citate \verb|\cite|. Pri
+% \verb|\eqref|, za citate \verb|~\cite|. Pri
 % sklicevanju in citiranju sklicano številko povežemo s
 % prejšnjo besedo z nedeljivim presledkom
 % $\sim$, kot
@@ -4058,19 +4054,19 @@ učenje ustavimo prej.
 % \url{https://en.wikibooks.org/wiki/LaTeX/Indexing}.
 
 % \subsection{Navajanje literature}
-% Članke citiramo z uporabo \verb|\cite{label}|,
-% \verb|\cite[text]{label}| ali pa več naenkrat s
-% \verb|\cite\{label1, label2}|. Tudi tukaj predhodno
+% Članke citiramo z uporabo \verb|~\cite{label}|,
+% \verb|~\cite[text]{label}| ali pa več naenkrat s
+% \verb|~\cite\{label1, label2}|. Tudi tukaj predhodno
 % besedo in citat povežemo z nedeljivim presledkom
 % $\sim$. Na primer~\cite{chen2006meshless,liu2001point},
-% ali pa \cite{kibriya2007empirical}, ali pa
-% \cite[str.\ 12]{trobec2015parallel}, \cite[enačba
+% ali pa~\cite{kibriya2007empirical}, ali pa
+%~\cite[str.\ 12]{trobec2015parallel},~\cite[enačba
 % (2.3)]{pereira2016convergence}.
 % Vnosi iz \verb|.bib| datoteke, ki niso citirani, se ne
 % prikažejo v seznamu literature, zato jih
 % tukaj citiram.~\cite{vene2000categorical},
-% \cite{gregoric2017stopniceni}, \cite{slak2015induktivni},
-% \cite{nsphere}, \cite{kearsley1975linearly},
-% \cite{STtemplate}, \cite{NunbergerTand},
-% \cite{vanoosten2008realizability}.
+%~\cite{gregoric2017stopniceni},~\cite{slak2015induktivni},
+%~\cite{nsphere},~\cite{kearsley1975linearly},
+%~\cite{STtemplate},~\cite{NunbergerTand},
+%~\cite{vanoosten2008realizability}.
 \end{document}
