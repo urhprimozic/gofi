@@ -188,8 +188,8 @@ descent}
 
 \begin{document}
 
-\section*{Uvod}
-\addcontentsline{toc}{section}{Uvod}
+\section{Uvod}
+%\addcontentsline{toc}{section}{Uvod}
 Poljubna preslikava $f$ iz končne grupe $G$ v prostor
 matrik $\C^{n\times n}$ je \emph{upodobitev} grupe $G$ natanko tedaj,
 ko velja $f(g h) = f(g) f(h)$ za vsak $g, h \in G$.
@@ -199,10 +199,12 @@ f(h)\|^2$, ki je nič
 natanko tedaj, ko $f$ predstavlja upodobitev grupe $G$.
 
 Iskanje upodobitev končnih grup lahko s tem prevedemo na optimizacijo
-funkcije $\Loss{homo}$. Za vsak element grupe $g$ izberemo svojo
-matriko $f(g)$. Če najdemo vektor $[f(g)]_{g \in G}$, v katerem je
+funkcije $\Loss{homo}$. Za vsak element $g$ iz grupe $G$ izberemo svojo
+matriko $f(g)$ in s tem definiramo preslikavo
+$f \colon G \to \C^{n \times n}$
+. Če je za tako preslikavo $f$,
 vrednost funkcije
-izgube $0$, smo našli upodobitev.
+izgube $\Loss{homo}(f)$ enaka nič,Y je $f$ upodobitev.
 \begin{primer}
   {
     Poljubno preslikavo iz grupe $\Z_2 = \{0, 1\}$ v $\C$ lahko
@@ -220,10 +222,10 @@ izgube $0$, smo našli upodobitev.
 Podobno lahko na optimizacijski problem prevedemo iskanje
 \emph{delovanj} in iskanje
 \emph{izomorfizmov}
-grafov. Iskane morfizme enačimo
+grafov. Homomorfizme grup v permutacije oziroma izomorfizme grafov
+enačimo
 z množico ničel gladke funkcije
-$\loss \colon \R^n \to [0, \infty)$
-evklidskim prostorom. S tem iskanje diskretnih struktur
+$\loss \colon \R^n \to [0, \infty)$. S tem iskanje diskretnih struktur
 prevedemo na iskanje ničel gladke funkcije.
 
 Optimizacije se  lotimo z gradientnim spustom, temeljno
@@ -254,7 +256,7 @@ matrika $P$, ki minimizira zgornjo funkcijo, predstavlja izomorfizem grafov.
 
 Problem ujemanja grafov je pomemben v industriji in se med drugim pojavlja v
 strojnem vidu, biomehaniki in robotiki\cite{graphmathcingsurvey}. V
-splošnem se ga rešuje
+splošnem ga rešujemo
 z aproksimacijskimi algoritmi, ki najdejo dvojno stohastično matriko,
 ki minimalizira $ \|M_1 - P M_2 P^T\|^2$, nato pa to matriko
 prevedejo v permutacijsko.
@@ -2710,7 +2712,7 @@ $10^{-3}$, dokler norma gradienta ne pade pod
 $ 10^{-12}$.
 Na sliki \ref{fig:cayley-aut-demo} so prikazane matrike
 $P$ na začetku in
-na koncu optimizacije za različne $n$. 
+na koncu optimizacije za različne $n$.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/graphs/vanilla/aut_Cn_demo_234.png}
@@ -3300,13 +3302,12 @@ Avtor v \cite[stran 63]{ulam1960collection}
 zastavi splošno vprašanje, ali morata biti rešitvi
 podobnih enačb podobni?
 
-Za $\epsilon$-upodobitve amebialnih grup je odgovor pritrdilen.
-Kazhdanov izrek \ref{kazhdan1967connection} pravi,
+Za $\epsilon$-upodobitve amenabilnih grup je odgovor pritrdilen.
+Kazhdanov izrek \ref{izrek : kazhdan} pravi,
 da je za dovolj majhen $\epsilon$ vsaka
-$\epsilon$-upodobitev amebialne grupe blizu pravi upodobitvi.
+$\epsilon$-upodobitev amenabilne grupe blizu pravi upodobitvi.
 
-\TODO{Prosim za revizijo: }
-V delu se ukvarjamo s sorodnim problemom \emph{stablinosti prezentacij},
+V delu se ukvarjamo s sorodnim problemom \emph{stabilnosti prezentacij},
 omenjenim v
 \cite{chapman2023efficientlystablepresentationserrorcorrecting}
 in v \cite{willett2024conditionalrepresentationstabilityclassification}.
@@ -3318,11 +3319,12 @@ $$ za
 vse relacije $r \in R$.
 V lemi \ref{lema : model ~ homomorfizem} dokažemo, da je v
 končnih grupah vsaka kvaziupodobitev tudi $\epsilon$-upodobitev.
-Vprašanje je, če se dokaz da razširiti na nekatere neskončne
+Vprašanje je, ali se da dokaz razširiti na nekatere neskončne
 grupe in kakšne pogoje morajo izpolnjevati.
-\TODO{Še kaj več o tem? Ne najdem dobrih rezulatov o tem na spetu.}
+Ta smer ostaja odprta, saj v literaturi nismo našli jasnih rezultatov
+za ta primer.
 
-Dokaz Kazhdanovega izreka za splošne amebialne grupe je daleč od trivialnega.
+Dokaz Kazhdanovega izreka za splošne amenabilne grupe je daleč od trivialnega.
 Preko teorije v tem delu pa lahko izrek za končne grupe dokažemo zelo
 enostavno (glej opombo
 \ref{dokaz_kazhdan_enostaven}).
@@ -3370,7 +3372,7 @@ dosežemo boljše rezultate \cite{Andersen_2016}.
 
 Dodatno lahko izberemo ureditev bijekcij (funkcij) in ene rešitve
 preferiramo pred
-drugimi. To vi lahko dosegli z dodajanjem asimetričnega člena
+drugimi. To bi lahko dosegli z dodajanjem asimetričnega člena
 funkciji izgube, ki meri razdaljo do preferirane rešitve.
 \subsubsection{Izbira parametrizacije porazdelitve z meta učenjem}
 Predstavljeni družini porazdelitev funkcij preko stohastične matrike in
@@ -3378,18 +3380,18 @@ permutacij preko tabel inverzij morda nista najboljša izbira.
 
 Izbire prave parametrizacije bi se lahko lotili z adaptivnim metaučenjem,
 ki bi med iteracijami prilagajal primarno parametrizacijo nad
-funkcijami (permutacijami) tako, da bi se ognili lokalnih mimimumov.
+funkcijami (permutacijami) tako, da bi se ognili lokalnim minimumom.
 \subsubsection{Alternativne arhitekture}
 Morda obstaja boljša arhitektura modela, ki bi pri preparametrizaciji
 dajala boljše rezultate. Če je za model $M=M(M_1, M_2)$ preslikava
 $M \circ \loss$ gradient dominantna, potem nima lokalnih minimumov. Eden izmed
-možnih pristopv k reševanju ujemanja grafov bi bil, da poiščemo
+možnih pristopov k reševanju ujemanja grafov bi bil, da poiščemo
 arhitekturo modela, pri kateri je $M \circ \loss$ gradient dominantna.
 
 V literaturi zasledimo uporabo transformerjev \cite{LIU2023109059} in
 grafovskih mrež \cite{graphoptimaltransport2020crossdomainalignment}
-za ujemanje grafov. Kljub sofisticiranosti arhitekture 
-se v obeh primerih pojavljajo lokalni mimimumi. 
+za ujemanje grafov. Kljub sofisticiranosti arhitekture
+se v obeh primerih pojavljajo lokalni minimumi.
 \appendix
 \clearpage
 \section{Nevronske mreže}
@@ -3486,9 +3488,9 @@ Spodnji izrek je povzet po
 \cite[stran 6, izrek 1]{allenzhu2019convergencetheorydeeplearning}.
 \begin{izrek}[Allen-Zhu, Li, Song]
   \label{izrek:allen-zhu-global-minima}
-  Naj $f(z,y)$ izpolnjuje Polyak-Lojasiewiczev.
+  Naj $f(z,y)$ izpolnjuje Polyak-Lojasiewiczev pogoj.
   Naj bo $S_\text{train}$ taka množica vzorcev, da
-  obstaja $\delta > 0$, da za dva  vzorca $(x_i, y_i),
+  obstaja $\delta > 0$, da za dva vzorca $(x_i, y_i),
   (x_j,y_j) \in S_\text{train}$ z različnima indeksoma $i
   \neq j $ velja $\|x_i - x_j\| > \delta$.
 
@@ -3606,7 +3608,7 @@ parametra modela.
 \paragraph{Trajektorije}
 Več trajektorij enodimenzionalnega modela iz slike
 \ref{fig:Dn-trajektorije-demo-dim1}. Enačbo gradientnega
-toka rešujemo z  metodo Dormand-Prince. Vsaka slika prikazuje
+toka rešujemo z metodo Dormand-Prince. Vsaka slika prikazuje
 $500$ trajektorij z naključno izbranimi
 začetnimi parametri $r, s ~ U[-1, 1]$.
 %
