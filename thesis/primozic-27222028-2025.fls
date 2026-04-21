@@ -260,6 +260,8 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/xurl/xurl.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/xurl/xurl.sty
 OUTPUT primozic-27222028-2025.xmpdata
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/pdfx/pdfx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/pdfx/pdfx.sty
@@ -571,7 +573,6 @@ INPUT ./images/dihedral/2d/cropped/prob_of_convergence_D_8.png
 INPUT ./images/dihedral/2d/cropped/prob_of_convergence_D_8.png
 INPUT ./images/dihedral/2d/cropped/prob_of_convergence_D_8.png
 INPUT ./images/dihedral/2d/cropped/prob_of_convergence_D_8.png
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr5.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx12.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx8.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/rm-lmbx6.tfm

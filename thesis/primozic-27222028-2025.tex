@@ -139,6 +139,7 @@ descent}
 \usepackage{xparse}
 \usepackage{tabularx}
 \usepackage{mathdots}
+\usepackage{xurl}
 % \usepackage{tikz}
 % VEČ ZANIMIVIH PAKETOV
 % \usepackage{array}      % več možnosti za tabele
@@ -202,12 +203,12 @@ Iskanje upodobitev končnih grup lahko s tem prevedemo na optimizacijo
 funkcije $\Loss{homo}$. Za vsak element $g$ iz grupe $G$ izberemo svojo
 matriko $f(g)$ in s tem definiramo preslikavo
 $f \colon G \to \C^{n \times n}$
-. Če je za tako preslikavo $f$,
+. Če je za tako preslikavo $f$
 vrednost funkcije
-izgube $\Loss{homo}(f)$ enaka nič,Y je $f$ upodobitev.
+izgube $\Loss{homo}(f)$ enaka nič, je $f$ upodobitev.
 \begin{primer}
   {
-    Poljubno preslikavo iz grupe $\Z_2 = \{0, 1\}$ v $\C$ lahko
+    Poljubno preslikavo iz grupe $\Z_2 = \{0, 1\}$ v $\C$
     predstavimo s parom kompleksnih
     števil $(z_0= f(0),z_1=f(1)) \in \C^2$. Funkcija izgube je v tem
     primeru enaka
@@ -216,7 +217,7 @@ izgube $\Loss{homo}(f)$ enaka nič,Y je $f$ upodobitev.
     |z_0 - z_0^2|^2 + |z_0 - z_1 z_1|^2,
     $$
     edini dve upodobitvi grupe $\Z_2$ pa ustrezata paroma števil
-    $(1,1)$ in $(-1,-1)$.
+    $(1,1)$ in $(1,-1)$.
   }
 \end{primer}
 Podobno lahko na optimizacijski problem prevedemo iskanje
@@ -310,20 +311,19 @@ Preparametrizacijo z nevronskimi mrežami za iskanje
 izomorfizmov grafov predstavijo
 v~\cite{li2019graphmatchingnetworkslearning}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Oznake}
-\addcontentsline{toc}{section}{Oznake}
+\subsection{Oznake}
+%\addcontentsline{toc}{section}{Oznake}
 
 \label{section:oznake}
-\begin{tabularx}{\linewidth}[ht]{l p{0.9\linewidth}}
+\begin{tabularx}{\linewidth}[ht]{l X}
   $S_n$ & Množica permutacij števil $1, 2, \dotsc, n$. \\
   $[n]$ & Množica števil $\{1, 2, \dotsc, n\}$. \\
   $\operatorname{flatten}$ &  Sploščitev matrike
   $\operatorname{flatten} \colon \R^{n \times n} \to \R^{n^2}$.
-  % \newline
   Za $A=[a_{i,j}] \in \R^{n \times n}$ je $\operatorname{flatten}(A)
   _i = a_{\lfloor\frac{i}{n} \rfloor, i \bmod n}$.
-  % $\operatorname{flatten} \colon \R^{n \times n} \to \R^{n^2}$
   \\
+  % $\operatorname{flatten} \colon \R^{n \times n} \to \R^{n^2}$
   $\operatorname{softmax}$ & Funkcija $\operatorname{softmax} \colon
   \R^n \to \R^n$. Glej definicijo \ref{def:softmax}.\\
   % $\operatorname{softmax}(x)_i = \frac{e^{x_i}}{\sum_{j=1}^n
@@ -341,7 +341,7 @@ v~\cite{li2019graphmatchingnetworkslearning}.
   $B_r(a)$ & Krogla okoli $a$ s polmerom $r$.
   Velja $B_r(a) = \{x \mid |x-a| < r \}$.\\
 \end{tabularx}
-\subsection*{Oznake matrik}
+\subsection{Oznake matrik}
 Za matriko $A = [a_{i,j}] \in \R^{n \times n}$
 označimo $i,j$-ti element z $A_{i,j} = a_{i,j}$,
 $i$-to vrstico z $a_i = [a_{i,1}, a_{i,2}, \dotsc, a_{i,n}]$ in
@@ -352,8 +352,8 @@ $j$-ti stolpec z $a^j = [a_{1,j}, a_{2,j}, \dotsc, a_{n,j}]^T$.
 \section{Optimizacija z gradientnim spustom}
 \label{section:Optimizacija z gradientnim spustom}
 Na različne probleme v matematiki lahko gledamo kot na iskanje
-minimuma $\hat \phi = \operatorname{argmin}( \mathcal L(\phi) \mid
-\phi )$ funkcionalna $\loss$. Če je domena funkcionalna evklidski
+minimuma $$\hat \phi = \operatorname*{argmin}_{\phi} \mathcal L(\phi)$$
+funkcionala $\loss$. Če je domena funkcionala evklidski
 prostor, $\mathcal{L}\colon \R^n \to \R$ pa gladka, lahko minimum
 iščemo z gradientnimi metodami optimizacije.
 
@@ -389,7 +389,13 @@ Definicije sledijo~\cite{prince2023understandingdeeplearning}.
       gradientnega spusta na funkciji $f(x) = x e^{\sqrt{x} -
       2x\sin(x)}$ z začetnim parametrom $x_0=1$ in hitrostjo učenja
       $\eta$. V obeh primerih metoda konvergira do lokalnega minimuma
-    funkcije.}
+      funkcije.
+      Študiramo lahko, od kje naprej se funkcijske vrednosti
+      od lokalnega minimuma razlikujejo
+      za manj kot $\epsilon = 0.1$. Pri
+      $\eta = 0.1$ se to zgodi po 12 korakih, pri $\eta = 0.5$ pa
+      po treh.
+    }
     \label{fig:primer gradientnega spusta}
   \end{figure}
 \end{primer}
@@ -414,7 +420,8 @@ diferencialne enačbe gradientnega toka (glej
   metode, ki sicer temeljijo na gradientnem spustu, ampak
   niso numerični ekvivalent reševanja gradientnega toka.
   Med drugim lahko z uporabo šuma v izračunu gradienta
-  dobimo metodo, ki z visoko verjetnostjo pobegne iz sedel~\cite{jin2017escapesaddlepointsefficiently}. Te lastnosti
+  dobimo metodo, ki z visoko verjetnostjo pobegne iz
+  sedel~\cite{jin2017escapesaddlepointsefficiently}. Te lastnosti
   nima nobena rešitev enačb gradientnega toka.
 
   Alternativno bi se lahko optimizacije lotili z boljšimi numeričnimi
@@ -443,9 +450,9 @@ je odvisna od izbire začetnih parametrov $\phi_0$.
 \subsection{Moment}
 Kljub gladkosti funkcije $\loss$ so lahko spremembe parametrov pri
 uporabi gradientnega spusta kaotične. Lahko jih delno omejimo z
-uporabo \emph{momenta} (~\cite[stran 86]{prince2023understandingdeeplearning})
+uporabo \emph{momenta}~\cite[stran 86]{prince2023understandingdeeplearning}
 \begin{align*}
-  m_{i+1} &= \beta \cdot m_t + (1-\beta) \nabla \loss (\phi_i) \\
+  m_{i+1} &= \beta \cdot m_i + (1-\beta) \nabla \loss (\phi_i) \\
   \phi_{i+1} &= \phi_i -  \eta m_{i+1},
 \end{align*}
 kjer sta $\beta \in [0,1), \eta > 0$ parametra metode. Sprememba
@@ -453,18 +460,18 @@ parametra $\phi_{i+1} - \phi_i$ je s tem manj kaotična in bolj gladka.
 % \TODO{To sem mislil dodati kot motivacijo za Adama. A jo sploh potrebujemo?}
 \subsection{Adam}
 \label{adam}
-\emph{Adam} \index{adam}(~\cite[stran
-88]{prince2023understandingdeeplearning}) je
+\emph{Adam} \index{adam}~\cite[stran
+88]{prince2023understandingdeeplearning} je
 iteracijski optimizacijski algoritem, podan s pravili
 \begin{align*}
   m_{i+1} &= \beta \cdot m_i + (1-\beta) \nabla \loss (\phi_i) \\
   \overline{m}_{i+1} &= \frac{m_{i+1}}{1 - \beta ^{i+1}}\\
-  v_{i+1} &= \gamma \cdot v_t + (1-\gamma) (\nabla \loss (\phi_i))^2 \\
-  \overline{v}_{i+1} &= \frac{v_{i+1}}{1 - \delta ^{i+1}}\\
+  v_{i+1} &= \gamma \cdot v_i + (1-\gamma) (\nabla \loss (\phi_i))^2 \\
+  \overline{v}_{i+1} &= \frac{v_{i+1}}{1 - \gamma ^{i+1}}\\
   \phi_{i+1} &= \phi_i -  \eta
-  \frac{\overline{m}_{i+1}}{\overline{v}_{i+1} + \epsilon},
+  \frac{\overline{m}_{i+1}}{\sqrt{\overline{v}_{i+1}} + \epsilon},
 \end{align*}
-kjer so $\eta > 0, \beta \in [0,1), \delta \in [0,1 ), \gamma \in
+kjer so $\eta > 0, \beta \in [0,1), \gamma \in
 [0,1)$ parametri modela.
 
 Zaradi dobrih empiričnih rezultatov se v praksi v strojnem učenju
@@ -474,28 +481,25 @@ algoritem Adam.
 \label{subsection : PGD}
 Gradientni spust lahko obtiči v sedlih.
 Iz sedla lahko pridemo z dodajanjem slučajne perturbacije
-parametrov, ko je gradient ciljne funkcije majhen
-\cite{jin2017escapesaddlepointsefficiently}.
+parametrov, ko je gradient ciljne funkcije majhen~\cite{jin2017escapesaddlepointsefficiently}.
 
 Za $\nabla \loss(\phi) < \epsilon$ definiramo
 $$
 \phi_{i+1} = \phi_i - \eta \nabla \loss(\phi_i) + \xi_i,
 $$
 kjer je $\xi_i \sim U[B_r(0)]$
-enakomerno porazdeljen šum $|\xi_i| < r $
+enakomerno porazdeljen šum $|\xi_i| \leq r $
 za izbrana hiperparametra $r$ in $\epsilon$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 \clearpage
 \section{Iskanje upodobitev}
 \label{section:Iskanje upodobitev}
-Obstaja očitna\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
+Množico preslikav končne grupe $G$ v prostor matrik $\R^{n \times n}$ lahko
+enačimo\footnote{Za $G=\{g_1, g_2, \dotsc, g_m\}$ lahko
   enačimo $f = (\operatorname{flatten}(f(g_1)),
     \operatorname{flatten}(f(g_2)), \dotsc,
-\operatorname{flatten}(f(g_{m}) ))$.} $1:1$ korespondenca med
-preslikavami končnih grup v evklidske prostore  $f\colon G \to
-\R^{n \times n} $ in prostorom $K = {\R^{n \times n}}^{|G|}\cong
-\R^{n^2 |G|}$.
+\operatorname{flatten}(f(g_{m}) ))$.} z evklidskim prostorom $K = \R^{n^2 |G|}$.
 
 Definiramo lahko gladko funkcijo $\loss \colon K \to [0,
 \infty)$, za katero je $\loss (x) = 0$ natanko tedaj, ko $x$
@@ -697,7 +701,7 @@ model $\hat\rho$ podoben homomorfizmu.
   \begin{equation}
     \label{eq:funkcija izgube nad relacijami            }
     \Loss{rel}(\hat\rho) = \frac{1}{|R|} \sum \limits_{r \in R}
-    \|\hat \rho(r) - I  \|.
+    \|\hat \rho(r) - I  \|^2.
   \end{equation}
 \end{definicija}
 Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
@@ -707,8 +711,8 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
   dimenzijske realne upodobitve permutacijske grupe na treh
   točkah za prezentacijo $S_3 = \langle a, b \mid a^2 = b^2 = (ab)^3 = 1 \rangle
   $.
-  Predstavljamo si lahko, da $a$ predstavlja tranzpozicijo $(12)$,
-  $b$ pa tranzpozicijo $(13)$.
+  Predstavljamo si lahko, da $a$ predstavlja transpozicijo $(12)$,
+  $b$ pa transpozicijo $(13)$.
   Model je definiran
   z vrednostima
   $\hat\rho(a) = x$ in $\hat\rho(b) = y$.
@@ -764,7 +768,7 @@ Očitno je model $\hat \rho$ upodobitev natanko tedaj, ko je $
   $S_n$ bi tako imel $(n!)^2$ parametrov, kar je neugodno za
   numerične simulacije. Če pa sledimo pristopu s prezentacijami
   in vzamemo minimalno množico generatorjev (recimo
-  tranzpozicija in $n$-cikel), operiramo le s štirimi
+  transpozicija in $n$-cikel), operiramo le s štirimi
   kompleksnimi parametri, neodvisno od velikosti grupe.
 \end{opomba}
 \subsubsection{Funkcija izgube za nerazcepnost}
@@ -796,7 +800,7 @@ konvergiramo.
   \begin{equation}
     \label{eq: unitary loss}
     \Loss{unitary} = \frac{1}{|S|} \sum \limits_{s \in S}
-    \|\hat\rho(s) \hat\rho(s)^H - I\|.
+    \|\hat\rho(s) \hat\rho(s)^H - I\|^2.
   \end{equation}
 \end{definicija}
 Če ne piše drugače, od tu naprej vedno privzamemo, da
@@ -817,7 +821,8 @@ so natanko ničle $\nabla\loss(\phi) = 0$ gradienta
 (~\cite[poglavje 9.3]{Hirsch2012dynamical-systems}).
 \begin{opomba}
   Enačbe gradientnih tokov nimajo vedno enostavnih  rešitev v
-  zaprti obliki~\cite{park2024absenceclosedformdescriptionsgradient}. Običajno se jih
+  zaprti obliki~\cite{park2024absenceclosedformdescriptionsgradient}.
+  Običajno se jih
   računa numerično.
 
   V delu enostavne\footnote{Za uporabo Runge-Kutte moramo
@@ -825,11 +830,14 @@ so natanko ničle $\nabla\loss(\phi) = 0$ gradienta
     \loss $ z naraščajočim številom parametrov postane težaven in
     nepraktičen. V tem primeru se v delu numerične integracije
   lotimo z avtogradom, ki sam izračuna gradient.}  gradientne
-  tokove (ciklične in diedrske grupe) integriramo s Runge-Kutto
-  (s pythonovo
-  metodo  \verb|scipy.integrate.solve_ivp.|), enačbe zapletenih
-  gradientnih tokov rešujemo z avtograd implementacijo Adama
-  (pythonova knjižnica \verb|torch|).
+  tokove (ciklične in diedrske grupe)
+   integriramo 
+    z metodo Dormand-Prince
+\cite{solvingordinarydifferentialequations1993nonstiff}. Uporabljamo 
+implementacijo iz knjižnice \texttt{SciPy}~\cite{2020SciPy-NMeth}.
+   Enačbe zapletenih
+  gradientnih tokov rešujemo z algoritmom Adam, kjer uporabljamo 
+  implementacijo iz knjižnice \texttt{PyTorch}~\cite{paszke2019pytorch}.
 \end{opomba}
 %%%%%%%%%%%%
 \subsection{Obstoj rešitve}
@@ -851,13 +859,13 @@ To nam zagotavlja spodnji izrek.
 %
 \begin{izrek}[Obstoj rešitve]
   \label{izrek : obstoj rešitve upodobitve}
-  Obstaja $\delta(\epsilon)$ razreda $O(\epsilon)$, da iz
+  Obstaja $\delta(\epsilon) \leq O(\epsilon)$, da iz
   $
   \loss(\hat \rho) < \delta(\epsilon)
   $
   sledi, da
   obstaja nerazcepna upodobitev $\rho \colon G \to
-  GL_n(\C) $, za katero velja
+  \operatorname{GL}_n(\C) $, za katero velja
   $$
   \sup_{s \in S} \|\hat \rho(s) - \rho(s) \| \leq \epsilon.
   $$
@@ -886,7 +894,7 @@ $\hat \rho(s)$ zelo blizu unitarne matrike za vsak
 $s \in S$.
 \begin{lema}
   \label{lema:rho_s - Q_s < eps}
-  Iz  $\Loss{unit}(\hat \rho) < |S|\epsilon $ sledi, da je
+  Iz  $\Loss{unitary}(\hat \rho) < |S|\epsilon $ sledi, da je
   $\|\hat \rho(s) - Q_s\| < \epsilon$ za neko unitarno matriko
   $Q_s$.
 \end{lema}
@@ -914,11 +922,11 @@ $s \in S$.
   $$
   \|H_s - I\| = \|\operatorname{diag}(\sigma_1, \sigma_2,
   \dotsc, \sigma_n)  - I\|
-  = \sum_{i=1}^n (\sigma_i -1)^2.
+  = \sqrt{\sum_{i=1}^n (\sigma_i -1)^2}.
   $$
   Podobno je
   $$
-  \|\s \s^* - I\| = \sum_{i=1}^n (\sigma_i^2 -1)^2
+  \|\s \s^* - I\| = \sqrt{\sum_{i=1}^n (\sigma_i^2 -1)^2}
   $$
   in očitno velja
   $
@@ -986,7 +994,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
     &= I + E_{vu} + \hat \rho(v) E_r \hat \rho(u) \\
     &= I + E_{vru}
   \end{align*}
-  za $\| E_{vru}\| = %\|E_{vu} + \hat \rho(v) E_r \hat \rho(u)\|
+  za $\| E_{vru}\|  %\|E_{vu} + \hat \rho(v) E_r \hat \rho(u)\|
   \leq (\sqrt{n}+ \epsilon)^{|vu|}|vru|\epsilon$.
   Splošna beseda $w \equiv 1 \mod R$ je oblike
   $w = v_1 r_1  u_1 v_2 r_2 u_2 \dotsm v_L(w) r_L(w) u_L(w)$.
@@ -1031,7 +1039,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   $$
 \end{lema}
 \begin{dokaz}
-  Opazimo, da za $A, B \in GL_n$ iz
+  Opazimo, da za $A, B \in \operatorname{GL}_n$ iz
   $\|AB-I\| < \delta$ sledi
   $\| B - A^{-1}\| < \frac{\delta}{\|A^{-1}\|}$.
   Za dovolj majhen $\epsilon$ so matrike $\hat \rho(v)$ obrnljive.
@@ -1079,7 +1087,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
     & + \|\hat \rho(w_{(gh)^{-1}}) - \hat \rho(w_{gh})\| \\
     & \leq
     2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
-    \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|},
+    \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}.
     %\\
     %& \approx
     %\frac{1}{\|\hat \rho(v)^{-1} \|}
@@ -1159,7 +1167,7 @@ na $S^*$ in na $G$ enako kot $\hat \rho$.
     %
     +
     2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
-    \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}
+    \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}.
   \end{align*}
 \end{dokaz}
 %
@@ -1193,13 +1201,13 @@ Zdaj lahko dokažemo glavni izrek razdelka.
   in $\Loss{irr}(\hat \rho) < \frac{1}{2}$.
 
   Potem obstaja nerazcepna upodobitev $\rho \colon G \to
-  GL_n(\C) $, za katero velja
+  \operatorname{GL}_n(\C) $, za katero velja
   $$
   \left\|
-  ||\hat \rho(g) - \rho(g)
+  \hat \rho(g) - \rho(g)
   \right\|
-  \leq O(\epsilon)
-  $$.
+  \leq O(\epsilon).
+  $$
 \end{izrek}
 \begin{dokaz}
   Opazujmo \emph{normo karakterja} preslikave $\rho$. Iz pogojev
@@ -1237,9 +1245,9 @@ Zdaj lahko dokažemo glavni izrek razdelka.
   $(Df)^{-1}(0)$, da je $f$ v njej enaka 0.
 
   Odprte množice v $(Df)^{-1}(0)$ so oblike $W = U \cap (Df)^{-1}(0)$,
-  kjer je $U$ odprta v $\R^n$. Če najdemo $W = \{a\}$, smo konec.
+  kjer je $U$ odprta v $\R^n$. Če najdemo $W = \{a\}$, je dokaz končan.
 
-  Če take $W$ ni, potem je za poljubno smer $w$ za dovolj majhne $t$
+  Če take $W$ ni, potem  za poljubno smer $w$ in  za dovolj majhne $t$ velja
   $a + tw  \in W$. Torej je $Df(a + tw) = 0$ za dovolj majhne $t$.
   Iz tega pa sledi, da je $t \mapsto f(a + tw)$ konstantna funkcija, torej je
   $f(W) = f(a) = 0$ in $a \in W \subset f^{-1}(0)$.
@@ -1250,9 +1258,9 @@ Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
 cikličnih grupah $C_n = \langle z \mid z^n=1 \rangle$. Edine nerazcepne
 upodobitve ciklične grupe so
 $$
-\rho_k(z) = e^\frac{2 \pi k}{n},
+\rho_k(z) = e^{\frac{2 \pi i k}{n}},
 $$
-kjer je $k \in \{0, 1, \dotsc, n\}$. Pri iskanju teh upodobitev
+kjer je $k \in \{0, 1, \dotsc, n-1\}$. Pri iskanju teh upodobitev
 z gradientnim spustom se bomo omejili na enodimenzionalne modele.
 
 Model $\hat\rho \colon G \to \C^*$ je določen z vrednostjo
@@ -1362,8 +1370,8 @@ Dvorazsežne nerazcepne upodobitve so
   \begin{bmatrix}
     \cos\left(\frac{2\pi k}{n}\right) & -\sin\left(\frac{2\pi
     k}{n}\right) \\
-    \sin\left(\frac{2\pi k}{n}\right) & \cos\left(\frac{2\pi k}{n}\right),
-  \end{bmatrix}
+    \sin\left(\frac{2\pi k}{n}\right) & \cos\left(\frac{2\pi k}{n}\right)
+  \end{bmatrix},
 \end{align*}
 kjer je $0 \leq k < \frac{n}{2} $. Vse nerazcepne upodobitve so
 realne, zato jih bomo iskali z realnimi modeli.
@@ -1387,9 +1395,8 @@ Numerično rešujemo enačbo gradientnega toka
 $$\frac{d(r,s)}{dt} = -\nabla(\Loss{rel} + \Loss{unit} +
 \Loss{irr}).$$
 Enačbo rešujemo z metodo Dormand-Prince
-\cite{solvingordinarydifferentialequations1993nonstiff}, implementirano v
-knjižnici \texttt{SciPy}~\cite{2020SciPy-NMeth}.
-
+\cite{solvingordinarydifferentialequations1993nonstiff}. Uporabljamo 
+implementacijo iz knjižnice \texttt{SciPy}~\cite{2020SciPy-NMeth}.
 % Implementacija simulacije je v \TODO{dodatek?}.
 
 Na sliki \ref{fig:Dn-trajektorije-demo} so različne rešitve
@@ -1514,8 +1521,7 @@ $(\operatorname{tr}(R(t)), \operatorname{tr}(S(t)))$.
     % \end{bmatrix}$, kjer so $x,y,z, \operatorname{tr} \sim U[-2,2]$}
   .}.
   \label{fig:diedrska-2dim-trajektorije}
-\end{figure}
-\footnotetext{Začetni parametri $R_0, S_0 $ so oblike $
+\end{figure}\footnotetext{Začetni parametri $R_0, S_0 $ so oblike $
   \begin{bmatrix}
     x & y \\
     z & \operatorname{tr} - x
@@ -1675,7 +1681,7 @@ edine kritične točke funkcije
 $$
 F(x_1, x_2, \dotsc, x_k)
 = \sum_{i=1}^l (e^{a_1^{(i)}x_1 + a_2^{(i)}x_2 + \dotsc +
-a_k^{(i)}x_k} -1)^2.
+a_k^{(i)}x_k} -1)^2
 $$
 v
 točkah ${s}_1^{a_1^{(i)}} {s}_2^{a_2^{(i)}}
@@ -1708,11 +1714,11 @@ prostor vektorjev $\{[f(i)]_{i=1, \dotsc n} | f \in
 Nad prostorom funkcij $\funnn{n}$ definiramo gladko družino
 porazdelitev. Generatorje grupe sprva slikamo v poljubne
 porazdelitve, nato pa spreminjamo porazdelitve, da je
-verjetnost za homomorfizem čim večja.\footnote{V strojnem
+verjetnost za homomorfizem čim večja. V strojnem
   učenju nad diskreten prostor izidov $D$ običajno
   definiramo gladko družino porazdelitev
   $\{\mathcal{P}_\phi(D)\}$ in minimiziramo  $-\log(P_\phi
-(\text{opaženi izidi}))$.}
+(\text{opaženi izidi}))$~\cite{prince2023understandingdeeplearning}.
 
 Model $\hat \rho$ delovanja $\rho \colon G \to S_n$ bo
 preslikava $\hat \rho \colon G \to \mathcal{P}(\funnn{n})$,
@@ -2162,9 +2168,11 @@ Zdaj lahko dokažemo glavni rezultat tega razdelka.
   $
   , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
   $P_{s_2} = \overline{P_{s_2}} + E_{s_2}$.
-  Induktivno nadaljujemo. Izberemo tak $\epsilon$
+  Induktivno nadaljujemo.
+  
+  Izberemo tak $\epsilon$
   ,da je za vsak $j \in [m]$
-  $\epsilon_j
+  $$\epsilon_j
   =
   \left(
     2 n^{\frac{3}{2}}
@@ -2175,7 +2183,8 @@ Zdaj lahko dokažemo glavni rezultat tega razdelka.
     \|P_{s_i}\|
     \epsilon
   \right)^{\frac{1}{2}}
-  < \frac{1}{2}$. Potem je
+  < \frac{1}{2}.$$
+   Potem je
   $$
   P_{s_j} = \overline{P_{s_j}} + E_{s_j}.
   $$
@@ -2322,7 +2331,8 @@ $$
 ,
 $$
 kjer je $P_r = \operatorname{softmax}(R),$
-$P_s = \operatorname{softmax}(S)$ in $R, S \in \R^{m \times m}$.
+$P_s = \operatorname{softmax}(S)$, $R, S \in \R^{m \times m}$
+in $\log$ logaritem matrike po elementih.
 \paragraph{Rezultati}
 Na sliki \ref{fig:actions-dn} so matrike
 $P_r$ in $P_s$ na začetku in po $2000$ korakih gradientnega spusta
@@ -2379,8 +2389,7 @@ bijektivna, torej da velja
   &= \sum_{\sigma  \in S_n} \prod_{i=1}^n (P_f)_{i, \sigma(i)} \\
   &= \operatorname{Perm}(P_f),
 \end{align*}
-kjer $\operatorname{Perm}(P_f)$ označuje \emph{permanent}
-\footnote{$\operatorname{Perm}(A) = \sum_{\sigma  \in
+kjer $\operatorname{Perm}(P_f)$ označuje \emph{permanent}\footnote{$\operatorname{Perm}(A) = \sum_{\sigma  \in
 S_n} \prod_{i=1}^n A_{i, \sigma(i)}$} matrike $P_f$.
 
 Za stohastične matrike velja spodnja lema.
@@ -2641,10 +2650,11 @@ da predstavlja izomorfizem.
   $$
   |f(P)-f(\overline{P})| \leq  \|M_2\|(\|P\| +
   \|\overline{P}\|)\epsilon
-  < \|M_2\|(1 + \sqrt{n})\epsilon
-  $$. Vrednost funkcije izgube v $\overline{P}$ je omejena:
+  < \|M_2\|(1 + \sqrt{n})\epsilon.
   $$
-  f(\overline{P}) < \epsilon(1 + \|M_2\|\sqrt{n})
+  Vrednost funkcije izgube v $\overline{P}$ je omejena:
+  $$
+  f(\overline{P}) < \epsilon(1 + \|M_2\|\sqrt{n}).
   $$
 
   Opazujmo funkcijo izgube
@@ -2696,7 +2706,7 @@ da predstavlja izomorfizem.
 \paragraph{Avtomorfizmi cayleyevih grafov}
 \label{aut-cayley-vanilla-setup}
 Z metodo iščemo avtomorfizme Cayleyevih grafov simetrične grupe.
-Oštevilčenje vozlišč (elemetov  $S_n$)
+Oštevilčenje vozlišč (elementov  $S_n$)
 sledi metodi \\
 \verb| list(itertools.permutations(range(1, n + 1)))|,\\
 za množico generatorjev vzamemo transpozicijo
@@ -2811,7 +2821,7 @@ P(a_k = x_k).$$
   Verjetnost za permutacijo $\sigma = (13)(2)$ iz primera
   \ref{primer:tabela_inverzij} je
   $$P(\operatorname{TI}(\sigma) = (2, 2, 1)) = P(a_1 = 2) P(a_2 = 2)
-  P(a_3 = 1) = cef$$.
+  P(a_3 = 1) = cef.$$
 \end{primer}
 %
 %
@@ -2860,7 +2870,7 @@ Očitno je $$1-P(i \sim j \iff f(i) \sim f(j)) = (M_1)_{i,j} - P(f(i)
 \sim f(j)).$$
 Intuitivno lahko na izgubo  gledamo kot na vsoto
 odstopanj našega modela od homomorfizma po vseh parih vozlišč.
-Radi bi, da je za vsak par vozljišč $i,j$ verjetnost
+Radi bi, da je za vsak par vozlišč $i,j$ verjetnost
 $P(i \sim j \iff f(i) \sim f(j))$ čim večja.
 
 Za lažjo interpretacijo lahko uporabljamo povprečeno funkcijo
@@ -2870,7 +2880,7 @@ $$
 $$
 ki intuitivno predstavlja pričakovano izgubo na eni povezavi.
 
-Za par vozljišč $i,j$ in permutacijo $f\in S_n$ namreč lahko
+  Za par vozlišč $i,j$ in permutacijo $f\in S_n$ namreč lahko
 definiramo \emph{izgubo na povezavi} $i \sim j$ kot
 $$
 L_{i,j}(f) = |(M_1)_{i,j} - (M_2)_{f(i),f(j)}|.
@@ -2980,7 +2990,7 @@ q(j, h, m) =
 \begin{cases}
   P(a_m = j) & m = h \\
   q(j-1, h, m+1) S_m^<(j-1) +
-  & \text{sicer} \\
+  & \text{sicer.} \\
   q(j, h, m+1) S_m^>(j+1)&\\
 \end{cases}
 $$
@@ -3012,10 +3022,10 @@ p(i, k, j, h, m) =
   P(a_k = i) q(j-1, h, k+1) & m = k \\
   P(a_h = j) q(i, k, h+1) & m = h \\
   p(i-1, k, j-1, h, m+1) S_m^<(i-1) +
-  &  \text{sicer} \\
+  &  \text{sicer.} \\
   p(i, k, j-1, h, m+1) S_m^{\text{mid}}(i+1, j-1) +
   &\\
-  p(i, k, j, h, m+1) S_m^>(j+1)
+  p(i, k, j, h, m+1) S_m^>(j+1).
   & \\
 \end{cases}
 $$
@@ -3109,8 +3119,8 @@ dosežemo boljše rezultate.
   \includegraphics[width=0.7\linewidth]{images/graphs/comparisons/vanilla_vs_TI_loss.pdf}
   \caption{Primerjava izgube $\loss_\sim(\overline{P})$
     glede na velikost grafa.
-    Za vsak $n$ sta metodi preizkušeni na istih $10$-tih
-    naključno izbranih grafih. Vsaka točka je povprečje
+    Metodi sta preizkušeni na istih $10$-tih
+    naključno izbranih grafih s fiksnim številom vozlišč. Vsaka točka je povprečje
     napak na teh grafih. Permutacijska matrika $\overline{P}$
     ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij)
     oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega
@@ -3141,10 +3151,10 @@ simon2024bettermodernmachinelearning} do globalnega minimuma.
 Poleg tega empirični rezultati
 \cite{pascanu2014saddlepointproblemnonconvex} kažejo, da so
 pri nekonveksni parametrizaciji funkcij izgube v velikih dimenzijah
-selda bolj razširjena od lokalnih minimumov. Z večanjem
+sedla bolj razširjena od lokalnih minimumov. Z večanjem
 števila parametrov
 se v reliefu funkcije izgube pojavlja več sedel, iz katerih
-lahko pobegnemo s preturbiranim gradientnim spustom,
+lahko pobegnemo s perturbiranim gradientnim spustom,
 predstavljen v poglavju \ref{subsection : PGD}.
 
 Empirično testiramo dve izbiri preparametrizacije z
@@ -3162,7 +3172,7 @@ nevronskimi mrežami.
   x_{2, 1}, \dotsc x_{2, n -1}, \dotsc, x_{n-1, 1}, x_{n-1, 2} )^T$
   uporabimo softmax po blokih
   $$(p_{i, 1}, \dotsc, p_{i, n - i + 1}) =
-  \operatorname{softmax}(x_{i, 1}, \dotsc, x_{i, n - i + 1})$$,
+  \operatorname{softmax}(x_{i, 1}, \dotsc, x_{i, n - i + 1}),$$
   kjer je $p_{i,j}$ verjetnost, da $i$ postavimo na $j$-to
   prosto mesto, če smo prej
   postavili $i-1$ elementov.
@@ -3226,12 +3236,28 @@ ki poljubne matrike zvezno preslika v
 }. Točna formulacija je v dodatku \ref{dodatek:GNN+sinkhorn}.
 %
 
+
+Slika 
+\ref{fig:loss_computation_time_comparison}
+prikazuje primerjavo uporabe metode brez tabele inverzij, predstavljene
+v poglavju \ref{section:prehod na izomorfizen vanilla},
+z uporabo tabele inverzij
+brez preparametrizacije, predstavljene v poglavju 
+\ref{funkcija izgube TI}
+. Metodi sta preizkušeni na istih grafih. Slika \ref{fig:loss_computation_time_comparison} prikazuje 
+rast povprečne izgube metod glede na število vozlišč v grafu.
+
+
 Slika \ref{fig:primerjava vanilla-nn-mild-nn} prikazuje primerjavo
 uporabe tabele inverzij brez preparametrizacije z blago
-in globoko preparametrizacijo.
-Za vsak $n$
-so metode preizkušene na istih $10$-tih
-naključno izbranih grafih.
+in globoko preparametrizacijo. 
+
+Vse metode so preizkušene na 
+ $10$-tih
+naključno izbranih grafih s fiksnim številom vozlišč. 
+Slika \ref{fig:primerjava vanilla-nn-mild-nn}  prikazuje rast povprečne izgube metod glede 
+na število vozlišč v grafu.
+
 Po koncu optimizacije izračunamo
 napako najbolj verjetne permutacije in jo povprečimo po
 $10$-tih grafih.
@@ -3265,14 +3291,14 @@ padla pod $\epsilon_\nabla = 10^{-3}$.
 \end{figure}
 \begin{table}
   \centering
-  \begin{tabular}{l|l}
-    Metoda & Povprečna napaka \\
+\begin{tabular}{l|S[table-format=2.2]}
+    Metoda & {Povprečna napaka} \\
     \hline
-    Tabela inverzij& $11.05$ \\
-    Blaga preparametrizacija& $11.27$ \\
-    Globoka preparametrizacija& \boldmath$10.94$ \\
-    GNN in sinkhorn& $11.67$
-  \end{tabular}
+    Tabela inverzij & 11.05 \\
+    Blaga preparametrizacija & 11.27 \\
+    Globoka preparametrizacija & {\bfseries 10.94} \\
+    GNN in sinkhorn & 11.67
+\end{tabular}
   \caption{Povprečne napake metod.}
   \label{table:povprečne napake različnih metod grafi}
 \end{table}
@@ -3338,7 +3364,7 @@ Porazdelitev nad $\funnn{n}$ predstavimo s stohastično matriko. Zanima nas
 gladka parametrizacija stohastičnih matrik. V delu
 poljubne matrike pretvorimo v stohastične z uporabo funkcije softmax.
 
-Alternativa, ki je popularna v litaraturi pri ujemanju grafov je
+Alternativa, ki je popularna v literaturi pri ujemanju grafov je
 uporaba Sinkhornovega algoritma (definicija \ref{def:sinkhorn}), ki
 poljubne matrike zvezno preslika
 v dvojno stohastične.
@@ -3354,7 +3380,7 @@ konvergence metode lahko večamo
 z dodajanjem asimetrij.
 
 Namesto uporabe klasičnega gradientnega spusta lahko uporabimo
-preturbiran gradientni spust, s čimer se izognemo sedlom
+perturbiran gradientni spust, s čimer se izognemo sedlom
 \cite{schneider2025ubiquitoussymmetrycriticalpoints}.
 
 Dodatno bi namesto deterministične funkcije izgube
@@ -3486,8 +3512,10 @@ Spodnji izrek je povzet po
   \label{izrek:allen-zhu-global-minima}
   Naj $f(z,y)$ izpolnjuje Polyak-Lojasiewiczev pogoj.
   Naj bo $S_\text{train}$ taka množica vzorcev, da
-  obstaja $\delta > 0$, da za dva vzorca $(x_i, y_i),
-  (x_j,y_j) \in S_\text{train}$ z različnima indeksoma $i
+  obstaja $\delta > 0$, da za dva vzorca 
+  $$(x_i, y_i),
+  (x_j,y_j) \in S_\text{train}$$
+   z različnima indeksoma $i
   \neq j $ velja $\|x_i - x_j\| > \delta$.
 
   Naj bo $M = \sigma \circ W_l \circ
@@ -3583,7 +3611,7 @@ parametra modela.
   \label{def:ujemanje-GNN-sinkhorn}
   V poglavju
   \ref{paragraph:grafi_preparam_primerjava}
-  grafske nevronske mreže na naslednji
+  grafovske nevronske mreže na naslednji
   način uporabimo za
   reševanje ujemanja grafov:
   \begin{enumerate}
@@ -3599,9 +3627,8 @@ parametra modela.
 %
 %
 \section{Rezultati simulacij}
-\subsection{Upodobitve}
-\subsubsection{Diedrska grupa}
-\paragraph{Trajektorije}
+\subsection{Upodobitve diedrskih grup}
+\subsubsection{Trajektorije}
 Več trajektorij enodimenzionalnega modela iz slike
 \ref{fig:Dn-trajektorije-demo-dim1}. Enačbo gradientnega
 toka rešujemo z metodo Dormand-Prince. Vsaka slika prikazuje
@@ -3658,7 +3685,7 @@ Slike \ref{fig:dihedral_1d_grid_n3},
 \ref{fig:dihedral_1d_grid_n4}
 so bile
 pridobljene z $\epsilon = 0.01$ in integracijskim
-intervalov $t \in [0,1]$.
+intervalom $t \in [0,1]$.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1_1_r1000.pdf.png}
@@ -3682,7 +3709,7 @@ intervalov $t \in [0,1]$.
     $2000\times 2000$(zgoraj) in $3000 \times 3000$ (spodaj).
     Barvna shema je izbrana, da poudari kontraste med
     regijami z različnimi
-    hitrostmi konvergenc.
+    hitrostmi konvergence.
   }
   \label{fig:dihedral_1d_grid_n3_zoomed}
 \end{figure}
@@ -3711,7 +3738,7 @@ intervalov $t \in [0,1]$.
 %
 %
 \clearpage
-\paragraph{Dvodimenzionalen model}
+\subsubsection{Dvodimenzionalen model}
 \label{dodatek:dihedral-2d-trajektorije}
 Opazujemo realen model $\rho \colon D_n \to \R^{2 \times 2}$
 upodobitve diedrske grupe, podan z matrikama
@@ -3780,8 +3807,7 @@ $\nabla \loss$ je izračunan analitično.
   \label{fig:trajektorije_diedrska_grupa_2d-2}
 \end{figure}
 \clearpage
-\subsection{Delovanja}
-\subsubsection{Ciklične grupe}
+\subsection{Delovanja ciklične grupe}
 Opazujemo matrike $P_s$ pred in po optimizaciji
 kompleksnih modelov $\rho \colon C_n \to \funnn{m}$.
 Optimiziramo z algoritmom
@@ -3894,7 +3920,7 @@ učenje ustavimo prej.
 }
 \end {figure}
 \clearpage
-\subsubsection{Diedrske grupe}
+\subsection{Delovanja diedrske grupe}
 Opazujemo matrike $P_s$ in $P_r$ pred in po optimizaciji
 modelov $\rho \colon D_n \to \funnn{m}$. Optimiziramo z algoritmom
 \emph{adam} s hitrostjo učenja $0.01$ in privzetimi
