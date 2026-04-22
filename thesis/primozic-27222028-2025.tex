@@ -171,7 +171,7 @@ descent}
 \newcommand{\R}{\mathbb R}
 \newcommand{\N}{\mathbb N}
 \newcommand{\Z}{\mathbb Z}
-\newcommand{\loss }{\mathcal L}
+\newcommand{\loss}{\mathcal L}
 \newcommand{\fun}{\operatorname{fun}}
 \newcommand{\funnn}[1]{\fun([#1], [#1])}
 \newcommand{\Loss}[1]{\mathcal L _\text{#1}}
@@ -478,7 +478,7 @@ Zaradi dobrih empiričnih rezultatov se v praksi v strojnem učenju
 namesto surovega gradientnega spusta za optimizacijo uporablja
 algoritem Adam.
 \subsection{Perturbiran gradientni spust}
-\label{subsection : PGD}
+\label{subsection:pgd}
 Gradientni spust lahko obtiči v sedlih.
 Iz sedla lahko pridemo z dodajanjem slučajne perturbacije
 parametrov, ko je gradient ciljne funkcije majhen~\cite{jin2017escapesaddlepointsefficiently}.
@@ -511,8 +511,8 @@ V poglavju \ref{subsection:upodobitve končnih grup} predstavimo
 potrebno teoretično ozadje. V \ref{subsection: Iskanje upodobitev
 z gradientnim spustom} natančno definiramo metodo za iskanje
 upodobitev. V poglavjih
-\ref{subsection : ciklicčne grupe} in \ref{subsection: diedrske
-grupe} študiramo dinamiko diferencialnih enačb gradientnega toka
+\ref{subsection:ciklicne-grupe} in \ref{subsection:diedrske-grupe}
+študiramo dinamiko diferencialnih enačb gradientnega toka
 za ciklične in diedrske grupe.
 \subsection{Upodobitve končnih grup}
 \label{subsection:upodobitve končnih grup}
@@ -648,7 +648,7 @@ ki vsak generator grupe preslika v poljubno matriko.
 \end{opomba}
 %
 \begin{definicija}
-  \label{def : razširitev repr modela}
+  \label{def:razsiritev-repr-modela}
   Preslikavo $\hat \rho$ definiramo na grupi $G$ na naslednji način:
   \begin{itemize}
     \item Za vsak $g \in G\setminus \{1\}$ izberemo
@@ -1253,7 +1253,7 @@ Zdaj lahko dokažemo glavni izrek razdelka.
   $f(W) = f(a) = 0$ in $a \in W \subset f^{-1}(0)$.
 \end{opomba}
 \subsection{Ciklične grupe}
-\label{subsection : ciklicčne grupe}
+\label{subsection:ciklicne-grupe}
 Oglejmo si naš pristop iskanja nerazcepnih upodobitev na
 cikličnih grupah $C_n = \langle z \mid z^n=1 \rangle$. Edine nerazcepne
 upodobitve ciklične grupe so
@@ -1349,7 +1349,7 @@ unitarne nerazcepne upodobitve.
 \end{dokaz}
 
 \subsection{Diedrske grupe}
-\label{subsection: diedrske grupe}
+\label{subsection:diedrske-grupe}
 Opazujmo diedrsko grupo $D_n = \langle r, s \mid r^n=s^2 = (rs)^2 = 1 \rangle$.
 Enorazsežne upodobitve diedrske grupe so
 \begin{align*}
@@ -1439,10 +1439,7 @@ diedrskih grup - glej dodatek
   %
   {Rešitve enačb gradientnega
     toka za različne $n$ in različne začetne
-    parametre\footnote{Na vsakem grafu je 200 različnih
-      rešitev. Začetni parametri so vzorčeni iz enakomerne
-      porazdelitve nad $[-1,1]^2$. Za implementacijo glej
-    dodatek \ref{dodatek_1dim dn trajektorije}}.
+    parametre\protect\footnotemark.
     Črne pike predstavljajo vrednosti začetnih parametrov posameznih
     rešitev. Modre
     rešitve konvergirajo k nerazcepni upodobitvi, oranžne pa v
@@ -1451,6 +1448,9 @@ diedrskih grup - glej dodatek
   dodatku \ref{dodatek_1dim dn trajektorije}.}
   \label{fig:Dn-trajektorije-demo-dim1}
 \end{figure}
+\footnotetext{Na vsakem grafu je 200 različnih rešitev. Začetni parametri so
+  vzorčeni iz enakomerne porazdelitve nad $[-1,1]^2$. Za implementacijo
+  glej dodatek \ref{dodatek_1dim dn trajektorije}.}
 %
 %
 %
@@ -1747,7 +1747,7 @@ za $f \in \funnn{n}$.
 \begin{definicija}
   \index{model delovanja}
   Preslikavo $\hat \rho$ lahko podobno kot v definiciji
-  \ref{def : razširitev repr modela} razširimo na
+  \ref{def:razsiritev-repr-modela} razširimo na
   celotno grupo:
   \begin{itemize}
     \item Za vsak $g \in G$ izberemo
@@ -2614,7 +2614,7 @@ da predstavlja izomorfizem.
   % $$
 \end{dokaz}
 \begin{lema}
-  \label{lema:ocena za graph mathcing}
+  \label{lema:ocena-za-graph-matching}
   Za preslikavo
   $$f \colon X \mapsto \| M_1 - X M_2 X^T \|$$
   velja
@@ -2645,7 +2645,7 @@ da predstavlja izomorfizem.
 \begin{dokaz}
   Po lemi \ref{lema:loss unitary mali -> P blizu P streha}
   je $\|P - \overline{P}\| < \epsilon$.
-  Po lemi \ref{lema:ocena za graph mathcing}
+  Po lemi \ref{lema:ocena-za-graph-matching}
   pa velja
   $$
   |f(P)-f(\overline{P})| \leq  \|M_2\|(\|P\| +
@@ -3155,7 +3155,7 @@ sedla bolj razširjena od lokalnih minimumov. Z večanjem
 števila parametrov
 se v reliefu funkcije izgube pojavlja več sedel, iz katerih
 lahko pobegnemo s perturbiranim gradientnim spustom,
-predstavljen v poglavju \ref{subsection : PGD}.
+predstavljen v poglavju \ref{subsection:pgd}.
 
 Empirično testiramo dve izbiri preparametrizacije z
 nevronskimi mrežami.
@@ -3700,9 +3700,9 @@ intervalom $t \in [0,1]$.
 \end{figure}
 \begin{figure}[!hp]
   \centering
-  \includegraphics[width=0.8\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1.5_-0.5_r2000.pdf.png}
+  \includegraphics[width=0.77\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_-1.5_-0.5_r2000.pdf.png}
   \medskip
-  \includegraphics[width=0.77125\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_0.5_1.5_r3000.pdf.png}
+  \includegraphics[width=0.74\textwidth]{./images/dihedral/grid/cut_plot_grid_n3_0.5_1.5_r3000.pdf.png}
   \caption{Hitrosti konvergence enodimenzionalnega modela
     $D_3 \to \R$ na
     $[-1.5,-0.5]^2$ in $[0.5, 1.5]^2$ v resoluciji
