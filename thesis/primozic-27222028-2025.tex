@@ -115,8 +115,8 @@ descent}
 % - neobvezna zahvala
 \zahvala{
   Zahvaljujem se mentorjema za pomoč in vodenje ter prijateljem in
-  družini za podporo čez
-  študij.
+  družini za podporo med
+  študijem.
 }
 
 % - ime datoteke z viri (vključno s končnico .bib), če uporabljate BibTeX
@@ -202,8 +202,7 @@ natanko tedaj, ko $f$ predstavlja upodobitev grupe $G$.
 Iskanje upodobitev končnih grup lahko s tem prevedemo na optimizacijo
 funkcije $\Loss{homo}$. Za vsak element $g$ iz grupe $G$ izberemo svojo
 matriko $f(g)$ in s tem definiramo preslikavo
-$f \colon G \to \C^{n \times n}$
-. Če je za tako preslikavo $f$
+$f \colon G \to \C^{n \times n}$. Če je za tako preslikavo $f$
 vrednost funkcije
 izgube $\Loss{homo}(f)$ enaka nič, je $f$ upodobitev.
 \begin{primer}
@@ -229,7 +228,7 @@ z množico ničel gladke funkcije
 $\loss \colon \R^n \to [0, \infty)$. S tem iskanje diskretnih struktur
 prevedemo na iskanje ničel gladke funkcije.
 
-Optimizacije se  lotimo z gradientnim spustom, temeljno
+Optimizacije se lotimo z gradientnim spustom, temeljno
 optimizacijsko metodo v strojnem učenju. Izberemo
 \emph{začetne parametre} $\phi_0$ in stopnjo učenja
 $\eta > 0$, nato pa posodabljamo vrednosti parametrov z iterativno metodo
@@ -239,11 +238,11 @@ začetnih parametrov uspe najti ničlo $\loss(\lim_{i \to \infty} \phi_i) =0$
 funkcije $\loss$, v splošnem pa konvergira le do lokalnih ekstremov.
 
 Študiramo lahko, kako izbira začetnih parametrov vpliva na konvergenco metode.
-V tem primeru lahko gradientni spust tretiramo kot numerično metodo za reševanje
+V tem primeru lahko gradientni spust obravnavamo kot numerično metodo za reševanje
 diferencialne enačbe
 $\frac{d\phi}{dt} = - \nabla \loss(\phi)$ in študiramo dinamiko
 rešitev te enačbe.
-V delu se poglobimo v enačbi, ki pripadata iskanju nerazcepnih
+V delu se poglobimo v enačbe, ki pripadajo iskanju nerazcepnih
 upodobitev cikličnih in diedrskih grup.
 
 Iskanje izomorfizmov grafov je poseben primer
@@ -265,7 +264,7 @@ prevedejo v permutacijsko.
 Alternativno lahko nad množico permutacij $S_n$ definiramo
 gladko družino porazdelitev in za slučajno permutacijo $f \in S_n$
 maksimiziramo verjetnost, da je $f$ homomorfizem. S tem
-pristopom se ognemo prevedbi dvojno stohastične matrike v permutacijsko,
+pristopom se ognemo pretvorbi dvojno stohastične matrike v permutacijsko,
 ki je lahko problematična~\cite{lyzinski2015graphmatchingrelaxrisk}.
 
 % struktura
@@ -288,7 +287,7 @@ pa metodo za iskanje
 izomorfizmov grafov. Iskanje izomorfizmov grafov
 povežemo s problemom ujemanja grafov.
 V poglavju \ref{subsection:uporaba tabele inverzij}
-metodo razširimo z uporabo tabele inverzij, preko katere
+metodo razširimo z uporabo tabele inverzij, prek katere
 kandidate za izomorfizem iščemo med porazdelitvami nad
 množico permutacij $S_n$
 in podamo empirične rezultate metode v kombinaciji
@@ -298,10 +297,10 @@ Vse definirane metode teoretično obravnavamo in dokažemo, da
 ob dovolj majhni vrednosti $\loss( \phi)$ metoda
 najde iskano strukturo.
 
-Metode v delu so originalni rezultati
+Metode v delu so izvirni rezultati
 avtorja, mentorja in somentorja. Podoben pristop, kot
-ga uporabimo za iskanje nerazcepnih upodobitev končnih grup, v članku
-~\cite{chughtai2023neural} izkoriščajo
+ga uporabimo za iskanje nerazcepnih upodobitev končnih grup, avtorji v članku
+~\cite{chughtai2023neural} uporabljajo
 za učenje nevronske mreže, ki predstavlja grupo.
 Gladko porazdelitev nad tabelo inverzij v strojnem
 učenju študirajo v
@@ -677,12 +676,19 @@ gradientnim spustom, da bo model vse bližje upodobitvi.
 \begin{definicija}
   Poljubna beseda $w \in S^*$, ki ustreza enoti, je oblike
   $$w  = \prod_{i=1}^{L(w)} {v_i r_{l_i}} u_i,$$
-  kjer so $v_i, u_i \in S^*$, $r_{l_i} \in R$ in $L(w) \in \N$.
-  Za $w \equiv 1 \mod R$ z $L(w)$ označimo \emph{število pojavitev}
-  besed iz $R$ v
-  $w$.
+  kjer so $v_i, u_i \in S^*$, $r_{l_i} \in R$ in
+  $v_i \equiv u_i^{-1}  \mod G$, $L(w) \in \N$.
 
-  Dodatno definiramo $L=\max_{g \in G} L(w_{g^{-1}} w_g)$, ki vpliva na
+  
+  Če zgornja oblika zapisa ni enolična, izberemo tako, da se 
+  pred v $v_{i-1} u_i r_i$ ne pojavi nobena druga beseda iz $R$ razen $r_i$.   
+
+
+ Z $L(w)$ označimo \emph{število pojavitev}
+  besed iz $R$ v
+  $w$ in definiramo 
+  $$L=\max_{g \in G} L(w_{g^{-1}} w_g),$$ 
+  ki vpliva na
   vrednost funkcije izgube, pri kateri lahko sklepamo na obstoj
   rešitve (glej poglavje \ref{subsection : obstoj resitve}).
 \end{definicija}
@@ -692,9 +698,10 @@ gradientnim spustom, da bo model vse bližje upodobitvi.
 \index{funkcija izgube nad relacijami}
 Preslikava $\hat \rho$ je homomorfizem natanko tedaj, ko za
 vsako relacijo $r \in R$ velja
-$
-\hat \rho(r) = I
-$. Manjše, kot so norme $\|\hat \rho(r) - I \|$, bolj je
+$$
+\hat \rho(r) = I.
+$$
+ Manjše, kot so norme $\|\hat \rho(r) - I \|$, bolj je
 model $\hat\rho$ podoben homomorfizmu.
 \begin{definicija}
   \emph{Funkcija izgube nad relacijami} je definirana kot
@@ -1927,7 +1934,7 @@ identitete, matrika $P_s$ pa obrnljiva.
   %Za dovolj majhno
   %izbiro $\delta > 0$ je $\|E_r\| \leq \epsilon$.
 \end{dokaz}
-\begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrlnjiva]
+\begin{lema}[Za dovolj majhen $\epsilon$ je $P_s$ obrnljiva]
   \label{lema : Ps je obrnljiva}
   Če je
   $\Loss{rel}(\hat\rho) \leq \frac{-1}{|R|}\log(1-\frac{1}{2n})$,
@@ -2281,7 +2288,7 @@ Parametri so
 bili inicializirani z vzorčenjem iz normalne porazdelitve z
 srednjo vrednostjo $0$ in standardnim odklonom $1$.
 Eksperiment smo prekinili po
-$2000$ korakih gradientnega spusta ali pa ko je
+$2000$ korakih gradientnega spusta ali pa, ko je
 vrednost funkcije izgube padla pod
 $10^{-3}$.
 Več rezultatov je v dodatku \ref{appendix: actions-cyclic}.
@@ -3321,8 +3328,8 @@ $$
 \| \pi(gh) -\pi(g)\pi(h)  \| < \epsilon.
 $$
 Avtor v~\cite[stran 63]{ulam1960collection}
-zastavi splošno vprašanje, ali morata biti rešitvi
-podobnih enačb podobni?
+zastavi splošno vprašanje, ali morajo biti rešitve
+podobnih enačb podobne?
 
 Za $\epsilon$-upodobitve amenabilnih grup je odgovor pritrdilen.
 Kazhdanov izrek \ref{izrek : kazhdan} pravi,
