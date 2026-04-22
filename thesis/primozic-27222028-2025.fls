@@ -2,7 +2,7 @@ PWD /home/urh/Documents/gofi/thesis
 INPUT /usr/local/texlive/2025/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT primozic-27222028-2025.tex
+INPUT /home/urh/Documents/gofi/thesis/primozic-27222028-2025.tex
 OUTPUT primozic-27222028-2025.log
 INPUT ./fmfdelo.cls
 INPUT fmfdelo.cls
