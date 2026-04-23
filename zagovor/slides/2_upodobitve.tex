@@ -1,0 +1,79 @@
+\begin{frame}{\color{aoblue}Modeliranje upodobitev}
+  \note{
+    Poljubna preslikava je upodobitev, če je izguba enaka 0.
+  }
+
+  \begin{align*}
+    \rho \colon G &\to \mathbb{C}^{n \times n} \\
+    g &\mapsto
+    \begin{bmatrix}
+      g_{1,1} & \cdots & g_{1,n} \\
+      \vdots & & \vdots \\
+      g_{n,1} & \cdots & g_{n,n}
+    \end{bmatrix} = \phi_g
+  \end{align*}
+  je upodobitev, če je 
+  $$
+  \left\|
+    \rho(gh) - \rho(g)\rho(h)
+  \right\| = 0
+  $$
+  za vse $g, h \in G$.
+\end{frame}
+\begin{frame}{\color{aoblue}Modeliranje upodobitev}
+  \note{
+    Začnemo s poljubno preslikavo, in jo postopoma spreminjamo, da bo bolj podobna upodobitvi, kar 
+    je ekvivalentno temu, da je izguba čim manjša.
+  }
+Poljubna preslikava 
+  \begin{align*}
+   \hat {\rho} \colon G &\to \mathbb{C}^{n \times n} \\
+    g &\mapsto
+    \begin{bmatrix}
+      g_{1,1} & \cdots & g_{1,n} \\
+      \vdots & & \vdots \\
+      g_{n,1} & \cdots & g_{n,n}
+    \end{bmatrix} = \phi_g
+  \end{align*}
+  z izgubo 
+  $$
+  \sum_{g, h \in G} \left\|
+    \hat{\rho}(gh) - \hat{\rho}(g)\hat{\rho}(h)
+  \right\|
+  $$
+\end{frame}
+\begin{frame}{Generatorji}
+  \note{
+    V praksi hočemo čim manj parametrov, zato se omejimo le na generatorji. 
+  }
+
+  Grupa s prezentacijo $G = <S | R>$. Na $S$:
+  $$
+  \hat{\rho}(s) =
+  \begin{bmatrix}
+    s_{1,1} & \cdots & s_{1,n} \\
+    \vdots & & \vdots \\
+    s_{n,1} & \cdots & s_{n,n}
+  \end{bmatrix} = \phi_s
+  $$ 
+  drugje implicitno.
+  % \vfill
+  % \color{gray}{Model $\hat \rho$ has parameters $\phi = \{\phi_s
+  % \mid s \in S\} $. }
+\end{frame}
+\begin{frame}{Funkcije izgube}
+        \begin{align*}
+            \Loss{rel}(\hat\rho) &= \frac{1}{|R|} \sum \limits_{r \in R}
+    \|\hat \rho(r) - I  \|^2 
+     &\text{ \small izguba na relacijah}\\ 
+    \Loss{irr}(\rho) &= (|\chi_\rho| - 1)^2 
+     &\text{ \small nerazcepnost}\\
+     \Loss{unitary} &= \frac{1}{|S|} \sum \limits_{s \in S}
+    \|\hat\rho(s) \hat\rho(s)^H - I\|^2
+     &\text{ \small unitarnost}
+    \end{align*}
+    
+$$
+\loss = \Loss{rel} + \Loss{irr} + \Loss{unitary}
+$$
+\end{frame}

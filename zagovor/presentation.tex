@@ -1,0 +1,59 @@
+% Auriga theme
+% https://github.com/anishathalye/auriga
+
+\documentclass[14pt,aspectratio=169]{beamer}
+\usepackage{pgfpages}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\loss}{\mathcal L}
+\newcommand{\fun}{\operatorname{fun}}
+\newcommand{\funnn}[1]{\fun([#1], [#1])}
+\newcommand{\Loss}[1]{\mathcal L _\text{#1}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\mon}{(S\cup S ^{-1})^*}
+\newcommand{\s}{\hat \rho (s)}
+
+%NOTES
+%\setbeamertemplate{note page}[plain]
+%\setbeameroption{show notes on second screen=right}
+
+
+\usetheme{auriga}
+\usecolortheme{auriga}
+
+% define some colors for a consistent theme across slides
+\definecolor{red}{RGB}{181, 23, 0}
+\definecolor{blue}{RGB}{0, 118, 186}
+\definecolor{gray}{RGB}{146, 146, 146}
+
+\definecolor{labsixorange}{RGB}{243, 111, 33}
+\definecolor{aoblue}{RGB}{8, 96, 204}
+
+\title{Iskanje morfizmov z gradientnim spustom}
+
+\author{{Urh Primožič} \inst{1} \and Ljupčo Todorovski \inst{2} \and Urban Jezernik \inst{2}}
+
+\institute[shortinst]{\inst{1} mentor \samelineand \inst{2} somentor}
+
+\begin{document}
+
+{
+  % rather than use the frame options [noframenumbering,plain], we make the
+  % color match, so that the indicated page numbers match PDF page numbers
+  \setbeamercolor{page number in head/foot}{fg=white}
+  \begin{frame}
+    \titlepage
+  \end{frame}
+}
+
+\input{slides/1_ideja.tex}
+\input{slides/2_upodobitve.tex}
+\input{slides/3_gd.tex}
+\input{slides/4_primer_S3.tex}
+\end{document}
