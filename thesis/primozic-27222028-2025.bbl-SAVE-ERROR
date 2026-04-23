@@ -102,6 +102,139 @@
       \verb https://arxiv.org/abs/1811.03962
       \endverb
     \endentry
+    \entry{Andersen_2016}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=2c1b47b6de069b773c101e89ef4c0cf4}{%
+           family={Andersen},
+           familyi={A\bibinitperiod},
+           given={Jens\bibnamedelima O.},
+           giveni={J\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=28da42a7f212b61b6600c87e0e993ced}{%
+           family={Haque},
+           familyi={H\bibinitperiod},
+           given={Najmul},
+           giveni={N\bibinitperiod}}}%
+        {{hash=ff3d7ded48714cb23bff9a92bacf116b}{%
+           family={Mustafa},
+           familyi={M\bibinitperiod},
+           given={Munshi\bibnamedelima G.},
+           giveni={M\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=1dbdf36e9a1750af2791f2fb710b0069}{%
+           family={Strickland},
+           familyi={S\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Physical Society (APS)}%
+      }
+      \strng{namehash}{052605d47f9ff744714f98a437fe4182}
+      \strng{fullhash}{cb5c2d4f7b602eaea46732d7e6d76c55}
+      \strng{fullhashraw}{cb5c2d4f7b602eaea46732d7e6d76c55}
+      \strng{bibnamehash}{052605d47f9ff744714f98a437fe4182}
+      \strng{authorbibnamehash}{052605d47f9ff744714f98a437fe4182}
+      \strng{authornamehash}{052605d47f9ff744714f98a437fe4182}
+      \strng{authorfullhash}{cb5c2d4f7b602eaea46732d7e6d76c55}
+      \strng{authorfullhashraw}{cb5c2d4f7b602eaea46732d7e6d76c55}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{2470-0029}
+      \field{journaltitle}{Physical Review D}
+      \field{month}{3}
+      \field{number}{5}
+      \field{title}{Three-loop hard-thermal-loop perturbation theory thermodynamics at finite temperature and finite baryonic and isospin chemical potential}
+      \field{volume}{93}
+      \field{year}{2016}
+      \verb{doi}
+      \verb 10.1103/physrevd.93.054045
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1103/PhysRevD.93.054045
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1103/PhysRevD.93.054045
+      \endverb
+    \endentry
+    \entry{babai2016graphisomorphismquasipolynomialtime}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=cfe2ebe8e6de75b0a81d44ecef78d092}{%
+           family={Babai},
+           familyi={B\bibinitperiod},
+           given={László},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \strng{fullhash}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \strng{fullhashraw}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \strng{bibnamehash}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \strng{authorbibnamehash}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \strng{authornamehash}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \strng{authorfullhash}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \strng{authorfullhashraw}{cfe2ebe8e6de75b0a81d44ecef78d092}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.DS}
+      \field{eprinttype}{arXiv}
+      \field{title}{Graph Isomorphism in Quasipolynomial Time}
+      \field{year}{2016}
+      \verb{eprint}
+      \verb 1512.03547
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1512.03547
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1512.03547
+      \endverb
+    \endentry
+    \entry{chapman2023efficientlystablepresentationserrorcorrecting}{misc}{}{}
+      \name{author}{3}{}{%
+        {{hash=a4764c78b12d8baa379a7ed250947e93}{%
+           family={Chapman},
+           familyi={C\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=6567cc493e565bb418fe122f24f8056e}{%
+           family={Vidick},
+           familyi={V\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+        {{hash=f35e86edce5f9a380e5b3e654407b20e}{%
+           family={Yuen},
+           familyi={Y\bibinitperiod},
+           given={Henry},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{3ce0675ebf777968619d2d03f2737a9f}
+      \strng{fullhash}{3ce0675ebf777968619d2d03f2737a9f}
+      \strng{fullhashraw}{3ce0675ebf777968619d2d03f2737a9f}
+      \strng{bibnamehash}{3ce0675ebf777968619d2d03f2737a9f}
+      \strng{authorbibnamehash}{3ce0675ebf777968619d2d03f2737a9f}
+      \strng{authornamehash}{3ce0675ebf777968619d2d03f2737a9f}
+      \strng{authorfullhash}{3ce0675ebf777968619d2d03f2737a9f}
+      \strng{authorfullhashraw}{3ce0675ebf777968619d2d03f2737a9f}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{quant-ph}
+      \field{eprinttype}{arXiv}
+      \field{title}{Efficiently stable presentations from error-correcting codes}
+      \field{year}{2023}
+      \verb{eprint}
+      \verb 2311.04681
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2311.04681
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2311.04681
+      \endverb
+    \endentry
     \entry{graphoptimaltransport2020crossdomainalignment}{article}{}{}
       \name{author}{6}{}{%
         {{hash=f469b01c091ec9c602a5fe895f64dc71}{%
@@ -200,6 +333,52 @@
       \endverb
       \verb{url}
       \verb https://openreview.net/forum?id=j4_YHiTAN63
+      \endverb
+    \endentry
+    \entry{graphmathcingsurvey}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=9dc9a7b847d908621ca7caec77384f73}{%
+           family={Conte},
+           familyi={C\bibinitperiod},
+           given={Donatello},
+           giveni={D\bibinitperiod}}}%
+        {{hash=761465c5516ba160c8add4d6165ceed5}{%
+           family={Foggia},
+           familyi={F\bibinitperiod},
+           given={Pasquale},
+           giveni={P\bibinitperiod}}}%
+        {{hash=74552849f307fe5664ce79aea7664d47}{%
+           family={Sansone},
+           familyi={S\bibinitperiod},
+           given={Carlo},
+           giveni={C\bibinitperiod}}}%
+        {{hash=9b180a65744f70a23bdcd75a767f4184}{%
+           family={Vento},
+           familyi={V\bibinitperiod},
+           given={Mario},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{0c50de79afcbf511b01c6460cb049844}
+      \strng{fullhash}{a744ee2bf8a7f9d6fdd56a3bf97705c8}
+      \strng{fullhashraw}{a744ee2bf8a7f9d6fdd56a3bf97705c8}
+      \strng{bibnamehash}{0c50de79afcbf511b01c6460cb049844}
+      \strng{authorbibnamehash}{0c50de79afcbf511b01c6460cb049844}
+      \strng{authornamehash}{0c50de79afcbf511b01c6460cb049844}
+      \strng{authorfullhash}{a744ee2bf8a7f9d6fdd56a3bf97705c8}
+      \strng{authorfullhashraw}{a744ee2bf8a7f9d6fdd56a3bf97705c8}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Pattern Recognition and Artificial Intelligence}
+      \field{month}{05}
+      \field{title}{THIRTY YEARS OF GRAPH MATCHING IN PATTERN RECOGNITION}
+      \field{volume}{18}
+      \field{year}{2004}
+      \field{pages}{265\bibrangedash 298}
+      \range{pages}{34}
+      \verb{doi}
+      \verb 10.1142/S0218001404003228
       \endverb
     \endentry
     \entry{dherin2025learningsolvingdifferentialequations}{misc}{}{}
@@ -692,6 +871,70 @@
       \verb https://arxiv.org/abs/1904.12787
       \endverb
     \endentry
+    \entry{LIU2023109059}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=965a67dbc2585f1acc45141ecd91b1bc}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={He},
+           giveni={H\bibinitperiod}}}%
+        {{hash=ad1506e9f10da2cad4389eac16751647}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Tao},
+           giveni={T\bibinitperiod}}}%
+        {{hash=864b1b3afa60bef11e0ddb9fa5df4581}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yidong},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=30cc5fb069ec4ecf53a88a96eaf0b071}{%
+           family={Lang},
+           familyi={L\bibinitperiod},
+           given={Congyan},
+           giveni={C\bibinitperiod}}}%
+        {{hash=a60c53b2bc1d03cc76d96632b99f201b}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=bc86801edf24b9379fb947d2c2116b4b}{%
+           family={Ling},
+           familyi={L\bibinitperiod},
+           given={Haibin},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{8e25faaa1859c80fb4f7d52b9fc80b23}
+      \strng{fullhash}{2699170c31bd31101d908c36b41b6843}
+      \strng{fullhashraw}{2699170c31bd31101d908c36b41b6843}
+      \strng{bibnamehash}{8e25faaa1859c80fb4f7d52b9fc80b23}
+      \strng{authorbibnamehash}{8e25faaa1859c80fb4f7d52b9fc80b23}
+      \strng{authornamehash}{8e25faaa1859c80fb4f7d52b9fc80b23}
+      \strng{authorfullhash}{2699170c31bd31101d908c36b41b6843}
+      \strng{authorfullhashraw}{2699170c31bd31101d908c36b41b6843}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In recent years, powered by the learned discriminative representation via graph neural network (GNN) models, deep graph matching methods have made great progresses in the task of matching semantic features. However, these methods usually rely on heuristically generated graph patterns, which may introduce unreliable relationships to hurt the matching performance. In this paper, we propose a joint graph learning and matching network, named GLAM, to explore reliable graph structures for boosting graph matching. GLAM adopts a pure attention-based framework for both graph learning and graph matching. Specifically, it employs two types of attention mechanisms, self-attention and cross-attention for the task. The self-attention discovers the relationships between features to further update feature representations over the learnt structures; and the cross-attention computes cross-graph correlations between the two feature sets to be matched for feature reconstruction. Moreover, the final matching solution is directly derived from the output of the cross-attention layer, without employing a specific matching decision module. The proposed method is evaluated on three popular visual matching benchmarks (Pascal VOC, Willow Object and SPair-71k), and it outperforms previous state-of-the-art graph matching methods on all benchmarks. Furthermore, the graph patterns learnt by our model are validated to be able to remarkably enhance previous deep graph matching methods by replacing their handcrafted graph structures with the learnt ones.}
+      \field{issn}{0031-3203}
+      \field{journaltitle}{Pattern Recognition}
+      \field{title}{Joint Graph Learning and Matching for Semantic Feature Correspondence}
+      \field{volume}{134}
+      \field{year}{2023}
+      \field{pages}{109059}
+      \range{pages}{1}
+      \verb{doi}
+      \verb https://doi.org/10.1016/j.patcog.2022.109059
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0031320322005398
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0031320322005398
+      \endverb
+      \keyw{Feature correspondence,Attention network,Graph matching,Graph learning}
+    \endentry
     \entry{lyzinski2015graphmatchingrelaxrisk}{misc}{}{}
       \name{author}{6}{}{%
         {{hash=5df169d0de1ee96761d0ba8df7094398}{%
@@ -1070,6 +1313,40 @@
       \verb 10.1145/321958.321975
       \endverb
     \endentry
+    \entry{schneider2025ubiquitoussymmetrycriticalpoints}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=cebf691ff2f9ede32469e9b7e63ade81}{%
+           family={Schneider},
+           familyi={S\bibinitperiod},
+           given={Irmi},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{cebf691ff2f9ede32469e9b7e63ade81}
+      \strng{fullhash}{cebf691ff2f9ede32469e9b7e63ade81}
+      \strng{fullhashraw}{cebf691ff2f9ede32469e9b7e63ade81}
+      \strng{bibnamehash}{cebf691ff2f9ede32469e9b7e63ade81}
+      \strng{authorbibnamehash}{cebf691ff2f9ede32469e9b7e63ade81}
+      \strng{authornamehash}{cebf691ff2f9ede32469e9b7e63ade81}
+      \strng{authorfullhash}{cebf691ff2f9ede32469e9b7e63ade81}
+      \strng{authorfullhashraw}{cebf691ff2f9ede32469e9b7e63ade81}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LG}
+      \field{eprinttype}{arXiv}
+      \field{title}{Ubiquitous Symmetry at Critical Points Across Diverse Optimization Landscapes}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2506.01959
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2506.01959
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2506.01959
+      \endverb
+    \endentry
     \entry{tabela-inverzij-severo2025learningdistributionspermutationsrankings}{misc}{}{}
       \name{author}{3}{}{%
         {{hash=e06a68e310680243359481c2b05733d2}{%
@@ -1194,6 +1471,40 @@
       \field{isbn}{1107602629}
       \field{title}{Enumerative Combinatorics: Volume 1}
       \field{year}{2011}
+    \endentry
+    \entry{ulam1960collection}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=47d66ceead6fcfce5912488b753257f1}{%
+           family={Ulam},
+           familyi={U\bibinitperiod},
+           given={S.M.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Interscience Publishers}%
+      }
+      \strng{namehash}{47d66ceead6fcfce5912488b753257f1}
+      \strng{fullhash}{47d66ceead6fcfce5912488b753257f1}
+      \strng{fullhashraw}{47d66ceead6fcfce5912488b753257f1}
+      \strng{bibnamehash}{47d66ceead6fcfce5912488b753257f1}
+      \strng{authorbibnamehash}{47d66ceead6fcfce5912488b753257f1}
+      \strng{authornamehash}{47d66ceead6fcfce5912488b753257f1}
+      \strng{authorfullhash}{47d66ceead6fcfce5912488b753257f1}
+      \strng{authorfullhashraw}{47d66ceead6fcfce5912488b753257f1}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780598665133}
+      \field{series}{Interscience tracts in pure and applied mathematics}
+      \field{title}{A Collection of Mathematical Problems}
+      \field{year}{1960}
+      \verb{urlraw}
+      \verb https://books.google.si/books?id=DIpQAAAAMAAJ
+      \endverb
+      \verb{url}
+      \verb https://books.google.si/books?id=DIpQAAAAMAAJ
+      \endverb
     \endentry
     \entry{2020SciPy-NMeth}{article}{}{}
       \name{author}{35}{}{%
@@ -1392,6 +1703,30 @@
       \verb{doi}
       \verb 10.1038/s41592-019-0686-2
       \endverb
+    \endentry
+    \entry{willett2024conditionalrepresentationstabilityclassification}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=80b750b6a248254a62b772f4b514ef5e}{%
+           family={Willett},
+           familyi={W\bibinitperiod},
+           given={Rufus},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{80b750b6a248254a62b772f4b514ef5e}
+      \strng{fullhash}{80b750b6a248254a62b772f4b514ef5e}
+      \strng{fullhashraw}{80b750b6a248254a62b772f4b514ef5e}
+      \strng{bibnamehash}{80b750b6a248254a62b772f4b514ef5e}
+      \strng{authorbibnamehash}{80b750b6a248254a62b772f4b514ef5e}
+      \strng{authornamehash}{80b750b6a248254a62b772f4b514ef5e}
+      \strng{authorfullhash}{80b750b6a248254a62b772f4b514ef5e}
+      \strng{authorfullhashraw}{80b750b6a248254a62b772f4b514ef5e}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2408.13350}
+      \field{title}{Conditional representation stability: classification of \\ $*$-homo\-morphisms and relative eta invariants}
+      \field{year}{2024}
     \endentry
   \enddatalist
 \endrefsection

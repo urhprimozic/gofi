@@ -238,7 +238,8 @@ začetnih parametrov uspe najti ničlo $\loss(\lim_{i \to \infty} \phi_i) =0$
 funkcije $\loss$, v splošnem pa konvergira le do lokalnih ekstremov.
 
 Študiramo lahko, kako izbira začetnih parametrov vpliva na konvergenco metode.
-V tem primeru lahko gradientni spust obravnavamo kot numerično metodo za reševanje
+V tem primeru lahko gradientni spust obravnavamo kot numerično metodo
+za reševanje
 diferencialne enačbe
 $\frac{d\phi}{dt} = - \nabla \loss(\phi)$ in študiramo dinamiko
 rešitev te enačbe.
@@ -480,7 +481,8 @@ algoritem Adam.
 \label{subsection:pgd}
 Gradientni spust lahko obtiči v sedlih.
 Iz sedla lahko pridemo z dodajanjem slučajne perturbacije
-parametrov, ko je gradient ciljne funkcije majhen~\cite{jin2017escapesaddlepointsefficiently}.
+parametrov, ko je gradient ciljne funkcije
+majhen~\cite{jin2017escapesaddlepointsefficiently}.
 
 Za $\nabla \loss(\phi) < \epsilon$ definiramo
 $$
@@ -679,15 +681,13 @@ gradientnim spustom, da bo model vse bližje upodobitvi.
   kjer so $v_i, u_i \in S^*$, $r_{l_i} \in R$ in
   $v_i \equiv u_i^{-1}  \mod G$, $L(w) \in \N$.
 
-  
-  Če zgornja oblika zapisa ni enolična, izberemo tako, da se 
-  pred v $v_{i-1} u_i r_i$ ne pojavi nobena druga beseda iz $R$ razen $r_i$.   
+  Če zgornja oblika zapisa ni enolična, izberemo tako, da se
+  pred v $v_{i-1} u_i r_i$ ne pojavi nobena druga beseda iz $R$ razen $r_i$.
 
-
- Z $L(w)$ označimo \emph{število pojavitev}
+  Z $L(w)$ označimo \emph{število pojavitev}
   besed iz $R$ v
-  $w$ in definiramo 
-  $$L=\max_{g \in G} L(w_{g^{-1}} w_g),$$ 
+  $w$ in definiramo
+  $$L=\max_{g \in G} L(w_{g^{-1}} w_g),$$
   ki vpliva na
   vrednost funkcije izgube, pri kateri lahko sklepamo na obstoj
   rešitve (glej poglavje \ref{subsection : obstoj resitve}).
@@ -701,7 +701,7 @@ vsako relacijo $r \in R$ velja
 $$
 \hat \rho(r) = I.
 $$
- Manjše, kot so norme $\|\hat \rho(r) - I \|$, bolj je
+Manjše, kot so norme $\|\hat \rho(r) - I \|$, bolj je
 model $\hat\rho$ podoben homomorfizmu.
 \begin{definicija}
   \emph{Funkcija izgube nad relacijami} je definirana kot
@@ -838,12 +838,12 @@ so natanko ničle $\nabla\loss(\phi) = 0$ gradienta
     nepraktičen. V tem primeru se v delu numerične integracije
   lotimo z avtogradom, ki sam izračuna gradient.}  gradientne
   tokove (ciklične in diedrske grupe)
-   integriramo 
-    z metodo Dormand-Prince
-\cite{solvingordinarydifferentialequations1993nonstiff}. Uporabljamo 
-implementacijo iz knjižnice \texttt{SciPy}~\cite{2020SciPy-NMeth}.
-   Enačbe zapletenih
-  gradientnih tokov rešujemo z algoritmom Adam, kjer uporabljamo 
+  integriramo
+  z metodo Dormand-Prince
+  \cite{solvingordinarydifferentialequations1993nonstiff}. Uporabljamo
+  implementacijo iz knjižnice \texttt{SciPy}~\cite{2020SciPy-NMeth}.
+  Enačbe zapletenih
+  gradientnih tokov rešujemo z algoritmom Adam, kjer uporabljamo
   implementacijo iz knjižnice \texttt{PyTorch}~\cite{paszke2019pytorch}.
 \end{opomba}
 %%%%%%%%%%%%
@@ -852,8 +852,8 @@ implementacijo iz knjižnice \texttt{SciPy}~\cite{2020SciPy-NMeth}.
 
 Če je napaka modela $\Loss{rel}(\hat \rho)$ velika,
 smo zagotovo stran od upodobitve.
-Zanima nas, če velja obrat: ali iz majhne napake modela
-$\hat \rho$ lahko sklepamo na obstoj
+Zanima nas, ali velja obrat. Lahko iz majhne napake modela
+$\hat \rho$ sklepamo na obstoj
 upodobitve $\rho$, ki je blizu modelu $\hat \rho$?
 
 Za smiselnost zgornje metode iskanja upodobitev mora biti
@@ -866,7 +866,7 @@ To nam zagotavlja spodnji izrek.
 %
 \begin{izrek}[Obstoj rešitve]
   \label{izrek : obstoj rešitve upodobitve}
-  Obstaja $\delta(\epsilon) \leq O(\epsilon)$, da iz
+  Obstaja $\delta(\epsilon) = O(\epsilon)$, da iz
   $
   \loss(\hat \rho) < \delta(\epsilon)
   $
@@ -945,7 +945,7 @@ $s \in S$.
   $$
 
 \end{dokaz}
-Če je  $\Loss{unitary}(\hat\rho) < \epsilon$, lahko zapišemo
+Če je $\Loss{unitary}(\hat\rho) < |S|\epsilon$, lahko zapišemo
 $\s = Q_s + F_s$ za $\|F_s\| < \epsilon$. Iz tega sledi ocena
 %
 $$
@@ -1035,7 +1035,7 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   Naj bo
   $\Loss{rel}(\hat \rho) < |R| \epsilon$ in $
   \Loss{unitary}(\hat \rho)  < |S| \epsilon$.
-  Potem za taki besedi $w, v \in S ^*$, da velja
+  Potem za taki besedi $w, v \in S^*$, za kateri velja
   $w \equiv v^{-1}\mod R$ velja
   $$
   \|\hat \rho(w) - \hat \rho(v)^{-1}\| = O(\epsilon).
@@ -1078,27 +1078,19 @@ blizu. Iz tega bo sledilo, da je model skoraj homomorfizem.
   %kjer je $l_{g,h} = \max(|w_{g,h}|, |w_g w_h|)$.
 \end{lema}
 \begin{dokaz}
-  Naj bo $l_{g,h} = \max(|w_{g,h}|, |w_g w_h|)$. Za kanonične
-  predstavnike $w_g, w_h, w_{gh} \in S^*$
-  velja $w_g w_h  \equiv w_{gh}^{-1} \mod R$.
-  %Označimo z
-  %$v$ besedo, za katero velja
-  %$v \equiv (gh) ^{-1}  \mod R$.
-
-  Ocenimo
-  \begin{align*}
-    \|\hat \rho(w_g w_h) - \hat \rho(w_{gh})\|
-    & \leq
-    \|\hat \rho(w_g w_h) - \hat \rho(w_{(gh)^{-1}})\|
-    \\
-    & + \|\hat \rho(w_{(gh)^{-1}}) - \hat \rho(w_{gh})\| \\
-    & \leq
-    2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
-    \right)^L - 1}{\|\hat \rho(w_{(gh)^{-1}})^{-1} \|}.
-    %\\
-    %& \approx
-    %\frac{1}{\|\hat \rho(v)^{-1} \|}
-  \end{align*}
+  Za kanonične predstavnike $w_g, w_h, w_{gh} \in S^*$
+  velja $w_g w_h w_{gh}^{-1} \equiv 1 \mod R$.
+  Zato je po lemi \ref{lema : zveznost na besedah}
+  $$
+  \|\hat \rho(w_g w_h)\hat \rho(w_{gh})^{-1} - I\| = O(\epsilon).
+  $$
+  Ker je za dovolj majhen $\epsilon$ matrika $\hat \rho(w_{gh})$ obrnljiva,
+  iz tega sledi
+  $$
+  \|\hat \rho(w_g w_h) - \hat \rho(w_{gh})\| = O(\epsilon),
+  $$
+  kar je enakovredno trditvi
+  $\|\hat \rho(gh) - \hat \rho(g)\hat \rho(h)\| = O(\epsilon)$.
 \end{dokaz}
 %
 % \begin{lema}
@@ -1136,12 +1128,12 @@ $$
 Preslikavo implicitno razširimo
 na $S^*$ in na $G$ enako kot $\hat \rho$.
 \begin{lema}
-  Za preslikavo $\mu \colon G \to U(n)$, inducirana iz
+  Za preslikavo $\mu \colon G \to U(n)$, inducirano iz
   modela $\hat \rho$ z $\Loss{unitary}(\hat \rho) < |S|\epsilon$
   in $\Loss{rel}(\hat \rho) < |R| \epsilon$,
   velja
   $$
-  \|\mu(gh) - \mu(g)\mu(h)\| <  O(\epsilon).
+  \|\mu(gh) - \mu(g)\mu(h)\| = O(\epsilon).
   $$
   %$$
   %\|\mu(gh) - \mu(g)\mu(h)\| <  k_{g,h}(\epsilon).
@@ -1160,7 +1152,7 @@ na $S^*$ in na $G$ enako kot $\hat \rho$.
 \begin{dokaz}
   Iz leme \ref{lema:rho_s - Q_s < eps} sledi, da je za
   $g \in G$ $\|\mu(g)  - \hat \rho(g)\|<
-  |w_g| (\sqrt{n} - \epsilon)^{|w_g| -1}  \epsilon$.
+  |w_g| (\sqrt{n} + \epsilon)^{|w_g| -1}  \epsilon$.
   Ocenimo
   \begin{align*}
     \|\mu(gh) - \mu(g)\mu(h)\|
@@ -1170,7 +1162,7 @@ na $S^*$ in na $G$ enako kot $\hat \rho$.
     &+
     \|\hat \rho(g)\hat \rho(h) - \mu(g)\mu(h)\| \\
     &\leq
-    2|w_{gh}| (\sqrt{n} - \epsilon)^{|w_{gh}| -1}  \epsilon
+    2|w_{gh}| (\sqrt{n} + \epsilon)^{|w_{gh}| -1}  \epsilon
     %
     +
     2 \frac{\left( 1 + (\sqrt{n} + \epsilon)^{l_{g,h}} l_{g,h} \epsilon
@@ -1179,7 +1171,7 @@ na $S^*$ in na $G$ enako kot $\hat \rho$.
 \end{dokaz}
 %
 Iz definicije preslikave $\mu$ za modele z majhno napako očitno
-sledi  $\|\mu(g) - \rho(g)\| \leq o(\epsilon)$.
+sledi $\|\mu(g) - \hat \rho(g)\| = O(\epsilon)$.
 Iskana upodobitev $\rho$ sledi iz izreka
 \ref{izrek : kazhdan}. Treba je preveriti še, da je upodobitev
 nerazcepna.
@@ -1402,7 +1394,7 @@ Numerično rešujemo enačbo gradientnega toka
 $$\frac{d(r,s)}{dt} = -\nabla(\Loss{rel} + \Loss{unit} +
 \Loss{irr}).$$
 Enačbo rešujemo z metodo Dormand-Prince
-\cite{solvingordinarydifferentialequations1993nonstiff}. Uporabljamo 
+\cite{solvingordinarydifferentialequations1993nonstiff}. Uporabljamo
 implementacijo iz knjižnice \texttt{SciPy}~\cite{2020SciPy-NMeth}.
 % Implementacija simulacije je v \TODO{dodatek?}.
 
@@ -1457,7 +1449,7 @@ diedrskih grup - glej dodatek
 \end{figure}
 \footnotetext{Na vsakem grafu je 200 različnih rešitev. Začetni parametri so
   vzorčeni iz enakomerne porazdelitve nad $[-1,1]^2$. Za implementacijo
-  glej dodatek \ref{dodatek_1dim dn trajektorije}.}
+glej dodatek \ref{dodatek_1dim dn trajektorije}.}
 %
 %
 %
@@ -1617,27 +1609,27 @@ z^{b_i} - 1).
 $$
 %
 % \end{align*}
-Očitno velja $\frac{d}{d_s}\Loss{rel}(0,z) =
+Očitno velja $\frac{d}{ds}\Loss{rel}(0,z) =
 \frac{d}{d_z}\Loss{rel}(s,0) = 0  $.
-Rešitev z začetnima parametroma  $s_0 = 0, z_0 \in \R$ je
+Rešitev z začetnima parametroma $s_0 = 0, z_0 \in \R$ je oblike
 $$
-s(t) = 0, \quad z(t) = z_0 +  \frac{2}{|R|}
-z^{\operatorname{red}(z) -1},
+s(t) = 0,
 $$
-simetrično za $z_0 = 0$, kar ustreza rezultatu za diedrske grupe.
+$z(t)$ pa rešuje pripadajočo enodimenzionalno enačbo gradientnega toka.
+Simetrično velja za $z_0 = 0$, kar ustreza rezultatu za diedrske grupe.
 
-Preučimo še dogajanje znotraj kvadratnov. Recimo, da je
+Preučimo še dogajanje znotraj kvadrantov. Recimo, da je
 $s>0, z>0$. Prevedemo $\Loss{rel}$ na nove koordinate $x = \log s,
 y = \log z$ in definiramo
 $$
 F(x,y) =  \sum_{i=1}^l (e^{a_ix + b_iy} -1)^2.
 $$
-Očitno je $\frac{1}{|R|}\nabla_{x,y} F(x,y) = \nabla_{s,t}
-\Loss{rel}(s,t)
+Očitno je $\frac{1}{|R|}\nabla_{x,y} F(x,y) = \nabla_{s,z}
+\Loss{rel}(s,z)
 \begin{bmatrix}
   \frac{1}{s} & 0 \\
   0 & \frac{1}{z}
-\end{bmatrix}$. Kritične točke funkcij $L$ in $F$ se ujemajo.
+\end{bmatrix}$. Kritične točke funkcij $\Loss{rel}$ in $F$ se ujemajo.
 
 Očitna stacionarna točka funkcije $F$ na $s, z > 0$ je $s=z=1$, kar ustreza
 točki $x=y=0$. Dokazali bomo, da je $x=y=0$ edina stacionarna
@@ -1722,9 +1714,9 @@ Nad prostorom funkcij $\funnn{n}$ definiramo gladko družino
 porazdelitev. Generatorje grupe sprva slikamo v poljubne
 porazdelitve, nato pa spreminjamo porazdelitve, da je
 verjetnost za homomorfizem čim večja. V strojnem
-  učenju nad diskreten prostor izidov $D$ običajno
-  definiramo gladko družino porazdelitev
-  $\{\mathcal{P}_\phi(D)\}$ in minimiziramo  $-\log(P_\phi
+učenju nad diskreten prostor izidov $D$ običajno
+definiramo gladko družino porazdelitev
+$\{\mathcal{P}_\phi(D)\}$ in minimiziramo  $-\log(P_\phi
 (\text{opaženi izidi}))$~\cite{prince2023understandingdeeplearning}.
 
 Model $\hat \rho$ delovanja $\rho \colon G \to S_n$ bo
@@ -1849,14 +1841,16 @@ $$
 $$
 in spreminjamo elemente matrik $ \phi_s$, da model
 $\hat \rho_\phi$ skoraj zagotovo predstavlja delovanje.
-
+%
 \subsection{Funkcija izgube nad relacijami}
 \index{funkcija izgube nad relacijami!(delovanje)}
 Naj bo $\langle S \mid R \rangle$ prezentacija grupe $G$. Za vsako
 relacijo $r \in R$ bi radi $P(r = \operatorname{id})
-=1$ oziroma $0 = \log(P(r=\operatorname{id})) =
+=1$ oziroma
+$$0 = \log(P(r=\operatorname{id})) =
 \log(\prod_{i=1}^n P(r(i)=i)) =
-\operatorname{tr}(\log(P_r))$, kjer $\log(P_r)$
+\operatorname{tr}(\log(P_r)),$$
+kjer $\log(P_r)$
 računamo po elementih.
 \begin{definicija}
   \emph{Funkcijo izgube nad relacijami} za delovanja
@@ -2176,7 +2170,7 @@ Zdaj lahko dokažemo glavni rezultat tega razdelka.
   , je po lemi \ref{lema:inv~stohasticen->inv~permutacijska}
   $P_{s_2} = \overline{P_{s_2}} + E_{s_2}$.
   Induktivno nadaljujemo.
-  
+
   Izberemo tak $\epsilon$
   ,da je za vsak $j \in [m]$
   $$\epsilon_j
@@ -2191,7 +2185,7 @@ Zdaj lahko dokažemo glavni rezultat tega razdelka.
     \epsilon
   \right)^{\frac{1}{2}}
   < \frac{1}{2}.$$
-   Potem je
+  Potem je
   $$
   P_{s_j} = \overline{P_{s_j}} + E_{s_j}.
   $$
@@ -2370,7 +2364,7 @@ Več rezultatov je v dodatku \ref{appendix: actions-dihedral}.
 S podobnim pristopom kot v \ref{eq: repr model na S}
 lahko iščemo izomorfizme grafov. Iščemo model za
 bijektivno preslikavo $f \colon G_1 \to G_2$ med grafoma
-$G_1$ in $G_2$, za katero velja 
+$G_1$ in $G_2$, za katero velja
 $$f(i) \sim_2 f(j) \iff i \sim_1 j.$$
 
 Za model lahko vzamemo slučajno preslikavo $f$, podano s
@@ -2397,7 +2391,8 @@ bijektivna, torej da velja
   &= \sum_{\sigma  \in S_n} \prod_{i=1}^n (P_f)_{i, \sigma(i)} \\
   &= \operatorname{Perm}(P_f),
 \end{align*}
-kjer $\operatorname{Perm}(P_f)$ označuje \emph{permanent}\footnote{$\operatorname{Perm}(A) = \sum_{\sigma  \in
+kjer $\operatorname{Perm}(P_f)$ označuje
+\emph{permanent}\footnote{$\operatorname{Perm}(A) = \sum_{\sigma  \in
 S_n} \prod_{i=1}^n A_{i, \sigma(i)}$} matrike $P_f$.
 
 Za stohastične matrike velja spodnja lema.
@@ -2541,7 +2536,7 @@ $$
   \label{def:graph_matching}
   \index{ujemanje grafov}
   Naj bosta $M_1$ in $M_2$ matriki sosednosti dveh grafov
-  na $n$ vozliščih. Problem ujemanja graphov
+  na $n$ vozliščih. Problem ujemanja grafov
   \emph{(graph matching)}~\cite{lyzinski2015graphmatchingrelaxrisk} je
   definiran kot
   iskanje minimuma
@@ -2579,7 +2574,7 @@ Osredotočeni smo na posplošitev metod iz poglavij
 \label{section:prehod na izomorfizen vanilla}
 Kot v poglavju
 \ref{section:pretvorba modela v delovanje} lahko tudi model
-izomorfizma grafov pretvorimo v dejansko izomorfizem, če je le
+izomorfizma grafov pretvorimo v dejanski izomorfizem, če je le
 vrednost funkcije izgube dovolj majhna.
 \begin{definicija}
   Za majhno vrednost $\Loss{unitary}(P) + \loss_\sim(P)$
@@ -2641,7 +2636,8 @@ da predstavlja izomorfizem.
 \end{dokaz}
 \begin{lema}
   Če je
-  $$\loss_\sim(P) \le \epsilon <
+  $$\Loss{unitary}(P) \le \epsilon \quad \text{in} \quad
+  \loss_\sim(P) \le \epsilon <
   \min(  \frac{1}{2}
     ,
     \frac{\sqrt{2}}{1 + \|M_1\|\sqrt{n}}
@@ -2695,7 +2691,7 @@ da predstavlja izomorfizem.
 \subsection{Rezultati}
 \label{subsection : rezultati_grafi_vanilla}
 \begin{primer}
-  Poglejmo si preprost graf \ref{fig:primer_grafa} na
+  Na sliki \ref{fig:primer_grafa} je preprost graf na
   petih točkah $\{0,1,2,3,4\}$, s povezavami $\{0 \sim 4,
   4 \sim 3, 3 \sim 0, 3 \sim 1, 2 \sim 0\}$. Očitno je
   grupa avtomorfizmov tega grafa izomorfna diedrski grupi
@@ -2703,13 +2699,45 @@ da predstavlja izomorfizem.
   \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\linewidth]{images/random_samples_big_random_graph_1_on_5.png}
-    \caption{Graf na petih vozliščih.}
+    \caption{Preprost graf na petih vozliščih.}
     \label{fig:primer_grafa}
   \end{figure}
   Gradientni spust poleg trivialne rešitve na določenih
-  začetnih parametrih uspe najti avtomorfizem $(03)(24)$,
-  na drugih pa konvergira do limite, ki ni blizu avtomorfizma.
-
+  začetnih vrednostih  parametrov uspe najti avtomorfizem $(03)(12)$,
+  na drugih pa konvergira do limite, ki ni blizu avtomorfizma. Slika
+  \ref{fig:primer_grafa_parametri} prikazuje konvergenco na različnih
+  začetnih vrednostih parametrov matrike $P$.
+  \begin{figure}
+    \begin{subfigure}{\textwidth}
+      \centering
+      \includegraphics[height=0.3\linewidth]{images/random_samples_big_random_graph_1_on_5sample_9_initial.pdf}
+      %\hfill
+      \includegraphics[height=0.3\linewidth]{images/random_samples_big_random_graph_1_on_5sample_9_final.pdf}
+      \caption{Konvergenca do identitete.
+      }
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+      \centering
+      \includegraphics[height=0.3\linewidth]{images/random_samples_big_random_graph_1_on_5sample_0_initial.pdf}
+      %\hfill
+      \includegraphics[height=0.3\linewidth]{images/random_samples_big_random_graph_1_on_5sample_0_final.pdf}
+      \caption{Konvergenca do avtomorfizma $(03)(12)$.
+      }
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+      \centering
+      \includegraphics[height=0.3\linewidth]{images/random_samples_big_random_graph_1_on_5sample_11_initial.pdf}
+      %\hfill
+      \includegraphics[height=0.3\linewidth]{images/random_samples_big_random_graph_1_on_5sample_11_final.pdf}
+      \caption{Neuspešna konvergenca. 
+      }
+    \end{subfigure}
+    \caption{Vrednosti parametrov matrike $P$ na začetku in na koncu
+      optimizacije. Različne vrednosti začetnih parametrov
+    vplivajo na uspešnost konvergence. }
+    \label{fig:primer_grafa_parametri}
+  \end{figure}
+  %
 \end{primer}
 \paragraph{Avtomorfizmi cayleyevih grafov}
 \label{aut-cayley-vanilla-setup}
@@ -2888,7 +2916,7 @@ $$
 $$
 ki intuitivno predstavlja pričakovano izgubo na eni povezavi.
 
-  Za par vozlišč $i,j$ in permutacijo $f\in S_n$ namreč lahko
+Za par vozlišč $i,j$ in permutacijo $f\in S_n$ namreč lahko
 definiramo \emph{izgubo na povezavi} $i \sim j$ kot
 $$
 L_{i,j}(f) = |(M_1)_{i,j} - (M_2)_{f(i),f(j)}|.
@@ -3128,7 +3156,8 @@ dosežemo boljše rezultate.
   \caption{Primerjava izgube $\loss_\sim(\overline{P})$
     glede na velikost grafa.
     Metodi sta preizkušeni na istih $10$-tih
-    naključno izbranih grafih s fiksnim številom vozlišč. Vsaka točka je povprečje
+    naključno izbranih grafih s fiksnim številom vozlišč. Vsaka točka
+    je povprečje
     napak na teh grafih. Permutacijska matrika $\overline{P}$
     ustreza najbolj verjetni permutaciji (pri uporabi tabele inverzij)
     oziroma matriki, ki ima v vsaki vrstici enico na mestu največjega
@@ -3215,7 +3244,7 @@ nevronskimi mrežami.
   \operatorname{softmax}_\text{po blokih} \circ
   W_4\circ
   \operatorname{ReLU} \circ
-  w_3 \circ
+  W_3 \circ
   \operatorname{ReLU} \circ
   W_2 \circ
   \operatorname{ReLU} \circ
@@ -3244,31 +3273,27 @@ ki poljubne matrike zvezno preslika v
 }. Točna formulacija je v dodatku \ref{dodatek:GNN+sinkhorn}.
 %
 
-
-Slika 
-\ref{fig:loss_computation_time_comparison}
-prikazuje primerjavo uporabe metode brez tabele inverzij, predstavljene
+Slika \ref{fig:loss_computation_time_comparison}
+prikazuje primerjavo metode brez tabele inverzij, predstavljene
 v poglavju \ref{section:prehod na izomorfizen vanilla},
-z uporabo tabele inverzij
-brez preparametrizacije, predstavljene v poglavju 
-\ref{funkcija izgube TI}
-. Metodi sta preizkušeni na istih grafih. Slika \ref{fig:loss_computation_time_comparison} prikazuje 
-rast povprečne izgube metod glede na število vozlišč v grafu.
-
+in metode s tabelo inverzij brez preparametrizacije,
+predstavljene v poglavju \ref{funkcija izgube TI}.
+Metodi sta preizkušeni na istih grafih in prikazana je rast
+povprečne izgube glede na število vozlišč.
 
 Slika \ref{fig:primerjava vanilla-nn-mild-nn} prikazuje primerjavo
 uporabe tabele inverzij brez preparametrizacije z blago
-in globoko preparametrizacijo. 
+in globoko preparametrizacijo.
 
-Vse metode so preizkušene na 
- $10$-tih
-naključno izbranih grafih s fiksnim številom vozlišč. 
-Slika \ref{fig:primerjava vanilla-nn-mild-nn}  prikazuje rast povprečne izgube metod glede 
+Vse metode so preizkušene na
+$10$ naključno izbranih grafih s fiksnim številom vozlišč.
+Slika \ref{fig:primerjava vanilla-nn-mild-nn}  prikazuje rast
+povprečne izgube metod glede
 na število vozlišč v grafu.
 
 Po koncu optimizacije izračunamo
 napako najbolj verjetne permutacije in jo povprečimo po
-$10$-tih grafih.
+$10$ grafih.
 
 Vsaka krivulja prikazuje rast povprečne napake
 najbolj verjetne preslikave glede na velikost grafa.
@@ -3299,14 +3324,14 @@ padla pod $\epsilon_\nabla = 10^{-3}$.
 \end{figure}
 \begin{table}
   \centering
-\begin{tabular}{l|S[table-format=2.2]}
+  \begin{tabular}{l|S[table-format=2.2]}
     Metoda & {Povprečna napaka} \\
     \hline
     Tabela inverzij & 11.05 \\
     Blaga preparametrizacija & 11.27 \\
     Globoka preparametrizacija & {\bfseries 10.94} \\
     GNN in sinkhorn & 11.67
-\end{tabular}
+  \end{tabular}
   \caption{Povprečne napake metod.}
   \label{table:povprečne napake različnih metod grafi}
 \end{table}
@@ -3520,10 +3545,10 @@ Spodnji izrek je povzet po
   \label{izrek:allen-zhu-global-minima}
   Naj $f(z,y)$ izpolnjuje Polyak-Lojasiewiczev pogoj.
   Naj bo $S_\text{train}$ taka množica vzorcev, da
-  obstaja $\delta > 0$, da za dva vzorca 
+  obstaja $\delta > 0$, da za dva vzorca
   $$(x_i, y_i),
   (x_j,y_j) \in S_\text{train}$$
-   z različnima indeksoma $i
+  z različnima indeksoma $i
   \neq j $ velja $\|x_i - x_j\| > \delta$.
 
   Naj bo $M = \sigma \circ W_l \circ
