@@ -1,0 +1,36 @@
+\begin{frame}{\color{aoblue}Obstoj rešitve}
+  \begin{izrek}
+    Če je $\loss(\hat \rho) \leq O(\epsilon)$, obstaja
+    \emph{upodobitev} $\rho$, da velja
+    $$
+    sup_{g \in G} \left\|
+    \hat \rho(g) - \rho(g)
+    \right\| \leq \epsilon.
+    $$
+  \end{izrek}
+\end{frame}
+\begin{frame}{$\epsilon$-upodobitve}
+  \begin{izrek}[Kazhdan]
+    Če za $\mu \colon G \to U(\mathcal H)$ iz amenabilne grupe velja
+    $$
+    \sup_{g,h \in G} \|\mu(gh) - \mu(g)\mu(h)\| < \epsilon \leq \frac{1}{100},
+    $$
+    obstaja unitarna upodobitev $\pi$ grupe $G$, da velja
+    $$
+    \sup_{g \in G} \|\pi(g) - \mu(g) \| \leq 2\epsilon.
+    $$
+  \end{izrek}
+\end{frame}
+\begin{frame}{kvaziupodobitve}
+  \begin{definicija}
+    $\hat \rho \colon \langle S \mid R \rangle \to \C^{n \times n}$ je
+    \emph{kvaziupodobitev}, če velja
+    $$
+    sup_{r \in R} \left\| \phi(r) - I  \right\| < \epsilon.
+    $$
+  \end{definicija}
+  \begin{izrek}
+    Naj bo $G$ končna grupa. $\hat \rho \colon G \to \C^{n \times n}$
+    je  $\epsilon$-upodobitev natanko tedaj, ko je kvaziupodobitev.
+  \end{izrek}
+\end{frame}

@@ -1,0 +1,14 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[0] Config.pm:331> INFO - Logfile is 'primozic-27222028-2025.blg'
+[53] biber:342> INFO - === Fri Apr 24, 2026, 11:14:57
+[66] Biber.pm:421> INFO - Reading 'primozic-27222028-2025.bcf'
+[135] Biber.pm:1002> INFO - Found 35 citekeys in bib section 0
+[147] Biber.pm:4487> INFO - Processing section 0
+[155] Biber.pm:4678> INFO - Looking for bibtex file 'literatura.bib' for section 0
+[156] bibtex.pm:1713> INFO - LaTeX decoding ...
+[201] bibtex.pm:1519> INFO - Found BibTeX data source 'literatura.bib'
+[766] UCollate.pm:68> INFO - Overriding locale 'sl-SI' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[766] UCollate.pm:68> INFO - Overriding locale 'sl-SI' defaults 'variable = shifted' with 'variable = non-ignorable'
+[767] Biber.pm:4307> INFO - Sorting list 'nty/global//global/global/global' of type 'entry' with template 'nty' and locale 'sl-SI'
+[802] bbl.pm:676> INFO - Writing 'primozic-27222028-2025.bbl' with encoding 'UTF-8'
+[822] bbl.pm:779> INFO - Output to primozic-27222028-2025.bbl

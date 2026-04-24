@@ -1,0 +1,617 @@
+% Auriga theme
+% find the most up-to-date version here: https://github.com/anishathalye/auriga
+
+\documentclass[14pt,aspectratio=169]{beamer}
+\usepackage{pgfpages}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+% \ifnotes
+% \setbeamertemplate{note page}[plain]
+% \setbeameroption{show notes on second screen=right}
+% \fi
+
+\usetheme{auriga}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta}
+\usetikzlibrary{positioning}
+\usecolortheme{auriga}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\F}{\mathbb F}
+\newcommand{\loss}{\mathcal L}
+
+\newcommand{\opcija}[2]{#1\;\; [#2]}
+% define some colors for a consistent theme across slides
+\definecolor{red}{RGB}{181, 23, 0}
+\definecolor{blue}{RGB}{0, 118, 186}
+\definecolor{gray}{RGB}{146, 146, 146}
+\definecolor{labsixorange}{RGB}{243, 111, 33}
+% \definecolor{labsixorange}{RGB}{243, 111, 33}
+\definecolor{aoblue}{RGB}{8, 96, 204}
+
+\title{\color{aoblue}Finding morphisms with gradient descent 
+%\\
+% \color{gray} \small{
+% Povzeto po: Matej Petković, Ljupčo Todorovski, Urh Primožič;
+% P(expression|grammar),
+% %Probability of deriving an algebraic expression with a probabilistic
+% %context-free grammar,
+% 2022
+%}
+}
+
+\author{\underline{Urban Jezernik, Ljupčo Todorovski, Urh Primožič \inst{1}}}
+
+\institute[shortinst]{\inst{1} Fakulteta za matematiko in fiziko, Inštitut Jožef Stefan}
+
+\begin{document}
+
+{
+  % rather than use the frame options [noframenumbering,plain], we make the
+  % color match, so that the indicated page numbers match PDF page numbers
+  \setbeamercolor{page number in head/foot}{fg=white}
+  \begin{frame}
+    \titlepage
+  \end{frame}
+}
+
+\begin{frame}{\color{aoblue}Representations of finite groups}
+\note{
+Intreduction - everybody should be familiar
+On whiteboard, define representations and explain that they are linear actions. Explain what subrepresentation is using linear actions. Define irreducalbe representation.
+
+Assume finite groups and complex (real) vector spaces. note the theorem. Explain we will show a way to find irr. 
+}
+Let $|G| < \infty$ and $V=\mathbb{C}^n$.
+\begin{definition}
+    $\rho  \colon G  \to \text{GL}(V)$ is \emph{irreducalbe}, if there is no $0 < W < V$, such that $G \cdot W \leq W$.
+\end{definition}
+\begin{theorem}
+    Every representation $\rho \colon G \to GL(V)$ is equal to 
+    $ \oplus  _{i \in I} \rho_i$, where every $\rho_i$ is irreducable.
+\end{theorem}
+% \begin{theorem}
+%     $\rho$ is irreducalbe iff $|\chi_\rho| = \frac{1}{|G|} 
+%     \sum\limits_{g \in G} \text{tr}(\rho(g)) \text{tr}(\rho(g^{-1}) = 1$.
+% \end{theorem}
+
+\end{frame}
+\begin{frame}{\color{aoblue}Modeling representations}
+\note{
+Explain Urban's idea - start with an arbitrary function $G \to \mathbb{C}^{n \times n}$ and change its parameter (with gradient descent) (Explanation on how to change the parameters on the following slides!)
+}
+    Take any model 
+    \begin{align*}
+    \hat{\rho} \colon G &\to \mathbb{C}^{n \times n} \\    
+    g &\mapsto \begin{bmatrix}
+        g_{1,1} & \cdots & g_{1,n} \\
+        \vdots & & \vdots \\ 
+        g_{n,1} & \cdots & g_{n,n}
+    \end{bmatrix} = \phi_g 
+    \end{align*}
+and keep changing its parameters $\phi = \{\phi_g \mid g \in G\}$ until $\hat{\rho}$ becomes a representation.
+\end{frame}
+\begin{frame}{Just on generators}
+\note{
+In practice, we want small number of parameters --> define just on generators.
+}
+
+Let $G = <S | R>$. Define $\hat{\rho} \colon G \to \mathbb{C}^{n \times n}  $ as 
+    $$
+    \hat{\rho}(s) =\begin{bmatrix}
+        s_{1,1} & \cdots & s_{1,n} \\
+        \vdots & & \vdots \\ 
+        s_{n,1} & \cdots & s_{n,n}
+    \end{bmatrix} = \phi_s
+    $$ on generators $s \in S$ and 
+    $ \hat\rho(s_1s_2\dotsm s_m) = \hat\rho(s_1)\hat\rho(s_2)\dotsm \hat\rho(s_m)$ elsewhere.
+    % \vfill
+    % \color{gray}{Model $\hat \rho$ has parameters $\phi = \{\phi_s \mid s \in S\} $. }
+\end{frame}
+\begin{frame}{\color{aoblue}Relation loss}
+\note{
+\textbf{When will $\hat{\rho}$  be homomomorphism? Use the relations, define loss funcion, explain how it "measures, how close one is to a homomorphism"}
+}
+Let $G =<S|R>$.
+    $\hat \rho $ is a homomorphism iff $$\hat\rho(r) - I = 0$$ for every $r \in R$.
+
+    \begin{equation*}
+        \loss_{\text{rel}}(\hat\rho) = \frac{1}{|R|} \sum \limits_{r \in R}  ||\hat \rho(r) - I  ||_F^2
+    \end{equation*}
+    \begin{theorem}
+        $\hat\rho$ is homomorphism iff $\loss_{\text{rel}}(\hat\rho) = 0$
+    \end{theorem}
+\end{frame}
+\begin{frame}{\color{aoblue}Gradient descent}
+\note{
+We will try to minimise loss with gradient descent. 
+Examplain  on whiteboard that our model $\hat \rho$ is model in parameters $\phi = \{\phi_s \mid s \in S\}$. 
+Explain that we will try to minimise this loss by taking small steps in the oposite direction of the gradient.
+}
+Optimisation using
+    $$
+    \phi_{i+1} = \phi_i - \eta \nabla \loss(\phi_i) 
+    $$
+    Gradient flow equation
+    $$
+    \frac{d\phi}{dt} = - \nabla \loss(\phi), \quad \phi(0) = \phi_0
+    $$
+\end{frame}
+\setlength{\abovecaptionskip}{-10pt}
+\begin{frame}{\color{aoblue} One dimensional representations of $S_3$}
+\note{Explain our approach with this toy example}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{1_S3_1dim_sign.png}
+        \caption{Path of model $\hat \rho \colon S_3=<(1,2),(1,3)> \to \mathbb \R$}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{\color{aoblue} One dimensional representations of $S_3$}
+\note{Note that the demonstrration is "unfair", since we only use complex numbers. To get the same plot with C, we will focus on group with one element (so we can draw it).}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{2_S3_1dim_different_solutions.png}
+        \caption{Path of model $\hat \rho \colon S_3=<(1,2),(1,3)> \to \mathbb \R$ for different initial values.}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{\color{aoblue}Irreducibility loss}
+    \begin{theorem}
+    $\rho$ is irreducible iff $|\chi_\rho| = \frac{1}{|G|} 
+    \sum\limits_{g \in G} \text{tr}(\rho(g)) \text{tr}(\rho(g^{-1}) = 1$.
+\end{theorem}
+\vfill
+$$
+\loss_{\text{irr}}(\hat \rho) = (|\chi_{\hat \rho}| - 1 )^2
+$$
+\end{frame}
+\begin{frame}{\color{aoblue}Unitary loss}
+    \begin{theorem}
+       Every representation $\rho \colon G \to GL_n$ of finite group is equivalent to unitary representation $\rho_{\text{unitary}} \colon G \to U_n$.  
+    \end{theorem}
+    $$
+    \loss_{\text{unitary}} = \frac{1}{|S|} \sum \limits_{s \in S} ||\hat\rho(s) \hat\rho(s)^H - I||
+    $$
+    \vfill
+    $$
+    \loss = \loss_\text{rel}+\loss_\text{irr}+\loss_\text{unitary}
+    $$
+\end{frame}
+
+\begin{frame}{\color{aoblue}Cyclic groups}
+$C_n = <z \mid z^n = 1>$, model $\hat\rho(z) = x + i y$ with parameters $x, y$.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\linewidth]{3_Cn_solutions.png}
+    \caption{Solutions with different initial values.}
+    \label{fig:enter-label}
+\end{figure}
+\end{frame}
+\begin{frame}{\color{aoblue}Dynamics}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{4_Cn_limits.png}
+        \caption{Limit points of different initial values}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{Loss function}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{5_Cn_loss.png}
+        \caption{Plot of $\loss$ for $x,y \in [-1,1]$}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{\color{aoblue}Dihedral Groups}
+\note{Focus of my experiments, I guess.}
+
+\[
+D_{2n} = \langle r, s \mid r^n = s^2 = (rs)^2 = 1 \rangle
+\]
+
+\begin{theorem}
+The irreducible representations of the dihedral group \( D_{2n} \) are:
+\begin{columns}
+    \begin{column}{0.45\textwidth}
+        \begin{align*}
+            \rho_k \colon  s &\mapsto \begin{bmatrix}
+                0 & 1 \\
+                1 & 0
+            \end{bmatrix}\\
+            r &\mapsto \begin{bmatrix}
+                \cos\left(\frac{2\pi k}{n}\right) & -\sin\left(\frac{2\pi k}{n}\right) \\
+                \sin\left(\frac{2\pi k}{n}\right) & \cos\left(\frac{2\pi k}{n}\right)
+            \end{bmatrix}
+        \end{align*}
+    \end{column}
+    
+    \begin{column}{0.1\textwidth}
+        \centering
+        \small{and}
+    \end{column}
+    
+    \begin{column}{0.45\textwidth}
+        \begin{align*}
+            \chi_{\varepsilon, \delta} \colon \quad 
+            s &\mapsto \varepsilon, \\
+            r &\mapsto \delta
+        \end{align*}
+    \end{column}
+\end{columns}
+
+
+
+\noindent
+\small{
+where \( 0 \leq k < \frac{n}{2} \), \( \varepsilon \in \{-1, 1\} \), and
+$ 
+\delta \in 
+\begin{cases}
+    \{-1, 1\} & \text{if } n \text{ is even}, \\
+    \{1\} & \text{if } n \text{ is odd}.
+\end{cases}
+$
+}
+
+\end{theorem}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{Dn_1dim_n1.pdf}
+        \caption{\small{Showing $200$ out of $5000$ sampled trajectories}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{Dn_1dim_n7.pdf}
+        \caption{\small{Showing $200$ out of $5000$ sampled trajectories}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{Dn_1dim_n6.pdf}
+        \caption{\small{Showing $200$ out of $5000$ sampled trajectories}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{Dn_1dim_grid_r200_n5.pdf}
+        \caption{\tiny{Each colormap encodes one limit point. Faster the convergence, lighter the color.}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{Dn_1dim_grid_r200_n6.pdf}
+        \caption{\tiny{Each colormap encodes one limit point. Faster the convergence, lighter the color.}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{prob_of_convergence_D_3.pdf}
+        \caption{\tiny{Sample size: $10^4$. $\operatorname{tr}(R), \operatorname{tr}(S) \in (-2,2)$.}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{prob_of_convergence_D_5.pdf}
+        \caption{\tiny{Sample size: $10^4$. $\operatorname{tr}(R), \operatorname{tr}(S) \in (-2,2)$.}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[height = \textheight]{prob_of_convergence_D_12.pdf}
+        \caption{\tiny{Sample size: $10^4$. $\operatorname{tr}(R), \operatorname{tr}(S) \in (-2,2)$.}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+\begin{frame}{\small{Probability for success}}
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c}
+         Group &  $P\left( \loss (\lim \limits_{t \to \infty}\phi(t)) = 0  \right)$\\
+         \hline
+$D_{3}$ & $0.274$\\
+$D_{4}$ & $0.158$\\
+$D_{5}$ & $0.306$\\
+$D_{6}$ & $0.21$\\
+$D_{7}$ & $0.311$\\
+$D_{8}$ & $0.235$\\
+$D_{9}$ & $0.33$\\
+$D_{10}$ & $0.241$\\
+$D_{11}$ & $0.327$\\
+$D_{12}$ & $0.248$\\
+$D_{13}$ & $0.319$
+    \end{tabular}
+    % \caption{Probability for succes in different dihedral groups}
+    \label{tab:my_label}
+\end{table}
+    
+\end{frame}
+% \begin{frame}{Fixed trace of initial parameters}
+    
+% \end{frame}
+
+
+\begin{frame}{\color{aoblue} Group actions}
+    \note{
+Lets adapt the approach to group actions.
+
+Show some motivation on the board. 
+
+Discrete space is not suitable for GD - work with probabilities!
+    Explain how we get to the matrices, explain that this is not the only way
+    }
+  Map generators of $G=<S|R>$ to random maps on $[n]$.
+    \begin{align*}
+        \hat \rho \colon S &\to \mathcal{P}(\operatorname{fun}([n],[n])) \\
+    s &\mapsto P_s = \begin{bmatrix}
+        P(s(1) = 1) & P(s(1) = 2) & \dotsm & P(s(1) = n) \\
+        P(s(2) = 1) & P(s(2) = 2) & \dotsm & P(s(2) = n) \\
+        \vdots & \vdots & & \vdots \\
+        P(s(n) = 1) & P(s(n) = 2) & \dotsm & P(s(n) = n) \\
+    \end{bmatrix}
+    \end{align*}
+    For $f \in \operatorname{fun}([n],[n])$, define $P(s = f) = \prod \limits_{i=1}^n P(s(i) = f(i)) = \prod \limits_{i=1}^n s_{i, f(i)}$
+\end{frame}
+\begin{frame}{Construction details}
+    For $g=s_1s_2\dotsm s_m \in G$ define 
+    $$P_g = P_{s_1} P_{s_2} \dotsm P_{s_m} = \begin{bmatrix}
+          P(g(1) = 1) & \dotsm & P(g(1) = n) \\
+        \vdots & \vdots & & \vdots \\
+        P(g(n) = 1) & \dotsm & P(g(n) = n) \\
+    \end{bmatrix}$$ 
+    Get stochastic matrices using $\operatorname{softmax}(v)_i = \frac{e^{v_i}}{\sum_{j=1}^n e^{v_j}}$
+    \begin{align*}
+        P \colon \mathbb{R}^{n \times n} & \to \mathcal{S}_n \\
+        \begin{bmatrix}
+            a_1^T \\
+            \vdots \\
+            a_n^T
+        \end{bmatrix} &\mapsto 
+        \begin{bmatrix}
+            \operatorname{softmax}(a_1^T) \\
+            \vdots \\
+            \operatorname{softmax}(a_n^T)
+        \end{bmatrix} 
+    \end{align*}
+\end{frame}
+\begin{frame}{\color{aoblue} Make relations probable}
+ For $r \in R$, we want $P(r=\operatorname{id}) = 1$
+ $$
+ 0 = \log(P(r=\operatorname{id})) = \log(\prod_{i=1}^n P(r(i)=i)) = \operatorname{tr}(\log(P_r))
+ $$
+ $$
+ \mathcal{L}_{\text{rel}}  = - \frac{1}{|R|} \sum_{r \in R} \operatorname{tr}(\log(P_r))
+ $$
+\end{frame}
+\begin{frame}{\color{aoblue} Make bijections probable}
+    \note{Similarly to the unitarity constraint, we can constraint bijectivity}
+    $$
+    P(s \in S_n )= \sum_{\sigma \in S_n} P(s = \sigma) = \sum_{\sigma \in S_n}   \prod_{i=1}^n s_{i, \sigma(i)}
+= \text{Perm} (P_s).
+    $$
+    $P(s \in S_n ) = 1$ $\iff$ $P_S$ is permutation matrix $\iff$ $P_S \in U_n$
+    \vfill
+    $$
+    \mathcal{L}_{\text{bijective}} = \frac{1}{|S|} \sum_{s \in S}||P_sP_s^T - I||_F^2  = \mathcal{L}_{\text{unitary}} \circ \operatorname{softmax}
+    $$
+\end{frame}
+
+
+\begin{frame}{Converges to $ (1 6 2  3   5 4 )$}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=1.2\linewidth]{C6_on_6_sample2_initial.pdf}
+                %\caption{Caption}
+                \label{fig:enter-label}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=1.2\linewidth]{C6_on_6_sample2_final.pdf}
+                %\caption{Caption}
+                
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+\begin{frame}{Converges to $ (1 4 2 6 3 8)(5 9 7)$}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=1.2\linewidth]{C6_on_9_sample6_initial.pdf}
+                %\caption{Caption}
+                \label{fig:enter-label}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=1.2\linewidth]{C6_on_9_sample6_final.pdf}
+                %\caption{Caption}
+                
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+\begin{frame}{Converges to $r \xrightarrow{t \to \infty} (13524), s   \xrightarrow{t \to \infty} (14)(23)$}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.8\textheight]{D5_on_5_sample7_initial.pdf}
+    % \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+\end{frame}
+\begin{frame}{Converges to $r \xrightarrow{t \to \infty} (13524), s   \xrightarrow{t \to \infty} (14)(23)$}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.8\textheight]{D5_on_5_sample7_final.pdf}
+    % \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+\end{frame}
+\begin{frame}{\color{aoblue} Graph isomorphisms}
+\begin{itemize}
+    \item $G_1, G_2$ graphs with adjacency matrices $M_1 = \begin{bmatrix}
+        m_{i,j}^{(1)}
+    \end{bmatrix}$ and $M_2 = \begin{bmatrix}
+        m_{i,j}^{(1)}
+    \end{bmatrix}$
+
+    \item Random mapping $f \colon [n] \to [n] \sim P_f = \begin{bmatrix}P(f(i)=j)
+    \end{bmatrix}$
+
+    
+    \item For every $i \sim_1 j$, we want $P(f(i) \sim_2 f(j) = 1$ 
+\end{itemize}    
+
+\end{frame}
+\begin{frame}{\color{aoblue}Relation loss}
+ 
+$$
+P(f(i) \sim_2 f(j)) = \sum_{k= 1}^n \sum_{h = 1}^n f_{i, k} f_{j, h} m_{k,h}^{(2)} 
+% = f_j^T M_1 f_i
+= (P M_2 P^T)_{i, j}
+$$  
+\vfill
+\begin{align*}
+    \mathcal L_{\text{rel}}  &= -\sum_{i \sim_1 j} P(f(i) \sim_2 f(j)) 
+    \\&= -\sum_{i=1}^n\sum_{j=1}^n log(f_j^T M_2 f_i)m_{i,j}^{(1)}\\&= -\operatorname{tr}(\log(P_fM_2P_f^T) M_1^T)
+\end{align*}
+\end{frame}
+\begin{frame}{\color{aoblue} $P_f$ for $f$ acting on $\operatorname{Cayley}(S_3)$}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\linewidth]{cayley3_initial.pdf}
+                \caption{Caption}
+                \label{fig:enter-label}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\linewidth]{cayley3_final.pdf}
+                \caption{Caption}
+                
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+\begin{frame}{Automorphism of $\operatorname{Cayley}(S_4)$}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\linewidth]{Cayley_4_s0_initial.pdf}
+                \caption{Caption}
+                \label{fig:enter-label}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\linewidth]{Cayley_4_s0_final.pdf}
+                \caption{Caption}
+                
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Automorphism of random graph}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[, width=0.7\textwidth]{graph_2.pdf}
+              %  \caption{Caption}
+                \label{fig:enter-label}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.7\textheight]{Cayley_6_s4_final.pdf}
+              %  \caption{Caption}
+                
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{\color{aoblue} Further usage}
+    \begin{itemize}
+    \item  underparameterisation 
+    $x \mapsto \begin{bmatrix}
+x & -\sqrt{1 - x^2} \\
+\sqrt{1 - x^2} & x 
+\end{bmatrix}.$
+        \item overparameterisation 
+        
+        $\phi_s = \operatorname{NeuralNetwork }( p) $, 
+        $\operatorname{dim}( p) >> \operatorname{dim}(phi_s)$
+
+        \item adaptive loss (Orthogonality of characters, adaptive dimension) \textit{- bad results}
+        \item  usage of GANs, paths in graphs, euler walks, ...
+    \end{itemize}
+
+\end{frame}
+\begin{frame}{Related work}
+\begin{itemize}
+    \item \textit{Yang Liu}, Graph isomorphisms via self-supervised gd
+
+    \noindent 
+    $G_1 \cong G_2 \iff \exists P \text{ doubly stochastic }. PM_1 = BP  $
+    \item \textit{Xingtong Yu et al},
+Learning to Count Isomorphisms with Graph Neural Networks
+\item \textit{Cédric M. Campos et al}, Momentum-based gradient descent methods for Lie groups
+
+\emph{Find such matrices that the matrix commutators match the Lie algebra relations}
+\end{itemize}
+    
+\end{frame}
+\begin{frame}{}
+    \centering
+\big 
+
+Implementation: 
+
+\noindent
+\verb|github.com/urhprimozic/gofi
+
+\includegraphics[width=0.3\textwidth]{qrcode.png}
+
+
+    
+    
+\end{frame}
+\end{document}

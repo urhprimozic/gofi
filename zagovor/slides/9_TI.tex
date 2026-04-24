@@ -1,0 +1,52 @@
+\begin{frame}{\color{aoblue}Tabela inverzij}
+  \begin{definicija}[Tabela inverzij]
+    $$\operatorname{TI}(\sigma) =
+    (a_1,
+      a_2, \dotsc,
+    a_n), \quad a_k = |\{ j > k
+      \mid \sigma(j) < \sigma(k)
+    \}|$$
+  \end{definicija}
+  \begin{izrek}
+    $\operatorname{TI} \colon S_n \to \prod_{i=1}^n \{0, 1, \dotsc, n-i\}$ je bijekcija.
+  \end{izrek}
+  \end{frame}
+\begin{frame}{Porazdelitev nad tabelo inverzij}
+    \centering
+    $$
+    P_d =
+    \begin{bmatrix}
+      p_{1,1} & p_{1,2} & \dotsm & p_{2, n-1} & p_{1,n} \\
+      p_{2,1} & p_{2,2} & \dotsm & p_{2, n-1} & 0 \\
+      \vdots & \vdots & \iddots & \vdots & \vdots    \\
+      p_{n-1,1} & p_{n-1,2}  & \dotsm & 0  & 0\\
+      p_{n,1} & 0  & \dotsm & 0  & 0\\
+    \end{bmatrix}
+    $$
+    $$P(a_k = i) = P(k \text{ postavimo na } i\text{-to prazno
+mesto}) = p_{k, i}$$
+$$P(\operatorname{TI}(\sigma) = (x_1, x_2, \dotsc, x_n)) = \prod_{i=1}^n
+P(a_k = x_k)$$
+\end{frame}
+\begin{frame}{Funkcija izgube}
+    \begin{itemize}
+        \item $\Loss{TI} = \sum_{i, j} ( (M_1)_{i,j} - P(f(i) \sim f(j)) )^2$
+        \item preparametrizacija $P_d = M(\phi)(x_0)$ 
+    \end{itemize}
+\end{frame}
+\begin{frame}{Rezultati}
+    \centering
+    \includegraphics[height=0.8\paperheight]{img/vanilla_vs_TI_loss.pdf}
+\end{frame}
+\begin{frame}{Rezultati}
+    \centering
+    \includegraphics[height=0.8\paperheight]{img/average_curve_full.pdf.pdf}
+\end{frame}
+\begin{frame}{Opombe}
+    \begin{itemize}
+        \item $\epsilon$-upodobitve in kvaziupodobitve
+        \item softmax vs Sinkhorn
+        \item simetrije
+        \item meta učenje in boljše arhitekture modelov
+    \end{itemize}
+\end{frame}

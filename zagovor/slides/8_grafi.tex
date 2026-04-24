@@ -1,0 +1,63 @@
+\begin{frame}{\color{aoblue} Izomorfizmi grafov}
+\begin{itemize}
+    \item  $M_1 = \begin{bmatrix}
+        m_{i,j}^{(1)}
+    \end{bmatrix}$, $M_2 = \begin{bmatrix}
+        m_{i,j}^{(2)}
+    \end{bmatrix}$ matriki sosednosti 
+
+    \item slučajna preslikava $f \colon [n] \to [n] \sim P_f = \begin{bmatrix}P(f(i)=j)
+    \end{bmatrix}$
+
+    
+    \item za $i \sim_1 j$ hočemo $P(f(i) \sim_2 f(j) = 1$ 
+\end{itemize}    
+
+\end{frame}
+\begin{frame}{\color{aoblue}Izguba na relacijah}
+ 
+$$
+P(f(i) \sim_2 f(j)) = \sum_{k= 1}^n \sum_{h = 1}^n f_{i, k} f_{j, h} m_{k,h}^{(2)} 
+% = f_j^T M_1 f_i
+= (P M_2 P^T)_{i, j}
+$$  
+$$
+ \loss_\sim = \|M_1 - P M_2 P^T\|.
+$$
+\end{frame}
+\begin{frame}{\color{aoblue}Iščemo bijekcije}
+  \note{Similarly to the unitarity constraint, we can constraint bijectivity}
+  $$
+  P(f \in S_n )= \sum_{\sigma \in S_n} P(f = \sigma) = \sum_{\sigma
+  \in S_n}   \prod_{i=1}^n f_{i, \sigma(i)}
+  = \text{Perm} (P_f).
+  $$
+  $P(f \in S_n ) = 1 \iff P_f \text{ permutacijska }\iff P_f \in U_n$
+  \vfill
+  $$
+  \mathcal{L}_{\text{bijective}} = \frac{1}{|S|} \sum_{f \in
+  S}||P_fP_f^T - I||_F^2  = \mathcal{L}_{\text{unitary}} \circ
+  \operatorname{softmax}
+  $$
+\end{frame}
+\begin{frame}{Primer}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[, width=0.7\textwidth]{img/graf_primer.png}
+              %  \caption{Caption}
+                \label{fig:enter-label}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[height=0.6\textheight]{img/graf_primer_final.pdf}
+              %  \caption{Caption}
+                
+            \end{figure}
+            Model konvergira do $(13)(24)$
+        \end{column}
+    \end{columns}
+\end{frame}

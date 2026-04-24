@@ -1,0 +1,95 @@
+\begin{frame}{\color{aoblue}Delovanja}
+  \note{
+    Lets adapt the approach to group actions.
+
+    Show some motivation on the board.
+
+    Discrete space is not suitable for GD - work with probabilities!
+    Explain how we get to the matrices, explain that this is not the only way
+  }
+  Elementi grupe $G=<S|R>$ so slučajne preslikave $g \colon [n] \to [n]$.
+  \begin{align*}
+    \hat \rho \colon S &\to \mathcal{P}(\operatorname{fun}([n],[n])) \\
+    s &\mapsto P_s =
+    \begin{bmatrix}
+      P(s(1) = 1) & P(s(1) = 2) & \dotsm & P(s(1) = n) \\
+      P(s(2) = 1) & P(s(2) = 2) & \dotsm & P(s(2) = n) \\
+      \vdots & \vdots & & \vdots \\
+      P(s(n) = 1) & P(s(n) = 2) & \dotsm & P(s(n) = n) \\
+    \end{bmatrix}
+  \end{align*}
+  Za $f \in \operatorname{fun}([n],[n])$ je
+  $$P(s = f) = \prod \limits_{i=1}^n P(s(i) = f(i)) = \prod
+  \limits_{i=1}^n s_{i, f(i)}$$
+\end{frame}
+\begin{frame}{Parametrizacija stohastičnih matrik}
+  \begin{itemize}
+    \item vektor v verjetnostno
+      porazdelitev:$\operatorname{softmax}(v)_i =
+      \frac{e^{v_i}}{\sum_{j=1}^n e^{v_j}}$
+      % pretvori
+      %vektor $v$ v  verjetnostno porazdelitev.
+    \item parametrizacija stohastičnih matrik:
+      $$
+      \begin{bmatrix}
+        a_1^T \\
+        \vdots \\
+        a_n^T
+      \end{bmatrix} \mapsto
+      \begin{bmatrix}
+        \operatorname{softmax}(a_1^T) \\
+        \vdots \\
+        \operatorname{softmax}(a_n^T)
+      \end{bmatrix}
+      $$
+  \end{itemize}
+\end{frame}
+\begin{frame}{\color{aoblue} Izguba na relacijah}
+  Za relacijo $r \in R$ hočemo $P(r=\operatorname{id}) = 1$
+  $$
+  0 = \log(P(r=\operatorname{id})) = \log(\prod_{i=1}^n P(r(i)=i)) =
+  \operatorname{tr}(\log(P_r))
+  $$
+  $$
+  \mathcal{L}_{\text{rel}}  = - \frac{1}{|R|} \sum_{r \in R}
+  \operatorname{tr}(\log(P_r))
+  $$
+\end{frame}
+\begin{frame}{$C_6 = \langle z \mid z^6 \rangle$ deluje na $[6]$}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            %\begin{figure}
+                \centering
+                \includegraphics[width=1.2\linewidth]{img/C6_on_6_sample2_initial.pdf}
+          %  \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            %\begin{figure}
+                \centering
+                \includegraphics[width=1.2\linewidth]{img/C6_on_6_sample2_final.pdf}
+        % \end{figure}
+        \end{column}
+    \end{columns}
+     \centering 
+     $\hat \rho(z)$ konvergira do $ (1 6 2  3   5 4 )$
+\end{frame}
+\begin{frame}{$D_5 = \langle r, s \mid r^n, s^2, (rs)^2 \rangle$ deluje na $[5]$}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.7\textheight]{img/D5_on_5_sample7_initial.pdf}
+    % \caption{Caption}%
+\end{figure}
+\end{frame}
+\begin{frame}{$D_5 = \langle r, s \mid r^n, s^2, (rs)^2 \rangle$ deluje na $[5]$}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.7\textheight]{img/D5_on_5_sample7_final.pdf}
+    $r$ konvergira k  $(13524)$, $s$  konvergira k  $(14)(23)$
+\end{figure}
+\end{frame}
+\begin{frame}{Prehod na delovanje}
+    \begin{itemize}
+        \item $\overline{P_s}$ - $1$ na največjem elementu v vrstici, $0$ drugje
+        \item pri majhni izgubi je $s \mapsto \overline{P_s}$ delovanje
+    \end{itemize}
+\end{frame}

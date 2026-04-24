@@ -6,6 +6,9 @@
 \usepackage{fancyvrb}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{mathdots}
 
 \newcommand{\R}{\mathbb R}
 \newcommand{\N}{\mathbb N}
@@ -18,6 +21,17 @@
 \newcommand{\Q}{\mathbb Q}
 \newcommand{\mon}{(S\cup S ^{-1})^*}
 \newcommand{\s}{\hat \rho (s)}
+
+\theoremstyle{definition}
+\newtheorem{aksiom}{Aksiom}
+\newtheorem{definicija}{Definicija}[section]
+\newtheorem{opomba}[definicija]{Opomba}
+\newtheorem{primer*}[definicija]{Primer}
+\theoremstyle{plain}
+\newtheorem{lema}[definicija]{Lema}
+\newtheorem{izrek}[definicija]{Izrek}
+\newtheorem{trditev}[definicija]{Trditev}
+\newtheorem{posledica}[definicija]{Posledica}
 
 %NOTES
 %\setbeamertemplate{note page}[plain]
@@ -56,4 +70,9 @@
 \input{slides/2_upodobitve.tex}
 \input{slides/3_gd.tex}
 \input{slides/4_primer_S3.tex}
+\input{slides/5_obstoj_resitve.tex}
+\input{slides/6_rezultati_upodobitve.tex}
+\input{slides/7_delovanja.tex}
+\input{slides/8_grafi.tex}
+\input{slides/9_TI.tex}
 \end{document}
