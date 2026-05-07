@@ -1,10 +1,10 @@
 # Fdb version 4
-["xdvipdfmx"] 1777028265.47438 "presentation.xdv" "presentation.pdf" "presentation" 1777028282.64447 0
-  "presentation.xdv" 1777028265.33853 114760 c1831b0df235e50aba54f003ca219d6a "xelatex"
+["xdvipdfmx"] 1778137742.48214 "presentation.xdv" "presentation.pdf" "presentation" 1778137759.62808 0
+  "presentation.xdv" 1778137742.36656 114292 dd84ec4e341ca5d7a1eb5babc8e381ec "xelatex"
   (generated)
   "presentation.pdf"
   (rewritten before read)
-["xelatex"] 1777028263.0419 "/home/urh/Documents/gofi/zagovor/presentation.tex" "presentation.xdv" "presentation" 1777028282.64 0
+["xelatex"] 1778137740.2755 "/home/urh/Documents/gofi/zagovor/presentation.tex" "presentation.xdv" "presentation" 1778137759.62306 0
   "/home/urh/Documents/gofi/zagovor/presentation.tex" 1777027193.42957 2158 937004cc4323e78094f62610c07b04f8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -287,9 +287,9 @@
   "img/prob_of_convergence_D_3.png" 1766503995.00265 214455 5b4e2cc87259bcc0b38e5e0c322d6dc3 ""
   "img/prob_of_convergence_D_4.png" 1766503995.06965 225600 b1cf7bc418e39badf1649f10bc86e65e ""
   "img/vanilla_vs_TI_loss.pdf" 1773684578.96891 17590 bc0b2479d8f837bca4e10e38159267f0 ""
-  "presentation.aux" 1777028265.33686 8607 d529168e85ff742cbd15d0f246f96563 "xelatex"
-  "presentation.nav" 1777028265.33853 4550 b4d3ccc89edac41d3aa3b69df3037b93 "xelatex"
-  "presentation.out" 1777028264.35963 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
+  "presentation.aux" 1778137742.36494 8607 d529168e85ff742cbd15d0f246f96563 "xelatex"
+  "presentation.nav" 1778137742.36656 4550 b4d3ccc89edac41d3aa3b69df3037b93 "xelatex"
+  "presentation.out" 1778137741.53977 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
   "presentation.tex" 1777027193.42957 2158 937004cc4323e78094f62610c07b04f8 ""
   "slides/1_ideja.tex" 1776941677.01846 526 035b7203631a14a2d713f0128e9b3272 ""
   "slides/2_upodobitve.tex" 1776952065.37998 2066 5fecbaad5c38fa7cca25b4c9cf6afb78 ""
@@ -298,7 +298,7 @@
   "slides/5_obstoj_resitve.tex" 1777017897.88872 1090 8231118d426bec608b174c2e04978f19 ""
   "slides/6_rezultati_upodobitve.tex" 1777024367.10982 3366 1f4ec484ef87734004707b0975c55076 ""
   "slides/7_delovanja.tex" 1777025184.29436 3199 b321c7e3228eb859a45f86d3387422bc ""
-  "slides/8_grafi.tex" 1777026817.0423 1864 90cb5d24498877b2890aca69e01173f2 ""
+  "slides/8_grafi.tex" 1778137740.03611 1957 81e8514cea6a2d7fa3d94d4e8a6a5be5 ""
   "slides/9_TI.tex" 1777028256.06164 1648 c72b101bacbd4f021fe6055fb162e1f6 ""
   (generated)
   "presentation.aux"
